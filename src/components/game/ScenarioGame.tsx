@@ -117,6 +117,28 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
     // Save status toast state
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+    const saveStatusTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Auto-dismiss save status toast after delay
+    useEffect(() => {
+        if (saveStatus === 'idle') return;
+
+        // Clear any existing timer
+        if (saveStatusTimerRef.current) {
+            clearTimeout(saveStatusTimerRef.current);
+        }
+
+        const delay = saveStatus === 'saved' ? 3000 : 6000; // Error stays longer
+        saveStatusTimerRef.current = setTimeout(() => {
+            setSaveStatus('idle');
+        }, delay);
+
+        return () => {
+            if (saveStatusTimerRef.current) {
+                clearTimeout(saveStatusTimerRef.current);
+            }
+        };
+    }, [saveStatus]);
 
     // Post-journey feedback state
     const [showPostFeedback, setShowPostFeedback] = useState(false);
@@ -725,8 +747,11 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                         level_scores: updatedLevelScores,   // Save stars directly here as primary backup
                     }).eq('id', userProfile.id);
                     if (usersErr) {
-                        console.error('[AYA] users update error:', usersErr.message, usersErr.details);
+                        console.error('[AYA] users update error:', usersErr.message, usersErr.details, usersErr.code);
                         setSaveStatus('error');
+                        // CRITICAL: Do NOT return early — continue to handleLevelComplete
+                        // so the story does not restart. Progress is saved locally in Zustand
+                        // even if Supabase sync failed. The sync will retry on next app open.
                     } else {
                         console.log('[AYA] ✓ users updated (XP + level_scores saved)');
                         setSaveStatus('saved');
@@ -1374,15 +1399,29 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 </div>
             ))}
 
-            {/* Save Status Toast — visible indicator so user knows if DB save worked */}
+            {/* FIXED: auto-dismissing toast with retry option */}
             {saveStatus !== 'idle' && (
                 <div className={clsx(
-                    "fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] px-5 py-2.5 rounded-full font-bold text-sm tracking-wide shadow-2xl border backdrop-blur-md transition-all animate-fade-in-up",
+                    "fixed bottom-6 left-1/2 -translate-x-1/2 z-[9999] px-5 py-3 rounded-2xl font-semibold text-sm shadow-2xl border backdrop-blur-md transition-all animate-fade-in-up flex items-center gap-3",
                     saveStatus === 'saved'
                         ? "bg-emerald-900/80 border-emerald-400/50 text-emerald-300"
+                        : saveStatus === 'saving'
+                        ? "bg-slate-900/80 border-slate-400/50 text-slate-300"
                         : "bg-red-900/80 border-red-400/50 text-red-300"
                 )}>
-                    {saveStatus === 'saved' ? '✓ Progress Saved' : '✗ Save Failed — check connection'}
+                    {saveStatus === 'saved' && '✓ Progress Saved'}
+                    {saveStatus === 'saving' && '⟳ Saving...'}
+                    {saveStatus === 'error' && (
+                        <>
+                            <span>⚠ Save Failed</span>
+                            <button
+                                onClick={() => setSaveStatus('idle')}
+                                className="ml-2 text-red-200 underline text-xs font-normal hover:text-white transition-colors"
+                            >
+                                Dismiss
+                            </button>
+                        </>
+                    )}
                 </div>
             )}
 
