@@ -1,6 +1,4 @@
 import { createClient } from '@supabase/supabase-js';
-import { errorResponse, validateString, validateUUID } from './_validate.js';
-import { applyCors, checkRateLimit, hasValidJsonBody } from './_security.js';
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
@@ -17,10 +15,11 @@ try {
 }
 
 export default async function handler(req, res) {
-  applyCors(req, res, 'GET, POST, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (checkRateLimit(req, res, 'subscribe-push') || ((req.method === 'POST' || req.method === 'DELETE') && !hasValidJsonBody(req, res))) return;
 
   if (!supabase) {
     return res.status(500).json({
@@ -33,8 +32,9 @@ export default async function handler(req, res) {
   if (req.method === 'DELETE') {
     try {
       const { endpoint } = req.body || {};
-      const endpointError = validateString(endpoint, 'endpoint', 2048);
-      if (endpointError) return errorResponse(res, 400, endpointError);
+      if (!endpoint) {
+        return res.status(400).json({ success: false, error: 'Missing endpoint to unsubscribe.' });
+      }
 
       const { error: deleteError } = await supabase
         .from('push_subscriptions')
@@ -76,12 +76,15 @@ export default async function handler(req, res) {
     try {
       const { subscription, userId } = req.body || {};
 
-      if (!subscription || typeof subscription !== 'object') return errorResponse(res, 400, 'subscription must be an object');
-      const endpointError = validateString(subscription.endpoint, 'subscription endpoint', 2048);
-      if (endpointError || JSON.stringify(subscription).length > 8000) return errorResponse(res, 400, endpointError || 'subscription payload is too large');
+      if (!subscription || !subscription.endpoint) {
+        return res.status(400).json({
+          success: false,
+          error: 'Missing required subscription payload or endpoint.'
+        });
+      }
 
       const endpoint = subscription.endpoint;
-      const isValidUuid = !userId || !validateUUID(userId, 'userId');
+      const isValidUuid = userId && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId);
       const targetUserId = isValidUuid ? userId : null;
 
       // Check if subscription with the same endpoint already exists

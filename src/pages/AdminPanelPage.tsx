@@ -9,17 +9,21 @@ import FeedbackDashboard from '../components/admin/FeedbackDashboard';
 export function AdminPanelPage() {
     const navigate = useNavigate();
 
+    // Admin auth — read persisted Google email from localStorage
     const [isAdmin, setIsAdmin] = useState<boolean | null>(null); // null = loading
     const [currentEmail, setCurrentEmail] = useState('');
 
     useEffect(() => {
         const checkAdmin = async () => {
+            const email = localStorage.getItem('aya_google_email');
+            if (!email) { setIsAdmin(false); return; }
+            setCurrentEmail(email);
+            // Founder always gets access
+            if (email === 'anitadhakad333@gmail.com') { setIsAdmin(true); return; }
+            // Other admins: check database
             try {
-                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-                if (sessionError || !session?.user?.email) { setIsAdmin(false); return; }
-                setCurrentEmail(session.user.email);
-                const { data, error } = await supabase.rpc('is_admin_user', { check_email: session.user.email });
-                setIsAdmin(!error && !!data);
+                const { data } = await supabase.from('admin_users').select('email').eq('email', email).maybeSingle();
+                setIsAdmin(!!data);
             } catch {
                 setIsAdmin(false);
             }
@@ -48,7 +52,7 @@ export function AdminPanelPage() {
 
     const loadAdmins = async () => {
         try {
-            const { data, error } = await supabase.rpc('list_admin_users');
+            const { data, error } = await supabase.from('admin_users').select('id, email').order('created_at', { ascending: true });
             if (error) throw error;
             setAdminList(data || []);
         } catch (err: any) {
@@ -71,7 +75,7 @@ export function AdminPanelPage() {
 
         setAdminStatus('adding');
         try {
-            const { error } = await supabase.rpc('manage_admin_user', { action: 'add', target_email: email });
+            const { error } = await supabase.from('admin_users').insert({ email });
             if (error) throw error;
             setAdminStatus('success');
             setAdminMessage(`${email} added as admin!`);
@@ -83,14 +87,14 @@ export function AdminPanelPage() {
         }
     };
 
-    const handleRemoveAdmin = async (_id: string, email: string) => {
+    const handleRemoveAdmin = async (id: string, email: string) => {
         if (email === 'anitadhakad333@gmail.com') {
             setAdminStatus('error');
             setAdminMessage('Cannot remove the founder account.');
             return;
         }
         try {
-            const { error } = await supabase.rpc('manage_admin_user', { action: 'remove', target_email: email });
+            const { error } = await supabase.from('admin_users').delete().eq('id', id);
             if (error) throw error;
             setAdminStatus('success');
             setAdminMessage(`${email} removed.`);
@@ -108,9 +112,13 @@ export function AdminPanelPage() {
     const handleCheckSubs = async () => {
         setSubCheckLoading(true);
         try {
-            const { data, error } = await supabase.rpc('get_push_subscription_count');
-            if (error) throw error;
-            setSubCount(Number(data ?? 0));
+            const res = await fetch('/api/subscribe-push', {
+                headers: {
+                    'x-admin-email': currentEmail
+                }
+            });
+            const data = await res.json();
+            setSubCount(data.count ?? 0);
         } catch (err: any) {
             setSubCount(-1); // error indicator
         }
@@ -127,12 +135,11 @@ export function AdminPanelPage() {
 
         setNotifStatus('sending');
         try {
-            const { data: { session } } = await supabase.auth.getSession();
             const res = await fetch('/api/send-notifications', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {})
+                    'x-admin-email': currentEmail
                 },
                 body: JSON.stringify({ title, body, url: '/game' }),
             });

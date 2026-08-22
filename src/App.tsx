@@ -18,7 +18,6 @@ import { FeedbackDashboard } from './components/admin/FeedbackDashboard';
 import ReactGA from 'react-ga4';
 import { AnalyticsTracker } from './components/AnalyticsTracker';
 import { GoogleTranslateSync } from './components/GoogleTranslateSync';
-import { AdminRoute } from './components/AdminRoute';
 
 // Initialize Google Analytics 4
 ReactGA.initialize('G-30ZXCBJXSQ');
@@ -79,8 +78,8 @@ function App() {
             <Route path="journal" element={<JournalPage />} />
             <Route path="theme" element={<ThemeSwitcherPage />} />
             <Route path="social" element={<SocialPage />} />
-            <Route path="admin" element={<AdminRoute><AdminRouteHandler /></AdminRoute>} />
-            <Route path="admin/feedback" element={<AdminRoute><FeedbackDashboard /></AdminRoute>} />
+            <Route path="admin" element={<AdminRouteHandler />} />
+            <Route path="admin/feedback" element={<FeedbackDashboard />} />
             <Route path="*" element={<Navigate to="/game" replace />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />

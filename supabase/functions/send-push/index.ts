@@ -2,7 +2,7 @@ import webpush from 'npm:web-push@3.6.7';
 import { createClient } from 'npm:@supabase/supabase-js@2.44.2';
 
 const corsHeaders = {
-  'Access-Control-Allow-Origin': 'https://aya-phi-liard.vercel.app',
+  'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 

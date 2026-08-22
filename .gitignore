@@ -12,21 +12,6 @@ dist
 dist-ssr
 *.local
 
-# Environment files (never commit these)
-.env
-.env.local
-.env.development
-.env.development.local
-.env.test
-.env.test.local
-.env.production
-.env.production.local
-*.env
-!.env.example
-
-# Supabase temp files can contain project references
-supabase/.temp/
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

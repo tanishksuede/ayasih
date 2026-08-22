@@ -1,5 +1,4 @@
 // Session persistence utility — dual localStorage/sessionStorage fallback (Safari Private Mode safe)
-import { logger } from './logger';
 
 const KEYS = {
   userId: 'aya_user_id',
@@ -32,7 +31,7 @@ export const saveSession = (user: { id: string; mobile: string; name: string; ag
   safeSet(KEYS.mobile, user.mobile);
   safeSet(KEYS.name, user.name);
   safeSet(KEYS.age, String(user.age));
-  logger.log('[Session] Saved');
+  console.log('[Session] Saved:', user.id);
 };
 
 export const getSession = () => ({
@@ -44,7 +43,7 @@ export const getSession = () => ({
 
 export const clearSession = () => {
   Object.values(KEYS).forEach(safeRemove);
-  logger.log('[Session] Cleared.');
+  console.log('[Session] Cleared.');
 };
 
 export const clearAllUserData = () => {
@@ -72,7 +71,7 @@ export const clearAllUserData = () => {
     sessionKeys.forEach((k) => sessionStorage.removeItem(k));
     sessionStorage.clear();
   } catch {}
-  logger.log('[Session] All user data cleared from local and session storage.');
+  console.log('[Session] All user data cleared from local and session storage.');
 };
 
 export const markQuizDone = () => {

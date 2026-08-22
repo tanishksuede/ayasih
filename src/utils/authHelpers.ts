@@ -31,24 +31,9 @@ export function deriveMobileEmail(mobile: string): string {
  * The salt comes from VITE_AUTH_SALT in .env.local to prevent brute-force
  * derivation of any user's auth credentials from their phone number alone.
  */
-async function hmacSha256(key: string, message: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const cryptoKey = await crypto.subtle.importKey('raw', encoder.encode(key), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
-  const signature = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(message));
-  return Array.from(new Uint8Array(signature)).map((byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-export async function deriveMobilePassword(mobile: string): Promise<string> {
+export function deriveMobilePassword(mobile: string): string {
   const clean = mobile.replace(/\D/g, '');
-  const salt = import.meta.env.VITE_AUTH_SALT;
-  if (!salt) throw new Error('VITE_AUTH_SALT must be configured for mobile authentication.');
-  const hmac = await hmacSha256(salt, clean);
-  return `Aya${hmac}!A`;
-}
-
-/** Temporary compatibility bridge for accounts created before HMAC hardening. */
-export function deriveLegacyMobilePassword(mobile: string): string {
-  const salt = import.meta.env.VITE_AUTH_SALT;
-  if (!salt) throw new Error('VITE_AUTH_SALT must be configured for mobile authentication.');
-  return `Aya${salt.slice(0, 4)}${mobile.replace(/\D/g, '')}!Auth`;
+  const salt = import.meta.env.VITE_AUTH_SALT ?? 'aya-fallback-salt';
+  // Format: Aya<first4ofSalt><mobile>!Auth — always meets Supabase min-length
+  return `Aya${salt.slice(0, 4)}${clean}!Auth`;
 }

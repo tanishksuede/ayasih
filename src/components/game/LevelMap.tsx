@@ -29,15 +29,20 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const levelScores = useUserStore((state) => state.levelScores);
     const profile = useUserStore((state) => state.profile);
 
+    // Admin check — read persisted Google email from localStorage
     const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
         const checkAdmin = async () => {
+            const email = localStorage.getItem('aya_google_email');
+            if (!email) return;
+            // Founder always gets access (no DB needed)
+            if (email === 'anitadhakad333@gmail.com') { setIsAdmin(true); return; }
+            // Other admins: check database
             try {
+                // Must import supabase at the top if it wasn't already
                 const { supabase } = await import('../../utils/supabase');
-                const { data: { session } } = await supabase.auth.getSession();
-                if (!session?.user?.email) return;
-                const { data } = await supabase.rpc('is_admin_user', { check_email: session.user.email });
-                setIsAdmin(Boolean(data));
+                const { data } = await supabase.from('admin_users').select('email').eq('email', email).maybeSingle();
+                if (data) setIsAdmin(true);
             } catch {}
         };
         checkAdmin();
