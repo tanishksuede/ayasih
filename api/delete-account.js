@@ -1,4 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
+import { errorResponse, validateUUID } from './_validate.js';
+import { applyCors, checkRateLimit, hasValidJsonBody } from './_security.js';
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || '';
@@ -18,10 +20,7 @@ try {
 }
 
 export default async function handler(req, res) {
-  // CORS Headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  applyCors(req, res, 'POST, OPTIONS');
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -30,6 +29,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed. Use POST.' });
   }
+  if (checkRateLimit(req, res, 'delete-account') || !hasValidJsonBody(req, res)) return;
 
   if (!supabaseAdmin) {
     return res.status(500).json({
@@ -41,27 +41,16 @@ export default async function handler(req, res) {
   try {
     const { userId } = req.body || {};
 
-    if (!userId || typeof userId !== 'string') {
-      return res.status(400).json({
-        success: false,
-        error: 'Missing required parameter: userId'
-      });
-    }
+    const userIdError = validateUUID(userId, 'userId');
+    if (userIdError) return errorResponse(res, 400, userIdError);
 
     // 1. Authenticate Requester (Session / Token Validation)
     const authHeader = req.headers.authorization || '';
-    let token = authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
-    if (!token && req.body?.authToken) {
-      token = req.body.authToken;
-    }
-
-    let authenticatedAuthUid = null;
-    if (token) {
-      const { data: authData, error: authError } = await supabaseAdmin.auth.getUser(token);
-      if (!authError && authData?.user) {
-        authenticatedAuthUid = authData.user.id;
-      }
-    }
+    const token = authHeader.startsWith('Bearer ') ? authHeader.substring(7) : null;
+    if (!token) return errorResponse(res, 401, 'Authorization token is required.');
+    const { data: authData, error: authError } = await supabaseAdmin.auth.getUser(token);
+    if (authError || !authData?.user) return errorResponse(res, 401, 'Invalid or expired authentication token.');
+    const authenticatedAuthUid = authData.user.id;
 
     // 2. Fetch target user from public.users table
     const { data: targetUser, error: userFetchError } = await supabaseAdmin
@@ -80,17 +69,11 @@ export default async function handler(req, res) {
     }
 
     // 3. Security Verification: Ensure caller is deleting their own account
-    if (authenticatedAuthUid) {
-      const matchesAuthUid = targetUser.auth_user_id === authenticatedAuthUid;
-      const matchesGoogleId = targetUser.google_id === authenticatedAuthUid;
-      const matchesDirectId = targetUser.id === authenticatedAuthUid;
-
-      if (!matchesAuthUid && !matchesGoogleId && !matchesDirectId) {
-        return res.status(403).json({
-          success: false,
-          error: 'Unauthorized. You can only delete your own account.'
-        });
-      }
+    const matchesAuthUid = targetUser.auth_user_id === authenticatedAuthUid;
+    const matchesGoogleId = targetUser.google_id === authenticatedAuthUid;
+    const matchesDirectId = targetUser.id === authenticatedAuthUid;
+    if (!matchesAuthUid && !matchesGoogleId && !matchesDirectId) {
+      return errorResponse(res, 403, 'Unauthorized. You can only delete your own account.');
     }
 
     // 4. Soft Delete: Mark public.users record as deactivated with deleted_at timestamp

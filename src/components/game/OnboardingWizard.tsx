@@ -6,7 +6,7 @@ import { audioManager as audioSynth } from "../../utils/audioManager";
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { saveSession } from '../../utils/session';
 import { supabase } from '../../utils/supabase';
-import { deriveMobileEmail, deriveMobilePassword } from '../../utils/authHelpers';
+import { deriveLegacyMobilePassword, deriveMobileEmail, deriveMobilePassword } from '../../utils/authHelpers';
 import { useUsernameAvailability } from '../../hooks/useUsernameAvailability';
 import { UsernameField } from './UsernameField';
 
@@ -144,10 +144,6 @@ export function OnboardingWizard() {
 
                 if (session && session.user) {
                     const googleId = session.user.id;
-                    // Persist Google email for admin check (Supabase auth session is transient)
-                    if (session.user.email) {
-                        try { localStorage.setItem('aya_google_email', session.user.email); } catch {}
-                    }
                     // See if they already have an account linked to this google_id
                     const { data: existingUser, error: dbError } = await supabase
                         .from('users')
@@ -213,7 +209,7 @@ export function OnboardingWizard() {
         if (!userData.mobile) return;
 
         const email = deriveMobileEmail(userData.mobile);
-        const password = deriveMobilePassword(userData.mobile);
+        const password = await deriveMobilePassword(userData.mobile);
 
         // 1. Try signing in (most users will already have an auth account)
         const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
@@ -231,6 +227,23 @@ export function OnboardingWizard() {
                     .eq('id', userData.id);
             }
             return;
+        }
+
+        // Existing accounts used the legacy deterministic password. Upgrade them
+        // while authenticated so the user keeps a seamless session.
+        if (signInError?.message?.includes('Invalid login credentials')) {
+            const { data: legacySignIn } = await supabase.auth.signInWithPassword({
+                email,
+                password: deriveLegacyMobilePassword(userData.mobile),
+            });
+            if (legacySignIn?.session) {
+                const { error: updatePasswordError } = await supabase.auth.updateUser({ password });
+                if (updatePasswordError) throw updatePasswordError;
+                if (!userData.auth_user_id) {
+                    await supabase.from('users').update({ auth_user_id: legacySignIn.session.user.id }).eq('id', userData.id);
+                }
+                return;
+            }
         }
 
         // 2. signIn failed (no auth account yet) — create one

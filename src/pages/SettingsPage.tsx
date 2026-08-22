@@ -209,36 +209,23 @@ export function SettingsPage() {
                 const token = session?.access_token;
 
                 let apiSuccess = false;
-                try {
-                    const response = await fetch('/api/delete-account', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            ...(token ? { 'Authorization': `Bearer ${token}` } : {})
-                        },
-                        body: JSON.stringify({ userId: profile.id })
-                    });
+                const response = await fetch('/api/delete-account', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        ...(token ? { 'Authorization': `Bearer ${token}` } : {})
+                    },
+                    body: JSON.stringify({ userId: profile.id })
+                });
 
-                    const resData = await response.json().catch(() => ({}));
-                    if (response.ok && resData.success) {
-                        apiSuccess = true;
-                    } else if (resData.error) {
-                        console.warn('[DeleteAccount] Endpoint returned error, trying DB fallback:', resData.error);
-                    }
-                } catch (fetchErr) {
-                    console.warn('[DeleteAccount] Endpoint fetch failed, using DB fallback:', fetchErr);
+                const resData = await response.json().catch(() => ({}));
+                if (response.ok && resData.success) {
+                    apiSuccess = true;
+                } else if (resData.error) {
+                    throw new Error(resData.error);
                 }
 
-                // Fallback direct DB soft-delete if API endpoint didn't succeed
-                if (!apiSuccess) {
-                    const { error: dbError } = await supabase
-                        .from('users')
-                        .update({ status: 'deactivated', deleted_at: new Date().toISOString() })
-                        .eq('id', profile.id);
-                    if (dbError) {
-                        throw new Error(`Database error: ${dbError.message}`);
-                    }
-                }
+                if (!apiSuccess) throw new Error('Unable to delete account. Please try again.');
 
                 try {
                     await supabase.auth.signOut();

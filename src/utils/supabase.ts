@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { logger } from './logger';
 
 let supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || '').replace(/['"]/g, '').trim();
 const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || '').replace(/['"]/g, '').trim();
@@ -8,7 +9,7 @@ if (supabaseUrl && !supabaseUrl.startsWith('http')) {
 }
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('[Supabase] Missing environment variables! VITE_SUPABASE_URL or VITE_SUPABASE_ANON_KEY not set.');
+  logger.error('[Supabase] Missing environment variables.');
 }
 
 // On iOS Safari, detectSessionInUrl can cause a hang/loop when the URL doesn't
@@ -41,7 +42,7 @@ try {
     }
   );
 } catch (error) {
-  console.error('[Supabase] Fatal error initializing client. Check your VITE_SUPABASE_URL.', error);
+  logger.error('[Supabase] Fatal error initializing client.', error);
   // Fallback to dummy so the app doesn't crash on boot
   supabaseInstance = createClient('https://dummy.supabase.co', 'dummy-key');
 }

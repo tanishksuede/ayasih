@@ -124,9 +124,8 @@ export async function subscribeUserToPush(passedUserId?: string): Promise<PushSu
     }
 
     // ── 2. Validate VAPID key ──────────────────────────────────────────────
-    const DEFAULT_VAPID_KEY = 'BKuBEyjIX-OtnnyJ7cyBMLwAycYv6POyGVFIxPnlzbReZLxv3S-QP9wcJ-YIE38w_al1tqIDwSf41MUG8JgipZE';
-    const VAPID_KEY = (import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined) || DEFAULT_VAPID_KEY;
-    console.log('[Push] Using VAPID key prefix:', VAPID_KEY.substring(0, 15));
+    const VAPID_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
+    if (!VAPID_KEY) throw new Error('Push notifications are not configured.');
 
     // ── 3. Wait for or register the service worker ─────────────────────────
     let registration: ServiceWorkerRegistration;
@@ -164,7 +163,7 @@ export async function subscribeUserToPush(passedUserId?: string): Promise<PushSu
       });
     }
     
-    console.log('[Push] Subscribed successfully. Endpoint:', subscription.endpoint.slice(0, 40) + '…');
+    console.log('[Push] Subscribed successfully.');
 
     // ── 7. Persist via server-side API ──────────────────────────────────────
     let targetUserId: string | null = passedUserId || useUserStore.getState().profile?.id || localStorage.getItem('aya_user_id') || null;
