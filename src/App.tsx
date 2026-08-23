@@ -4,6 +4,9 @@ import { AppLayout } from './layouts/AppLayout';
 
 import { HomePage } from './pages/Home';
 import { GameRoot } from './pages/GameRoot';
+import { SignupPage } from './pages/SignupPage';
+import { SigninPage } from './pages/SigninPage';
+import { SignupCompletePage } from './pages/SignupCompletePage';
 import { bgmManager } from './utils/bgmManager';
 import { MapRouteHandler, IntroRouteHandler, PlayRouteHandler, ReportRouteHandler, DnaRouteHandler, SelectionRouteHandler, MoodRouteHandler, DailyRevealRouteHandler, LevelUpRouteHandler, AdminRouteHandler } from './pages/GameRouteHandlers';
 import { OnboardingWizard } from './components/game/OnboardingWizard';
@@ -58,6 +61,10 @@ function App() {
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/signin" element={<SigninPage />} />
+          <Route path="/signup/complete" element={<SignupCompletePage />} />
+          <Route path="/dashboard" element={<Navigate to="/game" replace />} />
           <Route path="/game" element={<GameRoot />}>
             <Route index element={<MapRouteHandler />} />
             <Route path="welcome" element={<OnboardingWizard />} />

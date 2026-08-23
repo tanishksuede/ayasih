@@ -230,6 +230,10 @@ export function GameRoot() {
                     age: Number(user.age) || 18,
                     mobile: user.mobile,
                     username: user.username ?? undefined,
+                    email: user.email ?? undefined,
+                    google_id: user.google_id ?? undefined,
+                    auth_user_id: user.auth_user_id ?? undefined,
+                    onboarding_complete: Boolean(user.onboarding_complete || user.username),
                     total_xp: user.total_xp || 0,
                     level: user.level || 1,
                     current_streak: user.current_streak || 0,
@@ -395,7 +399,7 @@ export function GameRoot() {
     }
 
     if (!profile && location.pathname !== '/game/welcome' && location.pathname !== '/game/setup') {
-        return <Navigate to="/game/welcome" replace />;
+        return <Navigate to="/signin" replace />;
     }
 
     if (profile && profile.assessmentCompleted && (location.pathname === '/game/welcome' || location.pathname === '/game/setup')) {

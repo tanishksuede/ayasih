@@ -645,11 +645,20 @@ export function OnboardingWizard() {
                                             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
-                                            onClick={() => { audioSynth.playClick(); navigate('/game/setup'); }}
+                                            onClick={() => { audioSynth.playClick(); navigate('/signin'); }}
                                             className="w-full py-4 bg-transparent border-2 border-[#2b2b38] text-white font-bold text-lg rounded-2xl hover:bg-white/10 hover:border-white/30 transition-all shadow-lg"
                                         >
-                                            USE MOBILE NUMBER
+                                            SIGN IN WITH USERNAME
                                         </motion.button>
+                                        <div className="mt-4 text-center">
+                                            <button
+                                                type="button"
+                                                onClick={() => { audioSynth.playClick(); navigate('/signup'); }}
+                                                className="text-[#00f1fe] font-bold hover:underline text-sm"
+                                            >
+                                                Don't have an account? Sign Up
+                                            </button>
+                                        </div>
                                     </>
                                 )}
                             </div>

@@ -50,6 +50,10 @@ export interface UserProfile {
     id?: string;
     mobile?: string;
     username?: string | null;
+    email?: string | null;
+    google_id?: string | null;
+    auth_user_id?: string | null;
+    onboarding_complete?: boolean;
     name: string;
     age: number;
     interests?: string[];

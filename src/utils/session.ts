@@ -6,6 +6,9 @@ const KEYS = {
   name: 'aya_user_name',
   age: 'aya_user_age',
   quizDone: 'aya_quiz_done',
+  email: 'aya_user_email',
+  username: 'aya_user_username',
+  onboardingComplete: 'aya_onboarding_complete',
 };
 
 const safeSet = (key: string, value: string) => {
@@ -26,11 +29,14 @@ const safeRemove = (key: string) => {
   try { sessionStorage.removeItem(key); } catch {}
 };
 
-export const saveSession = (user: { id: string; mobile: string; name: string; age: number; username?: string }) => {
-  safeSet(KEYS.userId, user.id);
-  safeSet(KEYS.mobile, user.mobile);
-  safeSet(KEYS.name, user.name);
-  safeSet(KEYS.age, String(user.age));
+export const saveSession = (user: { id: string; mobile?: string; name?: string; age?: number; username?: string; email?: string; onboarding_complete?: boolean }) => {
+  if (user.id) safeSet(KEYS.userId, user.id);
+  if (user.mobile !== undefined) safeSet(KEYS.mobile, user.mobile || '');
+  if (user.name !== undefined) safeSet(KEYS.name, user.name || '');
+  if (user.age !== undefined) safeSet(KEYS.age, String(user.age));
+  if (user.username !== undefined) safeSet(KEYS.username, user.username || '');
+  if (user.email !== undefined) safeSet(KEYS.email, user.email || '');
+  if (user.onboarding_complete !== undefined) safeSet(KEYS.onboardingComplete, String(user.onboarding_complete));
   console.log('[Session] Saved:', user.id);
 };
 
@@ -39,6 +45,9 @@ export const getSession = () => ({
   mobile: safeGet(KEYS.mobile),
   name: safeGet(KEYS.name),
   age: Number(safeGet(KEYS.age) || 0),
+  username: safeGet(KEYS.username),
+  email: safeGet(KEYS.email),
+  onboardingComplete: safeGet(KEYS.onboardingComplete) === 'true',
 });
 
 export const clearSession = () => {

@@ -1,0 +1,235 @@
+import { useState, useEffect, type ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Check, Lock, Phone, Eye, EyeOff } from 'lucide-react';
+import { AuthMascot } from '../components/auth/AuthMascot';
+import { UsernameField } from '../components/game/UsernameField';
+import { useUsernameAvailability } from '../hooks/useUsernameAvailability';
+import { authService } from '../services/authService';
+import { useUserStore } from '../store/userStore';
+import { audioManager as audioSynth } from '../utils/audioManager';
+
+export function SignupCompletePage() {
+    const navigate = useNavigate();
+    const profile = useUserStore((state) => state.profile);
+
+    const [username, setUsername] = useState(profile?.username || '');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [mobile, setMobile] = useState(profile?.mobile || '');
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [isHoveringBtn, setIsHoveringBtn] = useState(false);
+
+    const usernameAvailability = useUsernameAvailability(
+        username,
+        profile?.id || null
+    );
+
+    useEffect(() => {
+        if (profile?.onboarding_complete && profile?.username) {
+            // Already complete, send directly to main game dashboard
+            navigate('/game');
+        }
+    }, [profile, navigate]);
+
+    const handleCompleteSetup = async (e: React.FormEvent) => {
+        e.preventDefault();
+        audioSynth.playClick();
+
+        if (usernameAvailability.status !== 'available' && username.trim().length >= 3) {
+            setError('Please choose an available username.');
+            return;
+        }
+
+        setIsLoading(true);
+        setError('');
+
+        try {
+            await authService.completeProfileSetup({
+                username,
+                password,
+                mobile,
+            });
+            // Redirect to existing AYA application dashboard
+            navigate('/game');
+        } catch (err: any) {
+            console.error('Complete Setup Error:', err);
+            setError(err.message || 'Failed to complete profile. Please try again.');
+            setIsLoading(false);
+        }
+    };
+
+    const baseInputClasses = "w-full bg-black/40 border border-[#2b2b38] rounded-xl px-4 py-3 text-white placeholder-[#76747f] font-medium outline-none transition-all duration-300 hover:border-[#9333ea]/50 hover:bg-black/60 focus:ring-2 focus:ring-[#00f1fe]/40 focus:border-[#00f1fe]";
+
+    return (
+        <div className="w-full bg-[#0a0a0f] selection:bg-[#00f1fe] selection:text-black">
+            {/* Ambient Background Layers */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <div
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)`,
+                        backgroundSize: '40px 40px',
+                    }}
+                    className="absolute inset-0"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-transparent to-[#0a0a0f]" />
+                <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] bg-[#9333ea] opacity-20 blur-[120px] rounded-full" />
+                <div className="absolute top-[40%] -right-[20%] w-[60%] h-[60%] bg-[#00f1fe] opacity-10 blur-[100px] rounded-full" />
+                <div className="absolute -bottom-[10%] left-[20%] w-[80%] h-[50%] bg-[#ff00ff] opacity-10 blur-[150px] rounded-full" />
+            </div>
+
+            <div className="relative z-10 w-full min-h-[100dvh] flex flex-col md:flex-row items-center justify-center py-16 px-4 gap-8 lg:gap-16">
+                
+                {/* Form Card */}
+                <div className="w-full" style={{ maxWidth: '460px' }}>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: 'easeOut' }}
+                        className="w-full"
+                    >
+                        {/* Header */}
+                        <div className="text-center mb-8">
+                            <motion.h2
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.1 }}
+                                className="text-4xl font-black text-white drop-shadow-[0_0_20px_rgba(0,241,254,0.4)] leading-tight"
+                            >
+                                Create your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00f1fe] to-[#9333ea]">AYA Profile</span>
+                            </motion.h2>
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 0.6 }}
+                                transition={{ delay: 0.2 }}
+                                className="text-white/60 text-sm mt-2 font-medium"
+                            >
+                                Set up your username and account settings to finish
+                            </motion.p>
+                        </div>
+
+                        {/* Error Banner */}
+                        <AnimatePresence>
+                            {error && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    className="mb-6 p-4 bg-red-900/40 text-red-200 rounded-2xl border border-red-500/50 backdrop-blur-md text-center text-sm font-bold shadow-xl"
+                                >
+                                    ⚠️ {error}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        <form onSubmit={handleCompleteSetup} className="space-y-4 w-full">
+                            {/* Username */}
+                            <motion.div
+                                whileHover={{ y: -2 }}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.15 }}
+                                className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#9333ea]/40 transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(147,51,234,0.4)]"
+                            >
+                                <UsernameField
+                                    value={username}
+                                    onChange={setUsername}
+                                    status={usernameAvailability.status}
+                                    errorMessage={usernameAvailability.errorMessage}
+                                    disabled={isLoading}
+                                    label="Username"
+                                    helperText="Select a unique username for your AYA account"
+                                />
+                            </motion.div>
+
+                            {/* Optional Password */}
+                            <motion.div
+                                whileHover={{ y: -2 }}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#00f1fe]/40 transition-all duration-300"
+                            >
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="block text-[11px] font-bold text-[#00f1fe] uppercase tracking-[0.15em] flex items-center gap-1.5">
+                                        <Lock size={12} /> Account Password
+                                    </label>
+                                    <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider">Optional</span>
+                                </div>
+                                <div className="relative flex items-center">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        minLength={6}
+                                        value={password}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                                        className={`${baseInputClasses} pr-12`}
+                                        placeholder="Set a password for your account"
+                                        disabled={isLoading}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowPassword(!showPassword)}
+                                        className="absolute right-3 text-[#acaab5] hover:text-[#00f1fe] transition-colors p-1 rounded-lg"
+                                        title={showPassword ? "Hide password" : "Show password"}
+                                        aria-label={showPassword ? "Hide password" : "Show password"}
+                                    >
+                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                    </button>
+                                </div>
+                            </motion.div>
+
+                            {/* Optional Phone */}
+                            <motion.div
+                                whileHover={{ y: -2 }}
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.25 }}
+                                className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#00f1fe]/40 transition-all duration-300"
+                            >
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="block text-[11px] font-bold text-[#00f1fe] uppercase tracking-[0.15em] flex items-center gap-1.5">
+                                        <Phone size={12} /> Phone Number
+                                    </label>
+                                    <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider">Optional</span>
+                                </div>
+                                <input
+                                    type="tel"
+                                    inputMode="numeric"
+                                    value={mobile}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setMobile(e.target.value)}
+                                    className={baseInputClasses}
+                                    placeholder="E.g. +91 9876543210"
+                                    disabled={isLoading}
+                                />
+                            </motion.div>
+
+                            {/* Submit Button */}
+                            <motion.button
+                                onMouseEnter={() => setIsHoveringBtn(true)}
+                                onMouseLeave={() => setIsHoveringBtn(false)}
+                                onTouchStart={() => setIsHoveringBtn(true)}
+                                onTouchEnd={() => setIsHoveringBtn(false)}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.3 }}
+                                whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(0,241,254,0.5)' }}
+                                whileTap={{ scale: 0.98 }}
+                                disabled={isLoading || (username.trim().length > 0 && usernameAvailability.status !== 'available')}
+                                type="submit"
+                                className="w-full py-4 bg-[#00f1fe] text-[#004145] font-black text-lg rounded-2xl shadow-[0_0_30px_rgba(0,241,254,0.35)] flex items-center justify-center space-x-2 relative overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#7ff9ff] transition-all mt-4"
+                            >
+                                <span>{isLoading ? 'SAVING PROFILE...' : 'COMPLETE SETUP'}</span>
+                                {!isLoading && <Check size={22} className="stroke-[3]" />}
+                            </motion.button>
+                        </form>
+                    </motion.div>
+                </div>
+
+                {/* AYA Mascot */}
+                <AuthMascot isHappy={isHoveringBtn} />
+            </div>
+        </div>
+    );
+}
