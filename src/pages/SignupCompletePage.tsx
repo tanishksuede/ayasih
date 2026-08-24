@@ -1,7 +1,7 @@
-import { useState, useEffect, type ChangeEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Lock, Phone, Eye, EyeOff } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { AuthMascot } from '../components/auth/AuthMascot';
 import { UsernameField } from '../components/game/UsernameField';
 import { useUsernameAvailability } from '../hooks/useUsernameAvailability';
@@ -14,10 +14,6 @@ export function SignupCompletePage() {
     const profile = useUserStore((state) => state.profile);
 
     const [username, setUsername] = useState(profile?.username || '');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [mobile, setMobile] = useState(profile?.mobile || '');
-
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isHoveringBtn, setIsHoveringBtn] = useState(false);
@@ -28,17 +24,23 @@ export function SignupCompletePage() {
     );
 
     useEffect(() => {
-        if (profile?.onboarding_complete && profile?.username) {
-            // Already complete, send directly to main game dashboard
+        if (profile?.onboarding_complete && profile?.username && profile?.assessmentCompleted) {
+            // Already fully onboarded returning user, send directly to roadmap
             navigate('/game');
         }
     }, [profile, navigate]);
+
 
     const handleCompleteSetup = async (e: React.FormEvent) => {
         e.preventDefault();
         audioSynth.playClick();
 
-        if (usernameAvailability.status !== 'available' && username.trim().length >= 3) {
+        if (!username || username.trim().length < 3) {
+            setError('Please enter a username with at least 3 characters.');
+            return;
+        }
+
+        if (usernameAvailability.status !== 'available') {
             setError('Please choose an available username.');
             return;
         }
@@ -49,11 +51,17 @@ export function SignupCompletePage() {
         try {
             await authService.completeProfileSetup({
                 username,
-                password,
-                mobile,
             });
-            // Redirect to existing AYA application dashboard
-            navigate('/game');
+            
+            // Check if user is a returning user with completed assessment vs a new user
+            const currentProfile = useUserStore.getState().profile;
+            if (currentProfile?.assessmentCompleted) {
+                // Returning user -> Roadmap
+                navigate('/game');
+            } else {
+                // New user -> Existing AYA Onboarding Page
+                navigate('/game/onboarding/1');
+            }
         } catch (err: any) {
             console.error('Complete Setup Error:', err);
             setError(err.message || 'Failed to complete profile. Please try again.');
@@ -61,7 +69,6 @@ export function SignupCompletePage() {
         }
     };
 
-    const baseInputClasses = "w-full bg-black/40 border border-[#2b2b38] rounded-xl px-4 py-3 text-white placeholder-[#76747f] font-medium outline-none transition-all duration-300 hover:border-[#9333ea]/50 hover:bg-black/60 focus:ring-2 focus:ring-[#00f1fe]/40 focus:border-[#00f1fe]";
 
     return (
         <div className="w-full bg-[#0a0a0f] selection:bg-[#00f1fe] selection:text-black">
@@ -106,7 +113,7 @@ export function SignupCompletePage() {
                                 transition={{ delay: 0.2 }}
                                 className="text-white/60 text-sm mt-2 font-medium"
                             >
-                                Set up your username and account settings to finish
+                                Choose a unique username for your AYA account
                             </motion.p>
                         </div>
 
@@ -144,67 +151,6 @@ export function SignupCompletePage() {
                                 />
                             </motion.div>
 
-                            {/* Optional Password */}
-                            <motion.div
-                                whileHover={{ y: -2 }}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#00f1fe]/40 transition-all duration-300"
-                            >
-                                <div className="flex items-center justify-between mb-2">
-                                    <label className="block text-[11px] font-bold text-[#00f1fe] uppercase tracking-[0.15em] flex items-center gap-1.5">
-                                        <Lock size={12} /> Account Password
-                                    </label>
-                                    <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider">Optional</span>
-                                </div>
-                                <div className="relative flex items-center">
-                                    <input
-                                        type={showPassword ? "text" : "password"}
-                                        minLength={6}
-                                        value={password}
-                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-                                        className={`${baseInputClasses} pr-12`}
-                                        placeholder="Set a password for your account"
-                                        disabled={isLoading}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-3 text-[#acaab5] hover:text-[#00f1fe] transition-colors p-1 rounded-lg"
-                                        title={showPassword ? "Hide password" : "Show password"}
-                                        aria-label={showPassword ? "Hide password" : "Show password"}
-                                    >
-                                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                                    </button>
-                                </div>
-                            </motion.div>
-
-                            {/* Optional Phone */}
-                            <motion.div
-                                whileHover={{ y: -2 }}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.25 }}
-                                className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#00f1fe]/40 transition-all duration-300"
-                            >
-                                <div className="flex items-center justify-between mb-2">
-                                    <label className="block text-[11px] font-bold text-[#00f1fe] uppercase tracking-[0.15em] flex items-center gap-1.5">
-                                        <Phone size={12} /> Phone Number
-                                    </label>
-                                    <span className="text-[10px] text-white/50 font-bold uppercase tracking-wider">Optional</span>
-                                </div>
-                                <input
-                                    type="tel"
-                                    inputMode="numeric"
-                                    value={mobile}
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setMobile(e.target.value)}
-                                    className={baseInputClasses}
-                                    placeholder="E.g. +91 9876543210"
-                                    disabled={isLoading}
-                                />
-                            </motion.div>
-
                             {/* Submit Button */}
                             <motion.button
                                 onMouseEnter={() => setIsHoveringBtn(true)}
@@ -216,11 +162,11 @@ export function SignupCompletePage() {
                                 transition={{ delay: 0.3 }}
                                 whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(0,241,254,0.5)' }}
                                 whileTap={{ scale: 0.98 }}
-                                disabled={isLoading || (username.trim().length > 0 && usernameAvailability.status !== 'available')}
+                                disabled={isLoading || username.trim().length < 3 || usernameAvailability.status !== 'available'}
                                 type="submit"
                                 className="w-full py-4 bg-[#00f1fe] text-[#004145] font-black text-lg rounded-2xl shadow-[0_0_30px_rgba(0,241,254,0.35)] flex items-center justify-center space-x-2 relative overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#7ff9ff] transition-all mt-4"
                             >
-                                <span>{isLoading ? 'SAVING PROFILE...' : 'COMPLETE SETUP'}</span>
+                                <span>{isLoading ? 'SAVING USERNAME...' : 'SET USERNAME'}</span>
                                 {!isLoading && <Check size={22} className="stroke-[3]" />}
                             </motion.button>
                         </form>
@@ -233,3 +179,4 @@ export function SignupCompletePage() {
         </div>
     );
 }
+

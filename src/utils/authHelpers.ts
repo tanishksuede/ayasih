@@ -18,10 +18,29 @@
  */
 
 /**
- * Normalize phone number by extracting digits only.
+ * Normalize phone number by extracting digits only and removing Indian country code (+91 / 91) or leading 0.
  */
 export function normalizePhone(mobile: string): string {
-  return mobile.replace(/\D/g, '');
+  let digits = (mobile || '').replace(/\D/g, '');
+  if (digits.length === 12 && digits.startsWith('91')) {
+    digits = digits.slice(2);
+  }
+  if (digits.length === 11 && digits.startsWith('0')) {
+    digits = digits.slice(1);
+  }
+  return digits;
+}
+
+/**
+ * Validate that a normalized mobile number is EXACTLY 10 digits long.
+ * Throws a clean error if invalid. Returns clean 10-digit string if valid.
+ */
+export function validatePhone(mobile: string): string {
+  const clean = normalizePhone(mobile);
+  if (!clean || clean.length !== 10) {
+    throw new Error('Enter a valid 10-digit mobile number.');
+  }
+  return clean;
 }
 
 /**

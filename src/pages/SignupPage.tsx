@@ -6,6 +6,8 @@ import { AuthMascot } from '../components/auth/AuthMascot';
 import { authService } from '../services/authService';
 import { audioManager as audioSynth } from '../utils/audioManager';
 
+import { normalizePhone } from '../utils/authHelpers';
+
 export function SignupPage() {
     const navigate = useNavigate();
 
@@ -19,6 +21,12 @@ export function SignupPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isHoveringBtn, setIsHoveringBtn] = useState(false);
+
+    const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+        // Allow only numeric digits, max 10
+        const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+        setPhone(digits);
+    };
 
     const handleGoogleSignUp = async () => {
         audioSynth.playClick();
@@ -37,8 +45,9 @@ export function SignupPage() {
         e.preventDefault();
         audioSynth.playClick();
 
-        if (!phone.trim()) {
-            setError('Please enter your phone number.');
+        const cleanPhone = normalizePhone(phone);
+        if (!cleanPhone || cleanPhone.length !== 10) {
+            setError('Enter a valid 10-digit mobile number.');
             return;
         }
 
@@ -52,7 +61,7 @@ export function SignupPage() {
 
         try {
             await authService.signUpWithPhonePassword({
-                phone,
+                phone: cleanPhone,
                 password,
                 confirmPassword,
             });
@@ -64,6 +73,7 @@ export function SignupPage() {
             setIsLoading(false);
         }
     };
+
 
     const baseInputClasses = "w-full bg-black/40 border border-[#2b2b38] rounded-xl px-4 py-3 text-white placeholder-[#76747f] font-medium outline-none transition-all duration-300 hover:border-[#9333ea]/50 hover:bg-black/60 focus:ring-2 focus:ring-[#00f1fe]/40 focus:border-[#00f1fe]";
 
@@ -207,11 +217,12 @@ export function SignupPage() {
                                     <input
                                         type="tel"
                                         inputMode="numeric"
+                                        maxLength={10}
                                         required
                                         value={phone}
-                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
+                                        onChange={handlePhoneChange}
                                         className={baseInputClasses}
-                                        placeholder="E.g. +91 9876543210"
+                                        placeholder="E.g. 9876543210"
                                         disabled={isLoading}
                                     />
                                 </motion.div>

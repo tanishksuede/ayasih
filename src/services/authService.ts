@@ -2,7 +2,7 @@ import { supabase } from '../utils/supabase';
 import { saveSession, clearAllUserData } from '../utils/session';
 import { useUserStore } from '../store/userStore';
 import { checkUsernameAvailable } from './usernameService';
-import { normalizePhone, derivePhoneEmail, deriveMobileEmail } from '../utils/authHelpers';
+import { validatePhone, derivePhoneEmail, deriveMobileEmail } from '../utils/authHelpers';
 
 /** Helper to generate a consistent synthetic email for username-only Supabase Auth */
 export function deriveUsernameEmail(username: string): string {
@@ -53,15 +53,21 @@ export const authService = {
      * Sign Up with Phone Number + Password
      */
     async signUpWithPhonePassword({ phone, password, confirmPassword }: SignUpPhoneParams) {
-        const cleanPhone = normalizePhone(phone);
+        // Enforce strict 10-digit mobile number validation
+        const cleanPhone = validatePhone(phone);
 
-        if (!cleanPhone || cleanPhone.length < 8) {
-            throw new Error('Please enter a valid phone number (at least 8 digits).');
-        }
+        // Clear any stale local flags from previous user sessions on this device
+        try {
+            localStorage.removeItem('onboarding_done');
+            localStorage.removeItem('aya_quiz_done');
+            sessionStorage.removeItem('onboarding_done');
+            sessionStorage.removeItem('aya_quiz_done');
+        } catch {}
 
         if (password && confirmPassword && password !== confirmPassword) {
             throw new Error('Passwords do not match.');
         }
+
 
         if (!password || password.length < 6) {
             throw new Error('Password must be at least 6 characters.');
@@ -148,6 +154,7 @@ export const authService = {
 
         // 5. Save Session & Hydrate Store
         // onboarding_complete is false — user still needs to set a username at /signup/complete
+        // assessmentCompleted is false — user still needs to complete AYA onboarding/assessment
         saveSession({
             id: activeUser.id,
             username: activeUser.username || '',
@@ -172,21 +179,19 @@ export const authService = {
             current_streak: activeUser.current_streak || 0,
             longest_streak: activeUser.longest_streak || 0,
             daily_challenge_completed: false,
-            assessmentCompleted: true,
+            assessmentCompleted: false,
             traits: { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 },
         } as any);
 
         return activeUser;
     },
 
+
     /**
      * Sign In with Phone Number + Password
      */
     async signInWithPhonePassword({ phone, password }: SignInPhoneParams) {
-        const cleanPhone = normalizePhone(phone);
-        if (!cleanPhone || cleanPhone.length < 8) {
-            throw new Error('Please enter a valid phone number.');
-        }
+        const cleanPhone = validatePhone(phone);
         if (!password) {
             throw new Error('Please enter your password.');
         }
@@ -243,6 +248,56 @@ export const authService = {
         }
 
         return this.handlePostSignIn(userRow, authUid);
+    },
+
+    /**
+     * Internal post-signin handler to sync store & session
+     */
+    async handlePostSignIn(userRow: any, authUid?: string) {
+        // Link auth_user_id if missing
+        if (authUid && !userRow.auth_user_id) {
+            await supabase.from('users').update({ auth_user_id: authUid }).eq('id', userRow.id).catch(() => {});
+        }
+
+        const onboardingComplete = Boolean(userRow.onboarding_complete || userRow.username);
+        // Existing user has completed assessment if they have game progress or assessment flag
+        const hasAssessmentCompleted = Boolean(
+            (userRow.total_xp && userRow.total_xp > 0) ||
+            (userRow.stories_completed && userRow.stories_completed > 0) ||
+            (userRow.level && userRow.level > 1) ||
+            userRow.assessment_completed === true
+        );
+
+        saveSession({
+            id: userRow.id,
+            username: userRow.username,
+            name: userRow.name || userRow.username || 'Player',
+            mobile: userRow.mobile || '',
+            email: userRow.email || '',
+            onboarding_complete: onboardingComplete,
+            age: userRow.age || 18,
+        });
+
+        // Hydrate store
+        useUserStore.getState().setProfile({
+            id: userRow.id,
+            username: userRow.username,
+            name: userRow.name || userRow.username || 'Player',
+            mobile: userRow.mobile,
+            email: userRow.email,
+            onboarding_complete: onboardingComplete,
+            age: Number(userRow.age) || 18,
+            total_xp: userRow.total_xp || 0,
+            level: userRow.level || 1,
+            stories_completed: userRow.stories_completed || 0,
+            current_streak: userRow.current_streak || 0,
+            longest_streak: userRow.longest_streak || 0,
+            daily_challenge_completed: userRow.daily_challenge_completed || false,
+            assessmentCompleted: hasAssessmentCompleted,
+            traits: { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 },
+        } as any);
+
+        return { user: userRow, onboardingComplete };
     },
 
     /**
@@ -386,12 +441,13 @@ export const authService = {
             current_streak: activeUser.current_streak || 0,
             longest_streak: activeUser.longest_streak || 0,
             daily_challenge_completed: false,
-            assessmentCompleted: true,
+            assessmentCompleted: false,
             traits: { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 },
         } as any);
 
         return activeUser;
     },
+
 
     /**
      * Sign In with Username + Password
@@ -467,48 +523,7 @@ export const authService = {
         return this.handlePostSignIn(userRow, authUid);
     },
 
-    /**
-     * Internal post-signin handler to sync store & session
-     */
-    async handlePostSignIn(userRow: any, authUid?: string) {
-        // Link auth_user_id if missing
-        if (authUid && !userRow.auth_user_id) {
-            await supabase.from('users').update({ auth_user_id: authUid }).eq('id', userRow.id).catch(() => {});
-        }
 
-        const onboardingComplete = Boolean(userRow.onboarding_complete || userRow.username);
-
-        saveSession({
-            id: userRow.id,
-            username: userRow.username,
-            name: userRow.name || userRow.username || 'Player',
-            mobile: userRow.mobile || '',
-            email: userRow.email || '',
-            onboarding_complete: onboardingComplete,
-            age: userRow.age || 18,
-        });
-
-        // Hydrate store
-        useUserStore.getState().setProfile({
-            id: userRow.id,
-            username: userRow.username,
-            name: userRow.name || userRow.username || 'Player',
-            mobile: userRow.mobile,
-            email: userRow.email,
-            onboarding_complete: onboardingComplete,
-            age: Number(userRow.age) || 18,
-            total_xp: userRow.total_xp || 0,
-            level: userRow.level || 1,
-            stories_completed: userRow.stories_completed || 0,
-            current_streak: userRow.current_streak || 0,
-            longest_streak: userRow.longest_streak || 0,
-            daily_challenge_completed: userRow.daily_challenge_completed || false,
-            assessmentCompleted: true,
-            traits: { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 },
-        } as any);
-
-        return { user: userRow, onboardingComplete };
-    },
 
     /**
      * Complete profile setup — sets username after phone/Google signup.
@@ -679,6 +694,14 @@ export const authService = {
             age: savedRow?.age || currentProfile?.age || 18,
         });
 
+        const hasAssessmentCompleted = Boolean(
+            (savedRow?.total_xp && savedRow.total_xp > 0) ||
+            (savedRow?.stories_completed && savedRow.stories_completed > 0) ||
+            (savedRow?.level && savedRow.level > 1) ||
+            savedRow?.assessment_completed === true ||
+            currentProfile?.assessmentCompleted === true
+        );
+
         useUserStore.getState().setProfile({
             ...currentProfile,
             id: savedRow?.id || currentProfile?.id || crypto.randomUUID(),
@@ -687,11 +710,12 @@ export const authService = {
             mobile: savedRow?.mobile || cleanMobile || currentProfile?.mobile,
             email: authUser?.email || currentProfile?.email || '',
             onboarding_complete: true,
-            assessmentCompleted: true,
+            assessmentCompleted: hasAssessmentCompleted,
         } as any);
 
         return true;
     },
+
 
 
 
