@@ -18,11 +18,26 @@
  */
 
 /**
+ * Normalize phone number by extracting digits only.
+ */
+export function normalizePhone(mobile: string): string {
+  return mobile.replace(/\D/g, '');
+}
+
+/**
+ * Derive a deterministic synthetic email from a phone number for Supabase Auth.
+ */
+export function derivePhoneEmail(mobile: string): string {
+  const clean = normalizePhone(mobile);
+  return `phone_${clean}@aya-game.com`;
+}
+
+/**
  * Derive a deterministic synthetic email from a mobile number.
  * Strips all non-digit characters first.
  */
 export function deriveMobileEmail(mobile: string): string {
-  const clean = mobile.replace(/\D/g, '');
+  const clean = normalizePhone(mobile);
   return `mobile_${clean}@aya-game.com`;
 }
 
@@ -32,8 +47,9 @@ export function deriveMobileEmail(mobile: string): string {
  * derivation of any user's auth credentials from their phone number alone.
  */
 export function deriveMobilePassword(mobile: string): string {
-  const clean = mobile.replace(/\D/g, '');
+  const clean = normalizePhone(mobile);
   const salt = import.meta.env.VITE_AUTH_SALT ?? 'aya-fallback-salt';
   // Format: Aya<first4ofSalt><mobile>!Auth — always meets Supabase min-length
   return `Aya${salt.slice(0, 4)}${clean}!Auth`;
 }
+

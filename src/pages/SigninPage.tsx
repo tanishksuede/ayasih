@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Lock, User, Eye, EyeOff } from 'lucide-react';
+import { Check, Lock, Phone, Eye, EyeOff } from 'lucide-react';
 import { AuthMascot } from '../components/auth/AuthMascot';
 import { authService } from '../services/authService';
 import { audioManager as audioSynth } from '../utils/audioManager';
@@ -9,7 +9,7 @@ import { audioManager as audioSynth } from '../utils/audioManager';
 export function SigninPage() {
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('');
+    const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -33,8 +33,8 @@ export function SigninPage() {
         e.preventDefault();
         audioSynth.playClick();
 
-        if (!username.trim() || !password) {
-            setError('Please enter your username and password.');
+        if (!phone.trim() || !password) {
+            setError('Please enter your phone number and password.');
             return;
         }
 
@@ -42,8 +42,8 @@ export function SigninPage() {
         setError('');
 
         try {
-            const { onboardingComplete } = await authService.signInWithUsernamePassword({
-                username,
+            const { onboardingComplete } = await authService.signInWithPhonePassword({
+                phone,
                 password,
             });
 
@@ -55,7 +55,7 @@ export function SigninPage() {
             }
         } catch (err: any) {
             console.error('Signin Error:', err);
-            setError(err.message || 'Invalid username or password.');
+            setError(err.message || 'Invalid phone number or password.');
             setIsLoading(false);
         }
     };
@@ -124,9 +124,9 @@ export function SigninPage() {
                             )}
                         </AnimatePresence>
 
-                        {/* Username + Password Form */}
+                        {/* Phone + Password Form */}
                         <form onSubmit={handleFormSubmit} className="space-y-4 w-full">
-                            {/* Username */}
+                            {/* Phone Number */}
                             <motion.div
                                 whileHover={{ y: -2 }}
                                 initial={{ opacity: 0, x: -20 }}
@@ -135,17 +135,16 @@ export function SigninPage() {
                                 className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#9333ea]/40 transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(147,51,234,0.4)]"
                             >
                                 <label className="block text-[11px] font-bold text-[#00f1fe] mb-2 uppercase tracking-[0.15em] flex items-center gap-1.5">
-                                    <User size={12} /> Username
+                                    <Phone size={12} /> Phone Number
                                 </label>
                                 <input
-                                    type="text"
+                                    type="tel"
+                                    inputMode="numeric"
                                     required
-                                    autoCapitalize="off"
-                                    autoCorrect="off"
-                                    value={username}
-                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                                    value={phone}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPhone(e.target.value)}
                                     className={baseInputClasses}
-                                    placeholder="Enter your username"
+                                    placeholder="E.g. +91 9876543210"
                                     disabled={isLoading}
                                 />
                             </motion.div>
@@ -194,7 +193,7 @@ export function SigninPage() {
                                 transition={{ delay: 0.25 }}
                                 whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(0,241,254,0.5)' }}
                                 whileTap={{ scale: 0.98 }}
-                                disabled={isLoading || !username.trim() || !password}
+                                disabled={isLoading || !phone.trim() || !password}
                                 type="submit"
                                 className="w-full py-4 bg-[#00f1fe] text-[#004145] font-black text-lg rounded-2xl shadow-[0_0_30px_rgba(0,241,254,0.35)] flex items-center justify-center space-x-2 relative overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#7ff9ff] transition-all mt-2"
                             >
