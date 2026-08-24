@@ -1,4 +1,4 @@
-﻿import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || '';
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -113,6 +113,7 @@ export default async function handler(req, res) {
     };
     if (cleanMobile) payload.mobile = cleanMobile;
     if (authEmail) payload.email = authEmail;
+    if (age) payload.age = Number(age);
 
     let finalRow = null;
 
@@ -142,7 +143,6 @@ export default async function handler(req, res) {
         total_xp: 0,
         level: 1,
         stories_completed: 0,
-        age: 18,
       };
 
       const { data: insertedRows, error: insertErr } = await supabaseAdmin

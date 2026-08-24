@@ -1,8 +1,9 @@
 import { useState, type ChangeEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Lock, Phone, Eye, EyeOff } from 'lucide-react';
+import { Check, Lock, Phone, Eye, EyeOff, Calendar } from 'lucide-react';
 import { AuthMascot } from '../components/auth/AuthMascot';
+import { AgeSelector } from '../components/auth/AgeSelector';
 import { authService } from '../services/authService';
 import { audioManager as audioSynth } from '../utils/audioManager';
 
@@ -13,6 +14,7 @@ export function SignupPage() {
 
     const [authMode, setAuthMode] = useState<'choice' | 'form'>('choice');
     const [phone, setPhone] = useState('');
+    const [age, setAge] = useState<number | null>(null);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -51,6 +53,11 @@ export function SignupPage() {
             return;
         }
 
+        if (!age || age < 13 || age > 30) {
+            setError('Please select your age.');
+            return;
+        }
+
         if (password !== confirmPassword) {
             setError('Passwords do not match.');
             return;
@@ -62,6 +69,7 @@ export function SignupPage() {
         try {
             await authService.signUpWithPhonePassword({
                 phone: cleanPhone,
+                age,
                 password,
                 confirmPassword,
             });
@@ -73,6 +81,8 @@ export function SignupPage() {
             setIsLoading(false);
         }
     };
+
+
 
 
     const baseInputClasses = "w-full bg-black/40 border border-[#2b2b38] rounded-xl px-4 py-3 text-white placeholder-[#76747f] font-medium outline-none transition-all duration-300 hover:border-[#9333ea]/50 hover:bg-black/60 focus:ring-2 focus:ring-[#00f1fe]/40 focus:border-[#00f1fe]";
@@ -227,6 +237,28 @@ export function SignupPage() {
                                     />
                                 </motion.div>
 
+                                {/* Age Selection */}
+                                <motion.div
+                                    whileHover={{ y: -2 }}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.15 }}
+                                    className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#00f1fe]/40 transition-all duration-300"
+                                >
+                                    <label className="block text-[11px] font-bold text-[#00f1fe] mb-2 uppercase tracking-[0.15em] flex items-center gap-1.5">
+                                        <Calendar size={12} /> Age
+                                    </label>
+                                    <AgeSelector
+                                        value={age}
+                                        onChange={setAge}
+                                        disabled={isLoading}
+                                        min={13}
+                                        max={30}
+                                    />
+                                </motion.div>
+
+
+
                                 {/* Password */}
                                 <motion.div
                                     whileHover={{ y: -2 }}
@@ -306,7 +338,8 @@ export function SignupPage() {
                                     transition={{ delay: 0.35 }}
                                     whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(0,241,254,0.5)' }}
                                     whileTap={{ scale: 0.98 }}
-                                    disabled={isLoading || !phone.trim() || !password || password !== confirmPassword}
+                                    disabled={isLoading || !phone.trim() || !age || !password || password !== confirmPassword}
+
                                     type="submit"
                                     className="w-full py-4 bg-[#00f1fe] text-[#004145] font-black text-lg rounded-2xl shadow-[0_0_30px_rgba(0,241,254,0.35)] flex items-center justify-center space-x-2 relative overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#7ff9ff] transition-all mt-4"
                                 >

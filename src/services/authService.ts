@@ -15,6 +15,7 @@ export interface SignUpParams {
     password?: string;
     confirmPassword?: string;
     mobile?: string;
+    age?: number;
 }
 
 export interface SignInParams {
@@ -26,7 +27,9 @@ export interface SignUpPhoneParams {
     phone: string;
     password?: string;
     confirmPassword?: string;
+    age?: number;
 }
+
 
 export interface SignInPhoneParams {
     phone: string;
@@ -52,9 +55,14 @@ export const authService = {
     /**
      * Sign Up with Phone Number + Password
      */
-    async signUpWithPhonePassword({ phone, password, confirmPassword }: SignUpPhoneParams) {
+    async signUpWithPhonePassword({ phone, password, confirmPassword, age }: SignUpPhoneParams) {
         // Enforce strict 10-digit mobile number validation
         const cleanPhone = validatePhone(phone);
+
+        const numericAge = Number(age);
+        if (!age || isNaN(numericAge) || numericAge < 13 || numericAge > 30) {
+            throw new Error('Please select your age.');
+        }
 
         // Clear any stale local flags from previous user sessions on this device
         try {
@@ -67,7 +75,6 @@ export const authService = {
         if (password && confirmPassword && password !== confirmPassword) {
             throw new Error('Passwords do not match.');
         }
-
 
         if (!password || password.length < 6) {
             throw new Error('Password must be at least 6 characters.');
@@ -119,7 +126,7 @@ export const authService = {
             total_xp: 0,
             level: 1,
             stories_completed: 0,
-            age: 18,
+            age: numericAge,
             preferred_theme: 'city_dark',
         };
 
@@ -153,8 +160,6 @@ export const authService = {
         } catch { /* non-critical, swallow */ }
 
         // 5. Save Session & Hydrate Store
-        // onboarding_complete is false — user still needs to set a username at /signup/complete
-        // assessmentCompleted is false — user still needs to complete AYA onboarding/assessment
         saveSession({
             id: activeUser.id,
             username: activeUser.username || '',
@@ -162,7 +167,7 @@ export const authService = {
             mobile: activeUser.mobile || cleanPhone,
             email: activeUser.email || email,
             onboarding_complete: false,
-            age: activeUser.age || 18,
+            age: numericAge,
         });
 
         useUserStore.getState().setProfile({
@@ -172,7 +177,7 @@ export const authService = {
             mobile: activeUser.mobile || cleanPhone,
             email: activeUser.email || email,
             onboarding_complete: false,
-            age: activeUser.age || 18,
+            age: numericAge,
             total_xp: activeUser.total_xp || 0,
             level: activeUser.level || 1,
             stories_completed: activeUser.stories_completed || 0,
@@ -186,8 +191,8 @@ export const authService = {
         return activeUser;
     },
 
-
     /**
+
      * Sign In with Phone Number + Password
      */
     async signInWithPhonePassword({ phone, password }: SignInPhoneParams) {
@@ -532,9 +537,11 @@ export const authService = {
      *   1. Try POST /api/set-username (Vercel serverless / Vite dev plugin, uses Service Role Key)
      *   2. If API is unavailable, fall back to direct Supabase query using array select (no .single())
      */
-    async completeProfileSetup({ username, password, mobile }: SignUpParams) {
+    async completeProfileSetup({ username, password, mobile, age }: SignUpParams) {
         const cleanUsername = username.trim();
         const cleanMobile = mobile ? mobile.trim().replace(/\s+/g, '') : null;
+        const currentProfile = useUserStore.getState().profile;
+        const numericAge = age ? Number(age) : currentProfile?.age;
 
         if (!cleanUsername || cleanUsername.length < 3) {
             throw new Error('Username must be at least 3 characters long.');
@@ -556,7 +563,6 @@ export const authService = {
             if (pwErr) console.warn('[AuthService] Password update warning:', pwErr.message);
         }
 
-        const currentProfile = useUserStore.getState().profile;
         let savedRow: any = null;
 
         // ── Path 1: Server-side API (Vercel production & Vite dev plugin) ─────
@@ -570,6 +576,7 @@ export const authService = {
                 body: JSON.stringify({
                     username: cleanUsername,
                     mobile: cleanMobile || undefined,
+                    age: numericAge || undefined,
                 }),
             });
 
@@ -626,6 +633,7 @@ export const authService = {
             };
             if (cleanMobile) updatePayload.mobile = cleanMobile;
             if (authUser?.email) updatePayload.email = authUser.email;
+            if (numericAge) updatePayload.age = numericAge;
 
             // 1. Try UPDATE on existing user row filtered by auth_user_id
             const { data: updatedRows, error: updateErr } = await supabase
@@ -651,13 +659,13 @@ export const authService = {
                 savedRow = updatedRows[0];
             } else {
                 // 2. No row was updated — try UPSERT by auth_user_id
-                const insertPayload = {
+                const insertPayload: any = {
                     ...updatePayload,
                     total_xp: 0,
                     level: 1,
                     stories_completed: 0,
-                    age: 18,
                 };
+                if (numericAge) insertPayload.age = numericAge;
 
                 const { data: insertedRows, error: insertErr } = await supabase
                     .from('users')
@@ -684,6 +692,8 @@ export const authService = {
         }
 
         // ── Hydrate store & session ───────────────────────────────────────────
+        const finalAge = savedRow?.age || numericAge || currentProfile?.age;
+
         saveSession({
             id: savedRow?.id || currentProfile?.id || crypto.randomUUID(),
             username: cleanUsername,
@@ -691,7 +701,7 @@ export const authService = {
             mobile: savedRow?.mobile || cleanMobile || currentProfile?.mobile || '',
             email: authUser?.email || currentProfile?.email || '',
             onboarding_complete: true,
-            age: savedRow?.age || currentProfile?.age || 18,
+            age: finalAge,
         });
 
         const hasAssessmentCompleted = Boolean(
@@ -710,17 +720,15 @@ export const authService = {
             mobile: savedRow?.mobile || cleanMobile || currentProfile?.mobile,
             email: authUser?.email || currentProfile?.email || '',
             onboarding_complete: true,
+            age: finalAge,
             assessmentCompleted: hasAssessmentCompleted,
         } as any);
 
         return true;
     },
 
-
-
-
-
     /**
+
      * Sign out user completely
      */
     async signOut() {
