@@ -16,6 +16,8 @@ import { STORY_DATABASE } from '../../data/scenarios';
 import { IDOL_PROFILES } from '../../data/idolMindsets';
 import { calculateLevelInfo } from '../../utils/levelSystem';
 import { calculateLifeTraits, matchFutureArchetype } from '../../utils/futureSelfMatch';
+import { SourcesModal } from './SourcesModal';
+import { STORY_SOURCES } from '../../data/storySources';
 
 // Floating Text Animation Interface
 interface FloatText {
@@ -86,6 +88,23 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
     // Floating Text State
     const [floatTexts, setFloatTexts] = useState<FloatText[]>([]);
+
+    // Sources Modal State
+    const [showSources, setShowSources] = useState(false);
+    
+    // Resolve sources for the current level
+    const currentSources = STORY_SOURCES[level?.id || ''] ?? [];
+    const personalityName = level?.title
+      ? level.title.replace(/".*?"/, '').trim()
+      : 'This Story';
+    const personalityAge = level?.age ?? 0;
+
+    // Log warning for missing sources
+    useEffect(() => {
+      if (level?.id && !STORY_SOURCES[level.id]) {
+        console.warn(`[AYA Sources] No sources defined for story: ${level.id}`);
+      }
+    }, [level?.id]);
 
     // Emotion / Cinematic Theme State
     const initialEmotion = useMemo(() => {
@@ -1019,6 +1038,19 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                     {bgmEnabled ? '🎵' : '🔇'}
                 </button>
 
+                {/* Sources info button */}
+                {currentSources.length > 0 && (
+                  <button
+                    onClick={() => setShowSources(true)}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 backdrop-blur-sm border border-white/15 text-white/70 hover:bg-black/50 hover:text-white transition-all text-base font-bold shadow-lg"
+                    style={{ borderColor: `${currentTheme.badgeColor}80` }}
+                    aria-label="View story sources"
+                    title="Story Sources"
+                  >
+                    ⓘ
+                  </button>
+                )}
+
                 {/* Typewriter sound toggle */}
                 <button
                     onClick={() => {
@@ -1398,6 +1430,15 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                     </div>
                 </div>
             )}
+
+            {/* Sources Modal */}
+            <SourcesModal
+                isOpen={showSources}
+                onClose={() => setShowSources(false)}
+                personalityName={personalityName}
+                age={personalityAge}
+                sources={currentSources}
+            />
         </div>
     );
 }
