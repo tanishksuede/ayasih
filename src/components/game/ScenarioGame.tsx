@@ -93,7 +93,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
     const [showSources, setShowSources] = useState(false);
     
     // Resolve sources for the current level
-    const currentSources = STORY_SOURCES[level?.id || ''] ?? [];
+    const currentSources = STORY_SOURCES[level?.scenarioId || ''] ?? [];
     const personalityName = level?.title
       ? level.title.replace(/".*?"/, '').trim()
       : 'This Story';
@@ -101,10 +101,10 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
     // Log warning for missing sources
     useEffect(() => {
-      if (level?.id && !STORY_SOURCES[level.id]) {
-        console.warn(`[AYA Sources] No sources defined for story: ${level.id}`);
+      if (level?.scenarioId && !STORY_SOURCES[level.scenarioId]) {
+        console.warn(`[AYA Sources] No sources defined for story: ${level.scenarioId}`);
       }
-    }, [level?.id]);
+    }, [level?.scenarioId]);
 
     // Emotion / Cinematic Theme State
     const initialEmotion = useMemo(() => {
