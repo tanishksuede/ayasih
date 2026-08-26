@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Settings, BookOpen, Users, Star, Activity, User, SunMoon } from 'lucide-react';
+import { Menu, X, Settings, BookOpen, Users, Star, Activity, User } from 'lucide-react';
 import clsx from 'clsx';
 import { addToWishlist, logUnmatchedSearch } from '../../utils/feedbackUtils';
 import { useUserStore } from '../../store/userStore';
@@ -246,23 +246,6 @@ export function SideMenu({
                 <div className="flex flex-col gap-3">
                     <span className={clsx("text-[10px] font-black uppercase tracking-widest ml-2 mt-2", isCandyMode ? "text-slate-400" : "text-slate-500")}>App Controls</span>
                     
-                    <button
-                        onClick={() => {
-                            audioSynth.playClick();
-                            navigate('/game/theme');
-                            setIsOpen(false);
-                        }}
-                        className={clsx(
-                            "w-full flex items-center justify-center gap-3 p-4 rounded-2xl transition-all border shadow-sm",
-                            isCandyMode
-                                ? "bg-white/60 border-slate-200 hover:bg-white text-slate-700"
-                                : "bg-slate-800/40 border-slate-700 hover:bg-slate-700/80 text-indigo-200 hover:border-indigo-500/50"
-                        )}
-                    >
-                        <SunMoon size={20} className={isCandyMode ? "text-slate-500" : "text-indigo-400"} />
-                        <span className="text-[11px] font-black uppercase tracking-widest opacity-90">Change Theme</span>
-                    </button>
-
                     <div className="grid grid-cols-3 gap-2">
                         <button
                             onClick={() => {
