@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Settings, SunMoon, BookOpen, Users, Star } from 'lucide-react';
+import { Menu, X, Settings, SunMoon, BookOpen, Users, Star, Activity } from 'lucide-react';
 import clsx from 'clsx';
 import { addToWishlist, logUnmatchedSearch } from '../../utils/feedbackUtils';
 import { useUserStore } from '../../store/userStore';
@@ -157,7 +157,7 @@ export function SideMenu({
                         </div>
                     </button>
 
-                    {/* My Profile */}
+                    {/* DNA Data */}
                     <button
                         onClick={() => {
                             audioSynth.playClick();
@@ -172,14 +172,14 @@ export function SideMenu({
                         )}
                     >
                         <div className={clsx(
-                            "p-2 rounded-xl text-white shadow-inner text-xl leading-none flex items-center justify-center",
+                            "p-2 rounded-xl text-white shadow-inner flex items-center justify-center",
                             isCandyMode ? "bg-gradient-to-r from-emerald-400 to-teal-500" : "bg-gradient-to-r from-emerald-400 to-teal-500"
                         )}>
-                            🐢
+                            <Activity size={20} className="stroke-[2.5]" />
                         </div>
                         <div className="flex flex-col items-start leading-tight">
-                            <span className={clsx("text-[10px] font-bold uppercase tracking-wider", isCandyMode ? "text-emerald-600" : "text-emerald-400")}>My</span>
-                            <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-emerald-700" : "text-[#99f7ff]")}>Profile</span>
+                            <span className={clsx("text-[10px] font-bold uppercase tracking-wider", isCandyMode ? "text-emerald-600" : "text-emerald-400")}>My Stats</span>
+                            <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-emerald-700" : "text-[#99f7ff]")}>DNA Data</span>
                         </div>
                     </button>
 

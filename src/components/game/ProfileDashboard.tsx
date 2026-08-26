@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../utils/supabase';
 import { useUsernameAvailability } from '../../hooks/useUsernameAvailability';
 import { UsernameField } from './UsernameField';
+import clsx from 'clsx';
 
 interface ProfileDashboardProps {
     onBack: () => void;
@@ -16,6 +17,7 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
     const profile = useUserStore((state) => state.profile);
     const setProfile = useUserStore((state) => state.setProfile);
     const clearUserData = useUserStore((state) => state.clearUserData);
+    const { isCandyMode } = useUserStore();
     const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -115,36 +117,57 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
     const canSave = (!isUsernameChanged || usernameAvailability.status === 'available') && !isSaving;
 
     return (
-        <div className="min-h-screen bg-[#faf9f6] font-sans text-slate-800 pb-24 selection:bg-emerald-200 selection:text-emerald-900 overflow-x-hidden">
+        <div className={clsx(
+            "min-h-[100dvh] font-sans pb-24 overflow-x-hidden transition-colors duration-300",
+            isCandyMode 
+                ? "bg-[#faf9f6] text-slate-800 selection:bg-emerald-200 selection:text-emerald-900" 
+                : "bg-slate-900 text-slate-200 selection:bg-[#00f2ff]/30 selection:text-[#00f2ff]"
+        )}>
             
             {/* Soft decorative background shapes */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-emerald-50/50 blur-[100px]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-lavender-50/50 blur-[100px] bg-purple-50/50" />
+                <div className={clsx("absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full blur-[100px]", isCandyMode ? "bg-emerald-50/50" : "bg-[#00f2ff]/10")} />
+                <div className={clsx("absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full blur-[100px]", isCandyMode ? "bg-purple-50/50" : "bg-indigo-500/10")} />
             </div>
 
-            {/* Fixed Floating Back Button */}
-            <div className="fixed top-6 left-6 z-50">
+            {/* Fixed Floating Back Button - Pushed down to avoid PWA header */}
+            <div className="fixed top-24 md:top-28 left-6 z-50">
                 <button 
                     onClick={() => { audioSynth.playBack(); onBack(); }}
-                    className="flex items-center gap-2 px-4 py-3 bg-white rounded-full border border-slate-200 shadow-md text-slate-600 font-bold hover:text-slate-900 hover:bg-slate-50 hover:scale-105 active:scale-95 transition-all"
+                    className={clsx(
+                        "flex items-center gap-2 px-4 py-3 rounded-full border shadow-md font-bold hover:scale-105 active:scale-95 transition-all backdrop-blur-md",
+                        isCandyMode
+                            ? "bg-white/80 border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                            : "bg-slate-800/80 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700"
+                    )}
                 >
                     <ArrowLeft className="w-5 h-5" />
                     <span>Back</span>
                 </button>
             </div>
 
-            <main className="relative z-20 max-w-3xl mx-auto px-6 md:px-12 pt-24 pb-20">
+            {/* Main content pushed down to avoid header and give space */}
+            <main className="relative z-20 max-w-3xl mx-auto px-6 md:px-12 pt-40 pb-20">
                 <div className="flex flex-col gap-6">
                     
                     {/* Profile Card */}
-                    <div className="bg-white rounded-[2.5rem] p-8 shadow-sm border border-slate-100 relative overflow-hidden flex flex-col items-center text-center">
+                    <div className={clsx(
+                        "rounded-[2.5rem] p-8 shadow-sm border relative overflow-hidden flex flex-col items-center text-center backdrop-blur-sm",
+                        isCandyMode
+                            ? "bg-white/90 border-slate-100"
+                            : "bg-slate-800/80 border-slate-700/80 shadow-[0_0_30px_rgba(0,0,0,0.3)]"
+                    )}>
                         {/* Cute background accent */}
-                        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-emerald-50 to-white" />
+                        <div className={clsx(
+                            "absolute top-0 left-0 w-full h-32",
+                            isCandyMode 
+                                ? "bg-gradient-to-b from-emerald-50 to-white/0" 
+                                : "bg-gradient-to-b from-[#00f2ff]/10 to-transparent"
+                        )} />
                         
                         <div className="relative w-32 h-32 mb-6">
-                            <div className="absolute inset-0 bg-white rounded-full shadow-md" />
-                            <div className="absolute inset-2 bg-emerald-100 rounded-full overflow-hidden flex items-center justify-center">
+                            <div className={clsx("absolute inset-0 rounded-full shadow-md", isCandyMode ? "bg-white" : "bg-slate-700")} />
+                            <div className={clsx("absolute inset-2 rounded-full overflow-hidden flex items-center justify-center", isCandyMode ? "bg-emerald-100" : "bg-slate-800 border border-slate-600")}>
                                 <DotLottieReact
                                     src="/assets/Macot/waving mascot.lottie"
                                     loop
@@ -156,15 +179,15 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
 
                         {!isEditing ? (
                             <>
-                                <h1 className="text-2xl font-black text-slate-800 tracking-tight relative z-10">
+                                <h1 className={clsx("text-2xl font-black tracking-tight relative z-10", isCandyMode ? "text-slate-800" : "text-white")}>
                                     {profile?.name || 'Explorer'}
                                 </h1>
-                                <p className="text-emerald-500 font-bold text-sm mb-4 relative z-10">
+                                <p className={clsx("font-bold text-sm mb-4 relative z-10", isCandyMode ? "text-emerald-500" : "text-[#00f2ff]")}>
                                     @{profile?.username || `explorer_${Math.floor(Math.random()*1000)}`} • {profile?.age || 18} y/o
                                 </p>
                                 
                                 {profile?.mobile && (
-                                    <p className="text-slate-500 font-medium text-sm mb-6 relative z-10">
+                                    <p className={clsx("font-medium text-sm mb-6 relative z-10", isCandyMode ? "text-slate-500" : "text-slate-400")}>
                                         {profile.mobile}
                                     </p>
                                 )}
@@ -172,35 +195,37 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                 <div className="w-full flex flex-col gap-3 mt-4">
                                     <button 
                                         onClick={() => { audioSynth.playClick(); setIsEditing(true); }}
-                                        className="w-full flex items-center justify-center gap-3 py-4 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold rounded-2xl transition-colors"
+                                        className={clsx(
+                                            "w-full flex items-center justify-center gap-3 py-4 font-bold rounded-2xl transition-colors",
+                                            isCandyMode
+                                                ? "bg-slate-50 hover:bg-slate-100 text-slate-700"
+                                                : "bg-slate-700/50 hover:bg-slate-700 text-slate-200 border border-slate-600/50"
+                                        )}
                                     >
-                                        <Edit3 className="w-5 h-5 text-slate-400" />
+                                        <Edit3 className={clsx("w-5 h-5", isCandyMode ? "text-slate-400" : "text-slate-400")} />
                                         Edit Profile
                                     </button>
                                     
                                     <button 
                                         onClick={() => { audioSynth.playClick(); navigate('/game/settings'); }}
-                                        className="w-full flex items-center justify-center gap-3 py-4 bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold rounded-2xl transition-colors"
+                                        className={clsx(
+                                            "w-full flex items-center justify-center gap-3 py-4 font-bold rounded-2xl transition-colors",
+                                            isCandyMode
+                                                ? "bg-slate-50 hover:bg-slate-100 text-slate-700"
+                                                : "bg-slate-700/50 hover:bg-slate-700 text-slate-200 border border-slate-600/50"
+                                        )}
                                     >
-                                        <Settings className="w-5 h-5 text-slate-400" />
+                                        <Settings className={clsx("w-5 h-5", isCandyMode ? "text-slate-400" : "text-slate-400")} />
                                         App Settings
-                                    </button>
-                                    
-                                    <button 
-                                        onClick={handleLogout}
-                                        className="w-full flex items-center justify-center gap-3 py-4 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-2xl transition-colors"
-                                    >
-                                        <LogOut className="w-5 h-5 text-rose-500" />
-                                        Sign Out
                                     </button>
                                 </div>
                             </>
                         ) : (
                             <div className="w-full flex flex-col items-start text-left relative z-10 gap-4 mt-2">
-                                <h2 className="text-lg font-black text-slate-800 w-full text-center mb-2">Edit Details</h2>
+                                <h2 className={clsx("text-lg font-black w-full text-center mb-2", isCandyMode ? "text-slate-800" : "text-white")}>Edit Details</h2>
                                 
                                 <div className="w-full">
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Username</label>
+                                    <label className={clsx("block text-xs font-bold uppercase tracking-wider mb-2 ml-1", isCandyMode ? "text-slate-500" : "text-slate-400")}>Username</label>
                                     <UsernameField
                                         label=""
                                         value={usernameInput}
@@ -213,18 +238,23 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                         <p className="text-xs text-rose-500 font-bold mt-2 ml-1">{usernameError}</p>
                                     )}
                                     {usernameSuccess && (
-                                        <p className="text-xs text-emerald-500 font-bold mt-2 ml-1">{usernameSuccess}</p>
+                                        <p className={clsx("text-xs font-bold mt-2 ml-1", isCandyMode ? "text-emerald-500" : "text-[#00f2ff]")}>{usernameSuccess}</p>
                                     )}
                                 </div>
 
                                 <div className="w-full">
-                                    <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 ml-1">Age</label>
+                                    <label className={clsx("block text-xs font-bold uppercase tracking-wider mb-2 ml-1", isCandyMode ? "text-slate-500" : "text-slate-400")}>Age</label>
                                     <input
                                         type="number"
                                         value={newAge}
                                         onChange={(e) => setNewAge(parseInt(e.target.value))}
                                         disabled={isSaving}
-                                        className="w-full bg-slate-50 text-slate-800 font-bold rounded-2xl px-5 py-4 border border-slate-200 focus:outline-none focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10 transition-all"
+                                        className={clsx(
+                                            "w-full font-bold rounded-2xl px-5 py-4 border focus:outline-none transition-all",
+                                            isCandyMode
+                                                ? "bg-slate-50 text-slate-800 border-slate-200 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10"
+                                                : "bg-slate-900 text-white border-slate-700 focus:border-[#00f2ff] focus:ring-4 focus:ring-[#00f2ff]/20"
+                                        )}
                                     />
                                 </div>
 
@@ -232,7 +262,12 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                     <button 
                                         onClick={() => { audioSynth.playClick(); setIsEditing(false); }}
                                         disabled={isSaving}
-                                        className="flex-1 flex items-center justify-center gap-2 py-4 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-2xl transition-colors disabled:opacity-50"
+                                        className={clsx(
+                                            "flex-1 flex items-center justify-center gap-2 py-4 font-bold rounded-2xl transition-colors disabled:opacity-50",
+                                            isCandyMode
+                                                ? "bg-slate-100 hover:bg-slate-200 text-slate-600"
+                                                : "bg-slate-700 hover:bg-slate-600 text-slate-300 border border-slate-600"
+                                        )}
                                     >
                                         <X className="w-5 h-5" />
                                         Cancel
@@ -241,7 +276,12 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                     <button 
                                         onClick={handleSaveProfile}
                                         disabled={!canSave || (!isUsernameChanged && !isAgeChanged)}
-                                        className="flex-1 flex items-center justify-center gap-2 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl transition-colors shadow-md disabled:opacity-50 disabled:bg-slate-300 disabled:text-slate-500"
+                                        className={clsx(
+                                            "flex-1 flex items-center justify-center gap-2 py-4 font-bold rounded-2xl transition-colors shadow-md disabled:opacity-50 disabled:text-slate-500",
+                                            isCandyMode
+                                                ? "bg-emerald-500 hover:bg-emerald-600 text-white disabled:bg-slate-300"
+                                                : "bg-[#00f2ff] hover:bg-[#00d2ff] text-slate-900 disabled:bg-slate-700"
+                                        )}
                                     >
                                         <Check className="w-5 h-5" />
                                         {isSaving ? 'Saving...' : 'Save'}
