@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useUserStore } from '../../store/userStore';
 import { audioManager as audioSynth } from "../../utils/audioManager";
-import { ArrowLeft, Edit3, Settings, Check, X } from 'lucide-react';
+import { ArrowLeft, Edit3, Settings, Check, X, LogOut } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../../utils/supabase';
 import { useUsernameAvailability } from '../../hooks/useUsernameAvailability';
 import { UsernameField } from './UsernameField';
 import clsx from 'clsx';
+import { getFollowerCount, getFollowingCount } from '../../services/followService';
 
 interface ProfileDashboardProps {
     onBack: () => void;
@@ -16,10 +16,26 @@ interface ProfileDashboardProps {
 export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
     const profile = useUserStore((state) => state.profile);
     const setProfile = useUserStore((state) => state.setProfile);
+    const clearUserData = useUserStore((state) => state.clearUserData);
     const { isCandyMode } = useUserStore();
     const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState(false);
+    
+    // Social counts
+    const [followerCount, setFollowerCount] = useState<number | null>(null);
+    const [followingCount, setFollowingCount] = useState<number | null>(null);
+
+    useEffect(() => {
+        if (!profile?.id) return;
+        Promise.all([
+            getFollowerCount(profile.id),
+            getFollowingCount(profile.id),
+        ]).then(([fc, fwc]) => {
+            setFollowerCount(fc);
+            setFollowingCount(fwc);
+        }).catch(() => { /* counts fail silently */ });
+    }, [profile?.id]);
     
     // Edit state
     const [newAge, setNewAge] = useState(18);
@@ -40,6 +56,11 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
         }
     }, [profile, isEditing]);
 
+    const handleLogout = () => {
+        audioSynth.playClick();
+        clearUserData();
+        navigate('/'); 
+    };
 
     const handleSaveProfile = async () => {
         if (!profile?.id) return;
@@ -181,12 +202,26 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                 </p>
                                 
                                 {profile?.mobile && (
-                                    <p className={clsx("font-medium text-sm mb-6 relative z-10", isCandyMode ? "text-slate-500" : "text-slate-400")}>
+                                    <p className={clsx("font-medium text-sm mb-2 relative z-10", isCandyMode ? "text-slate-500" : "text-slate-400")}>
                                         {profile.mobile}
                                     </p>
                                 )}
 
-                                <div className="w-full flex flex-col gap-3 mt-4">
+                                {(followerCount !== null || followingCount !== null) && (
+                                    <div className={clsx("mt-1 mb-6 flex items-center justify-center gap-4 text-xs font-bold uppercase tracking-widest relative z-10", isCandyMode ? "text-slate-500" : "text-slate-400")}>
+                                        <span>
+                                            <span className={clsx("text-sm", isCandyMode ? "text-emerald-500" : "text-[#00f2ff]")}>{followerCount ?? '–'}</span>
+                                            {' '}Followers
+                                        </span>
+                                        <span className={clsx("w-1 h-1 rounded-full", isCandyMode ? "bg-purple-300" : "bg-[#d575ff]")} />
+                                        <span>
+                                            <span className={clsx("text-sm", isCandyMode ? "text-purple-500" : "text-[#d575ff]")}>{followingCount ?? '–'}</span>
+                                            {' '}Following
+                                        </span>
+                                    </div>
+                                )}
+
+                                <div className="w-full flex flex-col gap-3 mt-4 relative z-10">
                                     <button 
                                         onClick={() => { audioSynth.playClick(); setIsEditing(true); }}
                                         className={clsx(
@@ -201,16 +236,16 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                     </button>
                                     
                                     <button 
-                                        onClick={() => { audioSynth.playClick(); navigate('/game/settings'); }}
+                                        onClick={handleLogout}
                                         className={clsx(
-                                            "w-full flex items-center justify-center gap-3 py-4 font-bold rounded-2xl transition-colors",
+                                            "w-full flex items-center justify-center gap-3 py-4 font-bold rounded-2xl transition-colors mt-2",
                                             isCandyMode
-                                                ? "bg-slate-50 hover:bg-slate-100 text-slate-700"
-                                                : "bg-slate-700/50 hover:bg-slate-700 text-slate-200 border border-slate-600/50"
+                                                ? "bg-red-50 text-red-600 hover:bg-red-100"
+                                                : "bg-red-950/40 text-red-400 hover:bg-red-900/60 border border-red-900/50"
                                         )}
                                     >
-                                        <Settings className={clsx("w-5 h-5", isCandyMode ? "text-slate-400" : "text-slate-400")} />
-                                        App Settings
+                                        <LogOut className="w-5 h-5" />
+                                        Sign Out
                                     </button>
                                 </div>
                             </>
