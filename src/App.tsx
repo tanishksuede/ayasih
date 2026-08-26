@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppLayout } from './layouts/AppLayout';
-import { SubscriptionModal } from './components/payment/SubscriptionModal';
 
 import { HomePage } from './pages/Home';
 import { GameRoot } from './pages/GameRoot';
@@ -55,25 +54,8 @@ function App() {
     }
   }, [])
 
-  const [showSubscription, setShowSubscription] = useState(false);
-
-  useEffect(() => {
-    const hasSeenPopup = sessionStorage.getItem('hasSeenSubscriptionPopup');
-    if (!hasSeenPopup) {
-      const timer = setTimeout(() => {
-        setShowSubscription(true);
-        sessionStorage.setItem('hasSeenSubscriptionPopup', 'true');
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
   return (
     <BrowserRouter>
-      <SubscriptionModal 
-        isOpen={showSubscription} 
-        onClose={() => setShowSubscription(false)} 
-      />
       <GoogleTranslateSync />
       <AnalyticsTracker />
       <Routes>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { SupabaseChecker } from '../components/SupabaseChecker';
 import { StreakCelebration } from '../components/game/StreakCelebration';
+import { SubscriptionModal } from '../components/payment/SubscriptionModal';
 import { supabase } from '../utils/supabase';
 import { getSession, clearSession, markQuizDone, isQuizDone } from '../utils/session';
 import { withTimeout } from '../utils/withTimeout';
@@ -42,6 +43,21 @@ export function GameRoot() {
             }
         }
     }, [location.pathname, sessionStatus]);
+
+    const [showSubscription, setShowSubscription] = useState(false);
+
+    useEffect(() => {
+        if (sessionStatus === 'found' && profile) {
+            const hasSeenPopup = sessionStorage.getItem('hasSeenSubscriptionPopup');
+            if (!hasSeenPopup) {
+                const timer = setTimeout(() => {
+                    setShowSubscription(true);
+                    sessionStorage.setItem('hasSeenSubscriptionPopup', 'true');
+                }, 1500);
+                return () => clearTimeout(timer);
+            }
+        }
+    }, [sessionStatus, profile]);
 
     // Safety net: if a user finishes onboarding, GameRoot is already mounted,
     // so restoreSession() won't run again. We must fetch levels for them.
@@ -424,6 +440,10 @@ export function GameRoot() {
                 : 'h-[100dvh] overflow-hidden'
         }`}>
             <SupabaseChecker />
+            <SubscriptionModal 
+                isOpen={showSubscription} 
+                onClose={() => setShowSubscription(false)} 
+            />
             <Outlet />
             {pendingStreakData && (
                 <div className="absolute inset-0 z-[9999]">
