@@ -268,20 +268,6 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 document.getElementById('header-search-portal')!
             )}
 
-            {/* Direct Profile Button (Top Left) */}
-            <div className="absolute top-20 left-4 md:top-24 md:left-6 z-[105] pointer-events-auto mt-2">
-                <button
-                    onClick={() => {
-                        audioSynth.playClick();
-                        onOpenDnaProfile();
-                    }}
-                    className="w-12 h-12 rounded-full flex items-center justify-center transition-all shadow-lg pointer-events-auto bg-emerald-500 text-white border-2 border-emerald-300 hover:scale-105 active:scale-95"
-                    aria-label="Open Profile"
-                >
-                    <span className="text-xl">🐢</span>
-                </button>
-            </div>
-
             {/* Vibe Spinner Button (Top Middle) */}
             <div className="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-[105] pointer-events-auto mt-2">
                 <VibeSpinnerButton
