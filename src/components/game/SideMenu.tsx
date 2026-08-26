@@ -3,6 +3,7 @@ import { Menu, X, Settings, Sun, Moon, Volume2, VolumeX, BookOpen, Users, Star }
 import clsx from 'clsx';
 import { VibeSpinnerButton } from '../MoodWheel/VibeSpinnerButton';
 import { addToWishlist, logUnmatchedSearch } from '../../utils/feedbackUtils';
+import { useUserStore } from '../../store/userStore';
 
 interface SideMenuProps {
     isCandyMode: boolean;
@@ -30,6 +31,7 @@ export function SideMenu({
     const [isOpen, setIsOpen] = useState(false);
     const [wishlistInput, setWishlistInput] = useState('');
     const [wishlistStatus, setWishlistStatus] = useState<'idle' | 'loading' | 'added'>('idle');
+    const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
 
     const handleWishlistSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -200,6 +202,32 @@ export function SideMenu({
                         <div className="flex flex-col items-start leading-tight">
                             <span className={clsx("text-[10px] font-bold uppercase tracking-wider", isCandyMode ? "text-purple-400" : "text-[#00f2ff]/80")}>Profile</span>
                             <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-purple-600" : "text-[#99f7ff]")}>DNA Data</span>
+                        </div>
+                    </button>
+
+                    {/* Upgrade to Pro */}
+                    <button
+                        onClick={() => {
+                            audioSynth.playClick();
+                            setShowSubscriptionModal(true);
+                            setIsOpen(false);
+                        }}
+                        className={clsx(
+                            "flex items-center gap-4 p-3 rounded-2xl transition-all border shadow-[0_0_15px_rgba(234,179,8,0.3)]",
+                            isCandyMode
+                                ? "bg-gradient-to-r from-yellow-50 to-amber-50 border-amber-200 hover:border-amber-400"
+                                : "bg-gradient-to-r from-amber-500/10 to-yellow-600/10 border-amber-500/50 hover:border-amber-400/80"
+                        )}
+                    >
+                        <div className={clsx(
+                            "p-2 rounded-xl text-black shadow-inner flex items-center justify-center",
+                            "bg-gradient-to-r from-yellow-400 to-amber-500"
+                        )}>
+                            <Star size={20} className="stroke-[2.5]" />
+                        </div>
+                        <div className="flex flex-col items-start leading-tight">
+                            <span className={clsx("text-[10px] font-bold uppercase tracking-wider", isCandyMode ? "text-amber-600" : "text-amber-400/80")}>Unlock More</span>
+                            <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-amber-700" : "text-amber-400")}>Upgrade to Pro</span>
                         </div>
                     </button>
                 </div>

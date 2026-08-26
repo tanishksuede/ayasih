@@ -15,6 +15,8 @@ export function GameRoot() {
     const setMapTheme = useUserStore((state) => state.setMapTheme);
     const pendingStreakData = useUserStore((state) => state.pendingStreakData);
     const setPendingStreakData = useUserStore((state) => state.setPendingStreakData);
+    const showSubscriptionModal = useUserStore((state) => state.showSubscriptionModal);
+    const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
     const location = useLocation();
     const navigate = useNavigate();
     const safetySyncStarted = useRef(false);
@@ -44,14 +46,12 @@ export function GameRoot() {
         }
     }, [location.pathname, sessionStatus]);
 
-    const [showSubscription, setShowSubscription] = useState(false);
-
     useEffect(() => {
         if (sessionStatus === 'found' && profile) {
             const hasSeenPopup = sessionStorage.getItem('hasSeenSubscriptionPopup');
             if (!hasSeenPopup) {
                 const timer = setTimeout(() => {
-                    setShowSubscription(true);
+                    setShowSubscriptionModal(true);
                     sessionStorage.setItem('hasSeenSubscriptionPopup', 'true');
                 }, 1500);
                 return () => clearTimeout(timer);
@@ -441,8 +441,8 @@ export function GameRoot() {
         }`}>
             <SupabaseChecker />
             <SubscriptionModal 
-                isOpen={showSubscription} 
-                onClose={() => setShowSubscription(false)} 
+                isOpen={showSubscriptionModal} 
+                onClose={() => setShowSubscriptionModal(false)} 
             />
             <Outlet />
             {pendingStreakData && (

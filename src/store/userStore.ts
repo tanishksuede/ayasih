@@ -83,6 +83,10 @@ interface UserState {
 
     resetProgress: () => void;
     clearUserData: () => void;
+
+    // Subscription Modal State
+    showSubscriptionModal: boolean;
+    setShowSubscriptionModal: (show: boolean) => void;
 }
 const syncStoreToBackend = async (profile: any, currentLevelScores: Record<string, number>) => {
     if (!profile || !profile.id || profile.id.startsWith('offline-')) return;
@@ -151,6 +155,9 @@ export const useUserStore = create<UserState>()(
             levels: [], // Start empty
             levelScores: {},
             xp: 0, // Legacy fallback. New stats live on profile
+            showSubscriptionModal: false,
+
+            setShowSubscriptionModal: (show) => set({ showSubscriptionModal: show }),
 
             addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
 
