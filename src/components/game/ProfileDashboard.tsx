@@ -123,21 +123,18 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                 <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-lavender-50/50 blur-[100px] bg-purple-50/50" />
             </div>
 
-            {/* Header / Navigation */}
-            <header className="relative z-20 flex items-center justify-between px-6 py-6 md:px-12 md:py-8 max-w-3xl mx-auto">
+            {/* Fixed Floating Back Button */}
+            <div className="fixed top-6 left-6 z-50">
                 <button 
                     onClick={() => { audioSynth.playBack(); onBack(); }}
-                    className="flex items-center justify-center w-12 h-12 bg-white rounded-full border border-slate-100 shadow-sm text-slate-400 hover:text-slate-800 hover:scale-105 active:scale-95 transition-all"
+                    className="flex items-center gap-2 px-4 py-3 bg-white rounded-full border border-slate-200 shadow-md text-slate-600 font-bold hover:text-slate-900 hover:bg-slate-50 hover:scale-105 active:scale-95 transition-all"
                 >
                     <ArrowLeft className="w-5 h-5" />
+                    <span>Back</span>
                 </button>
-                <div className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">
-                    My Profile
-                </div>
-                <div className="w-12 h-12" /> {/* Balancer */}
-            </header>
+            </div>
 
-            <main className="relative z-20 max-w-3xl mx-auto px-6 md:px-12 pb-20">
+            <main className="relative z-20 max-w-3xl mx-auto px-6 md:px-12 pt-24 pb-20">
                 <div className="flex flex-col gap-6">
                     
                     {/* Profile Card */}
