@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useUserStore } from '../../store/userStore';
 import { audioManager as audioSynth } from "../../utils/audioManager";
-import { ArrowLeft, Edit3, Settings, LogOut, Check, X } from 'lucide-react';
+import { ArrowLeft, Edit3, Settings, Check, X } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../utils/supabase';
@@ -41,11 +41,6 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
         }
     }, [profile, isEditing]);
 
-    const handleLogout = () => {
-        audioSynth.playClick();
-        clearUserData();
-        navigate('/'); // Assuming root maps to onboarding/login
-    };
 
     const handleSaveProfile = async () => {
         if (!profile?.id) return;
