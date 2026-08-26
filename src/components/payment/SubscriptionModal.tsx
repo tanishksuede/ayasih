@@ -53,7 +53,7 @@ export function SubscriptionModal({ isOpen, onClose }: SubscriptionModalProps) {
       // 3. Initiate checkout
       const checkoutOptions = {
         paymentSessionId: data.payment_session_id,
-        redirectTarget: '_modal', // Opens a seamless popup
+        redirectTarget: '_self', // Change from _modal to _self to bypass strict iframe whitelisting
       };
 
       await cashfree.checkout(checkoutOptions);
