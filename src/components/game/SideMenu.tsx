@@ -164,7 +164,7 @@ export function SideMenu({
                         </div>
                     </button>
 
-                    {/* DNA Data */}
+                    {/* My Profile */}
                     <button
                         onClick={() => {
                             audioSynth.playClick();
@@ -180,13 +180,13 @@ export function SideMenu({
                     >
                         <div className={clsx(
                             "p-2 rounded-xl text-white shadow-inner text-xl leading-none flex items-center justify-center",
-                            isCandyMode ? "bg-gradient-to-r from-purple-500 to-pink-500" : "bg-gradient-to-r from-[#00f2ff] to-[#d575ff]"
+                            isCandyMode ? "bg-gradient-to-r from-emerald-400 to-teal-500" : "bg-gradient-to-r from-emerald-400 to-teal-500"
                         )}>
-                            🧬
+                            🐢
                         </div>
                         <div className="flex flex-col items-start leading-tight">
-                            <span className={clsx("text-[10px] font-bold uppercase tracking-wider", isCandyMode ? "text-purple-400" : "text-[#00f2ff]/80")}>Profile</span>
-                            <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-purple-600" : "text-[#99f7ff]")}>DNA Data</span>
+                            <span className={clsx("text-[10px] font-bold uppercase tracking-wider", isCandyMode ? "text-emerald-600" : "text-emerald-400")}>My</span>
+                            <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-emerald-700" : "text-[#99f7ff]")}>Profile</span>
                         </div>
                     </button>
 
