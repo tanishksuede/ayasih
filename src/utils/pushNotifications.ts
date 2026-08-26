@@ -75,6 +75,17 @@ function areUint8ArraysEqual(a: Uint8Array, b: Uint8Array): boolean {
   return true;
 }
 
+/** Return a non-sensitive browser label for the temporary push diagnostic. */
+function getBrowserLabel(userAgent: string): string {
+  if (/Edg\//.test(userAgent)) return 'Microsoft Edge';
+  if (/OPR\//.test(userAgent)) return 'Opera';
+  if (/CriOS\//.test(userAgent)) return 'Chrome on iOS';
+  if (/Chrome\//.test(userAgent)) return 'Google Chrome';
+  if (/Firefox\//.test(userAgent)) return 'Mozilla Firefox';
+  if (/Safari\//.test(userAgent)) return 'Safari';
+  return 'Unknown browser';
+}
+
 // Single-flight lock to prevent concurrent subscription calls
 let isSubscribingInFlight = false;
 
@@ -380,11 +391,34 @@ async function _subscribeUserToPushInternal(passedUserId?: string): Promise<Push
 export async function runIsolatedPushDiagnostic(): Promise<{ success: boolean; error?: string; endpointHost?: string }> {
   console.log('[Push Diagnostic] Running isolated browser PushManager test...');
   try {
+    const rawVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
+    const applicationServerKey = rawVapidKey ? urlBase64ToUint8Array(rawVapidKey) : null;
+    const registration = typeof navigator !== 'undefined' && 'serviceWorker' in navigator ? await navigator.serviceWorker.getRegistration('/sw.js') : null;
+    const existing = registration ? await registration.pushManager.getSubscription() : null;
+
+    const userAgent = typeof navigator !== 'undefined' ? navigator.userAgent : 'unknown';
+    const userAgentData = typeof navigator !== 'undefined' && (navigator as any).userAgentData ? (navigator as any).userAgentData : null;
+    const platform = typeof navigator !== 'undefined' ? navigator.platform : 'unknown';
+
+    console.log('[Push Diagnostic] System & Environment State:', {
+      userAgent,
+      userAgentData,
+      browser: getBrowserLabel(userAgent),
+      platform,
+      hasServiceWorkerSupport: typeof navigator !== 'undefined' && 'serviceWorker' in navigator,
+      swState: registration ? (registration.active ? 'activated' : (registration.installing ? 'installing' : 'waiting')) : 'not registered',
+      swScope: registration?.scope || 'none',
+      pushManagerAvailable: typeof window !== 'undefined' && 'PushManager' in window,
+      notificationPermission: typeof window !== 'undefined' && 'Notification' in window ? Notification.permission : 'unsupported',
+      appServerKeyLength: applicationServerKey ? applicationServerKey.length : 0,
+      appServerKeyFirstByte: applicationServerKey ? applicationServerKey[0] : null,
+      hasExistingSub: !!existing
+    });
+
     if (!isPushSupported()) {
       return { success: false, error: 'Web Push features not supported in this browser' };
     }
 
-    const rawVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
     if (!rawVapidKey) {
       return { success: false, error: 'VITE_VAPID_PUBLIC_KEY environment variable missing' };
     }
@@ -394,22 +428,9 @@ export async function runIsolatedPushDiagnostic(): Promise<{ success: boolean; e
       return { success: false, error: `Key validation failed: ${keyValidation.error}` };
     }
 
-    const registration = await navigator.serviceWorker.ready;
-    const applicationServerKey = urlBase64ToUint8Array(rawVapidKey);
-    const existing = await registration.pushManager.getSubscription();
+    const activeReg = await navigator.serviceWorker.ready;
 
-    console.log('[Push Diagnostic] Isolated check pre-subscribe:', {
-      origin: window.location.origin,
-      scope: registration.scope,
-      hasActiveWorker: !!registration.active,
-      permission: Notification.permission,
-      keyPrefix: rawVapidKey.substring(0, 12),
-      byteLength: applicationServerKey.byteLength,
-      firstByte: applicationServerKey[0],
-      hasExisting: !!existing
-    });
-
-    if (existing) {
+    if (existing && applicationServerKey) {
       const existingKeyUint8 = existing.options?.applicationServerKey ? new Uint8Array(existing.options.applicationServerKey) : null;
       const keysMatch = existingKeyUint8 ? areUint8ArraysEqual(existingKeyUint8, applicationServerKey) : false;
       if (!keysMatch) {
@@ -422,7 +443,7 @@ export async function runIsolatedPushDiagnostic(): Promise<{ success: boolean; e
     }
 
     console.log('[Push Diagnostic] Attempting isolated pushManager.subscribe()...');
-    const sub = await registration.pushManager.subscribe({
+    const sub = await activeReg.pushManager.subscribe({
       userVisibleOnly: true,
       applicationServerKey: applicationServerKey as unknown as BufferSource,
     });
@@ -431,8 +452,13 @@ export async function runIsolatedPushDiagnostic(): Promise<{ success: boolean; e
     console.log('[Push Diagnostic] Isolated PushManager.subscribe() SUCCESS! Endpoint host:', host);
     return { success: true, endpointHost: host };
   } catch (err: any) {
-    console.error('[Push Diagnostic] Isolated PushManager.subscribe() FAILED:', err?.name || 'Error', err?.message || err);
-    return { success: false, error: `${err?.name || 'Error'}: ${err?.message || err}` };
+    const exceptionName = err?.name || 'Error';
+    const exceptionMessage = err?.message || String(err);
+    console.error('[Push Diagnostic] Isolated PushManager.subscribe() FAILED:', {
+      exceptionName,
+      exceptionMessage,
+    });
+    return { success: false, error: `${exceptionName}: ${exceptionMessage}` };
   }
 }
 
