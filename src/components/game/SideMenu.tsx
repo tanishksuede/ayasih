@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Settings, SunMoon, BookOpen, Users, Star, Activity } from 'lucide-react';
+import { Menu, X, Settings, BookOpen, Users, Star, Activity, User } from 'lucide-react';
 import clsx from 'clsx';
 import { addToWishlist, logUnmatchedSearch } from '../../utils/feedbackUtils';
 import { useUserStore } from '../../store/userStore';
@@ -208,43 +208,25 @@ export function SideMenu({
                             <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-amber-700" : "text-amber-400")}>Upgrade to Pro</span>
                         </div>
                     </button>
-                </div>                {/* Theme Toggle (Full Width now) */}
-                <div className="mt-4">
-                    <button
-                        onClick={() => {
-                            audioSynth.playClick();
-                            navigate('/game/theme');
-                            setIsOpen(false);
-                        }}
-                        className={clsx(
-                            "w-full flex items-center justify-center gap-3 p-4 rounded-2xl transition-all border shadow-sm",
-                            isCandyMode
-                                ? "bg-white/60 border-slate-200 hover:bg-white"
-                                : "bg-slate-800/60 border-slate-700 hover:bg-slate-700/80 text-indigo-200"
-                        )}
-                    >
-                        <SunMoon size={24} className={isCandyMode ? "text-slate-600" : "text-indigo-400"} />
-                        <span className="text-xs font-bold uppercase tracking-widest opacity-80">Change Theme</span>
-                    </button>
-                </div>       
+                </div>
 
-                <div className="mt-4">
-                    {/* Settings */}
+                <div className="mt-4 grid grid-cols-2 gap-3">
+                    {/* Profile */}
                     <button
                         onClick={() => {
                             audioSynth.playClick();
-                            navigate('/game/settings');
+                            navigate('/game/profile');
                             setIsOpen(false);
                         }}
                         className={clsx(
-                            "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl transition-all border shadow-sm",
+                            "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl transition-all border shadow-sm w-full",
                             isCandyMode
-                                ? "bg-white/60 border-slate-200 hover:bg-white"
-                                : "bg-slate-800/60 border-slate-700 hover:bg-slate-700/80 text-indigo-200"
+                                ? "bg-white/60 border-slate-200 hover:bg-white text-slate-700"
+                                : "bg-slate-800/60 border-[#d575ff]/30 hover:bg-slate-700/80 hover:border-[#d575ff]/50 text-[#d575ff]"
                         )}
                     >
-                        <Settings size={24} className="opacity-80" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">Settings</span>
+                        <User size={24} className="opacity-90 mb-1" />
+                        <span className="text-[10px] font-black uppercase tracking-widest opacity-90">Profile</span>
                     </button>
 
                     {/* People / Social */}
@@ -255,14 +237,32 @@ export function SideMenu({
                             setIsOpen(false);
                         }}
                         className={clsx(
-                            "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl transition-all border shadow-sm",
+                            "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl transition-all border shadow-sm w-full",
                             isCandyMode
-                                ? "bg-white/60 border-slate-200 hover:bg-white"
-                                : "bg-slate-800/60 border-[#00f2ff]/20 hover:bg-slate-700/80 hover:border-[#00f2ff]/40 text-[#00f2ff]"
+                                ? "bg-white/60 border-slate-200 hover:bg-white text-slate-700"
+                                : "bg-slate-800/60 border-[#00f2ff]/30 hover:bg-slate-700/80 hover:border-[#00f2ff]/50 text-[#00f2ff]"
                         )}
                     >
-                        <Users size={24} className="opacity-80" />
-                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">People</span>
+                        <Users size={24} className="opacity-90 mb-1" />
+                        <span className="text-[10px] font-black uppercase tracking-widest opacity-90">People</span>
+                    </button>
+
+                    {/* Settings */}
+                    <button
+                        onClick={() => {
+                            audioSynth.playClick();
+                            navigate('/game/settings');
+                            setIsOpen(false);
+                        }}
+                        className={clsx(
+                            "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl transition-all border shadow-sm w-full",
+                            isCandyMode
+                                ? "bg-white/60 border-slate-200 hover:bg-white text-slate-700"
+                                : "bg-slate-800/60 border-slate-700 hover:bg-slate-700/80 text-indigo-200"
+                        )}
+                    >
+                        <Settings size={24} className="opacity-90 mb-1" />
+                        <span className="text-[10px] font-black uppercase tracking-widest opacity-90">Settings</span>
                     </button>
 
                     {/* Admin */}
@@ -274,14 +274,14 @@ export function SideMenu({
                                 setIsOpen(false);
                             }}
                             className={clsx(
-                                "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl transition-all border shadow-sm",
+                                "flex flex-col items-center justify-center gap-2 p-4 rounded-2xl transition-all border shadow-sm w-full",
                                 isCandyMode
-                                    ? "bg-fuchsia-100 border-fuchsia-200 hover:bg-fuchsia-200 text-fuchsia-700"
+                                    ? "bg-fuchsia-50 border-fuchsia-200 hover:bg-fuchsia-100 text-fuchsia-700"
                                     : "bg-fuchsia-900/30 border-fuchsia-500/30 hover:bg-fuchsia-900/60 text-fuchsia-300"
                             )}
                         >
-                            <span className="text-xl">👑</span>
-                            <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">Admin</span>
+                            <span className="text-2xl mb-1">👑</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest opacity-90">Admin</span>
                         </button>
                     )}
                 </div>
