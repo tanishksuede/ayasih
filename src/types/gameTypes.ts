@@ -59,6 +59,8 @@ export interface UserProfile {
     interests?: string[];
     roleModels?: string[];
     avatarId?: string;
+    avatarUrl?: string;
+    bio?: string;
     isAdmin?: boolean;
     access_type?: string;        // 'free' | 'jee15' | 'neet15'
     access_start_date?: string;  // ISO date string 'YYYY-MM-DD'

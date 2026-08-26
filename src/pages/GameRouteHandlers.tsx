@@ -96,6 +96,14 @@ export function DnaRouteHandler() {
     return <ProfileDashboard onBack={() => navigate('/game')} />;
 }
 
+export function ProfileRouteHandler() {
+    const navigate = useNavigate();
+    const profile = useUserStore((state) => state.profile);
+    if (!profile) return <Navigate to="/game" replace />;
+
+    return <ProfileDashboard onBack={() => navigate('/game')} />;
+}
+
 export function SelectionRouteHandler() {
     const { age } = useParams();
     const navigate = useNavigate();

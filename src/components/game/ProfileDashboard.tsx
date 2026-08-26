@@ -9,6 +9,8 @@ import { supabase } from '../../utils/supabase';
 import { UsernameField } from './UsernameField';
 import clsx from 'clsx';
 import { getFollowerCount, getFollowingCount } from '../../services/followService';
+import { calculateLevelInfo } from '../../utils/levelSystem';
+import { Trophy, Flame } from 'lucide-react';
 
 interface ProfileDashboardProps {
     onBack: () => void;
@@ -168,67 +170,120 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                     
                     {/* Profile Card */}
                     <div className={clsx(
-                        "rounded-[2.5rem] p-8 shadow-sm border relative overflow-hidden flex flex-col items-center text-center backdrop-blur-sm",
+                        "rounded-[2.5rem] p-8 shadow-sm border relative overflow-hidden flex flex-col items-center text-center backdrop-blur-md",
                         isCandyMode
-                            ? "bg-white/90 border-slate-100"
-                            : "bg-slate-800/80 border-slate-700/80 shadow-[0_0_30px_rgba(0,0,0,0.3)]"
+                            ? "bg-white/90 border-slate-200"
+                            : "bg-slate-800/80 border-[#00f2ff]/30 shadow-[0_0_30px_rgba(0,242,255,0.15)]"
                     )}>
-                        {/* Cute background accent */}
+                        {/* Neon background accent */}
                         <div className={clsx(
-                            "absolute top-0 left-0 w-full h-32",
+                            "absolute top-0 left-0 w-full h-40",
                             isCandyMode 
-                                ? "bg-gradient-to-b from-emerald-50 to-white/0" 
+                                ? "bg-gradient-to-b from-pink-100 to-white/0" 
                                 : "bg-gradient-to-b from-[#00f2ff]/10 to-transparent"
                         )} />
                         
-                        <div className="relative w-32 h-32 mb-6">
-                            <div className={clsx("absolute inset-0 rounded-full shadow-md", isCandyMode ? "bg-white" : "bg-slate-700")} />
-                            <div className={clsx("absolute inset-2 rounded-full overflow-hidden flex items-center justify-center", isCandyMode ? "bg-emerald-100" : "bg-slate-800 border border-slate-600")}>
-                                <DotLottieReact
-                                    src="/assets/Macot/waving mascot.lottie"
-                                    loop
-                                    autoplay
-                                    style={{ width: '150%', height: '150%', marginTop: '10%' }}
-                                />
+                        <div className="relative w-32 h-32 mb-6 mt-4">
+                            <div className={clsx("absolute inset-0 rounded-full shadow-lg border-4", isCandyMode ? "border-pink-300" : "border-[#00f2ff] shadow-[0_0_20px_rgba(0,242,255,0.5)]")} />
+                            <div className={clsx("absolute inset-1 rounded-full overflow-hidden flex items-center justify-center bg-slate-900")}>
+                                {profile?.avatarUrl ? (
+                                    <img src={profile.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                                ) : (
+                                    <DotLottieReact
+                                        src="/assets/Macot/waving mascot.lottie"
+                                        loop
+                                        autoplay
+                                        style={{ width: '150%', height: '150%', marginTop: '10%' }}
+                                    />
+                                )}
                             </div>
                         </div>
 
                         {!isEditing ? (
                             <>
-                                <h1 className={clsx("text-2xl font-black tracking-tight relative z-10", isCandyMode ? "text-slate-800" : "text-white")}>
+                                <h1 className={clsx("text-3xl font-black tracking-tight relative z-10 uppercase", isCandyMode ? "text-slate-800" : "text-white")}>
                                     {profile?.name || 'Explorer'}
                                 </h1>
-                                <p className={clsx("font-bold text-sm mb-4 relative z-10", isCandyMode ? "text-emerald-500" : "text-[#00f2ff]")}>
+                                <p className={clsx("font-bold text-sm mb-4 relative z-10 tracking-widest uppercase", isCandyMode ? "text-pink-500" : "text-[#00f2ff]")}>
                                     @{profile?.username || `explorer_${Math.floor(Math.random()*1000)}`} • {profile?.age || 18} y/o
                                 </p>
+
+                                {/* XP and Level Progress Bar */}
+                                {(() => {
+                                    const xp = profile?.total_xp || 0;
+                                    const levelInfo = calculateLevelInfo(xp);
+                                    const xpFloor = levelInfo.xpFloor;
+                                    const xpCeiling = levelInfo.xpCeiling + 1;
+                                    const xpProgress = Math.min(100, Math.max(0, (xp - xpFloor) / (xpCeiling - xpFloor) * 100));
+
+                                    return (
+                                        <div className="w-full max-w-md mx-auto mt-4 mb-8 relative z-10 bg-black/20 p-5 rounded-2xl border border-white/5">
+                                            <div className="flex justify-between items-end mb-2">
+                                                <div className="text-left">
+                                                    <span className={clsx("block text-[10px] font-black uppercase tracking-widest", isCandyMode ? "text-slate-500" : "text-slate-400")}>Level {profile?.level || 1}</span>
+                                                    <span className={clsx("block text-sm font-black uppercase tracking-widest", isCandyMode ? "text-pink-600" : "text-[#00f2ff]")}>{levelInfo.title}</span>
+                                                </div>
+                                                <div className="text-right">
+                                                    <span className={clsx("block text-xs font-black", isCandyMode ? "text-amber-500" : "text-amber-400")}>{xp} XP</span>
+                                                    <span className={clsx("block text-[10px] font-bold uppercase tracking-widest opacity-60", isCandyMode ? "text-slate-500" : "text-slate-400")}>Next: {xpCeiling} XP</span>
+                                                </div>
+                                            </div>
+                                            <div className={clsx("w-full h-3 rounded-full overflow-hidden", isCandyMode ? "bg-slate-200" : "bg-slate-800")}>
+                                                <div 
+                                                    className={clsx("h-full rounded-full transition-all duration-1000", isCandyMode ? "bg-gradient-to-r from-pink-400 to-amber-400" : "bg-gradient-to-r from-[#00f2ff] to-[#d575ff]")}
+                                                    style={{ width: `${xpProgress}%` }}
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                })()}
                                 
-                                {profile?.mobile && (
-                                    <p className={clsx("font-medium text-sm mb-2 relative z-10", isCandyMode ? "text-slate-500" : "text-slate-400")}>
-                                        {profile.mobile}
-                                    </p>
-                                )}
+                                {/* Bio Section */}
+                                <div className={clsx("w-full max-w-md mx-auto mb-8 p-4 rounded-2xl border text-sm text-left italic relative z-10", isCandyMode ? "bg-white border-pink-100 text-slate-600" : "bg-slate-800/50 border-slate-700 text-slate-300")}>
+                                    "{profile?.bio || "A mysterious explorer navigating the digital realm, forging a path toward self-mastery."}"
+                                </div>
+
+                                {/* Activity Stats / Milestones Grid */}
+                                <div className="w-full max-w-md mx-auto grid grid-cols-2 gap-3 mb-8 relative z-10">
+                                    <div className={clsx("p-4 rounded-2xl flex flex-col items-center justify-center border", isCandyMode ? "bg-orange-50 border-orange-200" : "bg-slate-800/40 border-orange-500/30")}>
+                                        <Flame className={clsx("w-6 h-6 mb-2", isCandyMode ? "text-orange-500" : "text-orange-400")} />
+                                        <span className="text-2xl font-black">{profile?.current_streak || 0}</span>
+                                        <span className={clsx("text-[10px] font-bold uppercase tracking-widest", isCandyMode ? "text-slate-500" : "text-slate-400")}>Current Streak</span>
+                                    </div>
+                                    <div className={clsx("p-4 rounded-2xl flex flex-col items-center justify-center border", isCandyMode ? "bg-emerald-50 border-emerald-200" : "bg-slate-800/40 border-emerald-500/30")}>
+                                        <Trophy className={clsx("w-6 h-6 mb-2", isCandyMode ? "text-emerald-500" : "text-emerald-400")} />
+                                        <span className="text-2xl font-black">{profile?.longest_streak || 0}</span>
+                                        <span className={clsx("text-[10px] font-bold uppercase tracking-widest", isCandyMode ? "text-slate-500" : "text-slate-400")}>Longest Streak</span>
+                                    </div>
+                                    {profile?.mobile && (
+                                        <div className={clsx("col-span-2 p-4 rounded-2xl flex flex-col items-center justify-center border", isCandyMode ? "bg-slate-50 border-slate-200" : "bg-slate-800/40 border-slate-700")}>
+                                            <span className={clsx("text-[10px] font-bold uppercase tracking-widest mb-1", isCandyMode ? "text-slate-500" : "text-slate-400")}>Linked Mobile</span>
+                                            <span className="font-medium text-sm">{profile.mobile}</span>
+                                        </div>
+                                    )}
+                                </div>
 
                                 {(followerCount !== null || followingCount !== null) && (
-                                    <div className={clsx("mt-1 mb-6 flex items-center justify-center gap-4 text-xs font-bold uppercase tracking-widest relative z-10", isCandyMode ? "text-slate-500" : "text-slate-400")}>
-                                        <span>
-                                            <span className={clsx("text-sm", isCandyMode ? "text-emerald-500" : "text-[#00f2ff]")}>{followerCount ?? '–'}</span>
-                                            {' '}Followers
-                                        </span>
-                                        <span className={clsx("w-1 h-1 rounded-full", isCandyMode ? "bg-purple-300" : "bg-[#d575ff]")} />
-                                        <span>
-                                            <span className={clsx("text-sm", isCandyMode ? "text-purple-500" : "text-[#d575ff]")}>{followingCount ?? '–'}</span>
-                                            {' '}Following
-                                        </span>
+                                    <div className={clsx("mt-1 mb-8 flex items-center justify-center gap-6 text-xs font-bold uppercase tracking-widest relative z-10", isCandyMode ? "text-slate-500" : "text-slate-400")}>
+                                        <div className="flex flex-col items-center">
+                                            <span className={clsx("text-xl", isCandyMode ? "text-emerald-500" : "text-[#00f2ff]")}>{followerCount ?? '–'}</span>
+                                            <span>Followers</span>
+                                        </div>
+                                        <div className={clsx("w-px h-8", isCandyMode ? "bg-slate-300" : "bg-slate-700")} />
+                                        <div className="flex flex-col items-center">
+                                            <span className={clsx("text-xl", isCandyMode ? "text-purple-500" : "text-[#d575ff]")}>{followingCount ?? '–'}</span>
+                                            <span>Following</span>
+                                        </div>
                                     </div>
                                 )}
 
-                                <div className="w-full flex flex-col gap-3 mt-4 relative z-10">
+                                <div className="w-full max-w-md mx-auto flex flex-col gap-3 relative z-10">
                                     <button 
                                         onClick={() => { audioSynth.playClick(); setIsEditing(true); }}
                                         className={clsx(
                                             "w-full flex items-center justify-center gap-3 py-4 font-bold rounded-2xl transition-colors",
                                             isCandyMode
-                                                ? "bg-slate-50 hover:bg-slate-100 text-slate-700"
+                                                ? "bg-slate-100 hover:bg-slate-200 text-slate-700"
                                                 : "bg-slate-700/50 hover:bg-slate-700 text-slate-200 border border-slate-600/50"
                                         )}
                                     >

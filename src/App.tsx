@@ -8,7 +8,7 @@ import { SignupPage } from './pages/SignupPage';
 import { SigninPage } from './pages/SigninPage';
 import { SignupCompletePage } from './pages/SignupCompletePage';
 import { bgmManager } from './utils/bgmManager';
-import { MapRouteHandler, IntroRouteHandler, PlayRouteHandler, ReportRouteHandler, DnaRouteHandler, SelectionRouteHandler, MoodRouteHandler, DailyRevealRouteHandler, LevelUpRouteHandler, AdminRouteHandler } from './pages/GameRouteHandlers';
+import { MapRouteHandler, IntroRouteHandler, PlayRouteHandler, ReportRouteHandler, DnaRouteHandler, SelectionRouteHandler, MoodRouteHandler, DailyRevealRouteHandler, LevelUpRouteHandler, AdminRouteHandler, ProfileRouteHandler } from './pages/GameRouteHandlers';
 import { OnboardingWizard } from './components/game/OnboardingWizard';
 import { CinematicOnboarding } from './components/game/CinematicOnboarding';
 import { PersonalityAssessment } from './components/game/PersonalityAssessment';
@@ -79,6 +79,7 @@ function App() {
             <Route path="play/:id" element={<PlayRouteHandler />} />
             <Route path="report/:id" element={<ReportRouteHandler />} />
             <Route path="dna" element={<DnaRouteHandler />} />
+            <Route path="profile" element={<ProfileRouteHandler />} />
             <Route path="selection/:age" element={<SelectionRouteHandler />} />
             <Route path="mood" element={<MoodRouteHandler />} />
             <Route path="daily-reveal" element={<DailyRevealRouteHandler />} />
