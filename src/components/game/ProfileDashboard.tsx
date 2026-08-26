@@ -16,7 +16,6 @@ interface ProfileDashboardProps {
 export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
     const profile = useUserStore((state) => state.profile);
     const setProfile = useUserStore((state) => state.setProfile);
-    const clearUserData = useUserStore((state) => state.clearUserData);
     const { isCandyMode } = useUserStore();
     const navigate = useNavigate();
 
