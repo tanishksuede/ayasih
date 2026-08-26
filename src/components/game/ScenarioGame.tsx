@@ -4,7 +4,7 @@ import { audioManager as audioSynth } from "../../utils/audioManager";
 import { detectEmotion, EMOTION_THEMES } from '../../utils/storyEmotion';
 import type { EmotionTheme } from '../../utils/storyEmotion';
 import { bgmManager } from '../../utils/bgmManager';
-import { CheckCircle, AlertCircle, ChevronRight, Volume2, VolumeX, Loader2, Palette, Star } from 'lucide-react';
+import { CheckCircle, AlertCircle, ChevronRight, Volume2, VolumeX, Loader2, Star } from 'lucide-react';
 
 import PostJourneyFeedback from '../feedback/PostJourneyFeedback';
 import { useJourneyTracking } from '../../hooks/useJourneyTracking';
@@ -143,7 +143,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
     useJourneyTracking(level.id);
 
-    const toggleCandyMode = useUserStore((state) => state.toggleCandyMode);
     const collectLesson = useUserStore((state) => state.collectLesson);
     const updateTraits = useUserStore((state) => state.updateTraits);
     const addSessionProgression = useUserStore((state) => state.addSessionProgression);
