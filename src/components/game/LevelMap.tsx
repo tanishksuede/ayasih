@@ -2,6 +2,7 @@ import { useUserStore } from '../../store/userStore';
 import { Star, Lock } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
+import { VibeSpinnerButton } from '../MoodWheel/VibeSpinnerButton';
 
 import clsx from 'clsx';
 import { AudioController } from '../shared/AudioController';
@@ -266,6 +267,19 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 />,
                 document.getElementById('header-search-portal')!
             )}
+
+            {/* Vibe Spinner Button (Top Middle) */}
+            <div className="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-[105] pointer-events-auto mt-2">
+                <VibeSpinnerButton
+                    streak={profile?.current_streak || 0}
+                    completed={!!profile?.daily_challenge_completed}
+                    userId={profile?.id || ''}
+                    onClick={() => {
+                        audioSynth.playClick();
+                        navigate('/game/mood');
+                    }}
+                />
+            </div>
 
             {/* Modals moved to routes */}
             {/* --- SCROLLABLE MAP CONTENT --- */}

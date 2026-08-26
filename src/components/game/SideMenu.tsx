@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Menu, X, Settings, Sun, Moon, Volume2, VolumeX, BookOpen, Users, Star } from 'lucide-react';
 import clsx from 'clsx';
-import { VibeSpinnerButton } from '../MoodWheel/VibeSpinnerButton';
 import { addToWishlist, logUnmatchedSearch } from '../../utils/feedbackUtils';
 import { useUserStore } from '../../store/userStore';
 
@@ -138,20 +137,6 @@ export function SideMenu({
                         )}
                     </div>
                 )}
-                {/* Vibe Spinner */}
-                <div className="w-full flex justify-center origin-top mt-10">
-                    <VibeSpinnerButton
-                        streak={profile?.current_streak || 0}
-                        completed={!!profile?.daily_challenge_completed}
-                        userId={profile?.id || ''}
-                        onClick={() => {
-                            audioSynth.playClick();
-                            navigate('/game/mood');
-                            setIsOpen(false);
-                        }}
-                    />
-                </div>
-
                 <div className="flex flex-col gap-4 mt-2">
                     {/* Journal */}
                     <button
