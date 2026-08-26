@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { useUserStore } from '../../store/userStore';
 import { audioManager as audioSynth } from "../../utils/audioManager";
 import { ArrowLeft, Edit3, BookOpen, Star, Flame, Compass, Heart, Brain, Lightbulb, TrendingUp, Trophy, Award, Clock } from 'lucide-react';
-import { calculateLevelInfo } from '../../utils/levelSystem';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import clsx from 'clsx';
 
