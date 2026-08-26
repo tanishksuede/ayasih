@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useUserStore } from '../../store/userStore';
 import { audioManager as audioSynth } from "../../utils/audioManager";
-import { ArrowLeft, Edit3, Settings, Check, X, LogOut } from 'lucide-react';
+import { ArrowLeft, Edit3, Check, X, LogOut } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useNavigate } from 'react-router-dom';
 import { useUsernameAvailability } from '../../hooks/useUsernameAvailability';
+import { supabase } from '../../utils/supabase';
 import { UsernameField } from './UsernameField';
 import clsx from 'clsx';
 import { getFollowerCount, getFollowingCount } from '../../services/followService';
