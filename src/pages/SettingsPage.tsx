@@ -6,19 +6,12 @@ import { bgmManager } from '../utils/bgmManager';
 import { Volume2, VolumeX, Trash2, AlertTriangle, Bell } from 'lucide-react';
 import clsx from 'clsx';
 import { supabase } from '../utils/supabase';
-import { useUsernameAvailability } from '../hooks/useUsernameAvailability';
-import { UsernameField } from '../components/game/UsernameField';
 import { clearAllUserData } from '../utils/session';
 import { subscribeToPush, unsubscribeFromPush, sendTestNotification, getNotificationSupportStatus, getExistingSubscription } from '../utils/pushNotifications';
 
 export function SettingsPage() {
     const navigate = useNavigate();
-    const [newAge, setNewAge] = useState(18);
     const [newPreferredMap, setNewPreferredMap] = useState('standard');
-    const [usernameInput, setUsernameInput] = useState('');
-    const [usernameError, setUsernameError] = useState('');
-    const [usernameSuccess, setUsernameSuccess] = useState('');
-    const [isSavingUsername, setIsSavingUsername] = useState(false);
 
     // Push Notifications State
     const [pushState, setPushState] = useState<'unsupported' | 'granted' | 'denied' | 'default' | 'subscribing'>(() => getNotificationSupportStatus());
@@ -62,19 +55,10 @@ export function SettingsPage() {
     const appLanguage = useUserStore((state) => state.appLanguage);
     const setAppLanguage = useUserStore((state) => state.setAppLanguage);
 
-    // Username availability — pass profile.id so the user's own current name
-    // is not reported as "taken" when they re-type it.
-    const usernameAvailability = useUsernameAvailability(
-        usernameInput,
-        profile?.id ?? null
-    );
 
     useEffect(() => {
         if (profile) {
-            if (profile.age) setNewAge(profile.age);
             if (profile.preferred_map) setNewPreferredMap(profile.preferred_map);
-            // Initialise the username field with the stored value, if any.
-            setUsernameInput(profile.username ?? '');
         }
     }, [profile]);
 
@@ -90,10 +74,9 @@ export function SettingsPage() {
 
     const handleSave = async () => {
         if (profile) {
-            setProfile({ ...profile, age: newAge, preferred_map: newPreferredMap });
+            setProfile({ ...profile, preferred_map: newPreferredMap });
             try {
                 await supabase.from('users').update({ 
-                    age: newAge,
                     preferred_map: newPreferredMap
                 }).eq('id', profile.id);
             } catch (err) {
@@ -103,99 +86,6 @@ export function SettingsPage() {
             navigate('/game');
         }
     };
-
-    const handleSaveUsername = async () => {
-        if (!profile?.id) return;
-        const trimmed = usernameInput.trim();
-
-        if (!trimmed) {
-            setUsernameError('Please enter a username.');
-            return;
-        }
-
-        if (trimmed === (profile.username ?? '')) {
-            return;
-        }
-
-        if (usernameAvailability.status !== 'available') {
-            setUsernameError(
-                usernameAvailability.errorMessage ||
-                'Please wait for the availability check to finish, or choose a different username.'
-            );
-            return;
-        }
-
-        setIsSavingUsername(true);
-        setUsernameError('');
-        setUsernameSuccess('');
-
-        try {
-            const { data: updatedRows, error: updateError } = await supabase
-                .from('users')
-                .update({ username: trimmed })
-                .eq('id', profile.id)
-                .select();
-
-            if (updateError) {
-                // Race condition / unique constraint violation
-                if (updateError.code === '23505') {
-                    setUsernameError('Username is already taken. Please choose another.');
-                } else {
-                    setUsernameError(`Failed to save username: ${updateError.message}`);
-                }
-                return;
-            }
-
-            // If 0 rows updated, user ID was not found in Supabase (local-only account)
-            if (!updatedRows || updatedRows.length === 0) {
-                const { data: upsertRows, error: upsertError } = await supabase
-                    .from('users')
-                    .upsert({
-                        id: profile.id,
-                        name: profile.name || 'User',
-                        age: profile.age || 20,
-                        mobile: profile.mobile || `local_${profile.id.slice(0, 8)}`,
-                        username: trimmed,
-                        access_type: profile.access_type || 'open',
-                        access_start_date: profile.access_start_date || new Date().toISOString().split('T')[0],
-                    })
-                    .select();
-
-                if (upsertError) {
-                    if (upsertError.code === '23505') {
-                        setUsernameError('Username is already taken. Please choose another.');
-                    } else {
-                        setUsernameError(`Database error: ${upsertError.message}`);
-                    }
-                    return;
-                }
-
-                if (!upsertRows || upsertRows.length === 0) {
-                    setUsernameError('Unable to persist username to database.');
-                    return;
-                }
-            }
-
-            // Success — update local store so DnaProfile, PwaHeader, SideMenu reflect change immediately
-            setProfile({ ...profile, username: trimmed });
-            setUsernameSuccess('Username updated successfully!');
-            setTimeout(() => setUsernameSuccess(''), 3000);
-        } catch (err: unknown) {
-            const message = err instanceof Error ? err.message : 'Unexpected error';
-            setUsernameError(`Error: ${message}`);
-        } finally {
-            setIsSavingUsername(false);
-        }
-    };
-
-    // Whether the username save button should be active
-    const isUsernameChanged = usernameInput.trim() !== (profile?.username ?? '');
-    const canSaveUsername =
-        !!profile?.id &&
-        isUsernameChanged &&
-        usernameInput.trim() !== '' &&
-        usernameAvailability.status === 'available' &&
-        !isSavingUsername;
 
     const handleDeleteAccount = async () => {
         setIsDeletingAccount(true);
@@ -380,53 +270,6 @@ export function SettingsPage() {
                     </div>
 
                     <hr className="border-slate-700" />
-
-                    {/* Username Management Section */}
-                    <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700 space-y-3">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">USERNAME</span>
-                            <span className="text-xs text-[#00f1fe] font-mono font-bold">
-                                {profile?.username ? `@${profile.username}` : '@choose_username'}
-                            </span>
-                        </div>
-
-                        <UsernameField
-                            label=""
-                            value={usernameInput}
-                            onChange={setUsernameInput}
-                            status={isUsernameChanged ? usernameAvailability.status : 'idle'}
-                            errorMessage={isUsernameChanged ? usernameAvailability.errorMessage : null}
-                            disabled={isSavingUsername}
-                        />
-
-                        {usernameError && (
-                            <p className="text-xs text-red-400 font-medium">{usernameError}</p>
-                        )}
-
-                        {usernameSuccess && (
-                            <p className="text-xs text-emerald-400 font-bold">{usernameSuccess}</p>
-                        )}
-
-                        <button
-                            onClick={handleSaveUsername}
-                            disabled={!canSaveUsername}
-                            className="w-full bg-[#00f1fe]/20 hover:bg-[#00f1fe]/30 text-[#00f1fe] border border-[#00f1fe]/40 font-bold py-2.5 rounded-xl text-xs uppercase tracking-widest transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md"
-                        >
-                            {isSavingUsername ? 'Saving…' : (profile?.username ? 'Update Username' : 'Set Username')}
-                        </button>
-                    </div>
-
-                    <hr className="border-slate-700" />
-
-                    <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Current Age</label>
-                        <input
-                            type="number"
-                            value={newAge}
-                            onChange={(e) => setNewAge(parseInt(e.target.value))}
-                            className="w-full bg-slate-800 text-white rounded-lg px-4 py-3 border border-slate-700 font-mono"
-                        />
-                    </div>
                     <div>
                         <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Preferred Exam Focus</label>
                         <select
