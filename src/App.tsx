@@ -18,6 +18,7 @@ import { ThemeSwitcherPage } from './pages/ThemeSwitcherPage';
 import { NotificationOnboardingPage } from './pages/NotificationOnboardingPage';
 import { SocialPage } from './pages/SocialPage';
 import { FeedbackDashboard } from './components/admin/FeedbackDashboard';
+import { PaymentVerify } from './pages/PaymentVerify';
 import ReactGA from 'react-ga4';
 import { AnalyticsTracker } from './components/AnalyticsTracker';
 import { GoogleTranslateSync } from './components/GoogleTranslateSync';
@@ -64,6 +65,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup/complete" element={<SignupCompletePage />} />
+          <Route path="/payment/verify" element={<PaymentVerify />} />
           <Route path="/dashboard" element={<Navigate to="/game" replace />} />
           <Route path="/game" element={<GameRoot />}>
             <Route index element={<MapRouteHandler />} />

@@ -20,6 +20,9 @@ export default async function handler(req, res) {
 
   try {
     const orderId = `order_${Date.now()}_${user_id || 'guest'}`;
+    const host = req.headers.host || 'aya-weld.vercel.app';
+    const protocol = host.includes('localhost') ? 'http' : 'https';
+    const returnUrl = `${protocol}://${host}/payment/verify?order_id={order_id}`;
 
     const orderPayload = {
       order_id: orderId,
@@ -31,8 +34,7 @@ export default async function handler(req, res) {
         customer_email: 'test@example.com', // Replace with real email if available
       },
       order_meta: {
-        // You can set return_url here if needed, but since we use the SDK, it's often handled there.
-        // return_url: "https://your-domain.com/payment-success?order_id={order_id}"
+        return_url: returnUrl
       },
       order_note: `Subscription: ${plan_id}`,
     };
