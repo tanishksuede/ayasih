@@ -119,7 +119,6 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     }, [ageLevels]);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    const [isBgmEnabled, setIsBgmEnabled] = useState(bgmManager.enabled);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -250,12 +249,9 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
             <SideMenu
                 isCandyMode={isCandyMode}
                 isAdmin={isAdmin}
-                isBgmEnabled={isBgmEnabled}
                 profile={profile}
                 audioSynth={audioSynth}
-                bgmManager={bgmManager}
                 navigate={navigate}
-                setIsBgmEnabled={setIsBgmEnabled}
                 onOpenDnaProfile={onOpenDnaProfile}
             />
 

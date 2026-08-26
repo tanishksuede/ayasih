@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, X, Settings, Sun, Moon, Volume2, VolumeX, BookOpen, Users, Star } from 'lucide-react';
+import { Menu, X, Settings, SunMoon, BookOpen, Users, Star } from 'lucide-react';
 import clsx from 'clsx';
 import { addToWishlist, logUnmatchedSearch } from '../../utils/feedbackUtils';
 import { useUserStore } from '../../store/userStore';
@@ -7,30 +7,23 @@ import { useUserStore } from '../../store/userStore';
 interface SideMenuProps {
     isCandyMode: boolean;
     isAdmin: boolean;
-    isBgmEnabled: boolean;
     profile: any;
     audioSynth: any;
-    bgmManager: any;
     navigate: (path: string) => void;
-    setIsBgmEnabled: (enabled: boolean) => void;
     onOpenDnaProfile: () => void;
 }
 
 export function SideMenu({
-    isCandyMode,
     isAdmin,
-    isBgmEnabled,
     profile,
     audioSynth,
-    bgmManager,
     navigate,
-    setIsBgmEnabled,
     onOpenDnaProfile
 }: SideMenuProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [wishlistInput, setWishlistInput] = useState('');
     const [wishlistStatus, setWishlistStatus] = useState<'idle' | 'loading' | 'added'>('idle');
-    const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
+    const { isCandyMode, setShowSubscriptionModal } = useUserStore();
 
     const handleWishlistSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -215,29 +208,8 @@ export function SideMenu({
                             <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-amber-700" : "text-amber-400")}>Upgrade to Pro</span>
                         </div>
                     </button>
-                </div>
-
-                {/* Grid for Smaller Settings */}
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                    {/* BGM Toggle */}
-                    <button
-                        onClick={() => {
-                            audioSynth.playClick();
-                            bgmManager.toggle();
-                            setIsBgmEnabled(bgmManager.enabled);
-                        }}
-                        className={clsx(
-                            "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl transition-all border shadow-sm",
-                            isCandyMode
-                                ? "bg-white/60 border-slate-200 hover:bg-white"
-                                : "bg-slate-800/60 border-slate-700 hover:bg-slate-700/80 text-indigo-200"
-                        )}
-                    >
-                        {isBgmEnabled ? <Volume2 size={24} className={isCandyMode ? "text-slate-600" : "text-indigo-400"} /> : <VolumeX size={24} className="text-slate-400" />}
-                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">BGM</span>
-                    </button>
-
-                    {/* Theme Toggle */}
+                </div>                {/* Theme Toggle (Full Width now) */}
+                <div className="mt-4">
                     <button
                         onClick={() => {
                             audioSynth.playClick();
@@ -245,16 +217,18 @@ export function SideMenu({
                             setIsOpen(false);
                         }}
                         className={clsx(
-                            "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl transition-all border shadow-sm",
+                            "w-full flex items-center justify-center gap-3 p-4 rounded-2xl transition-all border shadow-sm",
                             isCandyMode
                                 ? "bg-white/60 border-slate-200 hover:bg-white"
                                 : "bg-slate-800/60 border-slate-700 hover:bg-slate-700/80 text-indigo-200"
                         )}
                     >
-                        {isCandyMode ? <Sun size={24} className="text-amber-500" /> : <Moon size={24} className="text-indigo-400" />}
-                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">Theme</span>
+                        <SunMoon size={24} className={isCandyMode ? "text-slate-600" : "text-indigo-400"} />
+                        <span className="text-xs font-bold uppercase tracking-widest opacity-80">Change Theme</span>
                     </button>
-                    
+                </div>       
+
+                <div className="mt-4">
                     {/* Settings */}
                     <button
                         onClick={() => {
