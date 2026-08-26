@@ -5,6 +5,7 @@ import { PersonalityIntro } from '../components/game/PersonalityIntro';
 import { ScenarioGame } from '../components/game/ScenarioGame';
 import { MatchReport } from '../components/game/MatchReport';
 import { ProfileDashboard } from '../components/game/ProfileDashboard';
+import { DnaProfile } from '../components/game/DnaProfile';
 import { CharacterSelection } from '../components/game/CharacterSelection';
 import { MoodWheel } from '../components/MoodWheel/MoodWheel';
 import { DailyChallengeReveal } from '../components/game/DailyChallengeReveal';
@@ -93,7 +94,7 @@ export function DnaRouteHandler() {
     const profile = useUserStore((state) => state.profile);
     if (!profile) return <Navigate to="/game" replace />;
 
-    return <ProfileDashboard onBack={() => navigate('/game')} />;
+    return <DnaProfile onBack={() => navigate('/game')} />;
 }
 
 export function ProfileRouteHandler() {
