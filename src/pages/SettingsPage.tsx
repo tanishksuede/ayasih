@@ -7,7 +7,7 @@ import { Volume2, VolumeX, Trash2, AlertTriangle, Bell } from 'lucide-react';
 import clsx from 'clsx';
 import { supabase } from '../utils/supabase';
 import { clearAllUserData } from '../utils/session';
-import { subscribeToPush, unsubscribeFromPush, sendTestNotification, getNotificationSupportStatus, getExistingSubscription } from '../utils/pushNotifications';
+import { subscribeToPush, unsubscribeFromPush, sendTestNotification, getNotificationSupportStatus, getExistingSubscription, runIsolatedPushDiagnostic } from '../utils/pushNotifications';
 
 export function SettingsPage() {
     const navigate = useNavigate();
@@ -179,6 +179,18 @@ export function SettingsPage() {
         await sendTestNotification();
     };
 
+    const handleDiagnosticPush = async () => {
+        audioSynth.playClick();
+        setPushMessage('Running isolated browser push test...');
+        const result = await runIsolatedPushDiagnostic();
+        if (result.success) {
+            setPushMessage(`Push Service OK! Endpoint host: ${result.endpointHost}`);
+        } else {
+            setPushMessage(`Push Diagnostic: ${result.error}`);
+        }
+        setTimeout(() => setPushMessage(''), 6000);
+    };
+
     const handleDisablePush = async () => {
         audioSynth.playClick();
         setPushState('subscribing');
@@ -317,6 +329,12 @@ export function SettingsPage() {
                                     className="w-full bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 border border-purple-500/40 font-bold py-2 rounded-xl text-xs uppercase tracking-wider transition-all"
                                 >
                                     🔔 Send Test Notification
+                                </button>
+                                <button
+                                    onClick={handleDiagnosticPush}
+                                    className="w-full bg-slate-800/80 hover:bg-slate-800 text-purple-300 border border-purple-500/30 font-semibold py-1.5 rounded-xl text-[11px] uppercase tracking-wider transition-all"
+                                >
+                                    🛠️ Run Push Hardware Test
                                 </button>
                                 <button
                                     onClick={handleDisablePush}

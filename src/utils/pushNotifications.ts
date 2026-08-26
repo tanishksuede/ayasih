@@ -6,16 +6,25 @@ import { useUserStore } from '../store/userStore';
 // ---------------------------------------------------------------------------
 
 /**
+ * Sanitize a VAPID key string by trimming whitespace and stripping enclosing quotes if present.
+ */
+function sanitizeBase64Url(keyStr: string): string {
+  let clean = keyStr.trim();
+  if ((clean.startsWith('"') && clean.endsWith('"')) || (clean.startsWith("'") && clean.endsWith("'"))) {
+    clean = clean.slice(1, -1).trim();
+  }
+  return clean;
+}
+
+/**
  * Convert a URL-safe base64 VAPID public key to the Uint8Array that
  * pushManager.subscribe() expects as `applicationServerKey`.
- *
- * This is the canonical implementation — matches the web-push npm package
- * and the W3C Push API spec exactly.
  */
 function urlBase64ToUint8Array(base64String: string): Uint8Array {
-  const padding = '='.repeat((4 - base64String.length % 4) % 4);
-  const base64 = (base64String + padding)
-    .replace(/\-/g, '+')
+  const cleanStr = sanitizeBase64Url(base64String);
+  const padding = '='.repeat((4 - (cleanStr.length % 4)) % 4);
+  const base64 = (cleanStr + padding)
+    .replace(/-/g, '+')
     .replace(/_/g, '/');
   const rawData = window.atob(base64);
   const buffer = new ArrayBuffer(rawData.length);
@@ -25,6 +34,49 @@ function urlBase64ToUint8Array(base64String: string): Uint8Array {
   }
   return outputArray;
 }
+
+/**
+ * Validate that a VAPID public key string decodes to a valid 65-byte uncompressed P-256 EC public key.
+ */
+export function validateVapidPublicKey(keyStr: string): { valid: boolean; length?: number; error?: string } {
+  try {
+    const clean = sanitizeBase64Url(keyStr);
+    if (!clean) return { valid: false, error: 'VAPID public key string is empty' };
+    
+    const uint8 = urlBase64ToUint8Array(clean);
+    if (uint8.length !== 65) {
+      return {
+        valid: false,
+        length: uint8.length,
+        error: `Invalid VAPID public key byte length: expected 65 bytes, got ${uint8.length} bytes`
+      };
+    }
+    if (uint8[0] !== 4) {
+      return {
+        valid: false,
+        length: uint8.length,
+        error: `Invalid VAPID public key prefix byte: expected 0x04, got 0x${uint8[0].toString(16)}`
+      };
+    }
+    return { valid: true, length: uint8.length };
+  } catch (err: any) {
+    return { valid: false, error: err?.message || 'Failed to decode base64url string' };
+  }
+}
+
+/**
+ * Compare two Uint8Array buffers for equality.
+ */
+function areUint8ArraysEqual(a: Uint8Array, b: Uint8Array): boolean {
+  if (a.byteLength !== b.byteLength) return false;
+  for (let i = 0; i < a.byteLength; i++) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
+// Single-flight lock to prevent concurrent subscription calls
+let isSubscribingInFlight = false;
 
 // ---------------------------------------------------------------------------
 // Public API
@@ -107,105 +159,311 @@ export async function subscribeToPush(userId?: string): Promise<PushSubscription
   return subscribeUserToPush(userId);
 }
 
+/**
+ * Public function to subscribe user to push notifications.
+ * Idempotent & protected with an in-flight guard.
+ */
 export async function subscribeUserToPush(passedUserId?: string): Promise<PushSubscription | null> {
-  console.log('[Push] Starting subscription...');
+  if (isSubscribingInFlight) {
+    console.warn('[Push] Subscription request already in-flight. Skipping duplicate call.');
+    return null;
+  }
+
+  isSubscribingInFlight = true;
+  try {
+    return await _subscribeUserToPushInternal(passedUserId);
+  } finally {
+    isSubscribingInFlight = false;
+  }
+}
+
+/**
+ * Internal implementation of push subscription.
+ */
+async function _subscribeUserToPushInternal(passedUserId?: string): Promise<PushSubscription | null> {
+  console.log('[Push] Starting push notification subscription flow...');
 
   try {
-    // ── 1. Feature-detect ──────────────────────────────────────────────────
+    // ── 1. Feature Detection & Permission Check ───────────────────────────
+    console.log('[Push] Checking notification permission');
     if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
-      console.error('[Push] FAIL — Web push features not supported in this browser.');
+      console.error('[Push] FAIL — Stage 1 (Browser Support): Web Push features not supported in this browser.');
       return null;
     }
 
-    // If permission is already denied, do not prompt repeatedly
-    if (Notification.permission === 'denied') {
-      console.warn('[Push] Notification permission has been denied by the user.');
+    const initialPermission = Notification.permission;
+    console.log('[Push] Current notification permission state:', initialPermission);
+
+    if (initialPermission === 'denied') {
+      console.warn('[Push] FAIL — Stage 1 (Permission): Notification permission has been denied by the user in browser settings.');
       return null;
     }
 
-    // ── 2. Validate VAPID key ──────────────────────────────────────────────
-    const DEFAULT_VAPID_KEY = 'BKuBEyjIX-OtnnyJ7cyBMLwAycYv6POyGVFIxPnlzbReZLxv3S-QP9wcJ-YIE38w_al1tqIDwSf41MUG8JgipZE';
-    const VAPID_KEY = (import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined) || DEFAULT_VAPID_KEY;
-    console.log('[Push] Using VAPID key prefix:', VAPID_KEY.substring(0, 15));
+    // ── 2. Validate VAPID Public Key ───────────────────────────────────────
+    console.log('[Push] Validating VAPID public key...');
+    const rawVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
 
-    // ── 3. Wait for or register the service worker ─────────────────────────
-    let registration: ServiceWorkerRegistration;
+    if (!rawVapidKey || !rawVapidKey.trim()) {
+      console.error('[Push] FAIL — Stage 2 (VAPID Key): VITE_VAPID_PUBLIC_KEY environment variable is not configured.');
+      return null;
+    }
+
+    const keyValidation = validateVapidPublicKey(rawVapidKey);
+    console.log(`[Push] VAPID key format check: valid=${keyValidation.valid}, byteLength=${keyValidation.length ?? 'unknown'}`);
+
+    if (!keyValidation.valid) {
+      console.error(`[Push] FAIL — Stage 2 (VAPID Validation): ${keyValidation.error}`);
+      return null;
+    }
+
+    // ── 3. Register & Get Service Worker ──────────────────────────────────
+    console.log('[Push] Registering service worker');
+    let registration: ServiceWorkerRegistration | undefined;
     try {
-      registration = await navigator.serviceWorker.ready;
-    } catch {
-      registration = await navigator.serviceWorker.register('/sw.js');
-    }
-
-    // ── 4. Request notification permission ────────────────────────────────
-    console.log('[Push] Requesting Notification permission…');
-    const permission = await Notification.requestPermission();
-    if (permission !== 'granted') {
-      console.warn('[Push] User did not grant permission. Permission state:', permission);
+      registration = await navigator.serviceWorker.getRegistration('/sw.js');
+      if (!registration) {
+        registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+      }
+    } catch (regErr: any) {
+      console.error('[Push] FAIL — Stage 3 (Service Worker Register):', regErr?.message || regErr);
       return null;
     }
 
-    // ── 5. Convert VAPID key ───────────────────────────────────────────────
+    try {
+      const readyPromise = navigator.serviceWorker.ready;
+      const timeoutPromise = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Service worker ready timeout (5s)')), 5000)
+      );
+      registration = await Promise.race([readyPromise, timeoutPromise]);
+      console.log(`[Push] Service worker ready (scope: ${registration?.scope}, active: ${!!registration?.active})`);
+    } catch (swReadyErr: any) {
+      console.warn('[Push] Service worker ready wait notice:', swReadyErr?.message || swReadyErr);
+      if (!registration) {
+        console.error('[Push] FAIL — Stage 3 (Service Worker Ready): Registration not active.');
+        return null;
+      }
+    }
+
+    // ── 4. Request User Consent if Permission is Default ───────────────────
+    if (Notification.permission === 'default') {
+      console.log('[Push] Requesting Notification permission from user...');
+      const permissionResult = await Notification.requestPermission();
+      if (permissionResult !== 'granted') {
+        console.warn('[Push] FAIL — Stage 4 (Permission Prompt): User denied or dismissed permission prompt.');
+        return null;
+      }
+    }
+
+    // ── 5. Convert VAPID Key to Uint8Array ────────────────────────────────
+    console.log('[Push] Converting VAPID key...');
     let applicationServerKey: Uint8Array;
     try {
-      applicationServerKey = urlBase64ToUint8Array(VAPID_KEY);
-    } catch (e) {
-      console.error('[Push] VAPID key conversion failed:', e);
-      throw e;
+      applicationServerKey = urlBase64ToUint8Array(rawVapidKey);
+    } catch (e: any) {
+      console.error('[Push] FAIL — Stage 5 (VAPID Conversion): Key conversion failed:', e?.message || e);
+      return null;
     }
 
-    // ── 6. Subscribe ───────────────────────────────────────────────────────
-    console.log('[Push] Calling pushManager.subscribe()…');
-    let subscription = await registration.pushManager.getSubscription();
-    
+    // ── 6. Check Existing Subscription & Handle Key Mismatches ───────────
+    let subscription: PushSubscription | null = null;
+    let existingSub: PushSubscription | null = null;
+
+    try {
+      existingSub = await registration.pushManager.getSubscription();
+      console.log('[Push] Existing browser PushSubscription found:', !!existingSub);
+
+      if (existingSub) {
+        let keysMatch = false;
+        if (existingSub.options && existingSub.options.applicationServerKey) {
+          const existingKeyUint8 = new Uint8Array(existingSub.options.applicationServerKey);
+          keysMatch = areUint8ArraysEqual(existingKeyUint8, applicationServerKey);
+        }
+
+        if (keysMatch) {
+          console.log('[Push] Existing PushSubscription matches current VAPID public key. Reusing subscription.');
+          subscription = existingSub;
+        } else {
+          console.log('[Push] Existing PushSubscription uses a DIFFERENT VAPID key. Unsubscribing stale browser subscription...');
+          const unsubResult = await existingSub.unsubscribe();
+          console.log('[Push Debug] Unsubscribe result:', unsubResult);
+          const doubleCheck = await registration.pushManager.getSubscription();
+          console.log('[Push Debug] Double-check after unsubscribe (should be null):', doubleCheck === null);
+          subscription = null;
+        }
+      }
+    } catch (existingCheckErr: any) {
+      console.warn('[Push] Error checking existing subscription:', existingCheckErr?.message || existingCheckErr);
+    }
+
+    // ── 7. Call PushManager.subscribe() with Pre-Subscribe Diagnostics ────
     if (!subscription) {
-      subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: applicationServerKey as unknown as BufferSource,
-      });
-    }
-    
-    console.log('[Push] Subscribed successfully. Endpoint:', subscription.endpoint.slice(0, 40) + '…');
+      console.log('[Push Debug] origin:', typeof window !== 'undefined' ? window.location.origin : 'unknown');
+      console.log('[Push Debug] service worker scope:', registration.scope);
+      console.log('[Push Debug] service worker state:', registration.active ? registration.active.state : (registration.installing ? 'installing' : (registration.waiting ? 'waiting' : 'none')));
+      console.log('[Push Debug] pushManager available:', 'PushManager' in window);
+      console.log('[Push Debug] permission:', Notification.permission);
+      console.log('[Push Debug] userVisibleOnly:', true);
+      console.log('[Push Debug] VAPID key prefix:', rawVapidKey.substring(0, 12));
+      console.log('[Push Debug] VAPID byte length:', applicationServerKey.byteLength);
+      console.log('[Push Debug] VAPID first byte:', applicationServerKey[0]);
+      console.log('[Push Debug] existing subscription:', !!existingSub);
+      if (existingSub) {
+        try {
+          console.log('[Push Debug] existing subscription endpoint host:', new URL(existingSub.endpoint).hostname);
+        } catch {}
+        if (existingSub.options?.applicationServerKey) {
+          console.log('[Push Debug] existing subscription applicationServerKey length:', new Uint8Array(existingSub.options.applicationServerKey).byteLength);
+        }
+      }
 
-    // ── 7. Persist via server-side API ──────────────────────────────────────
+      console.log('[Push] Calling pushManager.subscribe()…');
+      try {
+        subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: applicationServerKey as unknown as BufferSource,
+        });
+        console.log('[Push] PushSubscription created');
+      } catch (subErr: any) {
+        console.error(`[Push] FAIL — Stage 6 (PushManager Subscribe): ${subErr?.name || 'Error'} - ${subErr?.message || subErr}`);
+        return null;
+      }
+    }
+
+    if (!subscription) {
+      console.error('[Push] FAIL — Stage 6 (PushManager Subscribe): No subscription created.');
+      return null;
+    }
+
+    // ── 8. Save Subscription to Backend (Only after subscribe() succeeds) ──
     let targetUserId: string | null = passedUserId || useUserStore.getState().profile?.id || localStorage.getItem('aya_user_id') || null;
-    
+
     if (!targetUserId) {
       try {
         const { data: { user: authUser } } = await supabase.auth.getUser();
         if (authUser) targetUserId = authUser.id;
       } catch (e) {
-        console.warn('[Push] Auth check failed:', e);
+        console.warn('[Push] Auth check warning:', e);
       }
     }
 
+    console.log('[Push] Saving subscription to backend');
     const subJson = subscription.toJSON();
 
-    try {
-      const apiRes = await fetch('/api/subscribe-push', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subscription: subJson, userId: targetUserId })
-      });
+    const apiRes = await fetch('/api/subscribe-push', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscription: subJson, userId: targetUserId })
+    });
 
-      if (!apiRes.ok) {
-        // Fallback endpoint if needed
-        await fetch('/api/push-subscribe', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ subscription: subJson, userId: targetUserId })
-        });
-      }
+    console.log(`[Push] Backend response: ${apiRes.status}`);
+    const resData = await apiRes.json().catch(() => ({}));
 
-      console.log('[Push] Subscription stored in database.');
-    } catch (apiErr) {
-      console.error('[Push] Network error saving subscription to DB:', apiErr);
+    if (!apiRes.ok || !resData.success) {
+      const errorMsg = resData.error || `HTTP ${apiRes.status}`;
+      console.error(`[Push] FAIL — Stage 8 (Backend Save): ${errorMsg}`);
+      throw new Error(`Failed to save subscription in backend: ${errorMsg}`);
     }
 
+    console.log('[Push] Subscription saved successfully');
     return subscription;
 
-  } catch (err) {
-    console.error('[Push] subscribeUserToPush() failed:', err);
+  } catch (err: any) {
+    console.error('[Push] subscribeUserToPush() failed:', err?.message || err);
     return null;
+  }
+}
+
+/**
+ * Isolated Browser Diagnostic Test Function.
+ * Performs ONLY browser PushManager.subscribe() without calling Supabase/backend.
+ */
+export async function runIsolatedPushDiagnostic(): Promise<{ success: boolean; error?: string; endpointHost?: string }> {
+  console.log('[Push Diagnostic] Running isolated browser PushManager test...');
+  try {
+    if (!isPushSupported()) {
+      return { success: false, error: 'Web Push features not supported in this browser' };
+    }
+
+    const rawVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
+    if (!rawVapidKey) {
+      return { success: false, error: 'VITE_VAPID_PUBLIC_KEY environment variable missing' };
+    }
+
+    const keyValidation = validateVapidPublicKey(rawVapidKey);
+    if (!keyValidation.valid) {
+      return { success: false, error: `Key validation failed: ${keyValidation.error}` };
+    }
+
+    const registration = await navigator.serviceWorker.ready;
+    const applicationServerKey = urlBase64ToUint8Array(rawVapidKey);
+    const existing = await registration.pushManager.getSubscription();
+
+    console.log('[Push Diagnostic] Isolated check pre-subscribe:', {
+      origin: window.location.origin,
+      scope: registration.scope,
+      hasActiveWorker: !!registration.active,
+      permission: Notification.permission,
+      keyPrefix: rawVapidKey.substring(0, 12),
+      byteLength: applicationServerKey.byteLength,
+      firstByte: applicationServerKey[0],
+      hasExisting: !!existing
+    });
+
+    if (existing) {
+      const existingKeyUint8 = existing.options?.applicationServerKey ? new Uint8Array(existing.options.applicationServerKey) : null;
+      const keysMatch = existingKeyUint8 ? areUint8ArraysEqual(existingKeyUint8, applicationServerKey) : false;
+      if (!keysMatch) {
+        console.log('[Push Diagnostic] Unsubscribing mismatched existing subscription...');
+        await existing.unsubscribe();
+      } else {
+        console.log('[Push Diagnostic] Existing subscription matches current VAPID key.');
+        return { success: true, endpointHost: new URL(existing.endpoint).hostname };
+      }
+    }
+
+    console.log('[Push Diagnostic] Attempting isolated pushManager.subscribe()...');
+    const sub = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: applicationServerKey as unknown as BufferSource,
+    });
+
+    const host = new URL(sub.endpoint).hostname;
+    console.log('[Push Diagnostic] Isolated PushManager.subscribe() SUCCESS! Endpoint host:', host);
+    return { success: true, endpointHost: host };
+  } catch (err: any) {
+    console.error('[Push Diagnostic] Isolated PushManager.subscribe() FAILED:', err?.name || 'Error', err?.message || err);
+    return { success: false, error: `${err?.name || 'Error'}: ${err?.message || err}` };
+  }
+}
+
+/**
+ * Silently sync existing push subscription with backend if permission is granted.
+ * NEVER invokes pushManager.subscribe() automatically during boot.
+ */
+export async function syncExistingSubscriptionIfGranted(): Promise<void> {
+  if (typeof window === 'undefined' || !('Notification' in window)) return;
+  if (Notification.permission === 'granted') {
+    try {
+      const existing = await getExistingSubscription();
+      if (existing) {
+        console.log('[Push Boot] Found existing subscription on boot — syncing with backend...');
+        let targetUserId: string | null = useUserStore.getState().profile?.id || localStorage.getItem('aya_user_id') || null;
+        if (!targetUserId) {
+          const { data: { user: authUser } } = await supabase.auth.getUser();
+          if (authUser) targetUserId = authUser.id;
+        }
+        await fetch('/api/subscribe-push', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subscription: existing.toJSON(), userId: targetUserId })
+        });
+        console.log('[Push Boot] Existing subscription synced successfully.');
+      } else {
+        console.log('[Push Boot] Notification permission granted, but no browser subscription exists yet. Awaiting user action.');
+      }
+    } catch (e) {
+      console.warn('[Push Boot] Silent sync error:', e);
+    }
   }
 }
 
@@ -257,21 +515,6 @@ export async function sendTestNotification(): Promise<boolean> {
     console.error('[Push] Failed to show test notification:', err);
     alert('Could not show notification: ' + (err?.message || err));
     return false;
-  }
-}
-
-/**
- * Silently subscribe and register push notifications if permission is already granted.
- */
-export async function autoSubscribeIfGranted(): Promise<void> {
-  if (typeof window === 'undefined' || !('Notification' in window)) return;
-  if (Notification.permission === 'granted') {
-    console.log('[Push] Permission already granted — auto-registering device...');
-    try {
-      await subscribeUserToPush();
-    } catch (e) {
-      console.warn('[Push] Auto-subscription silent error:', e);
-    }
   }
 }
 

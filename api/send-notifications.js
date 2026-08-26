@@ -17,17 +17,20 @@ try {
 }
 
 // Configure Web Push VAPID details
-const publicVapidKey = process.env.VAPID_PUBLIC_KEY || process.env.VITE_VAPID_PUBLIC_KEY || 'BKuBEyjIX-OtnnyJ7cyBMLwAycYv6POyGVFIxPnlzbReZLxv3S-QP9wcJ-YIE38w_al1tqIDwSf41MUG8JgipZE';
-const privateVapidKey = process.env.VAPID_PRIVATE_KEY || 'HHW51N5h_f1ofvSD3fJvVvToP93qk9lwr7_X7PuuPXo';
+const publicVapidKey = process.env.VAPID_PUBLIC_KEY || process.env.VITE_VAPID_PUBLIC_KEY;
+const privateVapidKey = process.env.VAPID_PRIVATE_KEY;
+const vapidSubject = process.env.VAPID_SUBJECT || 'mailto:support@aya-game.com';
 
-try {
-  webpush.setVapidDetails(
-    'mailto:support@aya-game.com',
-    publicVapidKey,
-    privateVapidKey
-  );
-} catch (err) {
-  console.error('[send-notifications] Failed to set VAPID details:', err);
+if (publicVapidKey && privateVapidKey) {
+  try {
+    webpush.setVapidDetails(
+      vapidSubject,
+      publicVapidKey,
+      privateVapidKey
+    );
+  } catch (err) {
+    console.error('[send-notifications] Failed to set VAPID details:', err);
+  }
 }
 
 const FOUNDER_EMAIL = 'anitadhakad333@gmail.com';
@@ -96,6 +99,14 @@ export default async function handler(req, res) {
 
   if (!supabase) {
     return res.status(500).json({ error: 'Supabase client is not configured on the server.' });
+  }
+
+  if (!publicVapidKey || !privateVapidKey) {
+    console.error('[send-notifications] VAPID keys missing in environment variables.');
+    return res.status(500).json({
+      success: false,
+      error: 'VAPID configuration error: VAPID_PUBLIC_KEY and VAPID_PRIVATE_KEY environment variables must be configured on the server.'
+    });
   }
 
   try {
