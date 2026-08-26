@@ -21,6 +21,18 @@ export function SubscriptionModal({ isOpen, onClose }: SubscriptionModalProps) {
       setLoadingPlan(planId);
       setError(null);
       
+      let formattedPhone = '9999999999';
+      if (userProfile?.mobile) {
+        // Remove all non-digits
+        const digitsOnly = userProfile.mobile.replace(/\D/g, '');
+        // If it starts with country code (e.g., 91 for India) and is 12 digits, keep last 10
+        if (digitsOnly.length > 10) {
+          formattedPhone = digitsOnly.slice(-10);
+        } else if (digitsOnly.length === 10) {
+          formattedPhone = digitsOnly;
+        }
+      }
+
       // 1. Get payment_session_id from our Vercel API
       const response = await fetch('/api/create-cashfree-order', {
         method: 'POST',
@@ -31,6 +43,7 @@ export function SubscriptionModal({ isOpen, onClose }: SubscriptionModalProps) {
           plan_id: planId,
           amount: amount,
           user_id: userProfile?.id || 'guest',
+          customer_phone: formattedPhone,
         })
       });
 
