@@ -1110,17 +1110,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                     <ChevronRight className="rotate-180 w-3 h-3" /> Exit
                 </button>
                 <div className="flex gap-4 items-center">
-                    {/* Theme Toggle for Testing */}
-                    <button
-                        onClick={() => toggleCandyMode()}
-                        className={clsx(
-                            "p-2 rounded-full transition-all",
-                            isCandyTheme ? "bg-pink-500 text-white shadow-lg" : "bg-black/40 text-white/50 hover:text-white"
-                        )}
-                        title="Toggle Candy Theme"
-                    >
-                        <Palette size={16} />
-                    </button>
 
                     <div className={clsx(
                         "flex items-center gap-3 px-6 py-3 rounded-full border-2 transition-all shadow-xl",

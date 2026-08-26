@@ -42,7 +42,7 @@ export function SourcesModal({
 
       {/* Modal card */}
       <div
-        className="relative z-10 w-full max-w-sm rounded-2xl border border-white/10 bg-[#0d1a3a] p-5 shadow-2xl"
+        className="relative z-10 w-[90%] max-w-[340px] md:max-w-sm rounded-2xl border border-white/10 bg-[#0d1a3a] p-5 shadow-2xl"
         onClick={(e) => e.stopPropagation()} // prevent close when clicking inside
       >
         {/* Header */}
