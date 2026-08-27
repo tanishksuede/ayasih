@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../store/userStore';
 import { audioManager as audioSynth } from "../utils/audioManager";
 import { bgmManager } from '../utils/bgmManager';
-import { Volume2, VolumeX, Trash2, AlertTriangle, Bell, SunMoon } from 'lucide-react';
+import { Volume2, VolumeX, Trash2, AlertTriangle, Bell } from 'lucide-react';
 import clsx from 'clsx';
 import { supabase } from '../utils/supabase';
 import { clearAllUserData } from '../utils/session';

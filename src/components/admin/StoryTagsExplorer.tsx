@@ -348,14 +348,14 @@ export function StoryTagsExplorer() {
                                     <div className="tag-marquee-wrapper bg-black/40 border border-white/5 rounded-2xl py-3 relative">
                                         <div 
                                             className="tag-marquee-container gap-2 px-2"
-                                            style={{ animation: \`tagMarquee \${Math.max(10, activeTags.length * 1.5)}s linear infinite\` }}
+                                            style={{ animation: `tagMarquee ${Math.max(10, activeTags.length * 1.5)}s linear infinite` }}
                                         >
                                             {[...activeTags, ...activeTags].map((tag, idx) => (
                                                 <button
                                                     key={idx}
                                                     onClick={() => setSelectedTag(tag)}
                                                     className="text-xs font-mono px-2.5 py-1 rounded-lg bg-gradient-to-r from-purple-900/50 to-fuchsia-900/40 text-purple-200 border border-purple-500/40 hover:border-[#00f2ff] hover:text-white transition-all shadow-sm flex items-center gap-1 shrink-0"
-                                                    title={\`Click to filter other stories with #\${tag}\`}
+                                                    title={`Click to filter other stories with #${tag}`}
                                                 >
                                                     #{tag}
                                                 </button>
