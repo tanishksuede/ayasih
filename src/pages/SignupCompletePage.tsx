@@ -203,6 +203,18 @@ export function SignupCompletePage() {
                                 {!isLoading && <Check size={22} className="stroke-[3]" />}
                             </motion.button>
                         </form>
+
+                        <div className="mt-6 text-center">
+                            <button
+                                onClick={async () => {
+                                    await authService.signOut();
+                                    navigate('/signin');
+                                }}
+                                className="text-[#00f1fe]/60 text-xs font-bold tracking-widest uppercase hover:text-[#00f1fe] transition-colors"
+                            >
+                                Cancel & Sign Out
+                            </button>
+                        </div>
                     </motion.div>
                 </div>
 
