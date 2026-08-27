@@ -231,11 +231,8 @@ export function GameRoot() {
                 // ── STEP 1.5: Check if user is an admin ──
                 let isAdmin = false;
                 try {
-                    const { data: { session: authSession } } = await supabase.auth.getSession();
-                    const adminEmails = ['anitadhakad333@gmail.com', 'rakshit.shrivastava73@gmail.com'];
-                    if (authSession?.user?.email && adminEmails.includes(authSession.user.email)) {
-                        isAdmin = true;
-                    }
+                    const { checkIsAdmin } = await import('../utils/adminCheck');
+                    isAdmin = await checkIsAdmin();
                 } catch (err) {
                     console.error('Failed to check admin status:', err);
                 }

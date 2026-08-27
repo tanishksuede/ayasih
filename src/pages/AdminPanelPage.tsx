@@ -31,21 +31,19 @@ type PushDeliverySummary = {
 export function AdminPanelPage() {
     const navigate = useNavigate();
 
-    // Admin auth — read persisted Google email from localStorage
+    // Admin auth — check via centralized utility (queries admin_users table)
     const [isAdmin, setIsAdmin] = useState<boolean | null>(null); // null = loading
     const [currentEmail, setCurrentEmail] = useState('');
 
     useEffect(() => {
         const checkAdmin = async () => {
-            const email = localStorage.getItem('aya_google_email');
-            if (!email) { setIsAdmin(false); return; }
-            setCurrentEmail(email);
-            // Founder always gets access
-            if (email === 'anitadhakad333@gmail.com') { setIsAdmin(true); return; }
-            // Other admins: check database
             try {
-                const { data } = await supabase.from('admin_users').select('email').eq('email', email).maybeSingle();
-                setIsAdmin(!!data);
+                const { checkIsAdmin } = await import('../utils/adminCheck');
+                const result = await checkIsAdmin();
+                setIsAdmin(result);
+                // Read persisted email for display
+                const email = localStorage.getItem('aya_google_email');
+                if (email) setCurrentEmail(email);
             } catch {
                 setIsAdmin(false);
             }

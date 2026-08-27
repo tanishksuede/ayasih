@@ -264,6 +264,21 @@ export const authService = {
             await supabase.from('users').update({ auth_user_id: authUid }).eq('id', userRow.id).catch(() => {});
         }
 
+        // Persist auth email for admin check (works for Google, phone, username logins)
+        try {
+            const { data: { session: authSession } } = await supabase.auth.getSession();
+            if (authSession?.user?.email) {
+                localStorage.setItem('aya_google_email', authSession.user.email);
+            }
+        } catch {}
+
+        // Check if user is an admin via admin_users table
+        let isAdmin = false;
+        try {
+            const { checkIsAdmin } = await import('../utils/adminCheck');
+            isAdmin = await checkIsAdmin();
+        } catch {}
+
         const onboardingComplete = Boolean(userRow.onboarding_complete || userRow.username);
         // Existing user has completed assessment if they have game progress or assessment flag
         const hasAssessmentCompleted = Boolean(
@@ -299,6 +314,7 @@ export const authService = {
             longest_streak: userRow.longest_streak || 0,
             daily_challenge_completed: userRow.daily_challenge_completed || false,
             assessmentCompleted: hasAssessmentCompleted,
+            isAdmin,
             traits: { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 },
         } as any);
 

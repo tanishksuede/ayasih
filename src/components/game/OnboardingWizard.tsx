@@ -331,13 +331,11 @@ export function OnboardingWizard() {
             });
         }
 
-        // Check if user is an admin (by Google email or any auth email)
+        // Check if user is an admin (by querying admin_users table)
         let isAdmin = false;
         try {
-            const { data: { session: authSession } } = await supabase.auth.getSession();
-            if (authSession?.user?.email === 'anitadhakad333@gmail.com') {
-                isAdmin = true;
-            }
+            const { checkIsAdmin } = await import('../../utils/adminCheck');
+            isAdmin = await checkIsAdmin();
         } catch (err) {
             console.error('Failed to check admin status during login:', err);
         }

@@ -1,7 +1,7 @@
 import { useUserStore } from '../../store/userStore';
 import { Lock, Star, Settings, BookOpen } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
-import { supabase } from '../../utils/supabase';
+
 import { createPortal } from 'react-dom';
 import { DISCLAIMER_TEXT } from './AntiGravityCanvas';
 import clsx from 'clsx';
@@ -27,22 +27,19 @@ export function SolarMap({ onPlayLevel, onOpenDnaProfile, isMapActive = true }: 
     const levels = useUserStore((state) => state.levels);
     const profile = useUserStore((state) => state.profile);
 
-    // Admin check — read persisted Google email from localStorage
-    const [isAdmin, setIsAdmin] = useState(false);
+    // Admin check — use profile.isAdmin from the store, with fallback to DB check
+    const [isAdmin, setIsAdmin] = useState(!!profile?.isAdmin);
     useEffect(() => {
+        if (profile?.isAdmin) { setIsAdmin(true); return; }
         const checkAdmin = async () => {
-            const email = localStorage.getItem('aya_google_email');
-            if (!email) return;
-            // Founder always gets access (no DB needed)
-            if (email === 'anitadhakad333@gmail.com') { setIsAdmin(true); return; }
-            // Other admins: check database
             try {
-                const { data } = await supabase.from('admin_users').select('email').eq('email', email).maybeSingle();
-                if (data) setIsAdmin(true);
+                const { checkIsAdmin } = await import('../../utils/adminCheck');
+                const result = await checkIsAdmin();
+                if (result) setIsAdmin(true);
             } catch {}
         };
         checkAdmin();
-    }, []);
+    }, [profile?.isAdmin]);
     const activeAge = profile?.age || 18;
     let processedLevels = levels.filter(l => Number(l.age) === Number(activeAge));
 
