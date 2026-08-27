@@ -109,7 +109,7 @@ export function GameRoot() {
 
             try {
                 const session = getSession();
-                if (!session.userId || !session.mobile) {
+                if (!session.userId) {
                     clearTimeout(maxWait);
                     setSessionStatus('not_found');
                     return;

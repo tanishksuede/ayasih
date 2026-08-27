@@ -313,6 +313,26 @@ export function StoryTagsExplorer() {
 
                             {/* TAG COUNT BADGE & COMPLETE TAG LIST */}
                             <div className="mb-4">
+                                <style>{`
+                                    @keyframes tagMarquee {
+                                        0% { transform: translateX(0); }
+                                        100% { transform: translateX(-50%); }
+                                    }
+                                    .tag-marquee-container {
+                                        display: flex;
+                                        width: max-content;
+                                    }
+                                    .tag-marquee-wrapper {
+                                        overflow: hidden;
+                                        white-space: nowrap;
+                                        -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+                                        mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+                                    }
+                                    .tag-marquee-wrapper:hover .tag-marquee-container {
+                                        animation-play-state: paused !important;
+                                    }
+                                `}</style>
+
                                 <div className="flex items-center justify-between mb-2.5">
                                     <span className="text-xs font-bold text-slate-200 flex items-center gap-1.5 uppercase tracking-wider">
                                         <Tag size={13} className="text-[#00f2ff]" /> Attached Tags
@@ -325,17 +345,22 @@ export function StoryTagsExplorer() {
                                 {activeTags.length === 0 ? (
                                     <div className="text-xs text-slate-500 italic py-2">No tags found for this scenario yet.</div>
                                 ) : (
-                                    <div className="flex flex-wrap gap-1.5 max-h-56 overflow-y-auto custom-scrollbar p-3 bg-black/40 border border-white/5 rounded-2xl">
-                                        {activeTags.map((tag, idx) => (
-                                            <button
-                                                key={idx}
-                                                onClick={() => setSelectedTag(tag)}
-                                                className="text-xs font-mono px-2.5 py-1 rounded-lg bg-gradient-to-r from-purple-900/50 to-fuchsia-900/40 text-purple-200 border border-purple-500/40 hover:border-[#00f2ff] hover:text-white transition-all shadow-sm flex items-center gap-1"
-                                                title={`Click to filter other stories with #${tag}`}
-                                            >
-                                                #{tag}
-                                            </button>
-                                        ))}
+                                    <div className="tag-marquee-wrapper bg-black/40 border border-white/5 rounded-2xl py-3 relative">
+                                        <div 
+                                            className="tag-marquee-container gap-2 px-2"
+                                            style={{ animation: \`tagMarquee \${Math.max(10, activeTags.length * 1.5)}s linear infinite\` }}
+                                        >
+                                            {[...activeTags, ...activeTags].map((tag, idx) => (
+                                                <button
+                                                    key={idx}
+                                                    onClick={() => setSelectedTag(tag)}
+                                                    className="text-xs font-mono px-2.5 py-1 rounded-lg bg-gradient-to-r from-purple-900/50 to-fuchsia-900/40 text-purple-200 border border-purple-500/40 hover:border-[#00f2ff] hover:text-white transition-all shadow-sm flex items-center gap-1 shrink-0"
+                                                    title={\`Click to filter other stories with #\${tag}\`}
+                                                >
+                                                    #{tag}
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>

@@ -296,16 +296,6 @@ export function SettingsPage() {
                         </select>
                     </div>
 
-                    <button
-                        onClick={() => {
-                            audioSynth.playClick();
-                            navigate('/game/theme');
-                        }}
-                        className="w-full flex items-center justify-center gap-3 bg-slate-800/80 hover:bg-slate-700 text-indigo-300 border border-slate-700 hover:border-indigo-500/50 font-bold py-3.5 rounded-xl shadow-md transform active:scale-95 transition-all uppercase tracking-wider text-xs"
-                    >
-                        <SunMoon size={18} />
-                        Change Theme / Appearance
-                    </button>
 
                     {/* Push Notifications Section */}
                     <div className="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700 space-y-3">

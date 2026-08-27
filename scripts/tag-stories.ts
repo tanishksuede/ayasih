@@ -111,12 +111,17 @@ async function run() {
             }
         }
 
-        // Guarantee at least 4 tags by checking core attributes if too sparse
-        if (tags.size < 4) {
-            if (lowerText.includes('choice') || lowerText.includes('outcome')) tags.add('decision-making');
-            if (lowerText.includes('feel') || lowerText.includes('fear') || lowerText.includes('joy')) tags.add('emotional-mastery');
-            if (lowerText.includes('you are')) tags.add('identity-discovery');
-            tags.add('resilience');
+        // Guarantee at least 35 tags by picking random taxonomy topics
+        if (tags.size < 35) {
+            const topics = Object.keys(keywordTaxonomy);
+            for (let i = topics.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [topics[i], topics[j]] = [topics[j], topics[i]];
+            }
+            for (const topic of topics) {
+                if (tags.size >= 35) break;
+                tags.add(topic);
+            }
         }
 
         const finalTags = Array.from(tags);

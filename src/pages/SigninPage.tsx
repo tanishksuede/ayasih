@@ -1,9 +1,10 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Lock, Phone, Eye, EyeOff } from 'lucide-react';
+import { Check, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { AuthMascot } from '../components/auth/AuthMascot';
 import { authService } from '../services/authService';
+import { supabase } from '../utils/supabase';
 import { audioManager as audioSynth } from '../utils/audioManager';
 
 import { normalizePhone } from '../utils/authHelpers';
@@ -11,17 +12,46 @@ import { normalizePhone } from '../utils/authHelpers';
 export function SigninPage() {
     const navigate = useNavigate();
 
-    const [phone, setPhone] = useState('');
+    const [identifier, setIdentifier] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
     const [isHoveringBtn, setIsHoveringBtn] = useState(false);
 
-    const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
-        // Allow only numeric digits, max 10
-        const digits = e.target.value.replace(/\D/g, '').slice(0, 10);
-        setPhone(digits);
+    useEffect(() => {
+        // Check if user is already logged in (e.g. returning from Google Auth)
+        supabase.auth.getSession().then(async ({ data: { session } }) => {
+            if (session?.user) {
+                try {
+                    const { data: userRow } = await supabase
+                        .from('users')
+                        .select('*')
+                        .eq('auth_user_id', session.user.id)
+                        .maybeSingle();
+
+                    if (userRow) {
+                        const { onboardingComplete } = await authService.handlePostSignIn(userRow, session.user.id);
+                        if (onboardingComplete) {
+                            navigate('/game');
+                        } else {
+                            navigate('/signup/complete');
+                        }
+                    } else {
+                        navigate('/signup/complete');
+                    }
+                } catch (err) {
+                    console.error('Error hydrating session:', err);
+                    setIsLoading(false);
+                }
+            } else {
+                setIsLoading(false);
+            }
+        });
+    }, [navigate]);
+
+    const handleIdentifierChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setIdentifier(e.target.value);
     };
 
     const handleGoogleSignIn = async () => {
@@ -41,9 +71,9 @@ export function SigninPage() {
         e.preventDefault();
         audioSynth.playClick();
 
-        const cleanPhone = normalizePhone(phone);
-        if (!cleanPhone || cleanPhone.length !== 10) {
-            setError('Enter a valid 10-digit mobile number.');
+        const trimmedIdentifier = identifier.trim();
+        if (!trimmedIdentifier) {
+            setError('Please enter your username or phone number.');
             return;
         }
 
@@ -56,12 +86,23 @@ export function SigninPage() {
         setError('');
 
         try {
-            const { onboardingComplete } = await authService.signInWithPhonePassword({
-                phone: cleanPhone,
-                password,
-            });
+            const cleanPhone = normalizePhone(trimmedIdentifier);
+            const isPhone = cleanPhone && cleanPhone.length === 10 && /^\d+$/.test(cleanPhone);
 
-            if (onboardingComplete) {
+            let result;
+            if (isPhone) {
+                result = await authService.signInWithPhonePassword({
+                    phone: cleanPhone,
+                    password,
+                });
+            } else {
+                result = await authService.signInWithUsernamePassword({
+                    username: trimmedIdentifier,
+                    password,
+                });
+            }
+
+            if (result.onboardingComplete) {
                 // Redirect to existing AYA game dashboard
                 navigate('/game');
             } else {
@@ -69,7 +110,7 @@ export function SigninPage() {
             }
         } catch (err: any) {
             console.error('Signin Error:', err);
-            setError(err.message || 'Invalid phone number or password.');
+            setError(err.message || 'Invalid credentials.');
             setIsLoading(false);
         }
     };
@@ -141,7 +182,7 @@ export function SigninPage() {
 
                         {/* Phone + Password Form */}
                         <form onSubmit={handleFormSubmit} className="space-y-4 w-full">
-                            {/* Phone Number */}
+                            {/* Identifier */}
                             <motion.div
                                 whileHover={{ y: -2 }}
                                 initial={{ opacity: 0, x: -20 }}
@@ -150,17 +191,15 @@ export function SigninPage() {
                                 className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#9333ea]/40 transition-all duration-300 hover:shadow-[0_8px_30px_-10px_rgba(147,51,234,0.4)]"
                             >
                                 <label className="block text-[11px] font-bold text-[#00f1fe] mb-2 uppercase tracking-[0.15em] flex items-center gap-1.5">
-                                    <Phone size={12} /> Phone Number
+                                    <User size={12} /> Username or Phone
                                 </label>
                                 <input
-                                    type="tel"
-                                    inputMode="numeric"
-                                    maxLength={10}
+                                    type="text"
                                     required
-                                    value={phone}
-                                    onChange={handlePhoneChange}
+                                    value={identifier}
+                                    onChange={handleIdentifierChange}
                                     className={baseInputClasses}
-                                    placeholder="E.g. 9876543210"
+                                    placeholder="Enter your username or phone"
                                     disabled={isLoading}
                                 />
                             </motion.div>
@@ -209,7 +248,7 @@ export function SigninPage() {
                                 transition={{ delay: 0.25 }}
                                 whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(0,241,254,0.5)' }}
                                 whileTap={{ scale: 0.98 }}
-                                disabled={isLoading || !phone.trim() || !password}
+                                disabled={isLoading || !identifier.trim() || !password}
                                 type="submit"
                                 className="w-full py-4 bg-[#00f1fe] text-[#004145] font-black text-lg rounded-2xl shadow-[0_0_30px_rgba(0,241,254,0.35)] flex items-center justify-center space-x-2 relative overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#7ff9ff] transition-all mt-2"
                             >
