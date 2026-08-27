@@ -42,6 +42,12 @@ export function SearchBar({ personalities, onMatch, onClose }: SearchBarProps) {
         setNotedMessage(null);
       }, 8000);
     }
+    
+    // Update session intent for recommendations (even if unmatched, they want this topic)
+    const store = useUserStore.getState();
+    if (store.updateSessionPreference) {
+        store.updateSessionPreference(lowerQuery, 0.5);
+    }
 
     // Log to Supabase for ALL searches (matches and non-matches)
     try {

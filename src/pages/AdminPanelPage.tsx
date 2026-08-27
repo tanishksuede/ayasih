@@ -5,6 +5,7 @@ import { ChevronLeft, Send, AlertTriangle, UserPlus, Trash2, Shield, Search, Bar
 import { supabase } from '../utils/supabase';
 import clsx from 'clsx';
 import FeedbackDashboard from '../components/admin/FeedbackDashboard';
+import { StoryTagsExplorer } from '../components/admin/StoryTagsExplorer';
 
 export function AdminPanelPage() {
     const navigate = useNavigate();
@@ -370,6 +371,8 @@ export function AdminPanelPage() {
 
                 <SearchAnalyticsView />
                 
+                <StoryTagsExplorer />
+
                 <div className="mt-8">
                     <FeedbackDashboard />
                 </div>

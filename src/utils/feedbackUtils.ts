@@ -30,6 +30,27 @@ export async function logJourneyEvent(userId: string, journeyId: string, eventTy
 
     const { data, error } = await supabase.from('journey_events').insert([payload]);
 
+    if (!error) {
+        // Trigger Recommendation Updates async
+        if (eventType === 'journey_complete' || eventType === 'journey_start') {
+            import('../services/recommendationEngine').then(({ updateUserTagPreference }) => {
+                supabase.from('story_tags').select('tag_name').eq('story_id', journeyId).then((res: any) => {
+                    if (res.data && payload.user_id) {
+                        const tags = res.data.map((d: any) => d.tag_name);
+                        const score = eventType === 'journey_complete' ? 1.0 : 0.2;
+                        updateUserTagPreference(payload.user_id, tags, score);
+                        
+                        // Also update short term session preferences
+                        import('../store/userStore').then(({ useUserStore }) => {
+                            const store = useUserStore.getState();
+                            tags.forEach((t: string) => store.updateSessionPreference(t, score));
+                        });
+                    }
+                });
+            });
+        }
+    }
+
     if (error) {
       if (error.code === '23503') {
         payload.user_id = null;

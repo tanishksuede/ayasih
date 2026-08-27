@@ -17,6 +17,7 @@ import { getUnlockedDayCount } from '../../utils/storyUnlock';
 import { SearchBar } from '../SearchBar';
 import { resolvePersonalityAvatar } from '../../utils/avatarUtils';
 import TopicPreferencesSurvey from '../feedback/TopicPreferencesSurvey';
+import { ForYouCarousel } from './ForYouCarousel';
 
 interface LevelMapProps {
     onPlayLevel: (level: any) => void;
@@ -307,7 +308,10 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                         willChange: "transform" // Force GPU acceleration on mobile
                     }}
                 >
-                    <div className="relative w-full max-w-md mx-auto mt-24 md:mt-32 pointer-events-none h-full map-content">
+                    <div className="absolute top-0 w-full pointer-events-auto z-50">
+                        <ForYouCarousel onPlayLevel={onPlayLevel} allLevels={levels} />
+                    </div>
+                    <div className="relative w-full max-w-md mx-auto mt-72 md:mt-80 pointer-events-none h-full map-content">
                         {/* NODES */}
 
                         {/* EMPTY STATE FOR AGES WITH NO STORIES */}

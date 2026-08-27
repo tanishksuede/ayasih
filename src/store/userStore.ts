@@ -17,7 +17,10 @@ interface UserState {
     setProfile: (profile: UserProfile) => void;
     unlockLevel: (levelId: string) => void;
     completeLevel: (levelId: string, stars: number) => void;
-    
+    // Recommendation System
+    sessionPreferences: Record<string, number>;
+    updateSessionPreference: (tag: string, weight: number) => void;
+
     // New Gamified XP Setup
     addXp: (amount: number) => void;
     addSessionProgression: (sessionXp: number) => void;
@@ -271,6 +274,12 @@ export const useUserStore = create<UserState>()(
             
             pendingStreakData: null,
             setPendingStreakData: (data) => set({ pendingStreakData: data }),
+
+            sessionPreferences: {},
+            updateSessionPreference: (tag, weight) => set((state) => {
+                const current = state.sessionPreferences[tag] || 0;
+                return { sessionPreferences: { ...state.sessionPreferences, [tag]: current + weight } };
+            }),
 
             setProfile: (profile) => {
                 console.log('[Store] Setting profile:', profile);
