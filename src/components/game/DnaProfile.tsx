@@ -12,6 +12,7 @@ import { GenomicReportCard } from './GenomicReportCard';
 import { calculateLifeTraits, matchFutureArchetype } from '../../utils/futureSelfMatch';
 import { bgmManager } from '../../utils/bgmManager';
 import { getFollowerCount, getFollowingCount } from '../../services/followService';
+import { fetchUserDnaProfile } from '../../services/dnaService';
 
 interface DnaProfileProps {
     onBack: () => void;
@@ -85,10 +86,40 @@ const NeonTraitBar = ({ label, value, neonColor }: { label: string, value: numbe
 
 export function DnaProfile({ onBack }: DnaProfileProps) {
     const profile = useUserStore((state) => state.profile);
+    const setProfile = useUserStore((state) => state.setProfile);
 
     // DNA Report mounts → bgm-neon-map.mp3
     useEffect(() => {
         bgmManager.play('neon-map');
+    }, []);
+
+    // On mount: fetch latest persisted DNA from Supabase to replace any stale Zustand state
+    useEffect(() => {
+        (async () => {
+            try {
+                const dbProfile = await fetchUserDnaProfile();
+                if (dbProfile && profile) {
+                    console.log('[DnaProfile] Hydrating store from Supabase DNA:', dbProfile.traits);
+                    setProfile({
+                        ...profile,
+                        traits: {
+                            ...profile.traits,
+                            risk: dbProfile.traits.risk,
+                            creativity: dbProfile.traits.creativity,
+                            vision: dbProfile.traits.vision,
+                            empathy: dbProfile.traits.empathy,
+                            leadership: dbProfile.traits.leadership,
+                        },
+                        total_xp: dbProfile.totalXp || profile.total_xp,
+                        level: dbProfile.level || profile.level,
+                        stories_completed: dbProfile.storiesCompleted || profile.stories_completed,
+                    });
+                }
+            } catch (e) {
+                console.warn('[DnaProfile] Could not fetch fresh DNA from Supabase, using store values:', e);
+            }
+        })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Fallback traits if profile missing completely

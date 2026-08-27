@@ -18,6 +18,7 @@ import { calculateLevelInfo } from '../../utils/levelSystem';
 import { calculateLifeTraits, matchFutureArchetype } from '../../utils/futureSelfMatch';
 import { SourcesModal } from './SourcesModal';
 import { STORY_SOURCES } from '../../data/storySources';
+import { saveStoryCompletionDna } from '../../services/dnaService';
 
 // Floating Text Animation Interface
 interface FloatText {
@@ -667,7 +668,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
             // Supabase Tracking
             // DEBUG: This fires even if user has no ID — confirms COMPLETE branch was reached
-            console.log('[AYA DEBUG] COMPLETE branch reached. userProfile.id =', userProfile?.id, '| finalSessionChoices.length =', finalSessionChoices.length);
+            console.log('[AYA DEBUG] COMPLETE branch reached. userProfile.id =', userProfile?.id);
 
             // Calculate XP progression mathematically
             const isFirstTime = !levelScores[level.id];
@@ -725,65 +726,99 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             if (userProfile?.id && !hasInsertedSession.current) {
                 hasInsertedSession.current = true;
 
-                // Build updated level_scores for direct save to users table
-                const currentLevelScores = useUserStore.getState().levelScores || {};
-                const updatedLevelScores = {
-                    ...currentLevelScores,
-                    [level.id]: Math.max(currentLevelScores[level.id] || 0, starCount)
-                };
-
-                // ── 1. Update users table: XP + stories + level_scores (most reliable backup) ──
+                // ── PRIMARY: Atomic RPC via dnaService (handles DNA, XP, game_sessions, idempotency) ──
                 try {
-                    const { error: usersErr } = await supabase.from('users').update({
-                        total_xp: newTotalXp,
-                        level: newLevelInfo.level,
-                        stories_completed: currentStories + 1,
-                        story_count: newStoryCount,
-                        gameplay_scores: newGameplayScores,
-                        level_scores: updatedLevelScores,   // Save stars directly here as primary backup
-                    }).eq('id', userProfile.id);
-                    if (usersErr) {
-                        console.error('[AYA] users update error:', usersErr.message, usersErr.details);
-                        setSaveStatus('error');
-                    } else {
-                        console.log('[AYA] ✓ users updated (XP + level_scores saved)');
-                        setSaveStatus('saved');
+                    const dnaResult = await saveStoryCompletionDna({
+                        levelId: String(level.id),
+                        selectedPersonality: String(level.personality || level.archetype || ''),
+                        matchScore: matchPercent,
+                        stars: starCount,
+                        sessionXp: sessionTotalXp,
+                        traits: {
+                            risk: recalibratedTraits.risk,
+                            creativity: recalibratedTraits.creativity,
+                            vision: recalibratedTraits.vision,
+                            empathy: recalibratedTraits.empathy,
+                            leadership: recalibratedTraits.leadership,
+                        },
+                        futureArchetype: futureMatchResult.archetype.name,
+                        futureArchetypeScore: futureMatchResult.score,
+                        lifeTraits: futureLT as unknown as Record<string, number>,
+                        gameplayScores: newGameplayScores,
+                        choicesLog: undefined,
+                    });
+
+                    console.log('[AYA] ✓ DNA + story completion persisted via dnaService:', dnaResult);
+
+                    // Sync the verified database values back to Zustand store
+                    const latestProfileAfterSave = useUserStore.getState().profile;
+                    if (latestProfileAfterSave) {
+                        useUserStore.getState().setProfile({
+                            ...latestProfileAfterSave,
+                            traits: {
+                                ...latestProfileAfterSave.traits,
+                                risk: dnaResult.traits.risk,
+                                creativity: dnaResult.traits.creativity,
+                                vision: dnaResult.traits.vision,
+                                empathy: dnaResult.traits.empathy,
+                                leadership: dnaResult.traits.leadership,
+                            },
+                            total_xp: dnaResult.totalXp,
+                            level: dnaResult.level,
+                            stories_completed: dnaResult.storiesCompleted,
+                        });
                     }
+                    setSaveStatus('saved');
                 } catch (e) {
-                    console.error('[AYA] users update threw:', e);
+                    console.error('[AYA] dnaService saveStoryCompletionDna failed, using fallback:', e);
                     setSaveStatus('error');
+
+                    // FALLBACK: direct users table update in case RPC is not deployed yet
+                    try {
+                        const currentLevelScores = useUserStore.getState().levelScores || {};
+                        const updatedLevelScores = {
+                            ...currentLevelScores,
+                            [level.id]: Math.max(currentLevelScores[level.id] || 0, starCount)
+                        };
+                        await supabase.from('users').update({
+                            total_xp: newTotalXp,
+                            level: newLevelInfo.level,
+                            stories_completed: currentStories + 1,
+                            story_count: newStoryCount,
+                            gameplay_scores: newGameplayScores,
+                            level_scores: updatedLevelScores,
+                        }).eq('id', userProfile.id);
+
+                        await supabase.from('personality_profiles').upsert({
+                            user_id: userProfile.id,
+                            trait_risk_taker: recalibratedTraits.risk,
+                            trait_creative: recalibratedTraits.creativity,
+                            trait_analytical: recalibratedTraits.vision,
+                            trait_social: recalibratedTraits.empathy,
+                            trait_ambitious: recalibratedTraits.leadership,
+                            total_xp: newTotalXp,
+                            level: newLevelInfo.level,
+                            stories_completed: currentStories + 1,
+                            last_updated: new Date().toISOString(),
+                            future_archetype: futureMatchResult.archetype.name,
+                            future_archetype_score: futureMatchResult.score,
+                            life_resilience: futureLT.resilience,
+                            life_discipline: futureLT.discipline,
+                            life_courage: futureLT.courage,
+                            life_creativity: futureLT.creativity,
+                            life_emotional_control: futureLT.emotional_control,
+                            life_leadership: futureLT.leadership,
+                            life_risk_intelligence: futureLT.risk_intelligence,
+                            life_consistency: futureLT.consistency,
+                        }, { onConflict: 'user_id' });
+                        console.log('[AYA] ✓ Fallback direct table writes completed');
+                        setSaveStatus('saved');
+                    } catch (fallbackErr) {
+                        console.error('[AYA] Fallback writes also failed:', fallbackErr);
+                    }
                 }
 
-                // ── 2. Upsert personality_profiles ────────────────────────────────────────
-                try {
-                    const { error: ppErr } = await supabase.from('personality_profiles').upsert({
-                        user_id: userProfile.id,
-                        mobile: userProfile.mobile || null,
-                        trait_risk_taker: recalibratedTraits.risk,
-                        trait_creative: recalibratedTraits.creativity,
-                        trait_analytical: recalibratedTraits.vision,
-                        trait_social: recalibratedTraits.empathy,
-                        trait_ambitious: recalibratedTraits.leadership,
-                        total_xp: newTotalXp,
-                        level: newLevelInfo.level,
-                        stories_completed: currentStories + 1,
-                        last_updated: new Date().toISOString(),
-                        future_archetype: futureMatchResult.archetype.name,
-                        future_archetype_score: futureMatchResult.score,
-                        life_resilience: futureLT.resilience,
-                        life_discipline: futureLT.discipline,
-                        life_courage: futureLT.courage,
-                        life_creativity: futureLT.creativity,
-                        life_emotional_control: futureLT.emotional_control,
-                        life_leadership: futureLT.leadership,
-                        life_risk_intelligence: futureLT.risk_intelligence,
-                        life_consistency: futureLT.consistency,
-                    }, { onConflict: 'user_id' });
-                    if (ppErr) console.error('[AYA] personality_profiles upsert error:', ppErr.message, ppErr.details);
-                    else console.log('[AYA] ✓ personality_profiles upserted');
-                } catch (e) { console.error('[AYA] personality_profiles upsert threw:', e); }
-
-                // ── 3. Streak & Daily Challenge ────────────────────────────────────────────
+                // ── Streak & Daily Challenge (always runs regardless of DNA save status) ──
                 try {
                     const streakResult = completeDailyChallenge();
                     if (streakResult && streakResult.newStreak > streakResult.oldStreak) {
@@ -796,43 +831,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                         if (onDailyChallengeComplete) onDailyChallengeComplete(streakResult);
                     }
                 } catch (e) { console.error('[AYA] streak update threw:', e); }
-
-                // ── 4. Insert game_sessions (history log — no scenario_choices to avoid JSONB errors) ──
-                try {
-                    const insertData: any = {
-                        user_id: userProfile.id,
-                        level_id: String(level.id),
-                        selected_personality: String(level.personality || level.archetype || ''),
-                        match_score: matchPercent,
-                        stars: starCount
-                    };
-                    const { data, error: insertError } = await supabase.from('game_sessions').insert(insertData).select();
-                    
-                    if (insertError) {
-                        if (insertError.code === '23503') {
-                            // Foreign key violation for guest user, retry without user_id
-                            insertData.user_id = null;
-                            const { data: retryData, error: retryError } = await supabase.from('game_sessions').insert(insertData).select();
-                            if (!retryError) {
-                                console.log('[AYA] ✓ game_sessions inserted (guest mode):', retryData);
-                                return;
-                            }
-                        }
-                        console.error('[AYA] game_sessions INSERT ERROR:', insertError.message, insertError.details, insertError.hint);
-                        // Fallback: Try inserting without new columns if they haven't been created yet
-                        const fallbackData: any = {
-                             user_id: userProfile.id,
-                             match_score: matchPercent,
-                        };
-                        const { error: fallbackError } = await supabase.from('game_sessions').insert(fallbackData);
-                        if (fallbackError && fallbackError.code === '23503') {
-                             fallbackData.user_id = null;
-                             await supabase.from('game_sessions').insert(fallbackData);
-                        }
-                    } else {
-                        console.log('[AYA] ✓ game_sessions inserted:', data);
-                    }
-                } catch (e) { console.error('[AYA] game_sessions insert threw:', e); }
 
             } else if (!userProfile?.id) {
                 console.warn('[AYA] No userProfile.id — cannot save to Supabase. Profile:', userProfile);
