@@ -1,4 +1,5 @@
 import { useNavigate, useParams, Navigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { useUserStore } from '../store/userStore';
 import { LevelMap } from '../components/game/LevelMap';
 import { PersonalityIntro } from '../components/game/PersonalityIntro';
@@ -14,6 +15,19 @@ import { calculateLevelInfo } from '../utils/levelSystem';
 
 export function MapRouteHandler() {
     const navigate = useNavigate();
+    const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
+    
+    useEffect(() => {
+        const hasSeenPopup = sessionStorage.getItem('hasSeenSubscriptionPopup');
+        if (!hasSeenPopup) {
+            const timer = setTimeout(() => {
+                setShowSubscriptionModal(true);
+                sessionStorage.setItem('hasSeenSubscriptionPopup', 'true');
+            }, 1500);
+            return () => clearTimeout(timer);
+        }
+    }, [setShowSubscriptionModal]);
+
     return (
         <LevelMap 
             onPlayLevel={(level) => navigate(`/game/intro/${level.id}`)} 

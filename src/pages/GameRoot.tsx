@@ -46,18 +46,7 @@ export function GameRoot() {
         }
     }, [location.pathname, sessionStatus]);
 
-    useEffect(() => {
-        if (sessionStatus === 'found' && profile) {
-            const hasSeenPopup = sessionStorage.getItem('hasSeenSubscriptionPopup');
-            if (!hasSeenPopup) {
-                const timer = setTimeout(() => {
-                    setShowSubscriptionModal(true);
-                    sessionStorage.setItem('hasSeenSubscriptionPopup', 'true');
-                }, 1500);
-                return () => clearTimeout(timer);
-            }
-        }
-    }, [sessionStatus, profile]);
+
 
     // Safety net: if a user finishes onboarding, GameRoot is already mounted,
     // so restoreSession() won't run again. We must fetch levels for them.
