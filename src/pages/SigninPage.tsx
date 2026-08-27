@@ -25,11 +25,20 @@ export function SigninPage() {
             const session = response.data.session;
             if (session?.user) {
                 try {
-                    const { data: userRow } = await supabase
+                    let { data: userRow } = await supabase
                         .from('users')
                         .select('*')
                         .eq('auth_user_id', session.user.id)
                         .maybeSingle();
+
+                    if (!userRow && session.user.email) {
+                        const { data: emailRow } = await supabase
+                            .from('users')
+                            .select('*')
+                            .eq('email', session.user.email)
+                            .maybeSingle();
+                        if (emailRow) userRow = emailRow;
+                    }
 
                     if (userRow) {
                         const { onboardingComplete } = await authService.handlePostSignIn(userRow, session.user.id);
