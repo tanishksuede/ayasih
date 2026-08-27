@@ -196,20 +196,33 @@ export function SocialPage() {
   const [followingCount, setFollowingCount] =
     useState<number>(0);
 
+  // Diagnostic: Log profile state on render/mount
+  useEffect(() => {
+    console.log('[SocialPage:diagnostic] 4. profile.id from useUserStore:', profile?.id ?? 'null/undefined', {
+      username: profile?.username,
+      name: profile?.name,
+      mobile: profile?.mobile,
+      email: profile?.email
+    });
+  }, [profile]);
+
   // Helper to ensure active user ID
   const getActiveUserId = useCallback(async (): Promise<string | null> => {
     try {
       const resolved = await getMyUserId();
+      console.log('[SocialPage:diagnostic] getActiveUserId resolved:', resolved, '(store profile.id was:', profile?.id, ')');
       return resolved;
-    } catch {
+    } catch (err) {
+      console.error('[SocialPage:diagnostic] getActiveUserId failed to resolve:', err);
       return null;
     }
-  }, []);
+  }, [profile?.id]);
 
   // ── Load Requests ──────────────────────────────────────────────────────────
 
   const loadRequests = useCallback(async () => {
     const userId = await getActiveUserId();
+    console.log('[SocialPage:diagnostic] loadRequests called with userId:', userId);
     if (!userId) return;
 
     setRequestsLoading(true);
@@ -226,12 +239,18 @@ export function SocialPage() {
         getFollowingCount(userId),
       ]);
 
+      console.log('[SocialPage:diagnostic] loadRequests received incoming requests count:', requests.length, {
+        requests,
+        followerCount: fc,
+        followingCount: fwc
+      });
+
       setIncomingRequests(requests);
       setFollowerCount(fc);
       setFollowingCount(fwc);
     } catch (err: unknown) {
       console.error(
-        '[SocialPage] loadRequests error:',
+        '[SocialPage:diagnostic] loadRequests error:',
         err
       );
 

@@ -63,6 +63,7 @@ export function useFollow(
     setLoading(true);
     try {
       const activeId = currentUserId || (await getMyUserId().catch(() => null));
+      console.log('[useFollow:diagnostic] fetchStatus activeId:', activeId, 'targetUserId:', targetUserId, '(currentUserId prop:', currentUserId, ')');
       if (!activeId || activeId === targetUserId) {
         setStatus('NONE');
         return;
@@ -72,6 +73,7 @@ export function useFollow(
       setError(null);
     } catch (err: unknown) {
       const msg = formatSupabaseError(err);
+      console.error('[useFollow:diagnostic] fetchStatus error:', msg);
       setError(msg);
     } finally {
       setLoading(false);

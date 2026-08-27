@@ -78,35 +78,60 @@ export interface FollowRequest {
 export async function getMyUserId(): Promise<string> {
   const { data: { user }, error: authError } = await supabase.auth.getUser();
   if (authError || !user) {
+    console.warn('[followService:diagnostic] Supabase auth user not found or error:', authError);
     throw new Error(
       'Auth session missing. Please log out and log back in to use social features.'
     );
   }
 
+  const authUserId = user.id;
+  console.log('[followService:diagnostic] 1. Supabase auth user.id:', authUserId, {
+    email: user.email,
+    phone: user.phone || (user.user_metadata as any)?.mobile
+  });
+
   // 1. Try get_my_user_id() DB RPC
+  let rpcResult: string | null = null;
   try {
     const { data: rpcData, error: rpcError } = await supabase.rpc('get_my_user_id');
     if (!rpcError && rpcData) {
-      return rpcData as string;
+      rpcResult = rpcData as string;
+    } else if (rpcError) {
+      console.warn('[followService:diagnostic] get_my_user_id() RPC error:', formatSupabaseError(rpcError));
     }
-  } catch {
-    // Fall back to direct query
+  } catch (e) {
+    console.warn('[followService:diagnostic] get_my_user_id() RPC threw:', e);
+  }
+
+  console.log('[followService:diagnostic] 2. public.get_my_user_id() result:', rpcResult);
+
+  if (rpcResult) {
+    console.log('[followService:diagnostic] 3. resolved public.users.id (via RPC):', rpcResult);
+    return rpcResult;
   }
 
   // 2. Direct lookup in public.users by auth_user_id or id matching auth UID
   try {
-    const { data: userRow } = await supabase
+    const { data: userRow, error: queryError } = await supabase
       .from('users')
-      .select('id')
+      .select('id, username, name, auth_user_id, email, mobile')
       .or(`auth_user_id.eq.${user.id},id.eq.${user.id}`)
       .is('deleted_at', null)
       .maybeSingle();
 
+    if (queryError) {
+      console.warn('[followService:diagnostic] public.users direct query error:', formatSupabaseError(queryError));
+    }
+
     if (userRow?.id) {
+      console.log('[followService:diagnostic] 3. resolved public.users.id (via direct auth_user_id/id lookup):', userRow.id, {
+        username: userRow.username,
+        auth_user_id: userRow.auth_user_id
+      });
       return userRow.id;
     }
-  } catch {
-    // Fall back to email/phone lookup
+  } catch (e) {
+    console.warn('[followService:diagnostic] direct users query threw:', e);
   }
 
   // 3. Direct lookup by email
@@ -114,16 +139,20 @@ export async function getMyUserId(): Promise<string> {
     try {
       const { data: emailUser } = await supabase
         .from('users')
-        .select('id')
+        .select('id, username, name, email')
         .eq('email', user.email)
         .is('deleted_at', null)
         .maybeSingle();
 
       if (emailUser?.id) {
+        console.log('[followService:diagnostic] 3. resolved public.users.id (via email lookup):', emailUser.id, {
+          username: emailUser.username,
+          email: emailUser.email
+        });
         return emailUser.id;
       }
-    } catch {
-      // ignore
+    } catch (e) {
+      console.warn('[followService:diagnostic] email query threw:', e);
     }
   }
 
@@ -133,19 +162,24 @@ export async function getMyUserId(): Promise<string> {
     try {
       const { data: phoneUser } = await supabase
         .from('users')
-        .select('id')
+        .select('id, username, name, mobile')
         .eq('mobile', phone)
         .is('deleted_at', null)
         .maybeSingle();
 
       if (phoneUser?.id) {
+        console.log('[followService:diagnostic] 3. resolved public.users.id (via mobile lookup):', phoneUser.id, {
+          username: phoneUser.username,
+          mobile: phoneUser.mobile
+        });
         return phoneUser.id;
       }
-    } catch {
-      // ignore
+    } catch (e) {
+      console.warn('[followService:diagnostic] phone query threw:', e);
     }
   }
 
+  console.error('[followService:diagnostic] 3. resolved public.users.id: FAILED to resolve for auth user:', authUserId);
   throw new Error('Could not resolve user identity. Please log out and log back in.');
 }
 
@@ -262,6 +296,7 @@ export async function sendFollowRequest(recipientId: string): Promise<void> {
  */
 export async function getIncomingFollowRequests(): Promise<FollowRequest[]> {
   const myUserId = await getMyUserId();
+  console.log('[followService:diagnostic] 5. the exact recipient_id used in getIncomingFollowRequests():', myUserId);
 
   const { data: requestRows, error: requestError } = await supabase
     .from('follow_requests')
@@ -270,7 +305,16 @@ export async function getIncomingFollowRequests(): Promise<FollowRequest[]> {
     .eq('status', 'pending')
     .order('created_at', { ascending: false });
 
-  if (requestError) throw new Error(formatSupabaseError(requestError));
+  if (requestError) {
+    console.error('[followService:diagnostic] follow_requests query error:', formatSupabaseError(requestError));
+    throw new Error(formatSupabaseError(requestError));
+  }
+
+  console.log('[followService:diagnostic] follow_requests query result count:', requestRows?.length ?? 0, {
+    recipient_id_queried: myUserId,
+    rows: requestRows
+  });
+
   if (!requestRows?.length) return [];
 
   const requesterIds = [...new Set((requestRows as any[]).map(r => r.requester_id))];
