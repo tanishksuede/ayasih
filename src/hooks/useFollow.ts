@@ -12,6 +12,7 @@ import { useState, useEffect, useCallback } from 'react';
 import {
   type FollowRelationshipState,
   getFollowStatus,
+  getMyUserId,
   sendFollowRequest,
   acceptFollowRequest,
   rejectFollowRequest,
@@ -44,7 +45,7 @@ interface UseFollowReturn {
 }
 
 /**
- * @param currentUserId  The logged-in user's UUID (from userStore profile.id)
+ * @param currentUserId  Optional logged-in user's UUID (will be dynamically resolved if omitted)
  * @param targetUserId   The UUID of the user being viewed
  */
 export function useFollow(
@@ -55,13 +56,18 @@ export function useFollow(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const isSelf = currentUserId === targetUserId;
+  const isSelf = Boolean(currentUserId && targetUserId && currentUserId === targetUserId);
 
   const fetchStatus = useCallback(async () => {
-    if (!currentUserId || !targetUserId || isSelf) return;
+    if (!targetUserId || isSelf) return;
     setLoading(true);
     try {
-      const s = await getFollowStatus(currentUserId, targetUserId);
+      const activeId = currentUserId || (await getMyUserId().catch(() => null));
+      if (!activeId || activeId === targetUserId) {
+        setStatus('NONE');
+        return;
+      }
+      const s = await getFollowStatus(activeId, targetUserId);
       setStatus(s);
       setError(null);
     } catch (err: unknown) {
@@ -83,8 +89,9 @@ export function useFollow(
     setError(null);
     try {
       await sendFollowRequest(targetUserId);
-      if (currentUserId) {
-        const verified = await getFollowStatus(currentUserId, targetUserId);
+      const activeId = currentUserId || (await getMyUserId().catch(() => null));
+      if (activeId) {
+        const verified = await getFollowStatus(activeId, targetUserId);
         setStatus(verified === 'REQUEST_SENT' ? 'REQUEST_SENT' : verified);
       } else {
         setStatus('REQUEST_SENT');

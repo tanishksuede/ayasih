@@ -88,7 +88,9 @@ export default async function handler(req, res) {
       const isValidUuid = userId && typeof userId === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userId);
       const targetUserId = isValidUuid ? userId : null;
 
-      console.log('[subscribe-push] Processing subscription. Endpoint prefix:', endpoint.slice(0, 40) + '...', 'hasValidUserId:', !!targetUserId);
+      let endpointHost = 'unknown';
+      try { endpointHost = new URL(endpoint).hostname; } catch { /* validation below handles malformed values */ }
+      console.log('[subscribe-push] Processing subscription.', { endpointHost, hasValidUserId: !!targetUserId });
 
       // Check if subscription with the same endpoint already exists
       const { data: existingRows, error: checkError } = await supabase

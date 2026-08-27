@@ -63,11 +63,94 @@ export interface FollowRequest {
   recipient?: PublicUserProfile;
 }
 
-// ── Internal: verify auth session ────────────────────────────────────────────
+// ── Internal: resolve public.users.id for current user ───────────────────────
+
+/**
+ * Returns the public.users.id for the currently authenticated user,
+ * dynamically resolved from the active Supabase Auth session via:
+ *   1. get_my_user_id() SECURITY DEFINER RPC (auth.uid() → auth_user_id → id)
+ *   2. Direct lookup by auth_user_id or id matching auth.uid()
+ *   3. Direct lookup by auth user email or mobile
+ *
+ * This ensures the client always uses the currently authenticated user's ID
+ * rather than any stale or mismatched profile ID from local storage.
+ */
+export async function getMyUserId(): Promise<string> {
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) {
+    throw new Error(
+      'Auth session missing. Please log out and log back in to use social features.'
+    );
+  }
+
+  // 1. Try get_my_user_id() DB RPC
+  try {
+    const { data: rpcData, error: rpcError } = await supabase.rpc('get_my_user_id');
+    if (!rpcError && rpcData) {
+      return rpcData as string;
+    }
+  } catch {
+    // Fall back to direct query
+  }
+
+  // 2. Direct lookup in public.users by auth_user_id or id matching auth UID
+  try {
+    const { data: userRow } = await supabase
+      .from('users')
+      .select('id')
+      .or(`auth_user_id.eq.${user.id},id.eq.${user.id}`)
+      .is('deleted_at', null)
+      .maybeSingle();
+
+    if (userRow?.id) {
+      return userRow.id;
+    }
+  } catch {
+    // Fall back to email/phone lookup
+  }
+
+  // 3. Direct lookup by email
+  if (user.email) {
+    try {
+      const { data: emailUser } = await supabase
+        .from('users')
+        .select('id')
+        .eq('email', user.email)
+        .is('deleted_at', null)
+        .maybeSingle();
+
+      if (emailUser?.id) {
+        return emailUser.id;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  // 4. Direct lookup by phone / metadata
+  const phone = user.phone || (user.user_metadata as any)?.mobile;
+  if (phone) {
+    try {
+      const { data: phoneUser } = await supabase
+        .from('users')
+        .select('id')
+        .eq('mobile', phone)
+        .is('deleted_at', null)
+        .maybeSingle();
+
+      if (phoneUser?.id) {
+        return phoneUser.id;
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  throw new Error('Could not resolve user identity. Please log out and log back in.');
+}
 
 /**
  * Throws if the caller has no active Supabase Auth session.
- * Does NOT return any user identity — the DB resolves that server-side.
  */
 async function requireAuthSession(): Promise<void> {
   const { data: { user }, error } = await supabase.auth.getUser();
@@ -77,22 +160,6 @@ async function requireAuthSession(): Promise<void> {
       'Auth session missing. Please log out and log back in to use social features.'
     );
   }
-}
-
-// ── Internal: resolve public.users.id for current user ───────────────────────
-
-/**
- * Returns the public.users.id for the currently authenticated user,
- * resolved server-side via get_my_user_id() (auth.uid() → auth_user_id → id).
- */
-async function getMyUserId(): Promise<string> {
-  await requireAuthSession();
-
-  const { data, error } = await supabase.rpc('get_my_user_id');
-  if (error) throw new Error(formatSupabaseError(error));
-  if (!data) throw new Error('Could not resolve user identity. Please log out and log back in.');
-
-  return data as string;
 }
 
 // ── User Search ───────────────────────────────────────────────────────────────
@@ -134,8 +201,7 @@ export async function searchUsersByUsername(
 
   // Client-side self-filter as best-effort (no security implication for search)
   try {
-    const { data: { user } } = await supabase.auth.getUser();
-    const myAppId = user ? await supabase.rpc('get_my_user_id').then((r: { data: string | null }) => r.data) : null;
+    const myAppId = await getMyUserId().catch(() => null);
     if (myAppId) {
       return ((data ?? []) as PublicUserProfile[]).filter((u: PublicUserProfile) => u.id !== myAppId);
     }
@@ -306,16 +372,66 @@ export async function getFollowingCount(userId: string): Promise<number> {
   return count ?? 0;
 }
 
+/**
+ * Get all outgoing (sent) pending follow requests from the current user.
+ */
+export async function getOutgoingFollowRequests(): Promise<FollowRequest[]> {
+  const myUserId = await getMyUserId();
+
+  const { data: requestRows, error: requestError } = await supabase
+    .from('follow_requests')
+    .select('id, requester_id, recipient_id, status, created_at, responded_at')
+    .eq('requester_id', myUserId)
+    .eq('status', 'pending')
+    .order('created_at', { ascending: false });
+
+  if (requestError) throw new Error(formatSupabaseError(requestError));
+  if (!requestRows?.length) return [];
+
+  const recipientIds = [...new Set((requestRows as any[]).map(r => r.recipient_id))];
+
+  const { data: userRows, error: userError } = await supabase
+    .from('users')
+    .select('id, username, name')
+    .in('id', recipientIds)
+    .is('deleted_at', null);
+
+  if (userError) throw new Error(formatSupabaseError(userError));
+
+  const userMap = new Map(((userRows as any[]) ?? []).map(u => [u.id, u as PublicUserProfile]));
+
+  return (requestRows as any[]).map(r => ({
+    id: r.id,
+    requester_id: r.requester_id,
+    recipient_id: r.recipient_id,
+    status: r.status as FollowRequestStatus,
+    created_at: r.created_at,
+    responded_at: r.responded_at,
+    recipient: userMap.get(r.recipient_id),
+  }));
+}
+
 // ── Relationship State ────────────────────────────────────────────────────────
 
 /**
- * Determine the follow relationship state between two public.users.id values.
- * currentUserId is the logged-in user's public.users.id (from Zustand store).
+ * Determine the follow relationship state between the logged-in user and target user.
+ * If currentUserId is omitted, it will be dynamically resolved from the Supabase session.
  */
 export async function getFollowStatus(
-  currentUserId: string,
-  targetUserId: string
+  currentUserIdOrTargetId: string,
+  maybeTargetUserId?: string
 ): Promise<FollowRelationshipState> {
+  let currentUserId: string;
+  let targetUserId: string;
+
+  if (maybeTargetUserId !== undefined) {
+    currentUserId = currentUserIdOrTargetId;
+    targetUserId = maybeTargetUserId;
+  } else {
+    currentUserId = await getMyUserId();
+    targetUserId = currentUserIdOrTargetId;
+  }
+
   if (currentUserId === targetUserId) return 'NONE';
 
   const { data: followRow, error: followError } = await supabase

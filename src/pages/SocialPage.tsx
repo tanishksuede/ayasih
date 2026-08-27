@@ -35,6 +35,7 @@ import { useUserStore } from '../store/userStore';
 import { audioManager as audioSynth } from '../utils/audioManager';
 
 import {
+  getMyUserId,
   searchUsersByUsername,
   getIncomingFollowRequests,
   acceptFollowRequest,
@@ -52,8 +53,6 @@ import {
   type FollowRequest,
   type FollowRelationshipState,
 } from '../services/followService';
-
-import { supabase } from '../utils/supabase';
 
 // ── Follow Button ─────────────────────────────────────────────────────────────
 
@@ -199,10 +198,13 @@ export function SocialPage() {
 
   // Helper to ensure active user ID
   const getActiveUserId = useCallback(async (): Promise<string | null> => {
-    if (profile?.id) return profile.id;
-    const { data } = await supabase.auth.getUser();
-    return data.user?.id ?? null;
-  }, [profile?.id]);
+    try {
+      const resolved = await getMyUserId();
+      return resolved;
+    } catch {
+      return null;
+    }
+  }, []);
 
   // ── Load Requests ──────────────────────────────────────────────────────────
 

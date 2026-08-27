@@ -7,6 +7,27 @@ import clsx from 'clsx';
 import FeedbackDashboard from '../components/admin/FeedbackDashboard';
 import { StoryTagsExplorer } from '../components/admin/StoryTagsExplorer';
 
+type PushFailure = {
+    subscriptionId: string;
+    endpointHostname: string;
+    httpStatus: number | null;
+    category: string;
+    reason: string;
+    errorType: string;
+    errorMessage: string;
+    errorBody: string | null;
+    removed?: boolean;
+};
+
+type PushDeliverySummary = {
+    sent: number;
+    expiredRemoved: number;
+    authentication: number;
+    temporary: number;
+    rateLimited: number;
+    other: number;
+};
+
 export function AdminPanelPage() {
     const navigate = useNavigate();
 
@@ -37,6 +58,8 @@ export function AdminPanelPage() {
     const [body, setBody] = useState('');
     const [notifStatus, setNotifStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
     const [notifMessage, setNotifMessage] = useState('');
+    const [deliverySummary, setDeliverySummary] = useState<PushDeliverySummary | null>(null);
+    const [deliveryFailures, setDeliveryFailures] = useState<PushFailure[]>([]);
 
     // Admin management state
     const [adminList, setAdminList] = useState<{ id: string; email: string }[]>([]);
@@ -135,6 +158,8 @@ export function AdminPanelPage() {
         }
 
         setNotifStatus('sending');
+        setDeliverySummary(null);
+        setDeliveryFailures([]);
         try {
             const res = await fetch('/api/send-notifications', {
                 method: 'POST',
@@ -151,13 +176,15 @@ export function AdminPanelPage() {
             }
 
             const data = await res.json();
+            setDeliverySummary(data.summary || null);
+            setDeliveryFailures(Array.isArray(data.failures) ? data.failures : []);
             
             if (data.sent === 0 && data.total === 0) {
                 setNotifStatus('error');
                 setNotifMessage('No registered devices found. Users must enable notifications in Settings to register their device.');
             } else if (data.failed > 0) {
                 setNotifStatus('error');
-                setNotifMessage(`Sent to ${data.sent} device(s), but failed for ${data.failed} device(s).`);
+                setNotifMessage('Broadcast completed with delivery failures. See the delivery report below.');
             } else {
                 setNotifStatus('success');
                 setNotifMessage(`Notification broadcasted successfully to ${data.sent} device(s)!`);
@@ -258,6 +285,43 @@ export function AdminPanelPage() {
                             </motion.div>
                         )}
                     </AnimatePresence>
+
+                    {deliverySummary && notifStatus !== 'sending' && (
+                        <div className="mb-6 rounded-xl border border-slate-700 bg-slate-900/60 p-4">
+                            <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-400">Delivery Summary</p>
+                            <div className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+                                <p><span className="text-slate-400">Sent:</span> <span className="font-bold text-emerald-300">{deliverySummary.sent}</span></p>
+                                <p><span className="text-slate-400">Expired/removed:</span> <span className="font-bold text-amber-300">{deliverySummary.expiredRemoved}</span></p>
+                                <p><span className="text-slate-400">Authentication/configuration errors:</span> <span className="font-bold text-red-300">{deliverySummary.authentication}</span></p>
+                                <p><span className="text-slate-400">Temporary failures:</span> <span className="font-bold text-orange-300">{deliverySummary.temporary}</span></p>
+                                <p><span className="text-slate-400">Rate limited:</span> <span className="font-bold text-orange-300">{deliverySummary.rateLimited}</span></p>
+                                <p><span className="text-slate-400">Other failures:</span> <span className="font-bold text-red-300">{deliverySummary.other}</span></p>
+                            </div>
+
+                            {deliveryFailures.length > 0 && (
+                                <details className="mt-4 rounded-lg border border-slate-700 bg-black/20 p-3">
+                                    <summary className="cursor-pointer text-sm font-bold text-purple-200">
+                                        Per-device failure report ({deliveryFailures.length})
+                                    </summary>
+                                    <div className="mt-3 space-y-3">
+                                        {deliveryFailures.map((failure) => (
+                                            <div key={failure.subscriptionId} className="rounded-lg border border-slate-700/70 bg-black/30 p-3 text-xs">
+                                                <div className="flex flex-wrap justify-between gap-2 text-slate-300">
+                                                    <span>Device: <span className="font-mono text-purple-200">{failure.subscriptionId}</span></span>
+                                                    <span>HTTP: <span className="font-bold text-white">{failure.httpStatus ?? 'No response'}</span></span>
+                                                </div>
+                                                <p className="mt-2 text-sm font-semibold text-amber-200">{failure.reason}</p>
+                                                <p className="mt-1 text-slate-400">Endpoint host: {failure.endpointHostname} · {failure.errorType}</p>
+                                                <p className="mt-1 break-words text-slate-300">{failure.errorMessage}</p>
+                                                {failure.errorBody && <p className="mt-1 break-words text-slate-500">Service response: {failure.errorBody}</p>}
+                                                {failure.category === 'expired' && <p className="mt-1 text-amber-300">{failure.removed ? 'Dead subscription removed.' : 'Dead subscription could not be removed; check server logs.'}</p>}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </details>
+                            )}
+                        </div>
+                    )}
 
                     {/* Diagnostic: Check registered devices */}
                     <div className="mb-6 p-4 bg-slate-800/50 border border-slate-700 rounded-xl">
