@@ -6,7 +6,6 @@ import { audioManager } from '../../utils/audioManager';
 import { resolvePersonalityAvatar } from '../../utils/avatarUtils';
 import { VibeSpinnerButton } from '../MoodWheel/VibeSpinnerButton';
 import { useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
 
 interface ForYouCarouselProps {
     onPlayLevel: (l: any) => void;
@@ -73,7 +72,7 @@ export function ForYouCarousel({ onPlayLevel, allLevels }: ForYouCarouselProps) 
         fetchRecs();
     }, [profile?.id, sessionPreferences, allLevels]);
 
-    // Duplicate list for a seamless, continuous infinite loop marquee
+    // 3x duplication for a seamless, 33.333% infinite continuous loop
     const marqueeItems = useMemo(() => {
         if (recommendedStories.length === 0) return [];
         return [...recommendedStories, ...recommendedStories, ...recommendedStories];
@@ -81,17 +80,38 @@ export function ForYouCarousel({ onPlayLevel, allLevels }: ForYouCarouselProps) 
 
     if (loading || recommendedStories.length === 0) return null;
 
-    // Animation duration based on number of items for consistent smooth speed
-    const duration = Math.max(25, recommendedStories.length * 5);
+    // Animation duration based on number of items for consistent smooth glide speed
+    const duration = Math.max(30, recommendedStories.length * 5.5);
 
     return (
         <div 
             className="w-full bg-gradient-to-b from-slate-950/95 via-slate-900/85 to-transparent backdrop-blur-xl border-b border-cyan-500/20 pt-20 md:pt-24 pb-5 z-40 relative shadow-[0_10px_30px_rgba(0,0,0,0.6)] overflow-hidden"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onTouchStart={() => setIsPaused(true)}
-            onTouchEnd={() => setIsPaused(false)}
         >
+            {/* Embedded Pure CSS Keyframes for True Resumable Pause */}
+            <style>{`
+                @keyframes ayaSeamlessMarquee {
+                    0% {
+                        transform: translate3d(0, 0, 0);
+                    }
+                    100% {
+                        transform: translate3d(-33.333333%, 0, 0);
+                    }
+                }
+                .aya-marquee-track {
+                    display: flex;
+                    gap: 1rem;
+                    width: max-content;
+                    animation: ayaSeamlessMarquee ${duration}s linear infinite;
+                    will-change: transform;
+                }
+                .aya-marquee-track:hover {
+                    animation-play-state: paused !important;
+                }
+                .aya-marquee-track.is-paused {
+                    animation-play-state: paused !important;
+                }
+            `}</style>
+
             {/* ── TOP HEADER ROW: TITLE & VIBE SPINNER (NO OVERLAP) ── */}
             <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between gap-3 mb-3">
                 {/* Left: Title & Live Badge */}
@@ -122,7 +142,7 @@ export function ForYouCarousel({ onPlayLevel, allLevels }: ForYouCarouselProps) 
                     <button
                         onClick={() => setIsPaused(!isPaused)}
                         className="w-7 h-7 rounded-full bg-slate-800/80 border border-white/10 hover:border-cyan-400 text-slate-300 hover:text-white flex items-center justify-center transition-all shadow-md active:scale-95 text-[10px]"
-                        title={isPaused ? "Resume Auto-slideshow" : "Pause Slideshow"}
+                        title={isPaused ? "Resume Slideshow" : "Pause Slideshow"}
                         aria-label="Toggle Slideshow"
                     >
                         {isPaused ? <Play className="w-3 h-3 text-cyan-400 ml-0.5" /> : <Pause className="w-3 h-3 text-purple-400" />}
@@ -130,25 +150,14 @@ export function ForYouCarousel({ onPlayLevel, allLevels }: ForYouCarouselProps) 
                 </div>
             </div>
             
-            {/* ── SEAMLESS MOVING SLIDESHOW MARQUEE (NO SCROLLBAR) ── */}
+            {/* ── SEAMLESS MOVING SLIDESHOW MARQUEE (NO SCROLLBAR & PERFECT PAUSE/RESUME) ── */}
             <div className="relative w-full overflow-hidden py-1">
                 {/* Edge fade gradients */}
                 <div className="absolute left-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none" />
                 <div className="absolute right-0 top-0 bottom-0 w-8 md:w-16 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none" />
 
-                <motion.div
-                    className="flex space-x-4 w-max px-4 cursor-pointer"
-                    animate={{
-                        x: isPaused ? undefined : [0, -((recommendedStories.length * 276))]
-                    }}
-                    transition={{
-                        x: {
-                            repeat: Infinity,
-                            repeatType: "loop",
-                            duration: duration,
-                            ease: "linear"
-                        }
-                    }}
+                <div 
+                    className={`aya-marquee-track px-4 cursor-pointer ${isPaused ? 'is-paused' : ''}`}
                 >
                     {marqueeItems.map((level, i) => {
                         const storyId = level.scenarioId || level.id;
@@ -230,7 +239,7 @@ export function ForYouCarousel({ onPlayLevel, allLevels }: ForYouCarouselProps) 
                             </div>
                         );
                     })}
-                </motion.div>
+                </div>
             </div>
         </div>
     );
