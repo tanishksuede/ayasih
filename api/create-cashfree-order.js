@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
   try {
     const orderId = `order_${Date.now()}_${user_id || 'guest'}`;
-    const host = req.headers.host || 'aya-weld.vercel.app';
+    const host = req.headers.host || 'atyourage.app';
     const protocol = host.includes('localhost') ? 'http' : 'https';
     const returnUrl = `${protocol}://${host}/payment/verify?order_id={order_id}`;
 
