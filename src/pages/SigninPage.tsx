@@ -21,7 +21,7 @@ export function SigninPage() {
 
     useEffect(() => {
         // Check if user is already logged in (e.g. returning from Google Auth)
-        supabase.auth.getSession().then(async (response) => {
+        supabase.auth.getSession().then(async (response: any) => {
             const session = response.data.session;
             if (session?.user) {
                 try {
