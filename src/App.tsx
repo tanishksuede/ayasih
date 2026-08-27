@@ -22,6 +22,7 @@ import { PaymentVerify } from './pages/PaymentVerify';
 import ReactGA from 'react-ga4';
 import { AnalyticsTracker } from './components/AnalyticsTracker';
 import { GoogleTranslateSync } from './components/GoogleTranslateSync';
+import { Analytics } from '@vercel/analytics/react';
 
 // Initialize Google Analytics 4
 ReactGA.initialize('G-30ZXCBJXSQ');
@@ -59,6 +60,7 @@ function App() {
     <BrowserRouter>
       <GoogleTranslateSync />
       <AnalyticsTracker />
+      <Analytics />
       <Routes>
         <Route element={<AppLayout />}>
           <Route path="/" element={<HomePage />} />
