@@ -36,19 +36,51 @@ export function AdminPanelPage() {
     const [currentEmail, setCurrentEmail] = useState('');
 
     useEffect(() => {
-        const checkAdmin = async () => {
+        let isMounted = true;
+
+        const verifyAdmin = async () => {
             try {
-                const { checkIsAdmin } = await import('../utils/adminCheck');
-                const result = await checkIsAdmin();
-                setIsAdmin(result);
-                // Read persisted email for display
-                const email = localStorage.getItem('aya_google_email');
-                if (email) setCurrentEmail(email);
-            } catch {
-                setIsAdmin(false);
+                // Immediately check session
+                const { data: { session } } = await supabase.auth.getSession();
+                
+                if (!session) {
+                    if (isMounted) setIsAdmin(false);
+                    return;
+                }
+
+                if (isMounted && session.user?.email) {
+                    setCurrentEmail(session.user.email);
+                }
+
+                // Call the secure RPC function
+                const { data: isAdminData, error } = await supabase.rpc('is_admin_user');
+                
+                if (error) throw error;
+                
+                if (isMounted) {
+                    setIsAdmin(!!isAdminData);
+                }
+            } catch (err) {
+                console.error('Admin verification failed:', err);
+                if (isMounted) setIsAdmin(false);
             }
         };
-        checkAdmin();
+
+        verifyAdmin();
+
+        // Listen for auth state changes
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event: string, _session: any) => {
+            if (event === 'SIGNED_OUT') {
+                if (isMounted) setIsAdmin(false);
+            } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+                verifyAdmin();
+            }
+        });
+
+        return () => {
+            isMounted = false;
+            subscription.unsubscribe();
+        };
     }, []);
 
     // Notification state
