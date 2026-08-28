@@ -1,21 +1,239 @@
-ALTER TABLE users ADD COLUMN IF NOT EXISTS daily_struggle TEXT;
-ALTER TABLE users ADD COLUMN IF NOT EXISTS last_struggle_update TIMESTAMP WITH TIME ZONE;
--- Future Self Match columns — additive migration, safe on existing rows
-ALTER TABLE personality_profiles
-  ADD COLUMN IF NOT EXISTS future_archetype TEXT,
-  ADD COLUMN IF NOT EXISTS future_archetype_score INTEGER,
-  ADD COLUMN IF NOT EXISTS life_resilience INTEGER,
-  ADD COLUMN IF NOT EXISTS life_discipline INTEGER,
-  ADD COLUMN IF NOT EXISTS life_courage INTEGER,
-  ADD COLUMN IF NOT EXISTS life_creativity INTEGER,
-  ADD COLUMN IF NOT EXISTS life_emotional_control INTEGER,
-  ADD COLUMN IF NOT EXISTS life_leadership INTEGER,
-  ADD COLUMN IF NOT EXISTS life_risk_intelligence INTEGER,
-  ADD COLUMN IF NOT EXISTS life_consistency INTEGER;
--- Prevent duplicate game_sessions for the same user + personality on the same day.
--- This acts as a database-level safety net in addition to the application-level useRef guard.
-CREATE UNIQUE INDEX IF NOT EXISTS unique_game_session 
-ON game_sessions(user_id, selected_personality, DATE(created_at));
+-- RUN THIS IN YOUR SUPABASE SQL EDITOR TO CREATE ALL REQUIRED TABLES
+
+-- 1. Create the Users table
+CREATE TABLE IF NOT EXISTS public.users (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  mobile TEXT UNIQUE,
+  name TEXT,
+  age INTEGER,
+  access_type TEXT,
+  access_start_date DATE,
+  preferred_theme TEXT,
+  preferred_map TEXT,
+  total_xp INTEGER DEFAULT 0,
+  level INTEGER DEFAULT 1,
+  stories_completed INTEGER DEFAULT 0,
+  current_streak INTEGER DEFAULT 0,
+  longest_streak INTEGER DEFAULT 0,
+  last_active_date DATE,
+  daily_challenge_completed BOOLEAN DEFAULT false,
+  daily_challenge_personality TEXT,
+  level_scores JSONB DEFAULT '{}'::jsonb,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. Create the Personality Profiles table
+CREATE TABLE IF NOT EXISTS public.personality_profiles (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
+  mobile TEXT,
+  trait_risk_taker INTEGER,
+  trait_creative INTEGER,
+  trait_analytical INTEGER,
+  trait_social INTEGER,
+  trait_ambitious INTEGER,
+  future_archetype TEXT,
+  interest_goal TEXT,
+  interest_struggle TEXT,
+  interest_domain TEXT,
+  total_xp INTEGER DEFAULT 0,
+  level INTEGER DEFAULT 1,
+  stories_completed INTEGER DEFAULT 0,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 3. Create the Quiz Responses table
+CREATE TABLE IF NOT EXISTS public.quiz_responses (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
+  responses JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 4. Create the Game Sessions table
+CREATE TABLE IF NOT EXISTS public.game_sessions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
+  scenario_id TEXT,
+  score INTEGER,
+  feedback TEXT,
+  traits_impact JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 5. Create Push Subscriptions table
+CREATE TABLE IF NOT EXISTS public.push_subscriptions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES public.users(id) ON DELETE CASCADE,
+  subscription JSONB NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 6. Disable Row Level Security (RLS) for now to allow your front-end to read/write without complex auth policies.
+-- 6. Enable Row Level Security (RLS) and define access policies.
+ALTER TABLE public.users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.personality_profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.quiz_responses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.game_sessions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.push_subscriptions ENABLE ROW LEVEL SECURITY;
+
+-- Allow users to read and update their own profile
+CREATE POLICY "Users can view own data" ON public.users FOR SELECT USING (auth.uid() = id);
+CREATE POLICY "Users can update own data" ON public.users FOR UPDATE USING (auth.uid() = id);
+-- For onboarding, allow insert if the user is authenticated and the ID matches
+CREATE POLICY "Users can insert own data" ON public.users FOR INSERT WITH CHECK (auth.uid() = id);
+
+-- Similar policies for other tables
+CREATE POLICY "Users can access own personality" ON public.personality_profiles FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users can access own quiz responses" ON public.quiz_responses FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users can access own game sessions" ON public.game_sessions FOR ALL USING (auth.uid() = user_id);
+CREATE POLICY "Users can access own push subscriptions" ON public.push_subscriptions FOR ALL USING (auth.uid() = user_id);
+-- RUN THIS IN YOUR SUPABASE SQL EDITOR TO CREATE THE SCENARIOS AND LEVELS TABLES
+
+CREATE TABLE IF NOT EXISTS public.scenarios (
+  id TEXT PRIMARY KEY,
+  title TEXT,
+  source TEXT,
+  frames JSONB,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS public.levels (
+  id TEXT PRIMARY KEY,
+  day_number INTEGER,
+  title TEXT,
+  description TEXT,
+  personality TEXT,
+  required_stars INTEGER,
+  year INTEGER,
+  age INTEGER,
+  theme TEXT,
+  archetype TEXT,
+  bio TEXT,
+  fame TEXT,
+  achievements JSONB,
+  lesson TEXT,
+  avatar_url TEXT,
+  scenario_id TEXT,
+  idol_traits JSONB,
+  status TEXT,
+  is_locked BOOLEAN,
+  stars INTEGER,
+  part1 TEXT,
+  part2 TEXT,
+  placeholder BOOLEAN,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Disable Row Level Security (RLS) so your frontend can read the levels/scenarios freely
+ALTER TABLE public.scenarios DISABLE ROW LEVEL SECURITY;
+ALTER TABLE public.levels DISABLE ROW LEVEL SECURITY;
+-- ============================================================
+-- Complete Live Analytics & Feedback Setup for Supabase
+-- Run this script in your Supabase SQL Editor to make sure all data
+-- is stored live in Supabase and instantly accessible on Admin Panel!
+-- ============================================================
+
+-- 1. CREATE ALL TABLES (IF THEY DO NOT EXIST)
+
+CREATE TABLE IF NOT EXISTS personality_wishlist (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid,
+  personality_name text NOT NULL,
+  vote_count integer DEFAULT 1,
+  requested_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+CREATE TABLE IF NOT EXISTS journey_feedback (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid,
+  journey_id text NOT NULL,
+  sentiment_score integer NOT NULL,
+  emoji text,
+  session_duration_seconds integer,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+CREATE TABLE IF NOT EXISTS story_difficulty_feedback (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid,
+  journey_id text NOT NULL,
+  difficulty_rating integer NOT NULL,
+  part integer DEFAULT 1,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+CREATE TABLE IF NOT EXISTS feature_usage (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid,
+  feature_name text NOT NULL,
+  session_id text,
+  accessed_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+CREATE TABLE IF NOT EXISTS unmatched_searches (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid,
+  search_query text NOT NULL,
+  searched_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+CREATE TABLE IF NOT EXISTS search_logs (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  query text NOT NULL,
+  query_original text,
+  matched boolean DEFAULT false,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+CREATE TABLE IF NOT EXISTS journey_events (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid,
+  journey_id text NOT NULL,
+  event_type text NOT NULL,
+  event_data jsonb DEFAULT '{}'::jsonb,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+CREATE TABLE IF NOT EXISTS user_topic_preferences (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid,
+  topic text NOT NULL,
+  selected_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+CREATE TABLE IF NOT EXISTS survey_responses (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id uuid,
+  question_key text NOT NULL,
+  response_text text,
+  response_rating integer,
+  responded_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+);
+
+-- 2. REMOVE CONSTRAINTS & DISABLE RLS TO GUARANTEE LIVE SUPABASE SAVES
+
+-- Disable RLS on feedback tables so inserts & selects NEVER get blocked by policies
+ALTER TABLE personality_wishlist DISABLE ROW LEVEL SECURITY;
+ALTER TABLE journey_feedback DISABLE ROW LEVEL SECURITY;
+ALTER TABLE story_difficulty_feedback DISABLE ROW LEVEL SECURITY;
+ALTER TABLE feature_usage DISABLE ROW LEVEL SECURITY;
+ALTER TABLE unmatched_searches DISABLE ROW LEVEL SECURITY;
+ALTER TABLE search_logs DISABLE ROW LEVEL SECURITY;
+ALTER TABLE journey_events DISABLE ROW LEVEL SECURITY;
+ALTER TABLE user_topic_preferences DISABLE ROW LEVEL SECURITY;
+ALTER TABLE survey_responses DISABLE ROW LEVEL SECURITY;
+
+-- Grant permissions to public/anon/authenticated roles
+GRANT ALL ON TABLE personality_wishlist TO anon, authenticated, postgres, service_role;
+GRANT ALL ON TABLE journey_feedback TO anon, authenticated, postgres, service_role;
+GRANT ALL ON TABLE story_difficulty_feedback TO anon, authenticated, postgres, service_role;
+GRANT ALL ON TABLE feature_usage TO anon, authenticated, postgres, service_role;
+GRANT ALL ON TABLE unmatched_searches TO anon, authenticated, postgres, service_role;
+GRANT ALL ON TABLE search_logs TO anon, authenticated, postgres, service_role;
+GRANT ALL ON TABLE journey_events TO anon, authenticated, postgres, service_role;
+GRANT ALL ON TABLE user_topic_preferences TO anon, authenticated, postgres, service_role;
+GRANT ALL ON TABLE survey_responses TO anon, authenticated, postgres, service_role;
 -- Migration to add level_scores to the users table
 -- This allows the game to persistently save star progression for each level.
 
@@ -1516,3 +1734,21 @@ UPDATE public.users
 SET is_admin = true 
 WHERE email IN (SELECT email FROM public.admin_users)
    OR auth_user_id IN (SELECT id FROM auth.users WHERE email IN (SELECT email FROM public.admin_users));
+-- Future Self Match columns — additive migration, safe on existing rows
+ALTER TABLE personality_profiles
+  ADD COLUMN IF NOT EXISTS future_archetype TEXT,
+  ADD COLUMN IF NOT EXISTS future_archetype_score INTEGER,
+  ADD COLUMN IF NOT EXISTS life_resilience INTEGER,
+  ADD COLUMN IF NOT EXISTS life_discipline INTEGER,
+  ADD COLUMN IF NOT EXISTS life_courage INTEGER,
+  ADD COLUMN IF NOT EXISTS life_creativity INTEGER,
+  ADD COLUMN IF NOT EXISTS life_emotional_control INTEGER,
+  ADD COLUMN IF NOT EXISTS life_leadership INTEGER,
+  ADD COLUMN IF NOT EXISTS life_risk_intelligence INTEGER,
+  ADD COLUMN IF NOT EXISTS life_consistency INTEGER;
+-- Prevent duplicate game_sessions for the same user + personality on the same day.
+-- This acts as a database-level safety net in addition to the application-level useRef guard.
+CREATE UNIQUE INDEX IF NOT EXISTS unique_game_session 
+ON game_sessions(user_id, selected_personality, DATE(created_at));
+ALTER TABLE users ADD COLUMN IF NOT EXISTS daily_struggle TEXT;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_struggle_update TIMESTAMP WITH TIME ZONE;
