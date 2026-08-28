@@ -844,14 +844,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             // Push final XP + stories_completed to local Zustand store (triggers syncStoreToBackend as backup)
             addSessionProgression(sessionTotalXp);
 
-            // UPDATE TRAITS globally
-            updateTraits({
-                risk: recalibratedTraits.risk - quizTraits.risk,
-                creativity: recalibratedTraits.creativity - quizTraits.creativity,
-                vision: recalibratedTraits.vision - quizTraits.vision,
-                empathy: recalibratedTraits.empathy - quizTraits.empathy,
-                leadership: recalibratedTraits.leadership - quizTraits.leadership
-            });
+            // Traits are already updated globally via setProfile and persisted via saveStoryCompletionDna
 
             // Float the XP events visually before demounting the view!
             triggerFloatText(`+50 XP`, 'positive');
