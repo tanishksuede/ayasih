@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { AuthMascot } from '../components/auth/AuthMascot';
 import { authService } from '../services/authService';
+import { useUserStore } from '../store/userStore';
 import { supabase } from '../utils/supabase';
 import { audioManager as audioSynth } from '../utils/audioManager';
 
@@ -20,47 +21,88 @@ export function SigninPage() {
     const [isHoveringBtn, setIsHoveringBtn] = useState(false);
 
     useEffect(() => {
-        // Check if user is already logged in (e.g. returning from Google Auth)
-        supabase.auth.getSession().then(async (response: any) => {
-            const session = response.data.session;
-            if (session?.user) {
-                try {
-                    let { data: userRow } = await supabase
+        let isMounted = true;
+
+        const processUserSession = async (session: any) => {
+            if (!session?.user || !isMounted) return;
+            try {
+                let { data: userRow } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('auth_user_id', session.user.id)
+                    .maybeSingle();
+
+                if (!userRow && session.user.email) {
+                    const { data: emailRow } = await supabase
                         .from('users')
                         .select('*')
-                        .eq('auth_user_id', session.user.id)
+                        .eq('email', session.user.email)
                         .maybeSingle();
+                    if (emailRow) userRow = emailRow;
+                }
 
-                    if (!userRow && session.user.email) {
-                        const { data: emailRow } = await supabase
-                            .from('users')
-                            .select('*')
-                            .eq('email', session.user.email)
-                            .maybeSingle();
-                        if (emailRow) userRow = emailRow;
-                    }
-
-                    if (userRow) {
-                        const { onboardingComplete } = await authService.handlePostSignIn(userRow, session.user.id);
-                        if (onboardingComplete) {
-                            navigate('/game');
-                        } else {
-                            navigate('/signup/complete');
-                        }
+                if (userRow) {
+                    const { onboardingComplete } = await authService.handlePostSignIn(userRow, session.user.id);
+                    if (onboardingComplete) {
+                        navigate('/game');
                     } else {
                         navigate('/signup/complete');
                     }
-                } catch (err) {
-                    console.error('Error hydrating session:', err);
-                    setIsLoading(false);
+                } else {
+                    const defaultName = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Player';
+                    useUserStore.getState().setProfile({
+                        id: session.user.id,
+                        auth_user_id: session.user.id,
+                        username: undefined,
+                        name: defaultName,
+                        email: session.user.email,
+                        onboarding_complete: false,
+                        age: 18,
+                        total_xp: 0,
+                        level: 1,
+                        stories_completed: 0,
+                        current_streak: 0,
+                        longest_streak: 0,
+                        daily_challenge_completed: false,
+                        assessmentCompleted: false,
+                        traits: { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 },
+                    } as any);
+                    navigate('/signup/complete');
                 }
+            } catch (err) {
+                console.error('Error hydrating session:', err);
+                if (isMounted) setIsLoading(false);
+            }
+        };
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event: string, session: any) => {
+            if (session?.user) {
+                await processUserSession(session);
             } else {
-                setIsLoading(false);
+                if (!window.location.hash.includes('access_token') && !window.location.search.includes('code=')) {
+                    if (isMounted) setIsLoading(false);
+                }
+            }
+        });
+
+        supabase.auth.getSession().then(async (response: any) => {
+            const session = response.data?.session;
+            if (session?.user) {
+                await processUserSession(session);
+            } else {
+                if (!window.location.hash.includes('access_token') && !window.location.search.includes('code=')) {
+                    if (isMounted) setIsLoading(false);
+                }
             }
         }).catch((err: any) => {
             console.error('Failed to get session:', err);
-            setIsLoading(false);
+            if (isMounted) setIsLoading(false);
         });
+
+        return () => {
+            isMounted = false;
+            subscription.unsubscribe();
+        };
     }, [navigate]);
 
     const handleIdentifierChange = (e: ChangeEvent<HTMLInputElement>) => {
