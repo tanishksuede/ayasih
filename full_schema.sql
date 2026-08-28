@@ -869,16 +869,16 @@ EXCEPTION WHEN OTHERS THEN NULL;
 END $$;
 
 -- 5. Create permissive policies (server-side service role bypasses RLS)
-CREATE POLICY IF NOT EXISTS "Allow service role insert" ON public.push_subscriptions
+CREATE POLICY "Allow service role insert" ON public.push_subscriptions
   FOR INSERT WITH CHECK (true);
 
-CREATE POLICY IF NOT EXISTS "Allow service role select" ON public.push_subscriptions
+CREATE POLICY "Allow service role select" ON public.push_subscriptions
   FOR SELECT USING (true);
 
-CREATE POLICY IF NOT EXISTS "Allow service role update" ON public.push_subscriptions
+CREATE POLICY "Allow service role update" ON public.push_subscriptions
   FOR UPDATE USING (true);
 
-CREATE POLICY IF NOT EXISTS "Allow service role delete" ON public.push_subscriptions
+CREATE POLICY "Allow service role delete" ON public.push_subscriptions
   FOR DELETE USING (true);
 
 -- 6. Create or replace the updated_at trigger
