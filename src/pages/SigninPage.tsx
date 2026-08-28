@@ -57,6 +57,9 @@ export function SigninPage() {
             } else {
                 setIsLoading(false);
             }
+        }).catch((err) => {
+            console.error('Failed to get session:', err);
+            setIsLoading(false);
         });
     }, [navigate]);
 

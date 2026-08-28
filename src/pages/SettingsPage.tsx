@@ -380,6 +380,22 @@ export function SettingsPage() {
                         Restart Journey (Reset)
                     </button>
 
+                    <button
+                        onClick={async () => {
+                            audioSynth.playClick();
+                            try {
+                                const { authService } = await import('../services/authService');
+                                await authService.signOut();
+                                navigate('/signin');
+                            } catch (err) {
+                                console.error('Error signing out:', err);
+                            }
+                        }}
+                        className="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 font-bold py-3 mt-4 rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wider text-xs flex items-center justify-center gap-2"
+                    >
+                        Sign Out
+                    </button>
+
                     {/* Bottom row: Go Back (left) & Delete Account (bottom right) */}
                     <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
                         <button
