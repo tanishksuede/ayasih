@@ -1774,6 +1774,6 @@ ALTER TABLE personality_profiles
 -- Prevent duplicate game_sessions for the same user + personality on the same day.
 -- This acts as a database-level safety net in addition to the application-level useRef guard.
 CREATE UNIQUE INDEX IF NOT EXISTS unique_game_session 
-ON game_sessions(user_id, selected_personality, DATE(created_at));
+ON game_sessions(user_id, selected_personality, ((created_at AT TIME ZONE 'UTC')::date));
 ALTER TABLE users ADD COLUMN IF NOT EXISTS daily_struggle TEXT;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS last_struggle_update TIMESTAMP WITH TIME ZONE;
