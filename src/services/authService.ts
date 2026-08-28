@@ -280,12 +280,13 @@ export const authService = {
         } catch {}
 
         const onboardingComplete = Boolean(userRow.onboarding_complete || userRow.username);
-        // Existing user has completed assessment if they have game progress or assessment flag
+        // Existing user has completed assessment if they have game progress, assessment flag, or onboarding flag
         const hasAssessmentCompleted = Boolean(
             (userRow.total_xp && userRow.total_xp > 0) ||
             (userRow.stories_completed && userRow.stories_completed > 0) ||
             (userRow.level && userRow.level > 1) ||
-            userRow.assessment_completed === true
+            userRow.assessment_completed === true ||
+            userRow.onboarding_complete === true
         );
 
         saveSession({
