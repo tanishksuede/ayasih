@@ -154,6 +154,8 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
         { key: 'Empathy (Social)',       score: finalTraits.empathy,     desc: 'understanding others, building strong bonds, and fostering collaboration' },
     ].sort((a, b) => b.score - a.score), [finalTraits]);
 
+    const [showAllCareers, setShowAllCareers] = useState(false);
+
     // Career directions (dynamic)
     const careerDirections = useMemo(() => {
         type TK = keyof typeof finalTraits;
@@ -167,13 +169,18 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
             { name: 'Social Entrepreneur', color: 'text-teal-300',    grad: 'from-teal-500 to-cyan-500',     icon: '🌱', w: { empathy: 0.5, leadership: 0.3, risk: 0.2 } },
             { name: 'Content Creator',     color: 'text-rose-300',    grad: 'from-rose-500 to-pink-500',     icon: '🎬', w: { creativity: 0.7, risk: 0.2, empathy: 0.1 } },
         ];
-        const scored = MAP.map(c => ({
+        let scored = MAP.map(c => ({
             ...c,
             score: Math.round(Object.entries(c.w).reduce((acc, [k, wt]) => acc + (finalTraits[k as TK] ?? 50) * (wt ?? 0), 0))
-        })).sort((a, b) => b.score - a.score).slice(0, 5);
+        })).sort((a, b) => b.score - a.score);
+        
+        if (!showAllCareers) {
+            scored = scored.slice(0, 4); // Show top 4 initially
+        }
+        
         const max = scored[0].score;
         return scored.map((c, i) => ({ ...c, pct: Math.round(96 - i * 5 + (c.score / max - 1) * 6) }));
-    }, [finalTraits]);
+    }, [finalTraits, showAllCareers]);
 
     // Interest areas
     const interestAreas = useMemo(() => [
@@ -441,8 +448,14 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
                             </div>
                         ))}
                     </div>
-                    <button className="w-full text-center text-[13px] text-slate-400 hover:text-white pt-2 border-t border-white/5 flex items-center justify-center gap-2 transition-colors">
-                        <Rocket size={13} /> View all career suggestions
+                    <button 
+                        onClick={() => {
+                            audioSynth.playClick();
+                            setShowAllCareers(!showAllCareers);
+                        }}
+                        className="w-full text-center text-[13px] text-slate-400 hover:text-white pt-2 border-t border-white/5 flex items-center justify-center gap-2 transition-colors"
+                    >
+                        <Rocket size={13} /> {showAllCareers ? "Show fewer career suggestions" : "View all career suggestions"}
                     </button>
                 </div>
 
