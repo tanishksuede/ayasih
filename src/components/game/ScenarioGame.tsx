@@ -145,7 +145,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
     useJourneyTracking(level.id);
 
     const collectLesson = useUserStore((state) => state.collectLesson);
-    const updateTraits = useUserStore((state) => state.updateTraits);
     const addSessionProgression = useUserStore((state) => state.addSessionProgression);
     const updateXpLocally = useUserStore((state) => state.updateXpLocally);
     const completeDailyChallenge = useUserStore((state) => state.completeDailyChallenge);
