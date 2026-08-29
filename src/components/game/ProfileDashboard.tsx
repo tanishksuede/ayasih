@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useUserStore } from '../../store/userStore';
 import { audioManager as audioSynth } from "../../utils/audioManager";
-import { ArrowLeft, Edit3, Check, X, LogOut } from 'lucide-react';
+import { ArrowLeft, Edit3, Check, X } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
-import { useNavigate } from 'react-router-dom';
 import { useUsernameAvailability } from '../../hooks/useUsernameAvailability';
 import { supabase } from '../../utils/supabase';
 import { UsernameField } from './UsernameField';
@@ -19,9 +18,7 @@ interface ProfileDashboardProps {
 export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
     const profile = useUserStore((state) => state.profile);
     const setProfile = useUserStore((state) => state.setProfile);
-    const clearUserData = useUserStore((state) => state.clearUserData);
     const { isCandyMode } = useUserStore();
-    const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState(false);
     
@@ -58,12 +55,6 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
             setUsernameInput(profile.username || '');
         }
     }, [profile, isEditing]);
-
-    const handleLogout = () => {
-        audioSynth.playClick();
-        clearUserData();
-        navigate('/'); 
-    };
 
     const handleSaveProfile = async () => {
         if (!profile?.id) return;
@@ -289,19 +280,6 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                     >
                                         <Edit3 className={clsx("w-5 h-5", isCandyMode ? "text-slate-400" : "text-slate-400")} />
                                         Edit Profile
-                                    </button>
-                                    
-                                    <button 
-                                        onClick={handleLogout}
-                                        className={clsx(
-                                            "w-full flex items-center justify-center gap-3 py-4 font-bold rounded-2xl transition-colors mt-2",
-                                            isCandyMode
-                                                ? "bg-red-50 text-red-600 hover:bg-red-100"
-                                                : "bg-red-950/40 text-red-400 hover:bg-red-900/60 border border-red-900/50"
-                                        )}
-                                    >
-                                        <LogOut className="w-5 h-5" />
-                                        Sign Out
                                     </button>
                                 </div>
                             </>
