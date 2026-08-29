@@ -151,7 +151,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
     };
 
     return (
-        <div className={clsx("w-full min-h-[100dvh] flex flex-col font-sans overflow-x-hidden bg-[#050817] text-white relative transition-opacity duration-300", isClosing && "opacity-0")}>
+        <div className={clsx("w-full min-h-[100dvh] flex flex-col font-sans overflow-x-hidden overflow-y-auto scroll-smooth bg-[#050817] text-white relative transition-opacity duration-300", isClosing && "opacity-0")}>
             {/* Background Effects */}
             <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6]/10 blur-[120px] mix-blend-screen" />
@@ -159,7 +159,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.03] mix-blend-overlay" />
             </div>
 
-            <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 pt-8 pb-32 min-h-[100dvh] flex flex-col">
+            <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 pt-8 pb-44 min-h-[100dvh] flex flex-col">
                 
                 {/* Hero Header */}
                 <motion.div 

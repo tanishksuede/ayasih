@@ -424,10 +424,20 @@ export function GameRoot() {
         // No longer redirecting to notifications
     }
 
+    const isScrollableRoute = 
+        location.pathname.startsWith('/game/report') ||
+        location.pathname === '/game/welcome' ||
+        location.pathname === '/game/setup' ||
+        location.pathname === '/game/dna' ||
+        location.pathname === '/game/profile' ||
+        location.pathname === '/game/settings' ||
+        location.pathname === '/game/journal' ||
+        location.pathname.startsWith('/game/admin');
+
     return (
         <div className={`relative w-full font-sans bg-slate-900 text-slate-100 ${
-            location.pathname === '/game/welcome' || location.pathname === '/game/setup'
-                ? 'min-h-[100dvh] overflow-y-auto overflow-x-hidden'
+            isScrollableRoute
+                ? 'min-h-[100dvh] overflow-y-auto overflow-x-hidden scroll-smooth'
                 : 'h-[100dvh] overflow-hidden'
         }`}>
             <SupabaseChecker />

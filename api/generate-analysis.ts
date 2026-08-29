@@ -27,6 +27,19 @@ function translateTag(tag: string): string {
     return tag.replace(/_/g, ' ');
 }
 
+function buildDynamicInsight(character: string, storyTitle: string, userChoice: string, consequence: string, translatedTags: string): string[] {
+    const cleanCharacter = character && character !== 'Default' ? character : 'this legend';
+    const tagText = translatedTags || 'a challenging situation';
+
+    const part1 = `When facing ${tagText}, finding your way takes patience. In ${storyTitle || 'this story'}, ${cleanCharacter} went through moments just like this where things felt uncertain.`;
+    const choiceText = userChoice ? `"${userChoice}"` : 'to take action';
+    const consequenceText = consequence && consequence !== 'Completed the phase.' ? ` ${consequence}` : '';
+    const part2 = `Your decision ${choiceText} shows how you naturally respond under pressure.${consequenceText}`;
+    const part3 = `Navigating these moments is all about learning what works for you. Trust your instincts, take it one step at a time, and keep your head up.`;
+
+    return [part1, part2, part3];
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://atyourage.app';
     res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
@@ -44,22 +57,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         userChoiceConsequence,
         userAge,
         userTraits
-    } = req.body;
+    } = req.body || {};
 
+    const translatedTags = (tags || []).map((t: string) => translateTag(t)).join(' and ') || 'a challenging situation';
     const groqKey = process.env.GROQ_API_KEY;
 
     if (!groqKey) {
-        return res.status(500).json({ error: 'Missing GROQ_API_KEY environment variable' });
+        // Return dynamic bespoke insight immediately if key is not configured
+        const parts = buildDynamicInsight(character, storyTitle, userChoice, userChoiceConsequence, translatedTags);
+        return res.status(200).json({ parts });
     }
 
     try {
-        const translatedTags = (tags || []).map((t: string) => translateTag(t)).join(' and ') || 'a challenging situation';
-
-        const prompt = `You are a thoughtful friend speaking directly to a young person after they complete an interactive life scenario.
+        const prompt = `You are a thoughtful, caring friend speaking directly to a young person after they complete an interactive life scenario.
 Your job is not to produce a psychological report.
 
 Understand the situation they selected, understand the story and character, understand the exact choice they made, and respond like a friend who genuinely wants to help.
-Connect the story to their real situation. Explain their choice honestly but gently. If their choice could be unhelpful, tell them why without judging them. Give practical, age appropriate advice. Reassure them that making an imperfect choice does not mean something is wrong with them.
+Connect the story to their real situation. Explain their choice honestly but gently. Give practical, age appropriate advice.
 Use simple natural conversational language.
 Return exactly three short parts.
 Do not use markdown, bullet points, dashes, asterisks, emojis, headings, labels, technical terms, raw database tags, or internal variable names.
@@ -73,11 +87,11 @@ Consequence of their choice: "${userChoiceConsequence}"
 User's Age: ${userAge || 'unknown'}
 
 Generate exactly 3 short conversational parts.
-PART 1: Connect their situation (${translatedTags}) with how ${character} handled a similar phase in this story.
+PART 1: Connect their situation (${translatedTags}) with how ${character} handled a similar phase in ${storyTitle}.
 PART 2: Talk specifically about their exact choice ("${userChoice}"). Explain why someone might make that choice, and gently explain if it's helpful or unhelpful for their situation.
 PART 3: Give short, friendly, practical guidance. Reassure them.
 
-Output MUST be a valid JSON object with exactly one key "parts", containing an array of 3 strings. Each part should be 1-3 short sentences (25-50 words maximum each).`;
+Output MUST be a valid JSON object with exactly one key "parts", containing an array of 3 strings. Each part should be 1-3 short sentences (25-45 words maximum each).`;
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
@@ -98,9 +112,9 @@ Output MUST be a valid JSON object with exactly one key "parts", containing an a
         });
 
         if (!response.ok) {
-            const errBody = await response.text();
-            console.error('Groq API Error:', response.status, errBody);
-            return res.status(500).json({ error: 'Groq API request failed' });
+            console.warn('Groq API Error, returning smart dynamic fallback');
+            const parts = buildDynamicInsight(character, storyTitle, userChoice, userChoiceConsequence, translatedTags);
+            return res.status(200).json({ parts });
         }
 
         const data = await response.json();
@@ -108,7 +122,8 @@ Output MUST be a valid JSON object with exactly one key "parts", containing an a
         const parsed = JSON.parse(content);
 
         if (!parsed.parts || !Array.isArray(parsed.parts) || parsed.parts.length !== 3) {
-            return res.status(500).json({ error: 'Invalid response format from Groq' });
+            const parts = buildDynamicInsight(character, storyTitle, userChoice, userChoiceConsequence, translatedTags);
+            return res.status(200).json({ parts });
         }
 
         // Clean any leftover markdown or unwanted characters
@@ -116,7 +131,8 @@ Output MUST be a valid JSON object with exactly one key "parts", containing an a
 
         return res.status(200).json(parsed);
     } catch (error) {
-        console.error('Analysis generation error:', error);
-        return res.status(500).json({ error: 'Failed to generate analysis' });
+        console.warn('Analysis generation error, returning smart dynamic fallback:', error);
+        const parts = buildDynamicInsight(character, storyTitle, userChoice, userChoiceConsequence, translatedTags);
+        return res.status(200).json({ parts });
     }
 }

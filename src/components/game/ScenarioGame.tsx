@@ -857,15 +857,23 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             
             setFinalStarCount(starCount);
             setAnalysisState('generating');
-            bgmManager.stop(1);
+            const DUMMY_OPTIONS = new Set([
+                'Collect Reward', 'Complete', 'Complete Level', 'Finish Chapter', 'Finish',
+                'Continue', 'Try Again', 'Confirm', 'Next', 'Claim Reward', 'Proceed', 'Done',
+                'Next Chapter', 'Start Journey', 'Begin', 'Mission Accomplished'
+            ]);
 
-            const realChoices = finalSessionChoices.filter(c => 
-                !['Collect Reward', 'Complete', 'Finish', 'Continue', 'Try Again', 'Confirm', 'Next'].includes(c.chosen_option)
+            const realChoices = sessionChoicesRef.current.filter(c => 
+                c.chosen_option && !DUMMY_OPTIONS.has(c.chosen_option.trim())
             );
-            const lastChoiceObj = realChoices.length > 0 ? realChoices[realChoices.length - 1] : finalSessionChoices[finalSessionChoices.length - 1];
+            const lastChoiceObj = realChoices.length > 0 
+                ? realChoices[realChoices.length - 1] 
+                : (sessionChoicesRef.current[0] || choiceData);
 
             const checkinData = useUserStore.getState().checkinData;
             const tags = checkinData ? [...(checkinData.situation_tags || []), ...(checkinData.emotional_tags || [])] : [];
+            const cleanCharacter = idolName && idolName !== 'Default' ? idolName : 'this legend';
+            const tagText = tags.length > 0 ? tags.map(t => t.replace(/_/g, ' ')).join(' and ') : 'your current challenges';
             
             fetch('/api/generate-analysis', {
                 method: 'POST',
@@ -873,7 +881,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 body: JSON.stringify({
                     tags,
                     storyTitle: safeScenario.title,
-                    character: idolName,
+                    character: cleanCharacter,
                     userChoice: lastChoiceObj?.chosen_option || '',
                     userChoiceConsequence: lastChoiceObj?.consequence || 'Completed the phase.',
                     userAge: userProfile?.age || 'unknown',
@@ -883,18 +891,21 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 if (!res.ok) throw new Error('API failed');
                 return res.json();
             }).then(data => {
-                if (data && data.parts && Array.isArray(data.parts)) {
+                if (data && data.parts && Array.isArray(data.parts) && data.parts.length === 3) {
                     setAnalysisParts(data.parts);
                     setAnalysisState('done');
                 } else {
                     throw new Error('Invalid format');
                 }
             }).catch(err => {
-                console.error('Groq analysis failed, using graceful fallback:', err);
+                console.warn('Groq analysis fetch offline/failed, using dynamic tailored insight:', err);
+                const choiceStr = lastChoiceObj?.chosen_option ? `"${lastChoiceObj.chosen_option}"` : 'to take action';
+                const consequenceStr = lastChoiceObj?.consequence && lastChoiceObj.consequence !== 'Completed the phase.' ? ` ${lastChoiceObj.consequence}` : '';
+                
                 const fallbackParts = [
-                    `Looks like I couldn't put my thoughts together right now. But you made it through the story, and that matters!`,
-                    `Your choice to "${lastChoiceObj?.chosen_option || 'take action'}" was interesting. I'll think about it more later.`,
-                    `Your story is still complete! You can keep going and I'll catch you next time.`
+                    `When dealing with ${tagText}, it is easy to feel the weight of every step. In ${safeScenario.title || 'this story'}, ${cleanCharacter} was at a similar turning point.`,
+                    `Your choice ${choiceStr} reveals your instinct for navigating real pressure.${consequenceStr}`,
+                    `Remember, every decision teaches you more about yourself. Trust your judgment, take things one step at a time, and keep moving forward.`
                 ];
                 setAnalysisParts(fallbackParts);
                 setAnalysisState('done');
