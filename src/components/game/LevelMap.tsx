@@ -17,12 +17,8 @@ import { SearchBar } from '../SearchBar';
 import { resolvePersonalityAvatar } from '../../utils/avatarUtils';
 import TopicPreferencesSurvey from '../feedback/TopicPreferencesSurvey';
 import { ForYouCarousel } from './ForYouCarousel';
-import { ProblemCheckInModal } from '../discovery/ProblemCheckInModal';
-import { ProblemSearchBar } from '../discovery/ProblemSearchBar';
-import { CurrentChapterBanner } from '../discovery/CurrentChapterBanner';
-import { CurrentVsEmergingCard } from '../discovery/CurrentVsEmergingCard';
-import { AyaPlusModal } from '../discovery/AyaPlusModal';
-import { WeeklyRecapModal } from '../discovery/WeeklyRecapModal';
+import { CheckInCard } from './CheckInCard';
+import { MessageSquarePlus, X } from 'lucide-react';
 
 interface LevelMapProps {
     onPlayLevel: (level: any) => void;
@@ -35,6 +31,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const levels = useUserStore((state) => state.levels);
     const levelScores = useUserStore((state) => state.levelScores);
     const profile = useUserStore((state) => state.profile);
+    const [showCheckInModal, setShowCheckInModal] = useState(false);
 
     // Admin check — use profile.isAdmin from the store, with fallback to DB check
     const [isAdmin, setIsAdmin] = useState(!!profile?.isAdmin);
@@ -49,15 +46,6 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
         };
         checkAdmin();
     }, [profile?.isAdmin]);
-
-    // Life Navigation & Discovery States
-    const [isCheckInOpen, setIsCheckInOpen] = useState(false);
-    const [isPlusOpen, setIsPlusOpen] = useState(false);
-    const [isWeeklyRecapOpen, setIsWeeklyRecapOpen] = useState(false);
-    const [situationQuery, setSituationQuery] = useState('');
-    const [situationTags, setSituationTags] = useState<string[]>([]);
-    const [activeTheme, setActiveTheme] = useState<string | null>(null);
-
     const activeAge = profile?.age || 18;
     
     let ageLevels: any[] = [];
@@ -305,33 +293,9 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     }}
                 >
                     <div className="absolute top-0 w-full pointer-events-auto z-50">
-                        <ForYouCarousel
-                            onPlayLevel={onPlayLevel}
-                            allLevels={levels}
-                            situationQuery={situationQuery}
-                            situationTags={situationTags}
-                            activeTheme={activeTheme}
-                        />
-                        <div className="pt-2 pb-1">
-                            <ProblemSearchBar
-                                currentQuery={situationQuery}
-                                onSearch={(q) => setSituationQuery(q)}
-                                onOpenCheckIn={() => setIsCheckInOpen(true)}
-                                activeTheme={activeTheme}
-                                onClearActiveTheme={() => {
-                                    setActiveTheme(null);
-                                    setSituationTags([]);
-                                }}
-                            />
-                        </div>
+                        <ForYouCarousel onPlayLevel={onPlayLevel} allLevels={levels} />
                     </div>
-                    <div className="relative w-full max-w-4xl mx-auto mt-96 md:mt-[26rem] pointer-events-none h-full map-content">
-                        {/* Current Chapter & Trajectory Widgets */}
-                        <div className="pointer-events-auto mb-8">
-                            <CurrentChapterBanner onOpenCheckIn={() => setIsCheckInOpen(true)} />
-                            <CurrentVsEmergingCard />
-                        </div>
-
+                    <div className="relative w-full max-w-md mx-auto mt-72 md:mt-80 pointer-events-none h-full map-content">
                         {/* NODES */}
 
                         {/* EMPTY STATE FOR AGES WITH NO STORIES */}
@@ -506,6 +470,39 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 </motion.div>
             </div>
 
+            {/* Floating Life Check-in FAB Button */}
+            <div className="fixed bottom-6 right-6 z-50 pointer-events-auto">
+                <button
+                    onClick={() => {
+                        audioSynth.playClick();
+                        setShowCheckInModal(true);
+                    }}
+                    className="flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 text-white font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(147,51,234,0.5)] border border-white/20 hover:scale-105 active:scale-95 transition-all"
+                >
+                    <MessageSquarePlus size={16} />
+                    <span>Life Check-in</span>
+                </button>
+            </div>
+
+            {/* Check-In Modal */}
+            {showCheckInModal && (
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto">
+                    <div className="relative w-full max-w-xl my-auto animate-fade-in-up">
+                        <button
+                            onClick={() => setShowCheckInModal(false)}
+                            className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/80 text-slate-300 hover:text-white z-10"
+                        >
+                            <X size={18} />
+                        </button>
+                        <CheckInCard
+                            onCheckInComplete={() => {
+                                setTimeout(() => setShowCheckInModal(false), 1500);
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
+
             {/* Topic Survey Modal after 3rd Journey */}
             {profile?.stories_completed === 3 && !localStorage.getItem('aya_topic_survey_done') && (
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
@@ -520,27 +517,6 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     </div>
                 </div>
             )}
-
-            {/* Life Navigation & Discovery Modals */}
-            <ProblemCheckInModal
-                isOpen={isCheckInOpen}
-                onClose={() => setIsCheckInOpen(false)}
-                onProblemSubmitted={(text, tags, theme) => {
-                    setSituationQuery(text);
-                    setSituationTags(tags);
-                    if (theme) setActiveTheme(theme);
-                }}
-            />
-
-            <AyaPlusModal
-                isOpen={isPlusOpen}
-                onClose={() => setIsPlusOpen(false)}
-            />
-
-            <WeeklyRecapModal
-                isOpen={isWeeklyRecapOpen}
-                onClose={() => setIsWeeklyRecapOpen(false)}
-            />
-        </div>
+        </div >
     );
 }

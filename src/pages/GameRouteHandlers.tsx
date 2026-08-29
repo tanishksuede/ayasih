@@ -94,6 +94,7 @@ export function ReportRouteHandler() {
 
     return (
         <MatchReport
+            storyId={String(level.id)}
             userTraits={profile.traits}
             userProfile={profile.psychologicalProfile}
             idolTraits={level.idolTraits || { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 }}

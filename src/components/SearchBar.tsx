@@ -49,8 +49,21 @@ export function SearchBar({ personalities, onMatch, onClose }: SearchBarProps) {
         store.updateSessionPreference(lowerQuery, 0.5);
     }
 
-    // Log to Supabase for ALL searches (matches and non-matches)
+    // Log to search_analytics table
     try {
+      const { logSearchQuery } = await import('../services/recommendationEngine');
+      const profile = useUserStore.getState().profile;
+      await logSearchQuery({
+        user_id: profile?.id,
+        query: query.trim(),
+        results_count: matchedPersonality ? 1 : 0,
+        matched_story_ids: matchedPersonality ? [matchedPersonality] : [],
+        is_zero_result: !matchedPersonality,
+        is_low_confidence: false,
+        session_id: getSessionId() || undefined,
+      });
+
+      // Also maintain legacy search_queries for backward compatibility
       await supabase.from('search_queries').insert({
         query_text: query.trim(),
         is_match: !!matchedPersonality,

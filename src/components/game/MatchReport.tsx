@@ -5,9 +5,10 @@ import { RefreshCw, Shield, Heart, Zap, Grid3x3, Check, Sparkles, Star, Flame, C
 import type { PersonalityTraits, PsychologicalProfile } from '../../types/gameTypes';
 import { IDOL_PROFILES } from '../../data/idolMindsets';
 import { useUserStore } from '../../store/userStore';
-
+import PostJourneyFeedback from '../feedback/PostJourneyFeedback';
 
 interface MatchReportProps {
+    storyId?: string;
     userTraits: PersonalityTraits;
     userProfile?: PsychologicalProfile;
     idolTraits: PersonalityTraits;
@@ -208,13 +209,25 @@ const ToughCookieMeter = ({ score, isCandyMode }: { score: number, isCandyMode: 
 );
 
 import { resolvePersonalityAvatar, PERSONALITY_AVATAR_MAP } from '../../utils/avatarUtils';
+import { generateSurprisedInsight, generateCurrentChapter } from '../../services/insightService';
+import { Lightbulb, Compass } from 'lucide-react';
 
-export function MatchReport({ userTraits, userProfile, idolName, onClose }: MatchReportProps) {
+export function MatchReport({ storyId, userTraits, userProfile, idolName, onClose }: MatchReportProps) {
     // useParams used to have 'id' here, but it is no longer used for PostJourneyFeedback
     const [animatedPercent, setAnimatedPercent] = useState(0);
     const isCandyMode = useUserStore((state) => state.isCandyMode);
+    const profile = useUserStore((state) => state.profile);
     const cleanIdolName = (idolName || "Default").trim();
     const mainAvatarUrl = resolvePersonalityAvatar(cleanIdolName);
+
+    // Compute "You Surprised Yourself" & "Current Chapter"
+    const surpriseInsight = useMemo(() => {
+        return generateSurprisedInsight(profile?.onboarding_scores, userTraits);
+    }, [profile?.onboarding_scores, userTraits]);
+
+    const currentChapter = useMemo(() => {
+        return generateCurrentChapter(userTraits);
+    }, [userTraits]);
 
     // Dynamic Trait Calculation based on Supabase mapped properties
     const TRAIT_MAP = [
@@ -582,6 +595,48 @@ export function MatchReport({ userTraits, userProfile, idolName, onClose }: Matc
                                 </div>
                             )}
 
+                            {/* ── YOU SURPRISED YOURSELF INSIGHT ── */}
+                            {surpriseInsight && (
+                                <div className="relative w-full max-w-2xl p-5 rounded-2xl bg-gradient-to-r from-purple-950/80 via-slate-900/90 to-indigo-950/80 border border-purple-500/40 backdrop-blur-xl shadow-xl">
+                                    <div className="flex items-center gap-2.5 mb-2 text-purple-300">
+                                        <div className="p-1.5 rounded-lg bg-purple-500/20 text-purple-300">
+                                            <Lightbulb size={18} />
+                                        </div>
+                                        <span className="text-xs font-black uppercase tracking-wider text-purple-200">
+                                            You Surprised Yourself
+                                        </span>
+                                    </div>
+                                    <h4 className="text-white font-bold text-sm md:text-base leading-snug">
+                                        {surpriseInsight.headline}
+                                    </h4>
+                                    <p className="text-slate-300 text-xs mt-1.5 leading-relaxed">
+                                        {surpriseInsight.detail}
+                                    </p>
+                                </div>
+                            )}
+
+                            {/* ── CURRENT CHAPTER BANNER ── */}
+                            {currentChapter && (
+                                <div className="relative w-full max-w-2xl p-4 rounded-2xl bg-slate-900/80 border border-cyan-500/30 backdrop-blur-md flex items-center justify-between gap-4">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
+                                            <Compass size={20} />
+                                        </div>
+                                        <div>
+                                            <div className="text-[10px] uppercase font-bold tracking-widest text-cyan-300">
+                                                Current Chapter
+                                            </div>
+                                            <div className="text-sm font-extrabold text-white">
+                                                {currentChapter.label}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p className="text-slate-300 text-xs max-w-xs text-right hidden sm:block">
+                                        {currentChapter.description}
+                                    </p>
+                                </div>
+                            )}
+
                             {/* Honey Mission Box / Cyber Directive */}
                             <div className="relative w-full max-w-2xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(251,191,36,0.3)] rounded-2xl overflow-hidden">
                                 <div className={clsx(
@@ -633,6 +688,19 @@ export function MatchReport({ userTraits, userProfile, idolName, onClose }: Matc
                                     </div>
                                 </div>
                             </div>
+
+                            {/* Action Reflection & Feedback */}
+                            {storyId && (
+                                <div className="w-full max-w-2xl mt-4">
+                                    <PostJourneyFeedback
+                                        journeyId={storyId}
+                                        sessionDurationSeconds={null}
+                                        onFeedbackComplete={() => {
+                                            console.log('[MatchReport] Feedback and reflection saved successfully.');
+                                        }}
+                                    />
+                                </div>
+                            )}
                         </div>
 
                         {/* RIGHT COLUMN: Growth Challenge */}

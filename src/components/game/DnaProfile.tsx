@@ -1,6 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { audioManager as audioSynth } from "../../utils/audioManager";
-import { ArrowLeft, Copy, Check, Star, Shield, Download, ClipboardList, Flame, Dna } from 'lucide-react';
+import { ArrowLeft, Copy, Check, Star, Shield, Download, ClipboardList, Flame, Dna, Compass, TrendingUp, TrendingDown, Minus, Sparkles, Briefcase } from 'lucide-react';
 import { IDOL_MINDSETS, IDOL_PROFILES } from '../../data/idolMindsets';
 import { useUserStore } from '../../store/userStore';
 import { calculateLevelInfo } from '../../utils/levelSystem';
@@ -13,6 +13,7 @@ import { calculateLifeTraits, matchFutureArchetype } from '../../utils/futureSel
 import { bgmManager } from '../../utils/bgmManager';
 import { getFollowerCount, getFollowingCount } from '../../services/followService';
 import { fetchUserDnaProfile } from '../../services/dnaService';
+import { generateCurrentChapter, generateEmergingYou, getPotentiallyAlignedDirections } from '../../services/insightService';
 
 interface DnaProfileProps {
     onBack: () => void;
@@ -417,6 +418,116 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
                     <NeonTraitBar label="Analytical" value={userTraits.vision} neonColor="#00f2ff" />
                     <NeonTraitBar label="Social" value={userTraits.empathy} neonColor="#00ff9d" />
                     <NeonTraitBar label="Ambitious" value={userTraits.leadership} neonColor="#ffb800" />
+                </div>
+
+                {/* ── 1. CURRENT YOU & CURRENT CHAPTER ── */}
+                <div className="w-full bg-[#191923] border border-cyan-500/30 rounded-[2rem] p-6 sm:p-8 mb-10 shadow-lg relative overflow-hidden">
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-2.5">
+                            <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
+                                <Compass size={20} />
+                            </div>
+                            <div>
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-cyan-300">
+                                    Current Chapter
+                                </span>
+                                <h3 className="text-xl font-black text-white">
+                                    {generateCurrentChapter(userTraits).label}
+                                </h3>
+                            </div>
+                        </div>
+                        <span className="px-3 py-1 rounded-full bg-cyan-950 border border-cyan-500/40 text-cyan-300 text-[10px] font-mono uppercase">
+                            Active State
+                        </span>
+                    </div>
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                        {generateCurrentChapter(userTraits).description}
+                    </p>
+                </div>
+
+                {/* ── 2. EMERGING YOU (BEHAVIORAL TRAJECTORY) ── */}
+                <div className="w-full bg-[#191923] border border-purple-500/30 rounded-[2rem] p-6 sm:p-8 mb-10 shadow-lg">
+                    <div className="flex items-center gap-2 mb-4">
+                        <div className="p-2 rounded-xl bg-purple-500/20 text-purple-400">
+                            <Sparkles size={20} />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-black uppercase tracking-widest text-purple-300">
+                                Emerging You
+                            </h3>
+                            <p className="text-[11px] text-slate-400">
+                                Recent behavioral shifts based on scenario decision patterns
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                        {generateEmergingYou(profile?.onboarding_scores, userTraits).map((item, idx) => {
+                            const traitLabels: Record<string, string> = {
+                                risk: 'Risk Taking',
+                                creativity: 'Creative Instinct',
+                                vision: 'Vision & Analysis',
+                                empathy: 'Social Attunement',
+                                leadership: 'Leadership Drive'
+                            };
+
+                            return (
+                                <div key={idx} className="p-3 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center justify-between">
+                                    <span className="text-xs font-bold text-slate-200">
+                                        {traitLabels[item.trait] || item.trait}
+                                    </span>
+                                    <div className="flex items-center gap-1.5">
+                                        {item.direction === 'rising' && (
+                                            <span className="flex items-center text-xs font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-500/30">
+                                                <TrendingUp size={14} className="mr-1" /> Rising (+{item.delta})
+                                            </span>
+                                        )}
+                                        {item.direction === 'falling' && (
+                                            <span className="flex items-center text-xs font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-md border border-amber-500/30">
+                                                <TrendingDown size={14} className="mr-1" /> Calibrating ({item.delta})
+                                            </span>
+                                        )}
+                                        {item.direction === 'stable' && (
+                                            <span className="flex items-center text-xs font-bold text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md">
+                                                <Minus size={14} className="mr-1" /> Anchored
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* ── 3. POTENTIALLY ALIGNED CAREER DIRECTIONS ── */}
+                <div className="w-full bg-[#191923] border border-amber-500/30 rounded-[2rem] p-6 sm:p-8 mb-10 shadow-lg">
+                    <div className="flex items-center gap-2 mb-3">
+                        <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400">
+                            <Briefcase size={20} />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-black uppercase tracking-widest text-amber-300">
+                                Potentially Aligned Directions
+                            </h3>
+                            <p className="text-[11px] text-slate-400">
+                                Exploratory career environments aligned with your observed behavioral profile
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="space-y-2 mt-4">
+                        {getPotentiallyAlignedDirections(userTraits).map((dir, idx) => (
+                            <div key={idx} className="p-3.5 rounded-xl bg-slate-900/90 border border-amber-500/20 flex items-center gap-3">
+                                <span className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#fbbf24]" />
+                                <span className="text-xs sm:text-sm font-bold text-amber-100">
+                                    {dir}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
+                    <p className="text-[10px] text-slate-500 mt-3 italic text-center">
+                        * AYA suggests behavioral archetypes for exploration and is not a deterministic aptitude guarantee.
+                    </p>
                 </div>
 
                 {/* Progression Hub Card */}

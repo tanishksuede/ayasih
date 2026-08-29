@@ -18,7 +18,6 @@ import { calculateLifeTraits, matchFutureArchetype } from '../../utils/futureSel
 import { SourcesModal } from './SourcesModal';
 import { STORY_SOURCES } from '../../data/storySources';
 import { saveStoryCompletionDna } from '../../services/dnaService';
-import { StoryReflectionScreen } from './StoryReflectionScreen';
 
 // Floating Text Animation Interface
 interface FloatText {
@@ -83,7 +82,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
     };
     // Feedback State
     const [feedbackChoice, setFeedbackChoice] = useState<Choice | null>(null);
-    const [lastChoiceMade, setLastChoiceMade] = useState<Choice | null>(null);
 
     // Background Loading State (prevents UI from showing until image is ready)
     const [isBgLoaded, setIsBgLoaded] = useState(false);
@@ -139,10 +137,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
     // Save status toast state
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
 
-    // Post-journey feedback state
-    const [showPostFeedback, setShowPostFeedback] = useState(false);
-    const [pendingCompletionStars, setPendingCompletionStars] = useState<number>(0);
-
     useJourneyTracking(level.id);
 
     const collectLesson = useUserStore((state) => state.collectLesson);
@@ -152,13 +146,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
     const levelScores = useUserStore((state) => state.levelScores);
 
     const handleLevelComplete = (stars: number) => {
-        setPendingCompletionStars(stars);
-        setShowPostFeedback(true);
-    };
-
-    const finalizeLevelComplete = () => {
-        setShowPostFeedback(false);
-        onComplete(pendingCompletionStars);
+        onComplete(stars);
     };
 
     // Use the global mode (renamed variable mapping for easier refactor)
@@ -870,7 +858,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
         }
 
         // Check if there is feedback to show
-        setLastChoiceMade(choice);
         if (choice.feedback) {
             const addedScore = choice.score || 0;
             // Updated to handle negative scores (simple addition works since choice.score can be -10)
@@ -1395,20 +1382,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                         : "bg-red-900/80 border-red-400/50 text-red-300"
                 )}>
                     {saveStatus === 'saved' ? '✓ Progress Saved' : '✗ Save Failed — check connection'}
-                </div>
-            )}
-
-            {/* Story Reflection & Micro-Action Screen */}
-            {showPostFeedback && (
-                <div className="fixed inset-0 z-[9999] overflow-y-auto bg-black/90 backdrop-blur-md">
-                    <StoryReflectionScreen
-                        level={level}
-                        choiceMade={lastChoiceMade || feedbackChoice}
-                        matchScore={score}
-                        stars={pendingCompletionStars}
-                        xpEarned={Math.max(20, score)}
-                        onContinue={finalizeLevelComplete}
-                    />
                 </div>
             )}
 

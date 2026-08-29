@@ -90,6 +90,10 @@ interface UserState {
     // Subscription Modal State
     showSubscriptionModal: boolean;
     setShowSubscriptionModal: (show: boolean) => void;
+
+    // Check-in State
+    checkinData: import('../types/ayaTypes').CheckInData | null;
+    setCheckinData: (data: import('../types/ayaTypes').CheckInData | null) => void;
 }
 const syncStoreToBackend = async (profile: any, currentLevelScores: Record<string, number>) => {
     if (!profile || !profile.id || profile.id.startsWith('offline-')) return;
@@ -274,6 +278,9 @@ export const useUserStore = create<UserState>()(
             
             pendingStreakData: null,
             setPendingStreakData: (data) => set({ pendingStreakData: data }),
+
+            checkinData: null,
+            setCheckinData: (data) => set({ checkinData: data }),
 
             sessionPreferences: {},
             updateSessionPreference: (tag, weight) => set((state) => {
