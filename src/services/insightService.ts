@@ -137,7 +137,8 @@ export function generateEmergingYou(
             trait: t,
             direction,
             delta: Math.round(delta),
-            sessions_analyzed: 5
+            // NOTE: sessions_analyzed is the configured window, not necessarily actual DB sessions played
+            sessions_analyzed: RECOMMENDATION_CONFIG.emerging_you_session_count
         });
     }
 

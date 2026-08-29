@@ -17,7 +17,7 @@ export const WeeklyRecapCard: React.FC<WeeklyRecapCardProps> = ({ recap, onDismi
     };
 
     const chapter = generateCurrentChapter(userTraits);
-    const storiesPlayed = recap?.stories_played ?? (profile?.stories_completed || 1);
+    const storiesPlayed = recap?.stories_played ?? (profile?.stories_completed || 0);
     const streak = profile?.current_streak || 1;
 
     return (

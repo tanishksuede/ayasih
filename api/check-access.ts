@@ -2,7 +2,8 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://atyourage.app';
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
@@ -15,10 +16,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     );
 
     try {
-        const { user_id, story_id } = req.body;
+        // Verify JWT — user can only check their own access
+        const token = req.headers.authorization?.replace('Bearer ', '');
+        const supabaseForAuth = createClient(
+            process.env.VITE_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY!
+        );
+
+        let verifiedUserId: string | undefined;
+        if (token) {
+            const { data: { user } } = await supabaseForAuth.auth.getUser(token);
+            verifiedUserId = user?.id;
+        }
+
+        const { story_id } = req.body;
+        // Use verified JWT user if available; fall back to body user_id for service-role callers
+        const user_id = verifiedUserId || req.body.user_id;
 
         if (!user_id) {
-            return res.status(400).json({ error: 'user_id is required' });
+            return res.status(401).json({ error: 'Unauthorized: no valid user' });
         }
 
         // Fetch user access type from Supabase

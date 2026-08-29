@@ -7,6 +7,7 @@ import { resolvePersonalityAvatar } from '../../utils/avatarUtils';
 import { VibeSpinnerButton } from '../MoodWheel/VibeSpinnerButton';
 import { useNavigate } from 'react-router-dom';
 import type { ScoredStory } from '../../types/ayaTypes';
+import { supabase } from '../../utils/supabase';
 
 interface ForYouCarouselProps {
     onPlayLevel: (l: any) => void;
@@ -94,7 +95,6 @@ export function ForYouCarousel({ onPlayLevel, allLevels }: ForYouCarouselProps) 
                 // Fetch tags for display
                 const ids = levelsToDisplay.map(l => l.scenarioId || l.id);
                 if (ids.length > 0) {
-                    const { supabase } = await import('../../utils/supabase');
                     const { data: tagRows } = await supabase
                         .from('story_tags')
                         .select('story_id, tag_name')
