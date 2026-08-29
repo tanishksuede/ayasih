@@ -2,42 +2,68 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 function translateTag(tag: string): string {
     const map: Record<string, string> = {
-        'exam_pressure': "the pressure you're feeling around exams",
-        'career_uncertainty': "feeling unsure about your future career path",
-        'heartbreak': "what you're going through after a difficult breakup",
-        'loneliness': "feeling a bit lonely right now",
-        'anxiety': "the anxiety you've been dealing with",
-        'relationship_issues': "the relationship challenges you're facing",
-        'confusion': "feeling confused about things",
-        'frustration': "the frustration you've been feeling",
-        'career_transition': "the career transition you're going through",
-        'high_pressure_burnout': "the high pressure and burnout you've been experiencing",
-        'risk_vs_safety': "weighing taking a risk versus playing it safe",
-        'creative_block': "feeling creatively blocked",
-        'imposter_syndrome': "dealing with imposter syndrome",
-        'social_anxiety': "feeling anxious in social situations",
-        'loss_of_motivation': "losing your motivation recently",
-        'anxious': "feeling anxious",
-        'frustrated': "feeling frustrated",
-        'lost': "feeling a bit lost",
-        'unmotivated': "feeling unmotivated",
-        'overwhelmed': "feeling overwhelmed"
+        'exam_pressure': "the high pressure and stress around exams",
+        'career_uncertainty': "uncertainty and doubt about your career direction",
+        'heartbreak': "healing after an emotional breakup or loss",
+        'loneliness': "feeling isolated or alone right now",
+        'anxiety': "overthinking and persistent anxiety",
+        'relationship_issues': "tensions or conflicts in your relationships",
+        'confusion': "feeling stuck and unsure which path to choose",
+        'frustration': "frustration when things are not going according to plan",
+        'career_transition': "the intimidating shift into a new field or career",
+        'high_pressure_burnout': "exhaustion from relentless pressure and burnout",
+        'risk_vs_safety': "the tension between taking a bold leap or playing it safe",
+        'creative_block': "feeling creatively drained or blocked",
+        'imposter_syndrome': "feeling like you do not belong or are not good enough",
+        'social_anxiety': "feeling self-conscious and anxious around others",
+        'loss_of_motivation': "struggling to find the drive to keep pushing",
+        'anxious': "anxiety and worry",
+        'frustrated': "deep frustration",
+        'lost': "feeling adrift without clear direction",
+        'unmotivated': "a dip in energy and motivation",
+        'overwhelmed': "feeling completely overwhelmed by demands"
     };
     if (map[tag]) return map[tag];
     return tag.replace(/_/g, ' ');
 }
 
-function buildDynamicInsight(character: string, storyTitle: string, userChoice: string, consequence: string, translatedTags: string): string[] {
-    const cleanCharacter = character && character !== 'Default' ? character : 'this legend';
-    const tagText = translatedTags || 'a challenging situation';
+// Multi-variant dynamic generator ensuring non-repetitive, high-quality responses
+function buildDynamicInsight(params: {
+    character: string;
+    storyTitle: string;
+    storyLesson?: string;
+    storyChallenge?: string;
+    userChoice: string;
+    consequence?: string;
+    translatedTags: string;
+}): string[] {
+    const { character, storyTitle, storyLesson, userChoice, consequence, translatedTags } = params;
+    const cleanCharacter = character && character !== 'Default' ? character : 'this trailblazer';
+    const tagText = translatedTags || 'a difficult crossroads';
 
-    const part1 = `When facing ${tagText}, finding your way takes patience. In ${storyTitle || 'this story'}, ${cleanCharacter} went through moments just like this where things felt uncertain.`;
-    const choiceText = userChoice ? `"${userChoice}"` : 'to take action';
-    const consequenceText = consequence && consequence !== 'Completed the phase.' ? ` ${consequence}` : '';
-    const part2 = `Your decision ${choiceText} shows how you naturally respond under pressure.${consequenceText}`;
-    const part3 = `Navigating these moments is all about learning what works for you. Trust your instincts, take it one step at a time, and keep your head up.`;
+    const part1Variations = [
+        `When ${cleanCharacter} faced moments of heavy uncertainty, they did not rely on luck. In ${storyTitle || 'this story'}, they cut through doubt by committing entirely to their craft and refusing to let external panic dictate their decisions.`,
+        `Faced with ${tagText}, ${cleanCharacter} proved that breakthrough moments come from decisive action. During ${storyTitle || 'this journey'}, they leaned into discipline and took ownership of what they could control.`,
+        `Navigating ${tagText} requires the exact courage ${cleanCharacter} demonstrated. When their back was against the wall in ${storyTitle || 'this scenario'}, they chose long-term conviction over temporary comfort.`
+    ];
 
-    return [part1, part2, part3];
+    const part2Variations = [
+        `When you chose "${userChoice}", it revealed your instinct to step up rather than retreat.${consequence ? ` ${consequence}` : ''} That aligns directly with the mindset ${cleanCharacter} used to push through obstacles.`,
+        `Your decision to go with "${userChoice}" shows how you naturally weigh risks when the stakes are real.${consequence ? ` ${consequence}` : ''} Recognizing this instinct is key to mastering your reactions.`,
+        `Opting for "${userChoice}" reflects a proactive approach.${consequence ? ` ${consequence}` : ''} Like ${cleanCharacter}, you chose to shape the outcome rather than passively watch it unfold.`
+    ];
+
+    const part3Variations = [
+        `To handle ${tagText} right now, break your problem into the one decision you can make today. Focus purely on execution, block out the noise, and trust your momentum.`,
+        `Your playbook for ${tagText} is simple: take the hardest necessary step first, protect your focus, and remember that clarity follows action, not overthinking.`,
+        `Apply ${cleanCharacter}'s principle to your life today: don't wait for ideal conditions. Make your move with conviction, learn from the feedback, and keep pushing forward.`
+    ];
+
+    const rand1 = part1Variations[Math.floor(Math.random() * part1Variations.length)];
+    const rand2 = part2Variations[Math.floor(Math.random() * part2Variations.length)];
+    const rand3 = part3Variations[Math.floor(Math.random() * part3Variations.length)];
+
+    return [rand1, rand2, rand3];
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -52,6 +78,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const {
         tags,
         storyTitle,
+        storyLesson,
+        storyChallenge,
         character,
         userChoice,
         userChoiceConsequence,
@@ -63,35 +91,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const groqKey = process.env.GROQ_API_KEY;
 
     if (!groqKey) {
-        // Return dynamic bespoke insight immediately if key is not configured
-        const parts = buildDynamicInsight(character, storyTitle, userChoice, userChoiceConsequence, translatedTags);
+        const parts = buildDynamicInsight({
+            character,
+            storyTitle,
+            storyLesson,
+            storyChallenge,
+            userChoice,
+            consequence: userChoiceConsequence,
+            translatedTags
+        });
         return res.status(200).json({ parts });
     }
 
     try {
-        const prompt = `You are a thoughtful, caring friend speaking directly to a young person after they complete an interactive life scenario.
-Your job is not to produce a psychological report.
+        const prompt = `You are a sharp, empathetic life mentor speaking directly to a young person after they finished an interactive historical scenario.
+Your goal is to provide a fresh, original, deeply insightful 3-part reflection. DO NOT use generic platitudes. Speak specifically about how the historical figure resolved this dilemma, connect it to the user's choice, and provide an actionable strategy.
 
-Understand the situation they selected, understand the story and character, understand the exact choice they made, and respond like a friend who genuinely wants to help.
-Connect the story to their real situation. Explain their choice honestly but gently. Give practical, age appropriate advice.
-Use simple natural conversational language.
-Return exactly three short parts.
-Do not use markdown, bullet points, dashes, asterisks, emojis, headings, labels, technical terms, raw database tags, or internal variable names.
+CONTEXT:
+• User's real-life challenge: ${translatedTags}
+• Character: ${character}
+• Story: ${storyTitle}
+• Scenario Challenge: ${storyChallenge || 'A pivotal career or life crossroads'}
+• Historical Resolution/Lesson: ${storyLesson || 'Took decisive action with grit and unwavering commitment'}
+• User's exact choice in the scenario: "${userChoice}"
+• Choice Consequence: "${userChoiceConsequence || 'Navigated the moment'}"
+• User age: ${userAge || 'young adult'}
 
-DATA TO ANALYZE:
-User is currently dealing with: ${translatedTags}
-Story Character: ${character}
-Story Title: ${storyTitle}
-User's EXACT Choice: "${userChoice}"
-Consequence of their choice: "${userChoiceConsequence}"
-User's Age: ${userAge || 'unknown'}
+INSTRUCTIONS FOR THE 3 PARTS:
+PART 1 (The Historical Breakthrough): Explain specifically how ${character} fixed or navigated this type of challenge (${translatedTags}) through their real decisions, mindset, or tactics in ${storyTitle}.
+PART 2 (The User's Decision Analysis): Connect their choice ("${userChoice}") to ${character}'s mindset. Highlight what this choice reveals about their instincts under pressure and whether it is an effective reaction.
+PART 3 (Actionable Strategy for User): Give a concrete, direct, practical method on how the user can apply ${character}'s decision-making framework in their own life today to overcome ${translatedTags}.
 
-Generate exactly 3 short conversational parts.
-PART 1: Connect their situation (${translatedTags}) with how ${character} handled a similar phase in ${storyTitle}.
-PART 2: Talk specifically about their exact choice ("${userChoice}"). Explain why someone might make that choice, and gently explain if it's helpful or unhelpful for their situation.
-PART 3: Give short, friendly, practical guidance. Reassure them.
-
-Output MUST be a valid JSON object with exactly one key "parts", containing an array of 3 strings. Each part should be 1-3 short sentences (25-45 words maximum each).`;
+STRICT FORMAT & STYLE RULES:
+1. Output MUST be valid JSON with a single key "parts" containing an array of EXACTLY 3 strings.
+2. Each part must be 2-3 punchy, conversational sentences (30-50 words each).
+3. NO markdown, NO asterisks, NO dashes, NO emojis, NO quotes around words, NO bullet points, NO labels (e.g. do not write "Part 1:").
+4. Never repeat stock clichés like "Remember, every decision...". Speak like a real perceptive friend giving genuine advice.`;
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
@@ -102,18 +137,28 @@ Output MUST be a valid JSON object with exactly one key "parts", containing an a
             body: JSON.stringify({
                 model: 'llama-3.1-8b-instant',
                 messages: [
-                    { role: 'system', content: 'You are a supportive, insightful friend. Respond ONLY in valid JSON. No markdown, no emojis.' },
+                    { role: 'system', content: 'You are an authentic, perceptive mentor. You never use clichés. You output ONLY valid JSON without markdown formatting.' },
                     { role: 'user', content: prompt }
                 ],
                 response_format: { type: "json_object" },
-                temperature: 0.7,
-                max_tokens: 300,
+                temperature: 0.85,
+                presence_penalty: 0.25,
+                frequency_penalty: 0.15,
+                max_tokens: 380,
             })
         });
 
         if (!response.ok) {
             console.warn('Groq API Error, returning smart dynamic fallback');
-            const parts = buildDynamicInsight(character, storyTitle, userChoice, userChoiceConsequence, translatedTags);
+            const parts = buildDynamicInsight({
+                character,
+                storyTitle,
+                storyLesson,
+                storyChallenge,
+                userChoice,
+                consequence: userChoiceConsequence,
+                translatedTags
+            });
             return res.status(200).json({ parts });
         }
 
@@ -122,17 +167,33 @@ Output MUST be a valid JSON object with exactly one key "parts", containing an a
         const parsed = JSON.parse(content);
 
         if (!parsed.parts || !Array.isArray(parsed.parts) || parsed.parts.length !== 3) {
-            const parts = buildDynamicInsight(character, storyTitle, userChoice, userChoiceConsequence, translatedTags);
+            const parts = buildDynamicInsight({
+                character,
+                storyTitle,
+                storyLesson,
+                storyChallenge,
+                userChoice,
+                consequence: userChoiceConsequence,
+                translatedTags
+            });
             return res.status(200).json({ parts });
         }
 
-        // Clean any leftover markdown or unwanted characters
+        // Clean any leftover markdown or unwanted formatting
         parsed.parts = parsed.parts.map((p: string) => p.replace(/[*_#\-~]/g, '').trim());
 
         return res.status(200).json(parsed);
     } catch (error) {
         console.warn('Analysis generation error, returning smart dynamic fallback:', error);
-        const parts = buildDynamicInsight(character, storyTitle, userChoice, userChoiceConsequence, translatedTags);
+        const parts = buildDynamicInsight({
+            character,
+            storyTitle,
+            storyLesson,
+            storyChallenge,
+            userChoice,
+            consequence: userChoiceConsequence,
+            translatedTags
+        });
         return res.status(200).json({ parts });
     }
 }

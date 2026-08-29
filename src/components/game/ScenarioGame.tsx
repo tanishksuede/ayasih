@@ -6,6 +6,7 @@ import type { EmotionTheme } from '../../utils/storyEmotion';
 import { bgmManager } from '../../utils/bgmManager';
 import { CheckCircle, AlertCircle, ChevronRight, Volume2, VolumeX, Loader2, Star } from 'lucide-react';
 import { AnalysisMascotModal } from './AnalysisMascotModal';
+import { InsightLoadingScreen } from './InsightLoadingScreen';
 
 import { useJourneyTracking } from '../../hooks/useJourneyTracking';
 import type { Level, Lesson } from '../../types/gameTypes';
@@ -103,6 +104,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
       ? level.title.replace(/".*?"/, '').trim()
       : 'This Story';
     const personalityAge = level?.age ?? 0;
+    const cleanCharacter = (level?.personality || level?.archetype || personalityName || "Default").trim();
 
     // Log warning for missing sources
     useEffect(() => {
@@ -872,15 +874,18 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
             const checkinData = useUserStore.getState().checkinData;
             const tags = checkinData ? [...(checkinData.situation_tags || []), ...(checkinData.emotional_tags || [])] : [];
-            const cleanCharacter = idolName && idolName !== 'Default' ? idolName : 'this legend';
             const tagText = tags.length > 0 ? tags.map(t => t.replace(/_/g, ' ')).join(' and ') : 'your current challenges';
-            
+            const lessonFrame = safeScenario.frames.find((f: any) => f.id?.startsWith('LEARNING') || f.id === 'lesson' || f.id?.includes('outcome'));
+            const introFrame = safeScenario.frames.find((f: any) => f.id === 'intro');
+
             fetch('/api/generate-analysis', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     tags,
                     storyTitle: safeScenario.title,
+                    storyChallenge: introFrame?.text || '',
+                    storyLesson: lessonFrame?.text || '',
                     character: cleanCharacter,
                     userChoice: lastChoiceObj?.chosen_option || '',
                     userChoiceConsequence: lastChoiceObj?.consequence || 'Completed the phase.',
@@ -902,11 +907,25 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 const choiceStr = lastChoiceObj?.chosen_option ? `"${lastChoiceObj.chosen_option}"` : 'to take action';
                 const consequenceStr = lastChoiceObj?.consequence && lastChoiceObj.consequence !== 'Completed the phase.' ? ` ${lastChoiceObj.consequence}` : '';
                 
-                const fallbackParts = [
-                    `When dealing with ${tagText}, it is easy to feel the weight of every step. In ${safeScenario.title || 'this story'}, ${cleanCharacter} was at a similar turning point.`,
-                    `Your choice ${choiceStr} reveals your instinct for navigating real pressure.${consequenceStr}`,
-                    `Remember, every decision teaches you more about yourself. Trust your judgment, take things one step at a time, and keep moving forward.`
+                const p1Pool = [
+                    `When facing ${tagText}, ${cleanCharacter} proved that breakthrough moments come from decisive action. During ${safeScenario.title || 'this story'}, they leaned into discipline and took ownership of what they could control.`,
+                    `Navigating ${tagText} requires the exact courage ${cleanCharacter} demonstrated. When their back was against the wall in ${safeScenario.title || 'this journey'}, they chose long-term conviction over temporary comfort.`
                 ];
+                const p2Pool = [
+                    `When you chose ${choiceStr}, it revealed your instinct to step up rather than retreat.${consequenceStr} That aligns directly with the mindset ${cleanCharacter} used to push through obstacles.`,
+                    `Opting for ${choiceStr} reflects a proactive approach.${consequenceStr} Like ${cleanCharacter}, you chose to shape the outcome rather than passively watch it unfold.`
+                ];
+                const p3Pool = [
+                    `To handle ${tagText} right now, break your problem into the one decision you can make today. Focus purely on execution, block out the noise, and trust your momentum.`,
+                    `Apply ${cleanCharacter}'s principle to your life today: don't wait for ideal conditions. Make your move with conviction, learn from the feedback, and keep pushing forward.`
+                ];
+
+                const fallbackParts = [
+                    p1Pool[Math.floor(Math.random() * p1Pool.length)],
+                    p2Pool[Math.floor(Math.random() * p2Pool.length)],
+                    p3Pool[Math.floor(Math.random() * p3Pool.length)]
+                ];
+
                 setAnalysisParts(fallbackParts);
                 setAnalysisState('done');
             });
@@ -1443,11 +1462,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
             {/* Analysis Generating Overlay */}
             {analysisState === 'generating' && (
-                <div className="fixed inset-0 z-[99998] bg-[#050817]/80 backdrop-blur-md flex flex-col items-center justify-center animate-fade-in">
-                    <Loader2 className="w-10 h-10 text-[#00D9FF] animate-spin mb-6" />
-                    <p className="text-xl font-bold text-white tracking-widest drop-shadow-lg">Generating your insights...</p>
-                    <p className="text-sm text-white/50 mt-2">Connecting to AI...</p>
-                </div>
+                <InsightLoadingScreen character={cleanCharacter} storyTitle={safeScenario.title} />
             )}
 
             {/* Analysis Mascot Modal */}
