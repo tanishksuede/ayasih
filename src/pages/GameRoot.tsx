@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { SupabaseChecker } from '../components/SupabaseChecker';
 import { StreakCelebration } from '../components/game/StreakCelebration';
+import { LevelUpCelebration } from '../components/game/LevelUpCelebration';
+import { calculateLevelInfo } from '../utils/levelSystem';
 import { SubscriptionModal } from '../components/payment/SubscriptionModal';
 import { supabase } from '../utils/supabase';
 import { getSession, clearSession, markQuizDone, isQuizDone } from '../utils/session';
@@ -367,6 +369,7 @@ export function GameRoot() {
     // re-trigger every time the user opens the app at level 2+
     const sessionEstablished = useRef(false);
     const prevLevelRef = useRef<number>(parseInt(localStorage.getItem('aya_last_seen_level') || '1', 10));
+    const [pendingLevelUp, setPendingLevelUp] = useState<{ levelNumber: number; levelName: string } | null>(null);
 
     useEffect(() => {
         if (!profile?.level) return;
@@ -379,11 +382,12 @@ export function GameRoot() {
         }
         // Only show level-up when level genuinely increases DURING this session
         if (profile.level > prevLevelRef.current) {
-            navigate('/game/level-up');
+            const levelInfo = calculateLevelInfo(profile.total_xp || 0);
+            setPendingLevelUp({ levelNumber: profile.level, levelName: levelInfo.title });
             prevLevelRef.current = profile.level;
             localStorage.setItem('aya_last_seen_level', String(profile.level));
         }
-    }, [profile?.level, navigate]);
+    }, [profile?.level, profile?.total_xp, navigate]);
 
     if (sessionStatus === 'checking') {
         return (
@@ -439,6 +443,15 @@ export function GameRoot() {
                         xpEarned={pendingStreakData.xpEarned}
                         isMilestone={pendingStreakData.isMilestone}
                         onComplete={() => setPendingStreakData(null)}
+                    />
+                </div>
+            )}
+            {pendingLevelUp && (
+                <div className="absolute inset-0 z-[10000]">
+                    <LevelUpCelebration 
+                        levelName={pendingLevelUp.levelName}
+                        levelNumber={pendingLevelUp.levelNumber}
+                        onComplete={() => setPendingLevelUp(null)}
                     />
                 </div>
             )}

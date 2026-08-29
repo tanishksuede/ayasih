@@ -177,7 +177,7 @@ export function LevelUpRouteHandler() {
 
     if (!profile) return <Navigate to="/game" replace />;
 
-    const levelInfo = calculateLevelInfo(profile.level || 1);
+    const levelInfo = calculateLevelInfo(profile.total_xp || 0);
 
     return (
         <div className="w-full min-h-[100dvh] bg-slate-950">
