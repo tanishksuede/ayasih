@@ -49,6 +49,7 @@ interface Choice {
 interface SessionChoiceData {
     question: string;
     chosen_option: string;
+    consequence?: string;
     time_taken_seconds: number;
     trait_impacts: {
         risk_taker: number;
@@ -523,6 +524,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
         const choiceData: SessionChoiceData = {
            question: displayedText,
            chosen_option: choice.text,
+           consequence: choice.feedback || choice.feedbackTitle,
            time_taken_seconds: timeTakenSeconds,
            trait_impacts: adjustedImpacts
         };
@@ -857,7 +859,11 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             setAnalysisState('generating');
             bgmManager.stop(1);
 
-            const lastChoiceObj = finalSessionChoices[finalSessionChoices.length - 1];
+            const realChoices = finalSessionChoices.filter(c => 
+                !['Collect Reward', 'Complete', 'Finish', 'Continue', 'Try Again', 'Confirm', 'Next'].includes(c.chosen_option)
+            );
+            const lastChoiceObj = realChoices.length > 0 ? realChoices[realChoices.length - 1] : finalSessionChoices[finalSessionChoices.length - 1];
+
             const checkinData = useUserStore.getState().checkinData;
             const tags = checkinData ? [...(checkinData.situation_tags || []), ...(checkinData.emotional_tags || [])] : [];
             
@@ -869,7 +875,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                     storyTitle: safeScenario.title,
                     character: idolName,
                     userChoice: lastChoiceObj?.chosen_option || '',
-                    userChoiceConsequence: choice.feedback || choice.feedbackTitle || 'Completed the phase.',
+                    userChoiceConsequence: lastChoiceObj?.consequence || 'Completed the phase.',
                     userAge: userProfile?.age || 'unknown',
                     userTraits: userProfile?.traits || {}
                 })
@@ -884,11 +890,11 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                     throw new Error('Invalid format');
                 }
             }).catch(err => {
-                console.error('Groq analysis failed, using fallback:', err);
+                console.error('Groq analysis failed, using graceful fallback:', err);
                 const fallbackParts = [
-                    `You made it through the scenario. I noticed you were dealing with ${tags.join(', ') || 'some challenges'}.`,
-                    `Your choice to "${lastChoiceObj?.chosen_option || 'take action'}" shows your underlying traits in action.`,
-                    `Remember, every decision is a stepping stone. Keep moving forward!`
+                    `Looks like I couldn't put my thoughts together right now. But you made it through the story, and that matters!`,
+                    `Your choice to "${lastChoiceObj?.chosen_option || 'take action'}" was interesting. I'll think about it more later.`,
+                    `Your story is still complete! You can keep going and I'll catch you next time.`
                 ];
                 setAnalysisParts(fallbackParts);
                 setAnalysisState('done');
@@ -1426,9 +1432,10 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
             {/* Analysis Generating Overlay */}
             {analysisState === 'generating' && (
-                <div className="fixed inset-0 z-[99998] bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center animate-fade-in">
-                    <Loader2 className="w-12 h-12 text-purple-400 animate-spin mb-4" />
-                    <p className="text-xl font-bold text-white tracking-widest drop-shadow-lg">GENERATING ANALYSIS...</p>
+                <div className="fixed inset-0 z-[99998] bg-[#050817]/80 backdrop-blur-md flex flex-col items-center justify-center animate-fade-in">
+                    <Loader2 className="w-10 h-10 text-[#00D9FF] animate-spin mb-6" />
+                    <p className="text-xl font-bold text-white tracking-widest drop-shadow-lg">Generating your insights...</p>
+                    <p className="text-sm text-white/50 mt-2">Connecting to AI...</p>
                 </div>
             )}
 

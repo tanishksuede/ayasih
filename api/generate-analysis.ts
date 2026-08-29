@@ -1,5 +1,32 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+function translateTag(tag: string): string {
+    const map: Record<string, string> = {
+        'exam_pressure': "the pressure you're feeling around exams",
+        'career_uncertainty': "feeling unsure about your future career path",
+        'heartbreak': "what you're going through after a difficult breakup",
+        'loneliness': "feeling a bit lonely right now",
+        'anxiety': "the anxiety you've been dealing with",
+        'relationship_issues': "the relationship challenges you're facing",
+        'confusion': "feeling confused about things",
+        'frustration': "the frustration you've been feeling",
+        'career_transition': "the career transition you're going through",
+        'high_pressure_burnout': "the high pressure and burnout you've been experiencing",
+        'risk_vs_safety': "weighing taking a risk versus playing it safe",
+        'creative_block': "feeling creatively blocked",
+        'imposter_syndrome': "dealing with imposter syndrome",
+        'social_anxiety': "feeling anxious in social situations",
+        'loss_of_motivation': "losing your motivation recently",
+        'anxious': "feeling anxious",
+        'frustrated': "feeling frustrated",
+        'lost': "feeling a bit lost",
+        'unmotivated': "feeling unmotivated",
+        'overwhelmed': "feeling overwhelmed"
+    };
+    if (map[tag]) return map[tag];
+    return tag.replace(/_/g, ' ');
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://atyourage.app';
     res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
@@ -26,21 +53,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     try {
-        const prompt = `You are a mentor in a self-discovery app. 
-The user recently said they are feeling/dealing with: ${(tags || []).join(', ')}.
-They just played a story about ${character} (${storyTitle}).
-In the story, they made this choice: "${userChoice}".
-Consequence: "${userChoiceConsequence}".
-User's age: ${userAge || 'unknown'}.
-User's traits (1-100 scale): ${JSON.stringify(userTraits || {})}.
+        const translatedTags = (tags || []).map((t: string) => translateTag(t)).join(' and ') || 'a challenging situation';
 
-Analyze what this choice means for their current situation in exactly 3 short parts.
-Part 1: Connect their situation (${(tags || []).join(', ')}) with how ${character} handled a similar phase.
-Part 2: Analyze what their choice ("${userChoice}") indicates about how they are handling their situation. Be constructive.
-Part 3: Give short, practical, age-appropriate guidance.
+        const prompt = `You are a thoughtful friend speaking directly to a young person after they complete an interactive life scenario.
+Your job is not to produce a psychological report.
 
-Output MUST be a valid JSON object with exactly one key "parts", containing an array of 3 strings.
-NO markdown. NO emojis. NO asterisks. NO dashes. Short sentences. Conversational tone.`;
+Understand the situation they selected, understand the story and character, understand the exact choice they made, and respond like a friend who genuinely wants to help.
+Connect the story to their real situation. Explain their choice honestly but gently. If their choice could be unhelpful, tell them why without judging them. Give practical, age appropriate advice. Reassure them that making an imperfect choice does not mean something is wrong with them.
+Use simple natural conversational language.
+Return exactly three short parts.
+Do not use markdown, bullet points, dashes, asterisks, emojis, headings, labels, technical terms, raw database tags, or internal variable names.
+
+DATA TO ANALYZE:
+User is currently dealing with: ${translatedTags}
+Story Character: ${character}
+Story Title: ${storyTitle}
+User's EXACT Choice: "${userChoice}"
+Consequence of their choice: "${userChoiceConsequence}"
+User's Age: ${userAge || 'unknown'}
+
+Generate exactly 3 short conversational parts.
+PART 1: Connect their situation (${translatedTags}) with how ${character} handled a similar phase in this story.
+PART 2: Talk specifically about their exact choice ("${userChoice}"). Explain why someone might make that choice, and gently explain if it's helpful or unhelpful for their situation.
+PART 3: Give short, friendly, practical guidance. Reassure them.
+
+Output MUST be a valid JSON object with exactly one key "parts", containing an array of 3 strings. Each part should be 1-3 short sentences (25-50 words maximum each).`;
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
@@ -51,7 +88,7 @@ NO markdown. NO emojis. NO asterisks. NO dashes. Short sentences. Conversational
             body: JSON.stringify({
                 model: 'llama-3.1-8b-instant',
                 messages: [
-                    { role: 'system', content: 'You are an insightful, friendly, and practical mentor. Respond ONLY in valid JSON. No markdown, no emojis.' },
+                    { role: 'system', content: 'You are a supportive, insightful friend. Respond ONLY in valid JSON. No markdown, no emojis.' },
                     { role: 'user', content: prompt }
                 ],
                 response_format: { type: "json_object" },
@@ -74,6 +111,7 @@ NO markdown. NO emojis. NO asterisks. NO dashes. Short sentences. Conversational
             return res.status(500).json({ error: 'Invalid response format from Groq' });
         }
 
+        // Clean any leftover markdown or unwanted characters
         parsed.parts = parsed.parts.map((p: string) => p.replace(/[*_#\-~]/g, '').trim());
 
         return res.status(200).json(parsed);
