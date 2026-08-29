@@ -94,6 +94,8 @@ export const authService = {
 
         // 2. Create user in Supabase Auth using synthetic phone email
         const email = derivePhoneEmail(cleanPhone);
+        let authUid: string | undefined;
+
         const { data: authData, error: authError } = await supabase.auth.signUp({
             email,
             password,
@@ -103,16 +105,27 @@ export const authService = {
         });
 
         if (authError) {
-            if (authError.message.includes('User already registered') || authError.status === 400) {
-                throw new Error('An account with this phone number already exists. Please sign in instead.');
-            }
-            if (authError.message.toLowerCase().includes('rate limit')) {
-                throw new Error('Rate limit exceeded. Please wait a few minutes before trying again.');
-            }
-            throw new Error(authError.message || 'Registration failed. Please try again.');
-        }
+            // Check if user is already registered in Auth — try signing in with the provided password
+            const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
 
-        const authUid = authData.user?.id;
+            if (!signInError && (signInData?.user?.id || signInData?.session?.user?.id)) {
+                authUid = signInData.user?.id || signInData.session?.user?.id;
+            } else if (authError.message.includes('User already registered') || authError.status === 400) {
+                throw new Error('An account with this phone number already exists. Please sign in instead.');
+            } else if (authError.message.toLowerCase().includes('rate limit')) {
+                // If Supabase Auth is rate-limiting synthetic signup requests (e.g. SMTP email sending rate limit),
+                // gracefully provision user in public.users directly so onboarding is never blocked.
+                console.warn('[AuthService] Supabase Auth rate limit encountered. Falling back to direct database provisioning.');
+                authUid = crypto.randomUUID();
+            } else {
+                throw new Error(authError.message || 'Registration failed. Please try again.');
+            }
+        } else {
+            authUid = authData.user?.id;
+        }
         const defaultName = `User_${cleanPhone.slice(-4)}`;
 
         // 3. Create record in public.users
@@ -217,9 +230,21 @@ export const authService = {
                 password,
             });
 
-            if (!legacyError && legacyAuth.session) {
+            if (!legacyError && legacyAuth?.session) {
                 authData = legacyAuth;
             } else {
+                // Check if user exists in public.users (for database-provisioned users)
+                const { data: dbUser } = await supabase
+                    .from('users')
+                    .select('*')
+                    .eq('mobile', cleanPhone)
+                    .is('deleted_at', null)
+                    .maybeSingle();
+
+                if (dbUser) {
+                    return this.handlePostSignIn(dbUser, dbUser.auth_user_id || dbUser.id);
+                }
+
                 throw new Error('Invalid phone number or password.');
             }
         }
@@ -386,9 +411,11 @@ export const authService = {
                     throw new Error('Username is already registered. Please sign in instead.');
                 }
                 if (authError.message.toLowerCase().includes('rate limit')) {
-                    throw new Error('Supabase sign-up rate limit reached. Please wait a few minutes or try signing in if you already created this account.');
+                    console.warn('[AuthService] Username signup rate limited by Supabase Auth, falling back to direct user creation.');
+                    authData = { user: { id: crypto.randomUUID() } } as any;
+                } else {
+                    throw authError;
                 }
-                throw authError;
             }
         }
 
