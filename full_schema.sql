@@ -1972,3 +1972,25 @@ DROP POLICY IF EXISTS "subscriptions_admin" ON public.subscriptions;
 CREATE POLICY "subscriptions_admin" ON public.subscriptions
     FOR ALL USING (public.is_admin_user());
 
+- -   M i g r a t i o n   0 2 8 :   S t o r y   R e q u e s t s   &   C o n t e n t   D e m a n d   S i g n a l s  
+ - -   C a p t u r e s   u s e r   r e q u e s t s   w h e n   n o   m a t c h i n g   s t o r y   e x i s t s   f o r   a   s e l e c t e d   s i t u a t i o n .  
+ - -   P r o v i d e s   d e m a n d   a n a l y t i c s   f o r   a d m i n s   t o   p r i o r i t i z e   n e w   s t o r y   a u t h o r i n g .  
+  
+ C R E A T E   T A B L E   I F   N O T   E X I S T S   p u b l i c . s t o r y _ r e q u e s t s   (  
+         i d   U U I D   P R I M A R Y   K E Y   D E F A U L T   g e n _ r a n d o m _ u u i d ( ) ,  
+         u s e r _ i d   U U I D   R E F E R E N C E S   a u t h . u s e r s ( i d )   O N   D E L E T E   S E T   N U L L ,  
+         r e q u e s t e d _ t a g   T E X T   N O T   N U L L ,  
+         r e q u e s t e d _ p r o b l e m   T E X T ,  
+         s t a t u s   T E X T   D E F A U L T   ' a c t i v e ' ,   - -   ' a c t i v e '   |   ' n o t i f i e d '   |   ' d i s m i s s e d '  
+         c r e a t e d _ a t   T I M E S T A M P   W I T H   T I M E   Z O N E   D E F A U L T   N O W ( ) ,  
+         n o t i f i e d _ a t   T I M E S T A M P   W I T H   T I M E   Z O N E  
+ ) ;  
+  
+ C R E A T E   I N D E X   I F   N O T   E X I S T S   i d x _ s t o r y _ r e q u e s t s _ t a g   O N   p u b l i c . s t o r y _ r e q u e s t s ( r e q u e s t e d _ t a g ) ;  
+ C R E A T E   I N D E X   I F   N O T   E X I S T S   i d x _ s t o r y _ r e q u e s t s _ u s e r   O N   p u b l i c . s t o r y _ r e q u e s t s ( u s e r _ i d ) ;  
+ C R E A T E   I N D E X   I F   N O T   E X I S T S   i d x _ s t o r y _ r e q u e s t s _ c r e a t e d _ a t   O N   p u b l i c . s t o r y _ r e q u e s t s ( c r e a t e d _ a t   D E S C ) ;  
+  
+ - -   E n a b l e   a c c e s s  
+ A L T E R   T A B L E   p u b l i c . s t o r y _ r e q u e s t s   D I S A B L E   R O W   L E V E L   S E C U R I T Y ;  
+ G R A N T   A L L   O N   T A B L E   p u b l i c . s t o r y _ r e q u e s t s   T O   a n o n ,   a u t h e n t i c a t e d ,   s e r v i c e _ r o l e ;  
+ 

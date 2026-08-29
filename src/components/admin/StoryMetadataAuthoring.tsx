@@ -13,12 +13,10 @@ export function StoryMetadataAuthoring() {
     const [dominantTrait, setDominantTrait] = useState<DnaTrait>('risk');
     const [resolutionArchetype, setResolutionArchetype] = useState<ResolutionArchetype>('persist');
     const [difficulty, setDifficulty] = useState<number>(3);
-    const [relatability, setRelatability] = useState<number>(4);
     const [isPremium, setIsPremium] = useState(false);
     const [whyTemplate, setWhyTemplate] = useState('');
     const [selectedSituations, setSelectedSituations] = useState<string[]>([]);
     const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
-    const [selectedIntents, setSelectedIntents] = useState<string[]>([]);
     const [semanticDesc, setSemanticDesc] = useState('');
     const [traitAffinity, setTraitAffinity] = useState<Record<DnaTrait, number>>({
         risk: 0.5,
@@ -47,26 +45,25 @@ export function StoryMetadataAuthoring() {
 
     const loadMetadataForStory = async (storyId: string) => {
         try {
-            const { data } = await supabase.from('story_metadata').select('*').eq('story_id', storyId).maybeSingle();
+            const { data } = await supabase.from('story_metadata').select('*').eq('scenario_id', storyId).maybeSingle();
             if (data) {
-                setDominantTrait(data.dominant_trait || 'risk');
-                setResolutionArchetype(data.resolution_archetype || 'persist');
-                setDifficulty(data.difficulty || 3);
-                setRelatability(data.relatability || 4);
+                // Using existing states but mapping to new schema columns
+                setResolutionArchetype(data.dilemma_type || 'persist');
+                setDifficulty(data.difficulty === 'hard' ? 5 : data.difficulty === 'easy' ? 1 : 3);
                 setIsPremium(data.is_premium || false);
-                setWhyTemplate(data.why_this_story_template || '');
-                setSelectedSituations(data.situation_tags || []);
-                setSelectedEmotions(data.emotional_tags || []);
-                setSelectedIntents(data.intent_tags || []);
-                setSemanticDesc(data.semantic_description || '');
-                if (data.trait_affinity) {
-                    setTraitAffinity({ ...traitAffinity, ...data.trait_affinity });
+                setSelectedSituations(data.situational_tags || []);
+                // Fallbacks for fields not in new schema to avoid breaking UI state
+                setDominantTrait('risk');
+                setWhyTemplate(data.reflection_prompt || '');
+                setSelectedEmotions([]);
+                setSemanticDesc(data.historical_context || '');
+                if (data.target_traits) {
+                    setTraitAffinity({ ...traitAffinity, ...data.target_traits });
                 }
             } else {
                 // Reset to defaults
                 setSelectedSituations([]);
                 setSelectedEmotions([]);
-                setSelectedIntents([]);
                 setWhyTemplate('');
                 setSemanticDesc('');
             }
@@ -85,25 +82,25 @@ export function StoryMetadataAuthoring() {
         if (!selectedStoryId) return;
         setSaveStatus('saving');
 
+        const difficultyStr = difficulty > 3 ? 'hard' : difficulty < 3 ? 'easy' : 'moderate';
+
         const payload = {
-            story_id: selectedStoryId,
-            situation_tags: selectedSituations,
-            problem_tags: selectedSituations,
-            emotional_tags: selectedEmotions,
-            intent_tags: selectedIntents,
-            dominant_trait: dominantTrait,
-            trait_affinity: traitAffinity,
-            resolution_archetype: resolutionArchetype,
-            difficulty: difficulty,
-            relatability: relatability,
+            scenario_id: selectedStoryId,
+            situational_tags: selectedSituations,
+            dilemma_type: resolutionArchetype,
+            target_traits: traitAffinity,
+            difficulty: difficultyStr,
             is_premium: isPremium,
-            why_this_story_template: whyTemplate.trim() || null,
-            semantic_description: semanticDesc.trim() || null,
-            updated_at: new Date().toISOString()
+            reflection_prompt: whyTemplate.trim() || null,
+            historical_context: semanticDesc.trim() || null,
+            life_theme: 'growth', // fallback
+            protagonist_lens: 'first_person' // fallback
         };
 
         try {
-            const { error } = await supabase.from('story_metadata').upsert(payload, { onConflict: 'story_id' });
+            const { error } = await supabase
+                .from('story_metadata')
+                .upsert(payload, { onConflict: 'scenario_id' });
             if (error) throw error;
             setSaveStatus('saved');
             setTimeout(() => setSaveStatus('idle'), 2500);

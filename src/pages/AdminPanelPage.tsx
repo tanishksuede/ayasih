@@ -498,7 +498,7 @@ function SearchAnalyticsView() {
 
     const loadLogs = async () => {
         setLoading(true);
-        let query = supabase.from('search_logs').select('*').order('created_at', { ascending: false });
+        let query = supabase.from('search_demand_analytics').select('*').order('created_at', { ascending: false });
         if (range !== 0) {
             const date = new Date();
             date.setDate(date.getDate() - range);
@@ -512,19 +512,19 @@ function SearchAnalyticsView() {
     // 1. Top searched terms
     const topSearches = (Object.entries(
         logs.reduce((acc, log) => {
-            acc[log.query] = (acc[log.query] || 0) + 1;
+            acc[log.query_text] = (acc[log.query_text] || 0) + 1;
             return acc;
         }, {} as Record<string, number>)
     ) as [string, number][]).sort((a, b) => b[1] - a[1]).slice(0, 10);
 
     // 2. Personality vs Situation
-    const isPersonality = (log: any) => /[A-Z]/.test(log.query_original);
+    const isPersonality = (log: any) => /[A-Z]/.test(log.query_text);
     const personalityCount = logs.filter(isPersonality).length;
     const situationCount = logs.length - personalityCount;
 
     // 3. Unmatched volume over time
     const unmatchedByDate = (Object.entries(
-        logs.filter(l => !l.matched).reduce((acc, log) => {
+        logs.filter(l => l.match_count === 0).reduce((acc, log) => {
             const date = new Date(log.created_at).toISOString().split('T')[0];
             acc[date] = (acc[date] || 0) + 1;
             return acc;
@@ -536,8 +536,8 @@ function SearchAnalyticsView() {
 
     // 5. Most requested missing personalities
     const missingPersonalities = (Object.entries(
-        logs.filter(l => !l.matched && isPersonality(l)).reduce((acc, log) => {
-            acc[log.query] = (acc[log.query] || 0) + 1;
+        logs.filter(l => l.match_count === 0 && isPersonality(l)).reduce((acc, log) => {
+            acc[log.query_text] = (acc[log.query_text] || 0) + 1;
             return acc;
         }, {} as Record<string, number>)
     ) as [string, number][]).sort((a, b) => b[1] - a[1]).slice(0, 10);
@@ -644,9 +644,9 @@ function SearchAnalyticsView() {
                                     <div className="flex items-center gap-3">
                                         <span className={clsx(
                                             "w-2 h-2 rounded-full",
-                                            log.matched ? "bg-emerald-500 shadow-[0_0_8px_#10b981]" : "bg-red-500 shadow-[0_0_8px_#ef4444]"
+                                            log.match_count > 0 ? "bg-emerald-500 shadow-[0_0_8px_#10b981]" : "bg-red-500 shadow-[0_0_8px_#ef4444]"
                                         )} />
-                                        <span className="text-slate-300 font-medium">"{log.query_original}"</span>
+                                        <span className="text-slate-300 font-medium">"{log.query_text}"</span>
                                     </div>
                                     <div className="flex items-center gap-4 text-xs text-slate-500">
                                         <span>{isPersonality(log) ? 'Person' : 'Situation'}</span>
