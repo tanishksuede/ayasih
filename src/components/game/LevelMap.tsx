@@ -63,24 +63,37 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const activeSituationFilter = useUserStore((state) => state.activeSituationFilter);
     const clearSituationFilter = useUserStore((state) => state.clearSituationFilter);
     const [metadataMap, setMetadataMap] = useState<Record<string, any>>({});
+    const [isMetadataLoading, setIsMetadataLoading] = useState(true);
+    const [metadataError, setMetadataError] = useState(false);
     const [notified, setNotified] = useState(false);
 
     // Fetch story_metadata for situation tag matching
     useEffect(() => {
+        let isMounted = true;
         const fetchMetadata = async () => {
+            setIsMetadataLoading(true);
+            setMetadataError(false);
             try {
                 const { supabase } = await import('../../utils/supabase');
-                const { data } = await supabase.from('story_metadata').select('*');
-                if (data && data.length > 0) {
+                const { data, error } = await supabase.from('story_metadata').select('*');
+                if (error) {
+                    console.error("[LevelMap] Supabase story_metadata error:", error);
+                    if (isMounted) setMetadataError(true);
+                } else if (data && isMounted) {
                     const map: Record<string, any> = {};
                     data.forEach((row: any) => { map[row.story_id] = row; });
                     setMetadataMap(map);
+                    console.log(`[LevelMap] Loaded ${data.length} story_metadata rows for situation filtering`);
                 }
             } catch (err) {
-                console.error("Failed to load story_metadata for map filtering", err);
+                console.error("[LevelMap] Failed to load story_metadata for map filtering", err);
+                if (isMounted) setMetadataError(true);
+            } finally {
+                if (isMounted) setIsMetadataLoading(false);
             }
         };
         fetchMetadata();
+        return () => { isMounted = false; };
     }, []);
 
     const getSituationLabel = (tag: string | null) => {
@@ -90,31 +103,13 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
         return tag.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
     };
 
-    if (profile?.preferred_map === 'jee') {
-        ageLevels = processedLevels.filter(l => l.theme === 'JEE').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
-    } else if (profile?.preferred_map === 'neet') {
-        ageLevels = processedLevels.filter(l => l.theme === 'NEET').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
-    } else if (profile?.preferred_map === 'upsc') {
-        ageLevels = processedLevels.filter(l => l.theme === 'UPSC').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
-    } else {
-        // Standard Map Flow
-        // 1. Filter by age
-        let ageFiltered = processedLevels.filter(l => Number(l.age) === Number(activeAge));
-        
-        const hasRealStories = ageFiltered.some(l => !l.title.toLowerCase().includes('coming soon'));
-        if (hasRealStories) {
-            ageFiltered = ageFiltered.filter(l => !l.title.toLowerCase().includes('coming soon'));
-        }
-
-        ageLevels = ageFiltered;
-    }
-
-    // 2. Filter map levels by activeSituationFilter if set
     if (activeSituationFilter) {
+        // WHEN SITUATION FILTER IS ACTIVE:
+        // Source pool = ALL processedLevels across the story library (not restricted by activeAge)
         const filterTag = activeSituationFilter.toLowerCase();
         const filterLabel = getSituationLabel(activeSituationFilter).toLowerCase();
 
-        ageLevels = ageLevels.filter(l => {
+        ageLevels = processedLevels.filter(l => {
             const sid = l.scenarioId || l.id;
             const meta = metadataMap[sid];
             if (meta) {
@@ -123,10 +118,37 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 const intentMatch = (meta.intent_tags || []).some((t: string) => t.toLowerCase() === filterTag);
                 if (situationMatch || problemMatch || intentMatch) return true;
             }
-            // Fallback text match
+            // Fallback text match on title / description / personality / theme / lesson
             const text = `${l.title} ${l.description} ${l.personality} ${l.theme} ${l.lesson}`.toLowerCase();
             return text.includes(filterLabel) || text.includes(filterTag) || text.includes(filterTag.replace(/_/g, ' '));
         });
+
+        // Debug trace
+        console.log(`[LevelMap Runtime Trace]`, {
+            activeSituationFilter,
+            metadataLoaded: !isMetadataLoading,
+            metadataMapKeysCount: Object.keys(metadataMap).length,
+            userAge: activeAge,
+            totalStoryLibraryCount: processedLevels.length,
+            filteredMatchingCount: ageLevels.length,
+            matchingStoryIds: ageLevels.map(l => l.scenarioId || l.id)
+        });
+    } else {
+        // STANDARD MAP FLOW (No situation filter active)
+        if (profile?.preferred_map === 'jee') {
+            ageLevels = processedLevels.filter(l => l.theme === 'JEE').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
+        } else if (profile?.preferred_map === 'neet') {
+            ageLevels = processedLevels.filter(l => l.theme === 'NEET').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
+        } else if (profile?.preferred_map === 'upsc') {
+            ageLevels = processedLevels.filter(l => l.theme === 'UPSC').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
+        } else {
+            let ageFiltered = processedLevels.filter(l => Number(l.age) === Number(activeAge));
+            const hasRealStories = ageFiltered.some(l => !l.title.toLowerCase().includes('coming soon'));
+            if (hasRealStories) {
+                ageFiltered = ageFiltered.filter(l => !l.title.toLowerCase().includes('coming soon'));
+            }
+            ageLevels = ageFiltered;
+        }
     }
     
     const unlockedDays = getUnlockedDayCount(profile?.access_type, profile?.access_start_date);
@@ -369,8 +391,31 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     <div className="relative w-full max-w-md mx-auto mt-72 md:mt-80 pointer-events-none h-full map-content">
                         {/* NODES */}
 
-                        {/* NO MATCH STATE FOR FILTERED SITUATION */}
-                        {activeSituationFilter && ageLevels.length === 0 && (
+                        {/* 1. LOADING STATE WHEN METADATA IS FETCHING */}
+                        {activeSituationFilter && isMetadataLoading && (
+                            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 text-center pointer-events-auto bg-slate-950/90 backdrop-blur-xl border border-purple-500/40 p-6 md:p-8 rounded-3xl max-w-sm z-50 shadow-2xl text-white animate-pulse">
+                                <div className="w-10 h-10 mx-auto mb-3 rounded-full border-2 border-purple-400 border-t-transparent animate-spin" />
+                                <h3 className="text-sm font-bold text-purple-200">Finding stories for you...</h3>
+                                <p className="text-xs text-slate-400 mt-1">Matching your situation with historical journeys.</p>
+                            </div>
+                        )}
+
+                        {/* 2. ERROR STATE IF DB METADATA FETCH FAILED */}
+                        {activeSituationFilter && !isMetadataLoading && metadataError && (
+                            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 text-center pointer-events-auto bg-slate-950/90 backdrop-blur-xl border border-rose-500/40 p-6 md:p-8 rounded-3xl max-w-sm z-50 shadow-2xl text-white">
+                                <h3 className="text-base font-bold text-rose-300 mb-2">Couldn't load personalized stories</h3>
+                                <p className="text-xs text-slate-400 mb-4">A connection error occurred. Please check your internet connection.</p>
+                                <button
+                                    onClick={clearSituationFilter}
+                                    className="w-full py-2.5 rounded-2xl bg-slate-900 border border-slate-700 font-bold text-xs text-slate-300 hover:text-white"
+                                >
+                                    Explore all stories
+                                </button>
+                            </div>
+                        )}
+
+                        {/* 3. NO MATCH STATE FOR FILTERED SITUATION (Only when metadata finished loading) */}
+                        {activeSituationFilter && !isMetadataLoading && !metadataError && ageLevels.length === 0 && (
                             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 text-center pointer-events-auto bg-slate-950/90 backdrop-blur-xl border border-purple-500/40 p-6 md:p-8 rounded-3xl max-w-sm z-50 shadow-2xl text-white">
                                 <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-300 shadow-inner">
                                     <BellRing size={26} />
