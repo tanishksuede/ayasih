@@ -16,8 +16,12 @@ function viteApiDevPlugin() {
         }
 
         const urlPath = req.url.split('?')[0];
-        const fileName = urlPath.replace('/api/', '') + '.js';
-        const filePath = path.resolve(process.cwd(), 'api', fileName);
+        const baseName = urlPath.replace('/api/', '');
+        
+        let filePath = path.resolve(process.cwd(), 'api', baseName + '.ts');
+        if (!fs.existsSync(filePath)) {
+            filePath = path.resolve(process.cwd(), 'api', baseName + '.js');
+        }
 
         if (!fs.existsSync(filePath)) {
           return next();
@@ -57,8 +61,7 @@ function viteApiDevPlugin() {
             };
           }
 
-          const fileUrl = `file://${filePath}?t=${Date.now()}`;
-          const handlerModule = await import(fileUrl);
+          const handlerModule = await server.ssrLoadModule(filePath);
           const handler = handlerModule.default;
 
           if (typeof handler === 'function') {

@@ -884,9 +884,14 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                     throw new Error('Invalid format');
                 }
             }).catch(err => {
-                console.error('Groq analysis failed:', err);
-                setAnalysisState('error');
-                setTimeout(() => handleLevelComplete(starCount), 500); // fallback
+                console.error('Groq analysis failed, using fallback:', err);
+                const fallbackParts = [
+                    `You made it through the scenario. I noticed you were dealing with ${tags.join(', ') || 'some challenges'}.`,
+                    `Your choice to "${lastChoiceObj?.chosen_option || 'take action'}" shows your underlying traits in action.`,
+                    `Remember, every decision is a stepping stone. Keep moving forward!`
+                ];
+                setAnalysisParts(fallbackParts);
+                setAnalysisState('done');
             });
             return;
         }
