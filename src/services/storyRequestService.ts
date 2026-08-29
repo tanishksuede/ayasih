@@ -73,7 +73,7 @@ export async function getStoryRequestsSummary(): Promise<StoryRequestSummary[]> 
         // Aggregate by tag
         const summaryMap: Record<string, { count: number; most_recent: string; status: string }> = {};
 
-        data.forEach(row => {
+        data.forEach((row: { requested_tag: string; created_at: string; status: string | null }) => {
             const tag = row.requested_tag;
             if (!summaryMap[tag]) {
                 summaryMap[tag] = {

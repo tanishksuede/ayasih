@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getStoryRequestsSummary, type StoryRequestSummary } from '../../services/storyRequestService';
 import { CHECKIN_TAGS } from '../../config/recommendationConfig';
-import { BarChart2, Bell, CheckCircle2, Clock, Sparkles } from 'lucide-react';
+import { BarChart2, Bell, Clock } from 'lucide-react';
 
 export function StoryRequestsDashboard() {
     const [requests, setRequests] = useState<StoryRequestSummary[]>([]);

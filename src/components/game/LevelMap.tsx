@@ -18,14 +18,21 @@ import { resolvePersonalityAvatar } from '../../utils/avatarUtils';
 import TopicPreferencesSurvey from '../feedback/TopicPreferencesSurvey';
 import { ForYouCarousel } from './ForYouCarousel';
 import { CheckInCard } from './CheckInCard';
-import { MessageSquarePlus, X, BellRing, Filter, Sparkles } from 'lucide-react';
+import { MessageSquarePlus, X, BellRing, Filter } from 'lucide-react';
 import { CHECKIN_TAGS } from '../../config/recommendationConfig';
+import { getStoryMetadata } from '../../data/storyMetadata';
 
 interface LevelMapProps {
     onPlayLevel: (level: any) => void;
     onOpenDnaProfile: () => void;
 }
 
+const trackSituationEvent = (eventName: string, parameters: Record<string, unknown> = {}) => {
+    const analyticsWindow = window as typeof window & {
+        gtag?: (command: 'event', name: string, params: Record<string, unknown>) => void;
+    };
+    analyticsWindow.gtag?.('event', eventName, parameters);
+};
 
 export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const navigate = useNavigate();
@@ -62,39 +69,8 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
 
     const activeSituationFilter = useUserStore((state) => state.activeSituationFilter);
     const clearSituationFilter = useUserStore((state) => state.clearSituationFilter);
-    const [metadataMap, setMetadataMap] = useState<Record<string, any>>({});
-    const [isMetadataLoading, setIsMetadataLoading] = useState(true);
-    const [metadataError, setMetadataError] = useState(false);
     const [notified, setNotified] = useState(false);
-
-    // Fetch story_metadata for situation tag matching
-    useEffect(() => {
-        let isMounted = true;
-        const fetchMetadata = async () => {
-            setIsMetadataLoading(true);
-            setMetadataError(false);
-            try {
-                const { supabase } = await import('../../utils/supabase');
-                const { data, error } = await supabase.from('story_metadata').select('*');
-                if (error) {
-                    console.error("[LevelMap] Supabase story_metadata error:", error);
-                    if (isMounted) setMetadataError(true);
-                } else if (data && isMounted) {
-                    const map: Record<string, any> = {};
-                    data.forEach((row: any) => { map[row.story_id] = row; });
-                    setMetadataMap(map);
-                    console.log(`[LevelMap] Loaded ${data.length} story_metadata rows for situation filtering`);
-                }
-            } catch (err) {
-                console.error("[LevelMap] Failed to load story_metadata for map filtering", err);
-                if (isMounted) setMetadataError(true);
-            } finally {
-                if (isMounted) setIsMetadataLoading(false);
-            }
-        };
-        fetchMetadata();
-        return () => { isMounted = false; };
-    }, []);
+    const [notifyError, setNotifyError] = useState(false);
 
     const getSituationLabel = (tag: string | null) => {
         if (!tag) return '';
@@ -104,34 +80,13 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     };
 
     if (activeSituationFilter) {
-        // WHEN SITUATION FILTER IS ACTIVE:
-        // Source pool = ALL processedLevels across the story library (not restricted by activeAge)
-        const filterTag = activeSituationFilter.toLowerCase();
-        const filterLabel = getSituationLabel(activeSituationFilter).toLowerCase();
-
+        // Situation Map uses the full playable library. Age is display context,
+        // not a requirement that can hide a valid situation match.
         ageLevels = processedLevels.filter(l => {
-            const sid = l.scenarioId || l.id;
-            const meta = metadataMap[sid];
-            if (meta) {
-                const situationMatch = (meta.situation_tags || []).some((t: string) => t.toLowerCase() === filterTag);
-                const problemMatch = (meta.problem_tags || []).some((t: string) => t.toLowerCase() === filterTag);
-                const intentMatch = (meta.intent_tags || []).some((t: string) => t.toLowerCase() === filterTag);
-                if (situationMatch || problemMatch || intentMatch) return true;
-            }
-            // Fallback text match on title / description / personality / theme / lesson
-            const text = `${l.title} ${l.description} ${l.personality} ${l.theme} ${l.lesson}`.toLowerCase();
-            return text.includes(filterLabel) || text.includes(filterTag) || text.includes(filterTag.replace(/_/g, ' '));
-        });
-
-        // Debug trace
-        console.log(`[LevelMap Runtime Trace]`, {
-            activeSituationFilter,
-            metadataLoaded: !isMetadataLoading,
-            metadataMapKeysCount: Object.keys(metadataMap).length,
-            userAge: activeAge,
-            totalStoryLibraryCount: processedLevels.length,
-            filteredMatchingCount: ageLevels.length,
-            matchingStoryIds: ageLevels.map(l => l.scenarioId || l.id)
+            const metadata = getStoryMetadata(l.scenarioId);
+            return metadata?.situationTags.includes(activeSituationFilter)
+                || metadata?.problemTags.includes(activeSituationFilter)
+                || metadata?.intentTags.includes(activeSituationFilter);
         });
     } else {
         // STANDARD MAP FLOW (No situation filter active)
@@ -150,6 +105,23 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
             ageLevels = ageFiltered;
         }
     }
+
+    const filteredScenarioIds = activeSituationFilter
+        ? ageLevels.map(level => level.scenarioId).join(',')
+        : '';
+
+    useEffect(() => {
+        if (!activeSituationFilter) return;
+
+        trackSituationEvent('situation_filter_applied', {
+            situation: activeSituationFilter,
+            matching_story_count: ageLevels.length,
+        });
+        trackSituationEvent(ageLevels.length > 0 ? 'matching_stories_shown' : 'zero_result_situation', {
+            situation: activeSituationFilter,
+            matching_story_count: ageLevels.length,
+        });
+    }, [activeSituationFilter, filteredScenarioIds]);
     
     const unlockedDays = getUnlockedDayCount(profile?.access_type, profile?.access_start_date);
 
@@ -391,31 +363,8 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     <div className="relative w-full max-w-md mx-auto mt-72 md:mt-80 pointer-events-none h-full map-content">
                         {/* NODES */}
 
-                        {/* 1. LOADING STATE WHEN METADATA IS FETCHING */}
-                        {activeSituationFilter && isMetadataLoading && (
-                            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 text-center pointer-events-auto bg-slate-950/90 backdrop-blur-xl border border-purple-500/40 p-6 md:p-8 rounded-3xl max-w-sm z-50 shadow-2xl text-white animate-pulse">
-                                <div className="w-10 h-10 mx-auto mb-3 rounded-full border-2 border-purple-400 border-t-transparent animate-spin" />
-                                <h3 className="text-sm font-bold text-purple-200">Finding stories for you...</h3>
-                                <p className="text-xs text-slate-400 mt-1">Matching your situation with historical journeys.</p>
-                            </div>
-                        )}
-
-                        {/* 2. ERROR STATE IF DB METADATA FETCH FAILED */}
-                        {activeSituationFilter && !isMetadataLoading && metadataError && (
-                            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 text-center pointer-events-auto bg-slate-950/90 backdrop-blur-xl border border-rose-500/40 p-6 md:p-8 rounded-3xl max-w-sm z-50 shadow-2xl text-white">
-                                <h3 className="text-base font-bold text-rose-300 mb-2">Couldn't load personalized stories</h3>
-                                <p className="text-xs text-slate-400 mb-4">A connection error occurred. Please check your internet connection.</p>
-                                <button
-                                    onClick={clearSituationFilter}
-                                    className="w-full py-2.5 rounded-2xl bg-slate-900 border border-slate-700 font-bold text-xs text-slate-300 hover:text-white"
-                                >
-                                    Explore all stories
-                                </button>
-                            </div>
-                        )}
-
-                        {/* 3. NO MATCH STATE FOR FILTERED SITUATION (Only when metadata finished loading) */}
-                        {activeSituationFilter && !isMetadataLoading && !metadataError && ageLevels.length === 0 && (
+                        {/* Local metadata makes this result immediate and offline-safe. */}
+                        {activeSituationFilter && ageLevels.length === 0 && (
                             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 text-center pointer-events-auto bg-slate-950/90 backdrop-blur-xl border border-purple-500/40 p-6 md:p-8 rounded-3xl max-w-sm z-50 shadow-2xl text-white">
                                 <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-300 shadow-inner">
                                     <BellRing size={26} />
@@ -434,14 +383,24 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                                 ) : (
                                     <button
                                         onClick={async () => {
+                                            trackSituationEvent('notify_me_clicked', { situation: activeSituationFilter });
+                                            setNotifyError(false);
                                             const { logStoryRequest } = await import('../../services/storyRequestService');
-                                            await logStoryRequest(profile?.id, activeSituationFilter);
-                                            setNotified(true);
+                                            const result = await logStoryRequest(profile?.id, activeSituationFilter);
+                                            if (result.success) {
+                                                setNotified(true);
+                                            } else {
+                                                setNotifyError(true);
+                                            }
                                         }}
                                         className="w-full py-3 mb-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 font-bold text-xs uppercase tracking-wider text-white shadow-lg shadow-purple-600/30 hover:scale-105 active:scale-95 transition-all"
                                     >
                                         Notify me
                                     </button>
+                                )}
+
+                                {notifyError && (
+                                    <p className="text-xs text-rose-300 mb-3">Couldn't save your request right now. Please try again later.</p>
                                 )}
 
                                 <button
@@ -454,7 +413,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                         )}
 
                         {/* EMPTY STATE FOR AGES WITH NO STORIES */}
-                        {ageLevels.length === 0 && (
+                        {!activeSituationFilter && ageLevels.length === 0 && (
                             <div className="absolute top-1/3 left-1/2 -translate-x-1/2 text-center pointer-events-auto bg-black/60 backdrop-blur-md border border-white/10 p-8 rounded-2xl max-w-sm z-30 shadow-2xl">
                                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center text-cyan-400 text-2xl font-black">
                                     {activeAge}
@@ -630,6 +589,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 <button
                     onClick={() => {
                         audioSynth.playClick();
+                        trackSituationEvent('checkin_opened');
                         setShowCheckInModal(true);
                     }}
                     className="flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 text-white font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(147,51,234,0.5)] border border-white/20 hover:scale-105 active:scale-95 transition-all"

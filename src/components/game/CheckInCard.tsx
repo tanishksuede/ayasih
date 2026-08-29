@@ -11,6 +11,13 @@ interface CheckInCardProps {
     onCheckInComplete?: (checkinData: CheckInData) => void;
 }
 
+const trackSituationEvent = (eventName: string, parameters: Record<string, unknown> = {}) => {
+    const analyticsWindow = window as typeof window & {
+        gtag?: (command: 'event', name: string, params: Record<string, unknown>) => void;
+    };
+    analyticsWindow.gtag?.('event', eventName, parameters);
+};
+
 export const CheckInCard: React.FC<CheckInCardProps> = ({ onCheckInComplete }) => {
     const profile = useUserStore(state => state.profile);
     const updateSessionPreference = useUserStore(state => state.updateSessionPreference);
@@ -65,6 +72,9 @@ export const CheckInCard: React.FC<CheckInCardProps> = ({ onCheckInComplete }) =
             setCheckinData(checkinData);
             const primarySituation = selectedSituations[0] || null;
             setActiveSituationFilter(primarySituation);
+            if (primarySituation) {
+                trackSituationEvent('situation_selected', { situation: primarySituation });
+            }
 
             // Update session preferences in Zustand store
             allTags.forEach(tag => {
