@@ -558,7 +558,7 @@ export const authService = {
         const cleanUsername = username.trim();
         const cleanMobile = mobile ? mobile.trim().replace(/\s+/g, '') : null;
         const currentProfile = useUserStore.getState().profile;
-        const numericAge = age ? Number(age) : currentProfile?.age;
+        const numericAge = age ? Number(age) : currentProfile?.age || 18;
 
         if (!cleanUsername || cleanUsername.length < 3) {
             throw new Error('Username must be at least 3 characters long.');
@@ -601,23 +601,22 @@ export const authService = {
                 const result = await resp.json();
                 if (result.success && result.user) {
                     savedRow = result.user;
-                } else {
-                    const msg = result.error || 'Failed to save username.';
-                    if (msg.toLowerCase().includes('taken') || msg.toLowerCase().includes('unique')) {
+                } else if (result.error) {
+                    if (result.error.toLowerCase().includes('taken')) {
                         throw new Error('Username is already taken. Please choose another.');
                     }
-                    throw new Error(msg);
+                    console.warn('[AuthService] /api/set-username returned error:', result.error);
                 }
             } else {
                 const result = await resp.json().catch(() => ({ error: 'Server error' }));
                 const msg = result.error || 'Failed to save username.';
-                if (msg.toLowerCase().includes('taken') || msg.toLowerCase().includes('unique')) {
+                if (msg.toLowerCase().includes('taken')) {
                     throw new Error('Username is already taken. Please choose another.');
                 }
                 console.info('[AuthService] /api/set-username returned non-ok:', resp.status, msg);
             }
         } catch (fetchErr: any) {
-            if (fetchErr.message?.toLowerCase().includes('taken') || fetchErr.message?.toLowerCase().includes('already')) {
+            if (fetchErr.message?.toLowerCase().includes('taken')) {
                 throw fetchErr;
             }
             console.info('[AuthService] API fetch failed, trying direct Supabase fallback:', fetchErr.message);
@@ -626,90 +625,114 @@ export const authService = {
         // ── Path 2: SECURITY DEFINER RPC (bypasses RLS) ───────────────────────
         if (!savedRow) {
             try {
-                const { data: rpcRes, error: rpcErr } = await supabase.rpc('set_username', { p_username: cleanUsername });
+                const { data: rpcRes, error: rpcErr } = await supabase.rpc('set_username', { 
+                    p_username: cleanUsername,
+                    p_age: numericAge || 18,
+                    p_mobile: cleanMobile || null
+                });
                 if (!rpcErr && rpcRes === 'ok') {
                     const { data: fresh } = await supabase.from('users').select('*').eq('auth_user_id', authUid);
                     if (fresh && fresh.length > 0) savedRow = fresh[0];
                 } else if (rpcErr) {
-                    if (rpcErr.message?.toLowerCase().includes('taken') || rpcErr.message?.toLowerCase().includes('unique')) {
+                    if (rpcErr.message?.toLowerCase().includes('taken')) {
                         throw new Error('Username is already taken. Please choose another.');
                     }
+                    console.warn('[AuthService] set_username RPC warning:', rpcErr.message);
                 }
             } catch (e: any) {
                 if (e.message?.toLowerCase().includes('taken')) throw e;
+                console.warn('[AuthService] set_username RPC exception:', e);
             }
         }
 
-        // ── Path 3: Direct Supabase client fallback (without .single()) ───────
+        // ── Path 3: Direct Supabase client fallback ───────────────────────────
         if (!savedRow) {
-            const updatePayload: any = {
+            const basePayload: any = {
                 auth_user_id: authUid,
                 username: cleanUsername,
                 name: cleanUsername,
                 onboarding_complete: true,
+                age: numericAge || 18,
             };
-            if (cleanMobile) updatePayload.mobile = cleanMobile;
-            if (authUser?.email) updatePayload.email = authUser.email;
-            if (numericAge) updatePayload.age = numericAge;
+            if (cleanMobile) basePayload.mobile = cleanMobile;
+            if (authUser?.email) basePayload.email = authUser.email;
 
-            // 1. Try UPDATE on existing user row filtered by auth_user_id
-            const { data: updatedRows, error: updateErr } = await supabase
+            // 1. Check if user row already exists by auth_user_id
+            const { data: existingUsers } = await supabase
                 .from('users')
-                .update(updatePayload)
-                .eq('auth_user_id', authUid)
-                .select();
+                .select('*')
+                .eq('auth_user_id', authUid);
 
-            if (updateErr) {
-                if (updateErr.code === '23505' || updateErr.message.toLowerCase().includes('unique')) {
-                    throw new Error('Username is already taken. Please choose another.');
-                }
-                if (updateErr.message.toLowerCase().includes('row-level') || updateErr.code === '42501') {
-                    throw new Error(
-                        'Database error: new row violates row-level security policy for table "users". ' +
-                        'Please run migration 017_fix_phone_auth_rls.sql in Supabase SQL Editor.'
-                    );
-                }
-                throw new Error(`Database error: ${updateErr.message}`);
-            }
+            if (existingUsers && existingUsers.length > 0) {
+                const { data: updatedRows, error: updateErr } = await supabase
+                    .from('users')
+                    .update(basePayload)
+                    .eq('id', existingUsers[0].id)
+                    .select();
 
-            if (updatedRows && updatedRows.length > 0) {
-                savedRow = updatedRows[0];
+                if (updateErr) {
+                    if (updateErr.code === '23505' && updateErr.message?.includes('users_username_lower_idx')) {
+                        throw new Error('Username is already taken. Please choose another.');
+                    }
+                    throw new Error(`Database error: ${updateErr.message}`);
+                }
+                if (updatedRows && updatedRows.length > 0) {
+                    savedRow = updatedRows[0];
+                }
             } else {
-                // 2. No row was updated — try UPSERT by auth_user_id
-                const insertPayload: any = {
-                    ...updatePayload,
+                // 2. Insert new user row
+                const insertPayload = {
+                    ...basePayload,
                     total_xp: 0,
                     level: 1,
                     stories_completed: 0,
                 };
-                if (numericAge) insertPayload.age = numericAge;
 
                 const { data: insertedRows, error: insertErr } = await supabase
                     .from('users')
-                    .upsert(insertPayload, { onConflict: 'auth_user_id' })
+                    .insert(insertPayload)
                     .select();
 
                 if (insertErr) {
-                    if (insertErr.code === '23505' || insertErr.message.toLowerCase().includes('unique')) {
+                    if (insertErr.code === '23505' && insertErr.message?.includes('users_username_lower_idx')) {
                         throw new Error('Username is already taken. Please choose another.');
                     }
-                    if (insertErr.message.toLowerCase().includes('row-level') || insertErr.code === '42501') {
-                        throw new Error(
-                            'Database error: new row violates row-level security policy for table "users". ' +
-                            'Please run migration 017_fix_phone_auth_rls.sql in Supabase SQL Editor.'
-                        );
+                    // If auth_user_id already exists (concurrent insert), try updating
+                    const { data: retryRows } = await supabase
+                        .from('users')
+                        .update(basePayload)
+                        .eq('auth_user_id', authUid)
+                        .select();
+                    if (retryRows && retryRows.length > 0) {
+                        savedRow = retryRows[0];
+                    } else {
+                        throw new Error(`Database error: ${insertErr.message}`);
                     }
-                    throw new Error(`Database error: ${insertErr.message}`);
-                }
-
-                if (insertedRows && insertedRows.length > 0) {
+                } else if (insertedRows && insertedRows.length > 0) {
                     savedRow = insertedRows[0];
                 }
             }
         }
 
+        // Ensure personality_profiles record exists
+        if (savedRow?.id) {
+            try {
+                await supabase.from('personality_profiles').upsert({
+                    user_id: savedRow.id,
+                    mobile: savedRow.mobile || null,
+                    trait_risk_taker: 50,
+                    trait_creative: 50,
+                    trait_analytical: 50,
+                    trait_social: 50,
+                    trait_ambitious: 50,
+                }, { onConflict: 'user_id' });
+            } catch (pErr) {
+                console.warn('[AuthService] personality_profiles upsert warning:', pErr);
+            }
+        }
+
         // ── Hydrate store & session ───────────────────────────────────────────
-        const finalAge = savedRow?.age || numericAge || currentProfile?.age;
+        const finalAge = savedRow?.age || numericAge || currentProfile?.age || 18;
 
         saveSession({
             id: savedRow?.id || currentProfile?.id || crypto.randomUUID(),

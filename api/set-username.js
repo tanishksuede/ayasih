@@ -24,7 +24,20 @@ export default async function handler(req, res) {
     return res.status(405).json({ success: false, error: 'Method not allowed.' });
   }
 
-  if (!supabaseAdmin) {
+  const activeUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || supabaseUrl;
+  const activeKey = process.env.SUPABASE_SERVICE_ROLE_KEY || serviceRoleKey;
+  let adminClient = supabaseAdmin;
+  if (!adminClient && activeUrl && activeKey) {
+    try {
+      adminClient = createClient(activeUrl, activeKey, {
+        auth: { autoRefreshToken: false, persistSession: false }
+      });
+    } catch (e) {
+      console.error('[set-username] Failed to create admin client in handler:', e);
+    }
+  }
+
+  if (!adminClient) {
     return res.status(500).json({ success: false, error: 'Server not configured.' });
   }
 
@@ -37,14 +50,14 @@ export default async function handler(req, res) {
       return res.status(401).json({ success: false, error: 'Authentication required.' });
     }
 
-    const { data: authData, error: authError } = await supabaseAdmin.auth.getUser(token);
+    const { data: authData, error: authError } = await adminClient.auth.getUser(token);
     if (authError || !authData?.user) {
       return res.status(401).json({ success: false, error: 'Invalid or expired session. Please sign in again.' });
     }
 
     const authUid = authData.user.id;
     const authEmail = authData.user.email || null;
-    const { username, mobile } = req.body || {};
+    const { username, mobile, age } = req.body || {};
 
     if (!username || typeof username !== 'string') {
       return res.status(400).json({ success: false, error: 'Username is required.' });
@@ -67,7 +80,8 @@ export default async function handler(req, res) {
     const { data: existingUsernameUsers } = await supabaseAdmin
       .from('users')
       .select('id, auth_user_id')
-      .ilike('username', cleanUsername);
+      .ilike('username', cleanUsername)
+      .is('deleted_at', null);
 
     if (existingUsernameUsers && existingUsernameUsers.length > 0) {
       const takenByOther = existingUsernameUsers.some(u => u.auth_user_id !== authUid);
@@ -105,15 +119,16 @@ export default async function handler(req, res) {
       if (byEmail && byEmail.length > 0) targetRow = byEmail[0];
     }
 
+    const numericAge = age ? Number(age) : 18;
     const payload = {
       auth_user_id: authUid,
       username: cleanUsername,
       name: cleanUsername,
       onboarding_complete: true,
+      age: numericAge,
     };
     if (cleanMobile) payload.mobile = cleanMobile;
     if (authEmail) payload.email = authEmail;
-    if (age) payload.age = Number(age);
 
     let finalRow = null;
 
@@ -126,7 +141,7 @@ export default async function handler(req, res) {
         .select();
 
       if (updateErr) {
-        if (updateErr.code === '23505') {
+        if (updateErr.code === '23505' && updateErr.message?.includes('users_username_lower_idx')) {
           return res.status(409).json({ success: false, error: 'Username is already taken. Please choose another.' });
         }
         return res.status(500).json({ success: false, error: updateErr.message });
@@ -151,7 +166,7 @@ export default async function handler(req, res) {
         .select();
 
       if (insertErr) {
-        if (insertErr.code === '23505') {
+        if (insertErr.code === '23505' && insertErr.message?.includes('users_username_lower_idx')) {
           return res.status(409).json({ success: false, error: 'Username is already taken. Please choose another.' });
         }
         return res.status(500).json({ success: false, error: insertErr.message });
@@ -159,6 +174,18 @@ export default async function handler(req, res) {
       if (insertedRows && insertedRows.length > 0) {
         finalRow = insertedRows[0];
       }
+    }
+
+    if (finalRow) {
+      await supabaseAdmin.from('personality_profiles').upsert({
+        user_id: finalRow.id,
+        mobile: finalRow.mobile || null,
+        trait_risk_taker: 50,
+        trait_creative: 50,
+        trait_analytical: 50,
+        trait_social: 50,
+        trait_ambitious: 50,
+      }, { onConflict: 'user_id' });
     }
 
     return res.status(200).json({
