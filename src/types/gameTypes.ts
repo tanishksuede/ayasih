@@ -166,3 +166,113 @@ export interface UtilityOption {
     // New: Trait Modifiers (Optional for now, defaults to simple calculation)
     traitModifiers?: Partial<PersonalityTraits>;
 }
+
+// --- LIFE NAVIGATION & SELF-DISCOVERY PLATFORM TYPES ---
+
+export type LifeTheme =
+    | 'career_uncertainty'
+    | 'high_pressure_burnout'
+    | 'family_expectations'
+    | 'creative_block'
+    | 'risk_vs_safety'
+    | 'imposter_syndrome'
+    | 'leadership_loneliness'
+    | 'relationship_dilemma'
+    | 'finding_purpose'
+    | 'identity_reinvention';
+
+export type LifeStage = 'early_teens' | 'late_teens' | 'college' | 'early_career' | 'turning_point';
+
+export interface ProblemCheckIn {
+    id?: string;
+    userId?: string;
+    situationText: string;
+    situationTags: string[];
+    lifeStage?: string;
+    feelingState?: string;
+    createdAt?: string;
+}
+
+export interface StoryMetadata {
+    id?: string;
+    scenarioId: string;
+    dilemmaType: string;
+    lifeTheme: string;
+    situationalTags: string[];
+    protagonistLens: string;
+    historicalContext?: string;
+    reflectionPrompt?: string;
+    microActionPrompt?: string;
+    isPremium?: boolean;
+    difficulty?: 'accessible' | 'moderate' | 'deep';
+    targetTraits?: Partial<PsychometricScores>;
+}
+
+export interface RecommendationResult {
+    storyId: string;
+    score: number;
+    title: string;
+    personality: string;
+    age: number;
+    explanation: string;
+    dilemmaType: string;
+    lifeTheme: string;
+    situationalTags: string[];
+    isPremium?: boolean;
+    matchFactors?: {
+        situationMatch: number;
+        dnaAlignment: number;
+        intentBonus: number;
+        noveltyScore: number;
+    };
+}
+
+export interface DissonanceInsight {
+    hasDissonance: boolean;
+    traitName?: string;
+    baselineValue?: number;
+    choiceDirection?: 'bolder' | 'more_cautious' | 'more_empathic' | 'more_independent' | 'more_visionary';
+    headline: string;
+    description: string;
+}
+
+export interface MicroAction {
+    scenarioId: string;
+    prompt: string;
+    committed: boolean;
+    reflectionNotes?: string;
+    completedAt?: string;
+}
+
+export interface CurrentVsEmergingYou {
+    currentTraits: PsychometricScores;
+    emergingTraits: PsychometricScores;
+    dominantShift: {
+        trait: keyof PsychometricScores;
+        delta: number;
+        label: string;
+    };
+    storiesCount: number;
+}
+
+export interface SafetyAssessment {
+    isCrisis: boolean;
+    severity: 'none' | 'low' | 'high';
+    matchedKeywords: string[];
+    supportMessage?: string;
+    helplines?: Array<{
+        country: string;
+        name: string;
+        contact: string;
+        url?: string;
+    }>;
+}
+
+export type SubscriptionTier = 'free' | 'plus' | 'pro';
+
+export interface UserSubscription {
+    tier: SubscriptionTier;
+    status: 'active' | 'cancelled' | 'expired';
+    startsAt: string;
+    expiresAt?: string | null;
+}

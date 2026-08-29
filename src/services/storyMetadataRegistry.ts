@@ -1,0 +1,130 @@
+import type { StoryMetadata, LifeTheme } from '../types/gameTypes';
+
+/**
+ * Built-in Story Metadata Registry.
+ * Supplies rich situational taxonomy, dilemma types, protagonist lenses,
+ * reflection prompts, and micro-actions for all core AYA scenarios.
+ */
+export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
+    'lvl_age_13_anne_1': {
+        scenarioId: 'lvl_age_13_anne_1',
+        dilemmaType: 'Identity & Isolation',
+        lifeTheme: 'identity_reinvention',
+        situationalTags: ['loneliness', 'privacy', 'fear', 'finding_voice', 'hope', 'writing', 'teen_pressure'],
+        protagonistLens: 'How Anne Frank used private writing to preserve her humanity in extreme confinement.',
+        historicalContext: 'Anne Frank was given a diary for her 13th birthday in hiding in Amsterdam (1942).',
+        reflectionPrompt: 'When you feel misunderstood or overwhelmed, what is your safest outlet to process raw truth?',
+        microActionPrompt: 'Spend 5 minutes tonight journaling without filtering or editing your thoughts.',
+        difficulty: 'accessible',
+        targetTraits: { risk: 55, creativity: 85, vision: 70, empathy: 80, leadership: 50 },
+    },
+    'lvl_age_14_kobe_1': {
+        scenarioId: 'lvl_age_14_kobe_1',
+        dilemmaType: 'Obsession vs Balance',
+        lifeTheme: 'high_pressure_burnout',
+        situationalTags: ['discipline', 'obsessive_work', 'lonely_grind', 'self_doubt', 'athletic_pressure', 'high_expectations'],
+        protagonistLens: 'How Kobe Bryant dealt with being benched and outmatched by practicing while others slept.',
+        historicalContext: 'Kobe scored zero points in summer camp at age 12 and spent ages 13-14 shooting 1,000 jumpers a day.',
+        reflectionPrompt: 'Are you working hard because you love the craft, or because you fear falling behind?',
+        microActionPrompt: 'Pick the one skill you felt weakest at this week and schedule 20 minutes of deliberate focus on it.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 80, creativity: 60, vision: 90, empathy: 40, leadership: 85 },
+    },
+    'lvl_age_15_fridakahlo_1': {
+        scenarioId: 'lvl_age_15_fridakahlo_1',
+        dilemmaType: 'Trauma & Creative Reinvention',
+        lifeTheme: 'identity_reinvention',
+        situationalTags: ['physical_pain', 'plans_destroyed', 'creative_block', 'rebirth', 'authenticity', 'unconventional'],
+        protagonistLens: 'How Frida Kahlo transformed a catastrophic accident that ended her medical dreams into groundbreaking art.',
+        historicalContext: 'After a severe bus crash at age 18, Frida began painting from her bed using a mirror mounted above.',
+        reflectionPrompt: 'What plan of yours fell apart recently, and what unexpected door might that breakdown open?',
+        microActionPrompt: 'Express a frustration you have through a creative medium (sketch, voice memo, or poem) instead of venting.',
+        difficulty: 'deep',
+        targetTraits: { risk: 90, creativity: 95, vision: 85, empathy: 75, leadership: 60 },
+    },
+    'lvl_age_16_ramanujan_1': {
+        scenarioId: 'lvl_age_16_ramanujan_1',
+        dilemmaType: 'Unorthodox Genius vs Academic Mold',
+        lifeTheme: 'family_expectations',
+        situationalTags: ['imposter_syndrome', 'academic_failure', 'unconventional_path', 'intense_passion', 'poverty'],
+        protagonistLens: 'How Srinivasa Ramanujan stayed true to pure mathematical discovery despite failing standard college exams.',
+        historicalContext: 'Ramanujan lost his scholarship because he only focused on mathematics and ignored other subjects.',
+        reflectionPrompt: 'Where are you forcing yourself to fit a standard metric when your real strength lies elsewhere?',
+        microActionPrompt: 'Write down your single deepest intellectual curiosity and spend 30 uninterrupted minutes exploring it today.',
+        difficulty: 'deep',
+        targetTraits: { risk: 85, creativity: 90, vision: 95, empathy: 50, leadership: 45 },
+    },
+    'lvl_age_18_stevejobs_1': {
+        scenarioId: 'lvl_age_18_stevejobs_1',
+        dilemmaType: 'Dropping Out vs Following Intuition',
+        lifeTheme: 'career_uncertainty',
+        situationalTags: ['dropout', 'uncertainty', 'intuition', 'aesthetic_vision', 'purpose', 'risk_taking', 'college_dilemma'],
+        protagonistLens: 'How Steve Jobs decided to drop out of Reed College and drop in on calligraphy and philosophy classes.',
+        historicalContext: 'At age 18, Steve Jobs refused to spend his parents life savings on standard classes and audited typography.',
+        reflectionPrompt: 'If you trusted your inner curiosity 20% more, what would you immediately start learning about?',
+        microActionPrompt: 'Audit or research one unconventional topic or course this week solely because it fascinates you.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 90, creativity: 90, vision: 95, empathy: 45, leadership: 85 },
+    },
+    'lvl_age_20_kalpana_1': {
+        scenarioId: 'lvl_age_20_kalpana_1',
+        dilemmaType: 'Breaking Cultural Expectations',
+        lifeTheme: 'family_expectations',
+        situationalTags: ['gender_norms', 'family_pressure', 'big_dreams', 'stem', 'courage', 'relocation', 'independence'],
+        protagonistLens: 'How Kalpana Chawla chose aeronautical engineering despite family pressure to pick traditional teaching.',
+        historicalContext: 'Kalpana was the only female in her aeronautical engineering batch at Punjab Engineering College.',
+        reflectionPrompt: 'Whose expectations are currently steering your choices: your own, or the people around you?',
+        microActionPrompt: 'Have one honest conversation this week stating your genuine aspiration to someone you respect.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 85, creativity: 70, vision: 90, empathy: 65, leadership: 80 },
+    },
+    'lvl_age_21_elonmusk_1': {
+        scenarioId: 'lvl_age_21_elonmusk_1',
+        dilemmaType: 'First Principles vs Conventional Wisdom',
+        lifeTheme: 'risk_vs_safety',
+        situationalTags: ['high_stakes', 'first_principles', 'startup_hustle', 'uncertainty', 'fearlessness', 'engineering'],
+        protagonistLens: 'How Elon Musk opted out of Stanford PhD after 2 days to launch Zip2 in the early internet wave.',
+        historicalContext: 'In 1995, Elon slept on the office futon and showered at the YMCA to build his first internet startup.',
+        reflectionPrompt: 'What problem in your environment seems obvious to fix, but everyone else is ignoring?',
+        microActionPrompt: 'Break down a complex problem you are facing into its raw physics/facts, discarding traditional assumptions.',
+        difficulty: 'deep',
+        targetTraits: { risk: 95, creativity: 85, vision: 95, empathy: 35, leadership: 90 },
+    },
+    'lvl_age_24_mariekurie_1': {
+        scenarioId: 'lvl_age_24_mariekurie_1',
+        dilemmaType: 'Extreme Perseverance in Obscurity',
+        lifeTheme: 'finding_purpose',
+        situationalTags: ['poverty', 'scientific_grit', 'lonely_research', 'perseverance', 'unrecognized_effort'],
+        protagonistLens: 'How Marie Curie worked as a governess for years in Poland to fund her education at the Sorbonne in Paris.',
+        historicalContext: 'Marie lived on bread and tea in an unheated Paris attic room while studying chemistry and physics.',
+        reflectionPrompt: 'What long-term goal is worth working quietly in the shadows for right now?',
+        microActionPrompt: 'Eliminate one non-essential distraction today to give 45 minutes to your core objective.',
+        difficulty: 'deep',
+        targetTraits: { risk: 75, creativity: 80, vision: 95, empathy: 60, leadership: 70 },
+    },
+};
+
+/**
+ * Helper to fetch metadata with automatic fallback if not in registry.
+ */
+export function getStoryMetadata(scenarioId: string, levelData?: any): StoryMetadata {
+    if (STORY_METADATA_REGISTRY[scenarioId]) {
+        return STORY_METADATA_REGISTRY[scenarioId];
+    }
+
+    const title = levelData?.personality || levelData?.title || 'Protagonist';
+    const theme = (levelData?.theme || 'identity_reinvention').toLowerCase().replace(/\s+/g, '_') as LifeTheme;
+
+    return {
+        scenarioId,
+        dilemmaType: levelData?.theme || 'Life Decision',
+        lifeTheme: theme,
+        situationalTags: [theme, 'growth', 'decision_making', 'mindset'],
+        protagonistLens: `How ${title} faced critical choices at age ${levelData?.age || 18}.`,
+        historicalContext: levelData?.description || '',
+        reflectionPrompt: `What would you do if you were in ${title}'s shoes today?`,
+        microActionPrompt: 'Take one small, decisive action related to this lesson today.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 60, creativity: 60, vision: 60, empathy: 60, leadership: 60 },
+    };
+}

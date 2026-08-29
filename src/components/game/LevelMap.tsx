@@ -17,6 +17,12 @@ import { SearchBar } from '../SearchBar';
 import { resolvePersonalityAvatar } from '../../utils/avatarUtils';
 import TopicPreferencesSurvey from '../feedback/TopicPreferencesSurvey';
 import { ForYouCarousel } from './ForYouCarousel';
+import { ProblemCheckInModal } from '../discovery/ProblemCheckInModal';
+import { ProblemSearchBar } from '../discovery/ProblemSearchBar';
+import { CurrentChapterBanner } from '../discovery/CurrentChapterBanner';
+import { CurrentVsEmergingCard } from '../discovery/CurrentVsEmergingCard';
+import { AyaPlusModal } from '../discovery/AyaPlusModal';
+import { WeeklyRecapModal } from '../discovery/WeeklyRecapModal';
 
 interface LevelMapProps {
     onPlayLevel: (level: any) => void;
@@ -43,6 +49,15 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
         };
         checkAdmin();
     }, [profile?.isAdmin]);
+
+    // Life Navigation & Discovery States
+    const [isCheckInOpen, setIsCheckInOpen] = useState(false);
+    const [isPlusOpen, setIsPlusOpen] = useState(false);
+    const [isWeeklyRecapOpen, setIsWeeklyRecapOpen] = useState(false);
+    const [situationQuery, setSituationQuery] = useState('');
+    const [situationTags, setSituationTags] = useState<string[]>([]);
+    const [activeTheme, setActiveTheme] = useState<string | null>(null);
+
     const activeAge = profile?.age || 18;
     
     let ageLevels: any[] = [];
@@ -290,9 +305,33 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     }}
                 >
                     <div className="absolute top-0 w-full pointer-events-auto z-50">
-                        <ForYouCarousel onPlayLevel={onPlayLevel} allLevels={levels} />
+                        <ForYouCarousel
+                            onPlayLevel={onPlayLevel}
+                            allLevels={levels}
+                            situationQuery={situationQuery}
+                            situationTags={situationTags}
+                            activeTheme={activeTheme}
+                        />
+                        <div className="pt-2 pb-1">
+                            <ProblemSearchBar
+                                currentQuery={situationQuery}
+                                onSearch={(q) => setSituationQuery(q)}
+                                onOpenCheckIn={() => setIsCheckInOpen(true)}
+                                activeTheme={activeTheme}
+                                onClearActiveTheme={() => {
+                                    setActiveTheme(null);
+                                    setSituationTags([]);
+                                }}
+                            />
+                        </div>
                     </div>
-                    <div className="relative w-full max-w-md mx-auto mt-72 md:mt-80 pointer-events-none h-full map-content">
+                    <div className="relative w-full max-w-4xl mx-auto mt-96 md:mt-[26rem] pointer-events-none h-full map-content">
+                        {/* Current Chapter & Trajectory Widgets */}
+                        <div className="pointer-events-auto mb-8">
+                            <CurrentChapterBanner onOpenCheckIn={() => setIsCheckInOpen(true)} />
+                            <CurrentVsEmergingCard />
+                        </div>
+
                         {/* NODES */}
 
                         {/* EMPTY STATE FOR AGES WITH NO STORIES */}
@@ -481,6 +520,27 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     </div>
                 </div>
             )}
-        </div >
+
+            {/* Life Navigation & Discovery Modals */}
+            <ProblemCheckInModal
+                isOpen={isCheckInOpen}
+                onClose={() => setIsCheckInOpen(false)}
+                onProblemSubmitted={(text, tags, theme) => {
+                    setSituationQuery(text);
+                    setSituationTags(tags);
+                    if (theme) setActiveTheme(theme);
+                }}
+            />
+
+            <AyaPlusModal
+                isOpen={isPlusOpen}
+                onClose={() => setIsPlusOpen(false)}
+            />
+
+            <WeeklyRecapModal
+                isOpen={isWeeklyRecapOpen}
+                onClose={() => setIsWeeklyRecapOpen(false)}
+            />
+        </div>
     );
 }
