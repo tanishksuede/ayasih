@@ -39,7 +39,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const levels = useUserStore((state) => state.levels);
     const levelScores = useUserStore((state) => state.levelScores);
     const profile = useUserStore((state) => state.profile);
-    const [showCheckInModal, setShowCheckInModal] = useState(false);
+    const [showCheckInModal, setShowCheckInModal] = useState(() => !sessionStorage.getItem('hasCheckedInSession'));
 
     // Admin check — use profile.isAdmin from the store, with fallback to DB check
     const [isAdmin, setIsAdmin] = useState(!!profile?.isAdmin);
@@ -603,14 +603,17 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
             {showCheckInModal && (
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto">
                     <div className="relative w-full max-w-xl my-auto animate-fade-in-up">
-                        <button
-                            onClick={() => setShowCheckInModal(false)}
-                            className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/80 text-slate-300 hover:text-white z-10"
-                        >
-                            <X size={18} />
-                        </button>
+                        {!!sessionStorage.getItem('hasCheckedInSession') && (
+                            <button
+                                onClick={() => setShowCheckInModal(false)}
+                                className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/80 text-slate-300 hover:text-white z-10"
+                            >
+                                <X size={18} />
+                            </button>
+                        )}
                         <CheckInCard
                             onCheckInComplete={() => {
+                                sessionStorage.setItem('hasCheckedInSession', 'true');
                                 setTimeout(() => setShowCheckInModal(false), 1500);
                             }}
                         />

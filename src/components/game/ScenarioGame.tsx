@@ -5,6 +5,7 @@ import { detectEmotion, EMOTION_THEMES } from '../../utils/storyEmotion';
 import type { EmotionTheme } from '../../utils/storyEmotion';
 import { bgmManager } from '../../utils/bgmManager';
 import { CheckCircle, AlertCircle, ChevronRight, Volume2, VolumeX, Loader2, Star } from 'lucide-react';
+import { AnalysisMascotModal } from './AnalysisMascotModal';
 
 import { useJourneyTracking } from '../../hooks/useJourneyTracking';
 import type { Level, Lesson } from '../../types/gameTypes';
@@ -82,6 +83,9 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
     };
     // Feedback State
     const [feedbackChoice, setFeedbackChoice] = useState<Choice | null>(null);
+    const [analysisState, setAnalysisState] = useState<'idle' | 'generating' | 'done' | 'error'>('idle');
+    const [analysisParts, setAnalysisParts] = useState<string[]>([]);
+    const [finalStarCount, setFinalStarCount] = useState(0);
 
     // Background Loading State (prevents UI from showing until image is ready)
     const [isBgLoaded, setIsBgLoaded] = useState(false);
@@ -849,11 +853,41 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
             console.log('[AYA DEBUG] All done, calling handleLevelComplete with stars:', starCount, 'and session XP:', sessionTotalXp);
             
-            // Queue transition out allowing particles to run
-            setTimeout(() => {
-                bgmManager.stop(1);
-                handleLevelComplete(starCount);
-            }, delayMs);
+            setFinalStarCount(starCount);
+            setAnalysisState('generating');
+            bgmManager.stop(1);
+
+            const lastChoiceObj = finalSessionChoices[finalSessionChoices.length - 1];
+            const checkinData = useUserStore.getState().checkinData;
+            const tags = checkinData ? [...(checkinData.situation_tags || []), ...(checkinData.emotional_tags || [])] : [];
+            
+            fetch('/api/generate-analysis', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    tags,
+                    storyTitle: safeScenario.title,
+                    character: idolName,
+                    userChoice: lastChoiceObj?.chosen_option || '',
+                    userChoiceConsequence: choice.feedback || choice.feedbackTitle || 'Completed the phase.',
+                    userAge: userProfile?.age || 'unknown',
+                    userTraits: userProfile?.traits || {}
+                })
+            }).then(res => {
+                if (!res.ok) throw new Error('API failed');
+                return res.json();
+            }).then(data => {
+                if (data && data.parts && Array.isArray(data.parts)) {
+                    setAnalysisParts(data.parts);
+                    setAnalysisState('done');
+                } else {
+                    throw new Error('Invalid format');
+                }
+            }).catch(err => {
+                console.error('Groq analysis failed:', err);
+                setAnalysisState('error');
+                setTimeout(() => handleLevelComplete(starCount), 500); // fallback
+            });
             return;
         }
 
@@ -1383,6 +1417,25 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 )}>
                     {saveStatus === 'saved' ? '✓ Progress Saved' : '✗ Save Failed — check connection'}
                 </div>
+            )}
+
+            {/* Analysis Generating Overlay */}
+            {analysisState === 'generating' && (
+                <div className="fixed inset-0 z-[99998] bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center animate-fade-in">
+                    <Loader2 className="w-12 h-12 text-purple-400 animate-spin mb-4" />
+                    <p className="text-xl font-bold text-white tracking-widest drop-shadow-lg">GENERATING ANALYSIS...</p>
+                </div>
+            )}
+
+            {/* Analysis Mascot Modal */}
+            {analysisState === 'done' && (
+                <AnalysisMascotModal 
+                    parts={analysisParts}
+                    theme={isCandyTheme ? 'candy' : 'dark'}
+                    onComplete={() => {
+                        handleLevelComplete(finalStarCount);
+                    }}
+                />
             )}
 
             {/* Sources Modal */}
