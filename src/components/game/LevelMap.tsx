@@ -18,7 +18,8 @@ import { resolvePersonalityAvatar } from '../../utils/avatarUtils';
 import TopicPreferencesSurvey from '../feedback/TopicPreferencesSurvey';
 import { ForYouCarousel } from './ForYouCarousel';
 import { CheckInCard } from './CheckInCard';
-import { MessageSquarePlus, X } from 'lucide-react';
+import { MessageSquarePlus, X, BellRing, Filter, Sparkles } from 'lucide-react';
+import { CHECKIN_TAGS } from '../../config/recommendationConfig';
 
 interface LevelMapProps {
     onPlayLevel: (level: any) => void;
@@ -59,6 +60,36 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
         return l;
     });
 
+    const activeSituationFilter = useUserStore((state) => state.activeSituationFilter);
+    const clearSituationFilter = useUserStore((state) => state.clearSituationFilter);
+    const [metadataMap, setMetadataMap] = useState<Record<string, any>>({});
+    const [notified, setNotified] = useState(false);
+
+    // Fetch story_metadata for situation tag matching
+    useEffect(() => {
+        const fetchMetadata = async () => {
+            try {
+                const { supabase } = await import('../../utils/supabase');
+                const { data } = await supabase.from('story_metadata').select('*');
+                if (data && data.length > 0) {
+                    const map: Record<string, any> = {};
+                    data.forEach((row: any) => { map[row.story_id] = row; });
+                    setMetadataMap(map);
+                }
+            } catch (err) {
+                console.error("Failed to load story_metadata for map filtering", err);
+            }
+        };
+        fetchMetadata();
+    }, []);
+
+    const getSituationLabel = (tag: string | null) => {
+        if (!tag) return '';
+        const found = CHECKIN_TAGS.situation.find(s => s.value === tag);
+        if (found) return found.label;
+        return tag.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    };
+
     if (profile?.preferred_map === 'jee') {
         ageLevels = processedLevels.filter(l => l.theme === 'JEE').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
     } else if (profile?.preferred_map === 'neet') {
@@ -76,6 +107,26 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
         }
 
         ageLevels = ageFiltered;
+    }
+
+    // 2. Filter map levels by activeSituationFilter if set
+    if (activeSituationFilter) {
+        const filterTag = activeSituationFilter.toLowerCase();
+        const filterLabel = getSituationLabel(activeSituationFilter).toLowerCase();
+
+        ageLevels = ageLevels.filter(l => {
+            const sid = l.scenarioId || l.id;
+            const meta = metadataMap[sid];
+            if (meta) {
+                const situationMatch = (meta.situation_tags || []).some((t: string) => t.toLowerCase() === filterTag);
+                const problemMatch = (meta.problem_tags || []).some((t: string) => t.toLowerCase() === filterTag);
+                const intentMatch = (meta.intent_tags || []).some((t: string) => t.toLowerCase() === filterTag);
+                if (situationMatch || problemMatch || intentMatch) return true;
+            }
+            // Fallback text match
+            const text = `${l.title} ${l.description} ${l.personality} ${l.theme} ${l.lesson}`.toLowerCase();
+            return text.includes(filterLabel) || text.includes(filterTag) || text.includes(filterTag.replace(/_/g, ' '));
+        });
     }
     
     const unlockedDays = getUnlockedDayCount(profile?.access_type, profile?.access_start_date);
@@ -262,6 +313,26 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 document.getElementById('header-search-portal')!
             )}
 
+            {/* Filter Header Banner */}
+            {activeSituationFilter && (
+                <div className="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-40 bg-slate-950/90 border border-purple-500/40 backdrop-blur-md px-4 py-2 rounded-full shadow-2xl flex items-center gap-3 animate-fade-in pointer-events-auto">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-purple-300">
+                        <Filter size={14} className="text-cyan-400 animate-pulse" />
+                        <span>Stories for:</span>
+                        <span className="text-white uppercase tracking-wider bg-purple-950/80 border border-purple-500/30 px-2 py-0.5 rounded-md font-extrabold">
+                            {getSituationLabel(activeSituationFilter)}
+                        </span>
+                    </div>
+                    <button
+                        onClick={clearSituationFilter}
+                        className="px-2.5 py-1 bg-purple-500/20 hover:bg-purple-500/40 text-purple-200 text-[11px] font-bold rounded-full transition-colors flex items-center gap-1 hover:text-white"
+                    >
+                        <X size={12} />
+                        <span>Clear filter</span>
+                    </button>
+                </div>
+            )}
+
             {/* Modals moved to routes */}
             {/* --- SCROLLABLE MAP CONTENT --- */}
             <div
@@ -297,6 +368,45 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     </div>
                     <div className="relative w-full max-w-md mx-auto mt-72 md:mt-80 pointer-events-none h-full map-content">
                         {/* NODES */}
+
+                        {/* NO MATCH STATE FOR FILTERED SITUATION */}
+                        {activeSituationFilter && ageLevels.length === 0 && (
+                            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 text-center pointer-events-auto bg-slate-950/90 backdrop-blur-xl border border-purple-500/40 p-6 md:p-8 rounded-3xl max-w-sm z-50 shadow-2xl text-white">
+                                <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-purple-500/20 border border-purple-400/30 flex items-center justify-center text-purple-300 shadow-inner">
+                                    <BellRing size={26} />
+                                </div>
+                                <h3 className="text-base md:text-lg font-black text-white mb-1">
+                                    We don't have a story for this yet.
+                                </h3>
+                                <p className="text-xs text-slate-300 leading-relaxed mb-5">
+                                    Want us to let you know when a story on <span className="font-bold text-cyan-300">{getSituationLabel(activeSituationFilter)}</span> is available?
+                                </p>
+
+                                {notified ? (
+                                    <div className="p-3 bg-emerald-950/80 border border-emerald-500/40 rounded-2xl text-emerald-300 text-xs font-bold mb-4 flex items-center justify-center gap-2">
+                                        <span>✓ Request saved! We'll notify you when published.</span>
+                                    </div>
+                                ) : (
+                                    <button
+                                        onClick={async () => {
+                                            const { logStoryRequest } = await import('../../services/storyRequestService');
+                                            await logStoryRequest(profile?.id, activeSituationFilter);
+                                            setNotified(true);
+                                        }}
+                                        className="w-full py-3 mb-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 font-bold text-xs uppercase tracking-wider text-white shadow-lg shadow-purple-600/30 hover:scale-105 active:scale-95 transition-all"
+                                    >
+                                        Notify me
+                                    </button>
+                                )}
+
+                                <button
+                                    onClick={clearSituationFilter}
+                                    className="w-full py-2.5 rounded-2xl bg-slate-900 border border-slate-700 font-bold text-xs text-slate-400 hover:text-white transition-colors"
+                                >
+                                    Explore all stories
+                                </button>
+                            </div>
+                        )}
 
                         {/* EMPTY STATE FOR AGES WITH NO STORIES */}
                         {ageLevels.length === 0 && (
@@ -480,7 +590,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     className="flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 text-white font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(147,51,234,0.5)] border border-white/20 hover:scale-105 active:scale-95 transition-all"
                 >
                     <MessageSquarePlus size={16} />
-                    <span>Life Check-in</span>
+                    <span>What are you dealing with?</span>
                 </button>
             </div>
 

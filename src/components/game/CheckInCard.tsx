@@ -14,6 +14,8 @@ interface CheckInCardProps {
 export const CheckInCard: React.FC<CheckInCardProps> = ({ onCheckInComplete }) => {
     const profile = useUserStore(state => state.profile);
     const updateSessionPreference = useUserStore(state => state.updateSessionPreference);
+    const setCheckinData = useUserStore(state => state.setCheckinData);
+    const setActiveSituationFilter = useUserStore(state => state.setActiveSituationFilter);
 
     const [selectedSituations, setSelectedSituations] = useState<string[]>([]);
     const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
@@ -59,12 +61,17 @@ export const CheckInCard: React.FC<CheckInCardProps> = ({ onCheckInComplete }) =
         setIsSubmitting(true);
 
         try {
-            // 2. Update session preferences in Zustand store
+            // Update store checkinData and activeSituationFilter for direct map reshaping
+            setCheckinData(checkinData);
+            const primarySituation = selectedSituations[0] || null;
+            setActiveSituationFilter(primarySituation);
+
+            // Update session preferences in Zustand store
             allTags.forEach(tag => {
                 updateSessionPreference(tag, 2.0);
             });
 
-            // 3. Persist check-in to Supabase if authenticated user
+            // Persist check-in to Supabase if authenticated user
             if (profile?.id && !profile.id.startsWith('offline-')) {
                 await supabase.from('user_checkins').insert({
                     user_id: profile.id,

@@ -94,6 +94,9 @@ interface UserState {
     // Check-in State
     checkinData: import('../types/ayaTypes').CheckInData | null;
     setCheckinData: (data: import('../types/ayaTypes').CheckInData | null) => void;
+    activeSituationFilter: string | null;
+    setActiveSituationFilter: (filter: string | null) => void;
+    clearSituationFilter: () => void;
 }
 const syncStoreToBackend = async (profile: any, currentLevelScores: Record<string, number>) => {
     if (!profile || !profile.id || profile.id.startsWith('offline-')) return;
@@ -281,6 +284,10 @@ export const useUserStore = create<UserState>()(
 
             checkinData: null,
             setCheckinData: (data) => set({ checkinData: data }),
+
+            activeSituationFilter: null,
+            setActiveSituationFilter: (filter) => set({ activeSituationFilter: filter }),
+            clearSituationFilter: () => set({ activeSituationFilter: null, checkinData: null }),
 
             sessionPreferences: {},
             updateSessionPreference: (tag, weight) => set((state) => {

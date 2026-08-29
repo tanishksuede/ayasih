@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import FeedbackDashboard from '../components/admin/FeedbackDashboard';
 import { StoryTagsExplorer } from '../components/admin/StoryTagsExplorer';
 import { StoryMetadataAuthoring } from '../components/admin/StoryMetadataAuthoring';
+import { StoryRequestsDashboard } from '../components/admin/StoryRequestsDashboard';
 
 type PushFailure = {
     subscriptionId: string;
@@ -462,6 +463,10 @@ export function AdminPanelPage() {
                             ))
                         )}
                     </div>
+                </div>
+
+                <div className="mt-8">
+                    <StoryRequestsDashboard />
                 </div>
 
                 <div className="mt-8">
