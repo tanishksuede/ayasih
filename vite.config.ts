@@ -93,6 +93,7 @@ export default defineConfig({
         clientsClaim: true,
         cleanupOutdatedCaches: true,
         globIgnores: ['**/music/**', '**/*.mp3'],
+        maximumFileSizeToCacheInBytes: 3 * 1024 * 1024, // 3MB — handles the main bundle
       },
     })
   ],
