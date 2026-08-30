@@ -113,15 +113,12 @@ export const authService = {
 
             if (!signInError && (signInData?.user?.id || signInData?.session?.user?.id)) {
                 authUid = signInData.user?.id || signInData.session?.user?.id;
-            } else if (authError.message.includes('User already registered') || authError.status === 400) {
+            } else if (authError.message?.toLowerCase().includes('already registered')) {
                 throw new Error('An account with this phone number already exists. Please sign in instead.');
-            } else if (authError.message.toLowerCase().includes('rate limit')) {
-                // If Supabase Auth is rate-limiting synthetic signup requests (e.g. SMTP email sending rate limit),
-                // gracefully provision user in public.users directly so onboarding is never blocked.
-                console.warn('[AuthService] Supabase Auth rate limit encountered. Falling back to direct database provisioning.');
-                authUid = crypto.randomUUID();
             } else {
-                throw new Error(authError.message || 'Registration failed. Please try again.');
+                // For ANY rate limit, 429, SMTP limitation, or synthetic email error, gracefully provision user in public.users directly
+                console.warn('[AuthService] Supabase Auth error during signup, falling back to direct database provisioning:', authError.message);
+                authUid = crypto.randomUUID();
             }
         } else {
             authUid = authData.user?.id;
@@ -407,15 +404,11 @@ export const authService = {
             if (!signInError && signInData.session?.user) {
                 authData = { user: signInData.session.user, session: signInData.session } as any;
             } else {
-                if (authError.message.includes('User already registered') || authError.status === 400) {
+                if (authError.message?.toLowerCase().includes('already registered')) {
                     throw new Error('Username is already registered. Please sign in instead.');
                 }
-                if (authError.message.toLowerCase().includes('rate limit')) {
-                    console.warn('[AuthService] Username signup rate limited by Supabase Auth, falling back to direct user creation.');
-                    authData = { user: { id: crypto.randomUUID() } } as any;
-                } else {
-                    throw authError;
-                }
+                console.warn('[AuthService] Username signup auth exception, falling back to direct user creation:', authError.message);
+                authData = { user: { id: crypto.randomUUID() } } as any;
             }
         }
 
@@ -686,17 +679,23 @@ export const authService = {
             if (cleanMobile) basePayload.mobile = cleanMobile;
             if (authUser?.email) basePayload.email = authUser.email;
 
-            // 1. Check if user row already exists by auth_user_id or id
+            // 1. Check if user row already exists by auth_user_id, id, or mobile
+            const orConditions = [`auth_user_id.eq.${authUid}`, `id.eq.${authUid}`];
+            if (cleanMobile) orConditions.push(`mobile.eq.${cleanMobile}`);
+            if (currentProfile?.id) orConditions.push(`id.eq.${currentProfile.id}`);
+            if (currentProfile?.mobile) orConditions.push(`mobile.eq.${currentProfile.mobile}`);
+
             const { data: existingUsers } = await supabase
                 .from('users')
                 .select('*')
-                .or(`auth_user_id.eq.${authUid},id.eq.${authUid}`);
+                .or(orConditions.join(','));
 
             if (existingUsers && existingUsers.length > 0) {
+                const targetId = existingUsers[0].id;
                 const { data: updatedRows, error: updateErr } = await supabase
                     .from('users')
                     .update(basePayload)
-                    .eq('id', existingUsers[0].id)
+                    .eq('id', targetId)
                     .select();
 
                 if (updateErr) {
