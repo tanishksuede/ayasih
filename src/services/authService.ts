@@ -591,13 +591,13 @@ export const authService = {
             throw new Error('Username must be at least 3 characters long.');
         }
 
-        // Require an active Supabase Auth session
+        // Require an active session (either Supabase Auth or local DB session from rate limit fallback)
         const { data: { session } } = await supabase.auth.getSession();
         const authUser = session?.user;
-        const authUid = authUser?.id;
+        const authUid = authUser?.id || currentProfile?.auth_user_id || currentProfile?.id;
         const accessToken = session?.access_token;
 
-        if (!authUid || !accessToken) {
+        if (!authUid) {
             throw new Error('You must be signed in to set a username. Please sign in again.');
         }
 
@@ -610,7 +610,8 @@ export const authService = {
         let savedRow: any = null;
 
         // ── Path 1: Server-side API (Vercel production & Vite dev plugin) ─────
-        try {
+        if (accessToken) {
+            try {
             const resp = await fetch('/api/set-username', {
                 method: 'POST',
                 headers: {
@@ -648,6 +649,7 @@ export const authService = {
             }
             console.info('[AuthService] API fetch failed, trying direct Supabase fallback:', fetchErr.message);
         }
+        }
 
         // ── Path 2: SECURITY DEFINER RPC (bypasses RLS) ───────────────────────
         if (!savedRow) {
@@ -684,11 +686,11 @@ export const authService = {
             if (cleanMobile) basePayload.mobile = cleanMobile;
             if (authUser?.email) basePayload.email = authUser.email;
 
-            // 1. Check if user row already exists by auth_user_id
+            // 1. Check if user row already exists by auth_user_id or id
             const { data: existingUsers } = await supabase
                 .from('users')
                 .select('*')
-                .eq('auth_user_id', authUid);
+                .or(`auth_user_id.eq.${authUid},id.eq.${authUid}`);
 
             if (existingUsers && existingUsers.length > 0) {
                 const { data: updatedRows, error: updateErr } = await supabase
