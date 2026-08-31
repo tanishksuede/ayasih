@@ -4174,6 +4174,75 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 16: Bhagat Singh
+    'lvl_age_16_bhagat': {
+        title: "The Letter on the Desk",
+        source: "Source: 'Without Fear: The Life and Trial of Bhagat Singh' by Kuldip Nayar (2007)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'seeking',
+                bg: '/assets/bg-bhagat-singh-lahore-1929.png',
+                text: "You are 16 years old and studying in Lahore. Your family insists that it is time for you to marry and settle into a respectable, secure domestic life.",
+                choices: [
+                    { text: "See your family's preparations", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'conflicted',
+                bg: '/assets/bg-bhagat-singh-lahore-1929.png',
+                text: "Wedding arrangements are already underway. But inside you burns a singular, unyielding conviction: your life belongs entirely to India's freedom struggle.",
+                choices: [
+                    { text: "Face the choice tonight", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'determined',
+                bg: '/assets/bg-bhagat-singh-lahore-1929.png',
+                text: "How do you handle your family's intense pressure to marry?",
+                choices: [
+                    {
+                        text: "Accept the marriage to keep your family happy, planning to support the freedom struggle quietly.",
+                        next: 'conform',
+                        score: 2,
+                        feedbackTitle: "Domestic Safety",
+                        feedback: "You live a quiet, safe life, but you are consumed by lingering regret, knowing you compromised on your ultimate purpose."
+                    },
+                    {
+                        text: "Run away from home in secret, abandoning family expectations to join the revolution full-time.",
+                        next: 'flee',
+                        score: 10,
+                        feedbackTitle: "Singular Purpose",
+                        feedback: "You leave a letter on the desk and flee to Kanpur into dangerous obscurity, answering the call of history."
+                    }
+                ]
+            },
+            {
+                id: 'conform',
+                emotion: 'resigned',
+                bg: '/assets/bg-bhagat-singh-lahore-1929.png',
+                text: "You fulfill family duties, but the fire of your true calling is slowly smothered by ordinary domestic comfort.",
+                choices: [
+                    { text: "Rethink your destiny", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'flee',
+                emotion: 'determined',
+                bg: '/assets/portrait-bhagat-singh.png',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/portrait-bhagat-singh.png',
+                text: "You leave a letter: 'My life has been dedicated to the noblest cause, that of the freedom of the country.' You board a train for Kanpur, enduring poverty and surveillance to become Bhagat Singh—an immortal beacon of revolutionary courage.\n\nLESSONS:\n1. Your true calling might require disappointing the people who love you most.\n2. A life of extraordinary purpose often demands the sacrifice of ordinary comforts.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

@@ -249,6 +249,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_16_billie',
             idolTraits: { discipline: 90, resilience: 95, risk: 100, leadership: 85, creativity: 100, empathy: 95, vision: 100 }
         },
+        // Age 16: Bhagat Singh
+        {
+            id: 'lvl_16_bhagat_1',
+            title: 'The Letter on the Desk',
+            description: 'At 16, under immense family pressure to marry and settle down, you must decide whether to accept domestic safety or leave a letter on the desk and flee to Kanpur for the freedom movement.',
+            requiredStars: 0,
+            year: 1924,
+            age: 16,
+            theme: 'History',
+            age_mirror_text: 'staring at a marriage proposal arranged by your family while feeling a burning conviction to dedicate your life to a higher cause',
+            archetype: 'The Revolutionary',
+            personality: 'Bhagat Singh',
+            bio: 'A 16-year-old student in Lahore choosing between traditional family expectations of marriage and dedicating his life to the freedom struggle.',
+            fame: 'Iconic revolutionary and national hero of the Indian independence struggle.',
+            achievements: ['Fled home at 16 to dedicate life entirely to India\'s independence', 'Founded Naujawan Bharat Sabha to unite youth across divisions', 'Immortal symbol of fearless sacrifice, discipline, and purpose'],
+            lesson: 'Your true calling might require disappointing the people who love you most; extraordinary purpose demands the sacrifice of ordinary comforts.',
+            avatarUrl: '/assets/portrait-bhagat-singh.png',
+            scenarioId: 'lvl_age_16_bhagat',
+            idolTraits: { discipline: 98, resilience: 100, risk: 100, leadership: 95, creativity: 85, empathy: 90, vision: 100 }
+        },
         // Age 20: Billie Eilish (Story 2)
         {
             id: 'lvl_20_billie_2', title: 'The Person Who Left You On Seen', description: 'At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.',

@@ -907,6 +907,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── BHAGAT SINGH (Age 16) ────────────────────────────────────────────────
+  'lvl_age_16_bhagat': [
+    {
+      title: '"Without Fear: The Life and Trial of Bhagat Singh" by Kuldip Nayar (2007)',
+      type: 'book',
+      detail: 'Documents that his family arranged a marriage for him at age 16 in Lahore, prompting his secret departure.',
+    },
+    {
+      title: '"Without Fear: The Life and Trial of Bhagat Singh" by Kuldip Nayar (2007)',
+      type: 'book',
+      detail: 'Fled to Kanpur in 1924 to join revolutionary groups and avoid domestic settlement.',
+    },
+    {
+      title: 'Historical archives / Bhagat Singh\'s Letter to his Father',
+      type: 'article',
+      detail: 'Famous farewell letter declaring: "My life has been dedicated to the noblest cause, that of the freedom of the country. Therefore, there is no rest or worldly desire that can lure me now."',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

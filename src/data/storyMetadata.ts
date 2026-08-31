@@ -3860,6 +3860,60 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_16_bhagat",
+    "situationTags": [
+      "family_pressure",
+      "purpose",
+      "big_decision",
+      "identity_question",
+      "starting_something"
+    ],
+    "problemTags": [
+      "family_marriage_pressure",
+      "domestic_safety_vs_revolution",
+      "sacrificing_comfort_for_cause"
+    ],
+    "emotionalTags": [
+      "conflicted",
+      "determined",
+      "seeking"
+    ],
+    "intentTags": [
+      "courage_to_commit",
+      "find_direction"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 15,
+    "ageMax": 18,
+    "dominantTrait": "vision",
+    "resolutionArchetype": "courage",
+    "lessonTags": [
+      "vision",
+      "courage",
+      "purpose",
+      "discipline"
+    ],
+    "difficulty": 4,
+    "relatability": 4,
+    "era": "historical",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Bhagat Singh at age 16 facing immense family pressure to marry, choosing instead to leave a letter on his desk and flee to Kanpur to dedicate his life entirely to India's freedom struggle.",
+    "triggerPhrases": [
+      "bhagat singh",
+      "the letter on the desk",
+      "family pressure",
+      "marriage pressure",
+      "kanpur",
+      "lahore"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Bhagat Singh at age 16 faced a pivotal choice in The Letter on the Desk — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

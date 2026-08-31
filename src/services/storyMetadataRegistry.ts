@@ -162,6 +162,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'moderate',
         targetTraits: { risk: 95, creativity: 100, vision: 100, empathy: 95, leadership: 85 },
     },
+    'lvl_age_16_bhagat': {
+        scenarioId: 'lvl_age_16_bhagat',
+        dilemmaType: 'Familial Duty vs Revolutionary Ideological Calling',
+        lifeTheme: 'family_expectations',
+        situationalTags: ['family_pressure', 'purpose', 'big_decision', 'identity_question', 'starting_something', 'sacrifice'],
+        protagonistLens: 'How Bhagat Singh chose between family pressure to marry into domestic comfort and a singular, dangerous commitment to national freedom.',
+        historicalContext: 'In 1924 at age 16, Bhagat Singh left a letter for his father declaring his life belonged to the nation, and fled to Kanpur to join the revolutionary movement.',
+        reflectionPrompt: 'Where are you choosing the comfort of other people\'s expectations over the difficult demands of your true conviction?',
+        microActionPrompt: 'Identify one choice you are delaying out of fear of disappointing someone, and write down the honest truth about what you must do.',
+        difficulty: 'deep',
+        targetTraits: { risk: 100, creativity: 85, vision: 100, empathy: 90, leadership: 95 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',
