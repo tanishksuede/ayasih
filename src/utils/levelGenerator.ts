@@ -311,6 +311,26 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-justin-19.png', scenarioId: 'lvl_age_19_justin',
             idolTraits: { discipline: 70, resilience: 90, risk: 85, leadership: 85, creativity: 95, empathy: 90, vision: 70 }
         },
+        // Age 19: Karan Aujla
+        {
+            id: 'lvl_19_aujla_1',
+            title: 'The Ghostwriter\'s Dilemma',
+            description: 'At 19, established stars offer big cash for your best lyrics. You must choose between selling out for safe money, risking an unfunded solo release, or leveraging a featured vocal verse.',
+            requiredStars: 0,
+            year: 2016,
+            age: 19,
+            theme: 'Music',
+            age_mirror_text: 'holding your best written song while an established star offers immediate cash, deciding whether to remain a ghostwriter or negotiate your vocal debut',
+            archetype: 'The Strategist',
+            personality: 'Karan Aujla',
+            bio: 'A 19-year-old sought-after ghostwriter in Canada choosing how to strategically transition from behind-the-scenes lyricist to front-facing superstar.',
+            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
+            achievements: ['Pioneered the strategic collaboration model to launch solo career', 'Turned ghostwriting leverage into global vocal stardom', 'Billions of streams and sold-out worldwide arena tours'],
+            lesson: 'Sometimes you have to leverage what you are known for to get what you actually want; strategic compromise builds lasting foundations.',
+            avatarUrl: '/assets/avatar_KaranAujla.jpg',
+            scenarioId: 'lvl_age_19_aujla',
+            idolTraits: { discipline: 95, resilience: 95, risk: 90, leadership: 90, creativity: 100, empathy: 85, vision: 100 }
+        },
         // Age 17: Karan Aujla
         {
             id: 'lvl_17_aujla_1',

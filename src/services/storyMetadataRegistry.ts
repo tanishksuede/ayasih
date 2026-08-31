@@ -210,6 +210,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'deep',
         targetTraits: { risk: 90, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
     },
+    'lvl_age_19_aujla': {
+        scenarioId: 'lvl_age_19_aujla',
+        dilemmaType: 'Behind-the-Scenes Profit vs Strategic Front-Facing Breakthrough',
+        lifeTheme: 'career_transition',
+        situationalTags: ['career_transition', 'career_uncertainty', 'feeling_stuck', 'starting_something', 'financial_stress', 'big_decision'],
+        protagonistLens: 'How Karan Aujla leveraged his leverage as a ghostwriter to demand featured vocal verses on hit songs, launching his transition into a solo superstar.',
+        historicalContext: 'In 2016 at age 19, instead of selling his biggest songs outright or taking unfunded solo gambles, he negotiated strategic feature verses that exposed his voice to millions.',
+        reflectionPrompt: 'How can you leverage your existing strengths or current role to create a bridge to where you actually want to be?',
+        microActionPrompt: 'Identify one opportunity where a strategic compromise or collaboration could advance your long-term goal faster than an all-or-nothing approach.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 85, creativity: 100, vision: 100, empathy: 85, leadership: 90 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

@@ -4081,6 +4081,63 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_19_aujla",
+    "situationTags": [
+      "career_transition",
+      "career_uncertainty",
+      "feeling_stuck",
+      "starting_something",
+      "financial_stress",
+      "big_decision"
+    ],
+    "problemTags": [
+      "boxed_into_support_role",
+      "immediate_cash_vs_artistic_branding",
+      "writer_to_performer_transition"
+    ],
+    "emotionalTags": [
+      "conflicted",
+      "frustrated",
+      "determined",
+      "motivated"
+    ],
+    "intentTags": [
+      "find_direction",
+      "challenge_myself"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 17,
+    "ageMax": 21,
+    "dominantTrait": "vision",
+    "resolutionArchetype": "action_step",
+    "lessonTags": [
+      "vision",
+      "patience",
+      "strategy",
+      "compromise",
+      "creativity"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Karan Aujla at age 19 choosing between selling a guaranteed hit song for quick cash or strategically negotiating a featured vocal verse to launch his solo singing career.",
+    "triggerPhrases": [
+      "karan aujla",
+      "the ghostwriter's dilemma",
+      "career transition",
+      "ghostwriting",
+      "featured verse",
+      "punjabi music lyricist"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 19 faced a pivotal choice in The Ghostwriter's Dilemma — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

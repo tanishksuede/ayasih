@@ -4482,6 +4482,91 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 19: Karan Aujla
+    'lvl_age_19_aujla': {
+        title: "The Ghostwriter's Dilemma",
+        source: "Source: GQ India, Film Companion & PTC Punjabi (2023)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'determined',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You are 19 and known as one of the sharpest lyricists in the Canadian Punjabi music scene. Famous stars pay top dollar for your pen, giving you financial stability, but your ultimate dream is to be the voice on stage.",
+                choices: [
+                    { text: "Look at your latest track", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'conflicted',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You just wrote a guaranteed chart-topper. A massive, established artist wants to buy the track immediately for a huge upfront payout, expecting full exclusive rights.",
+                choices: [
+                    { text: "Make the strategic choice", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'motivated',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "What do you do with this guaranteed hit song?",
+                choices: [
+                    {
+                        text: "Sell it completely for safe cash, accepting your profitable role as a behind-the-scenes writer.",
+                        next: 'sell',
+                        score: 2,
+                        feedbackTitle: "Golden Handcuffs",
+                        feedback: "You make great money writing for others, but you permanently stay in the shadows while other stars get all the fame."
+                    },
+                    {
+                        text: "Refuse to sell it and release it solo, risking a total flop without marketing backing.",
+                        next: 'solo_risk',
+                        score: 4,
+                        feedbackTitle: "High-Risk Gamble",
+                        feedback: "Without major distribution or industry relationships, the track gets lost in the noise, burning your financial runway."
+                    },
+                    {
+                        text: "Give the song to the star, but negotiate a featured vocal verse for yourself.",
+                        next: 'feature_verse',
+                        score: 10,
+                        feedbackTitle: "The Strategic Feature",
+                        feedback: "You use your pen as leverage, piggybacking on an established superstar's audience to introduce your own voice to millions."
+                    }
+                ]
+            },
+            {
+                id: 'sell',
+                emotion: 'resigned',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You cash the check, but watching someone else perform your words on stadium stages leaves you deeply unfulfilled.",
+                choices: [
+                    { text: "Rethink your leverage", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'solo_risk',
+                emotion: 'frustrated',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "Pride makes you refuse compromise, but without marketing machinery, great music alone isn't enough to break out.",
+                choices: [
+                    { text: "Consider a smarter path", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'feature_verse',
+                emotion: 'determined',
+                bg: '/assets/avatar_KaranAujla.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_KaranAujla.jpg',
+                text: "Your featured verse steals the entire show. Millions of listeners ask 'Who is this new guy?', launching Karan Aujla from a ghostwriter into an iconic global headliner.\n\nLESSONS:\n1. Sometimes you have to leverage what you are known for to get what you actually want.\n2. A strategic compromise often builds a stronger foundation than an all-or-nothing gamble.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

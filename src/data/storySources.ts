@@ -983,6 +983,20 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── KARAN AUJLA (Age 19) ─────────────────────────────────────────────────
+  'lvl_age_19_aujla': [
+    {
+      title: 'GQ India / Film Companion Interviews (2023)',
+      type: 'interview',
+      detail: 'Discusses his early years writing lucrative hits for established Punjabi artists like Jazzy B, Gagan Kokri, and Jassi Gill while dreaming of becoming a lead singer.',
+    },
+    {
+      title: 'PTC Punjabi / Discography Archives (2016–2018)',
+      type: 'article',
+      detail: 'Documents his strategic breakthrough approach of providing hit lyrics in exchange for featured vocal verses alongside Deep Jandu and Elly Mangat.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {
