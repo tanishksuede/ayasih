@@ -905,6 +905,26 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_steve_jobs.png', scenarioId: 'lvl_age_21',
             idolTraits: { discipline: 85, resilience: 90, risk: 95, leadership: 90, creativity: 100, empathy: 50, vision: 100 }
         },
+        // Age 22: Karan Aujla
+        {
+            id: 'lvl_22_aujla_1',
+            title: 'The Name Nobody Knew Yet',
+            description: 'At 22, past the first spike of \'Don\'t Worry\', you face the quiet stretch: do you take safe ghostwriting checks for stars, or keep staking your own name on uncertain solo tracks like \'Chitta Kurta\'?',
+            requiredStars: 0,
+            year: 2019,
+            age: 22,
+            theme: 'Music',
+            age_mirror_text: 'sitting in a modest home studio in Surrey in late 2019, deciding whether to take safe songwriting cash or keep releasing music under your own name',
+            archetype: 'The Resilient',
+            personality: 'Karan Aujla',
+            bio: 'A 22-year-old artist in Surrey, BC working through the post-breakout grind to prove his first hit wasn\'t a fluke.',
+            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
+            achievements: ['Proved breakout success was not a one-hit fluke with "Chitta Kurta"', 'Maintained creative independence without safe ghostwriting compromises', 'Set the stage for record-shattering 2021 debut album BTFU'],
+            lesson: 'One hit doesn\'t buy security — the real test is what you do in the quiet stretch after it; being good enough to write for others doesn\'t mean you\'re finished being an artist yourself.',
+            avatarUrl: '/assets/avatar_KaranAujla.jpg',
+            scenarioId: 'lvl_age_22_aujla',
+            idolTraits: { discipline: 95, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
+        },
         {
             id: 'lvl_22', title: 'The Dreamer', description: 'At 22, Walt lost everything and drew a mouse on a train.',
             requiredStars: 12, year: 1923, age: 22, theme: 'Art', archetype: 'The Dreamer', personality: 'Walt Disney',

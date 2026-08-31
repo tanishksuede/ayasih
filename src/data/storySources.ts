@@ -1016,6 +1016,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── KARAN AUJLA (Age 22) ─────────────────────────────────────────────────
+  'lvl_age_22_aujla': [
+    {
+      title: 'Spotify Discography & YouTube Music Records (2019)',
+      type: 'article',
+      detail: 'Documents the release of "Chitta Kurta" in December 2019 at age 22, cementing his solo momentum.',
+    },
+    {
+      title: 'Film Companion & GQ India Interviews (2023)',
+      type: 'interview',
+      detail: 'Recounts resisting lucrative ghostwriting-only contracts to prioritize his own artistic catalog during the post-breakout period.',
+    },
+    {
+      title: 'Times of India / PTC Punjabi Profiles',
+      type: 'article',
+      detail: 'Highlights his perseverance during the quiet stretch between his first viral hit and his record-breaking debut album in 2021.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

@@ -234,6 +234,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'accessible',
         targetTraits: { risk: 100, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
     },
+    'lvl_age_22_aujla': {
+        scenarioId: 'lvl_age_22_aujla',
+        dilemmaType: 'Safe Ghostwriting Checks vs Solo Longevity',
+        lifeTheme: 'career_transition',
+        situationalTags: ['career_transition', 'financial_stress', 'big_decision', 'career_uncertainty', 'comparing_myself', 'discipline'],
+        protagonistLens: 'How Karan Aujla navigated the quiet stretch following his first breakout hit, rejecting comfortable ghostwriting contracts to stake his reputation on "Chitta Kurta".',
+        historicalContext: 'In late 2019 at age 22 in Surrey, BC, he turned down lucrative behind-the-scenes songwriting retainers to continue releasing music under his own name.',
+        reflectionPrompt: 'When early success fades into the quiet daily grind, what motivates you to keep investing in your own name rather than taking safe, anonymous alternatives?',
+        microActionPrompt: 'Write down one project you believe in and commit to working on it today without waiting for external validation or immediate guarantees.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 95, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

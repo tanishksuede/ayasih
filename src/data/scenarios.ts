@@ -4636,6 +4636,106 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 22: Karan Aujla
+    'lvl_age_22_aujla': {
+        title: "The Name Nobody Knew Yet",
+        source: "Source: Spotify Discography, GQ India & Film Companion (2019–2023)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'restless',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "At 22, living in Surrey, BC, the initial high of your breakout single 'Don't Worry' has faded into the quiet grind. You are still writing hits for other artists to pay rent, while critics wonder if you were just a one-hit wonder.",
+                choices: [
+                    { text: "Face the industry offers", next: 'dilemma_1', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma_1',
+                emotion: 'conflicted',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "A prominent label offers a massive, lucrative exclusive deal to keep ghostwriting songs for their flagship stars instead of releasing under your own name. What do you do?",
+                choices: [
+                    {
+                        text: "Take the songwriting deal — secure guaranteed financial stability while remaining behind the scenes.",
+                        next: 'take_deal',
+                        score: 3,
+                        feedbackTitle: "The Comfortable Trap",
+                        feedback: "You earn steady money, but you surrender your own spotlight and lock your artistry in a supporting role."
+                    },
+                    {
+                        text: "Decline the deal — keep releasing music as yourself, even though income remains unpredictable.",
+                        next: 'decline_deal',
+                        score: 10,
+                        feedbackTitle: "Betting on Your Own Name",
+                        feedback: "You reject comfortable servitude to back your own voice, stepping into the high-stakes quiet stretch."
+                    }
+                ]
+            },
+            {
+                id: 'take_deal',
+                emotion: 'resigned',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "The checks clear on time, but watching other performers receive the stadium applause for your lyrics leaves a deep ache.",
+                choices: [
+                    { text: "Rethink your independence", next: 'dilemma_1', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'decline_deal',
+                emotion: 'anxious',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You bet on yourself, but your subsequent few solo singles fail to match the viral streaming numbers of your first hit. Doubt creeps in as you prepare your next song, 'Chitta Kurta'.",
+                choices: [
+                    { text: "Decide your creative direction", next: 'dilemma_2', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma_2',
+                emotion: 'determined',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "Do you dilute your sound to chase a commercial radio formula, or double down on your own gritty, authentic style?",
+                choices: [
+                    {
+                        text: "Chase the formula — copy current pop trends for a safer bet on repeating past numbers.",
+                        next: 'chase_formula',
+                        score: 2,
+                        feedbackTitle: "Chasing Trends",
+                        feedback: "Chasing trends erodes the unique authenticity that made listeners care about you in the first place."
+                    },
+                    {
+                        text: "Keep writing your way — release 'Chitta Kurta' with raw, authentic Punjabi storytelling.",
+                        next: 'stay_true',
+                        score: 10,
+                        feedbackTitle: "Pure Authenticity",
+                        feedback: "You stay uncompromising, allowing your distinct lyrical identity to cement your status as an enduring original."
+                    }
+                ]
+            },
+            {
+                id: 'chase_formula',
+                emotion: 'frustrated',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "Generic pop trends make you blend into the background, stripping away what made your pen special.",
+                choices: [
+                    { text: "Return to your authentic voice", next: 'dilemma_2', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'stay_true',
+                emotion: 'determined',
+                bg: '/assets/avatar_KaranAujla.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_KaranAujla.jpg',
+                text: "'Chitta Kurta' explodes across the charts in late 2019, proving your breakout was no fluke. By enduring the quiet stretch and betting on your own name, Karan Aujla cements his place as an undeniable global headliner.\n\nLESSONS:\n1. One hit doesn't buy security — the real test is what you do in the quiet stretch after it.\n2. Being good enough to write for others doesn't mean you're finished being an artist yourself.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

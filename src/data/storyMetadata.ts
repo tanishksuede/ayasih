@@ -4193,6 +4193,63 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_22_aujla",
+    "situationTags": [
+      "career_transition",
+      "financial_stress",
+      "big_decision",
+      "career_uncertainty",
+      "comparing_myself",
+      "discipline"
+    ],
+    "problemTags": [
+      "proving_first_hit_not_fluke",
+      "staying_afloat_without_label",
+      "boxed_as_songwriter_only"
+    ],
+    "emotionalTags": [
+      "determined",
+      "restless",
+      "hopeful",
+      "anxious"
+    ],
+    "intentTags": [
+      "courage_to_commit",
+      "find_direction"
+    ],
+    "lifeStageTags": [
+      "early_twenties"
+    ],
+    "ageMin": 20,
+    "ageMax": 24,
+    "dominantTrait": "risk",
+    "resolutionArchetype": "persistence",
+    "lessonTags": [
+      "risk",
+      "persistence",
+      "discipline",
+      "authenticity",
+      "courage"
+    ],
+    "difficulty": 3,
+    "relatability": 4,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Karan Aujla at age 22 navigating the post-breakout quiet stretch in Surrey, BC, declining safe ghostwriting deals to stake his own name on 'Chitta Kurta'.",
+    "triggerPhrases": [
+      "karan aujla",
+      "the name nobody knew yet",
+      "chitta kurta",
+      "post-breakout grind",
+      "one-hit wonder",
+      "surrey bc studio"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 22 faced a pivotal choice in The Name Nobody Knew Yet — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",
