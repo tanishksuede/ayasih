@@ -138,6 +138,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'moderate',
         targetTraits: { risk: 85, creativity: 90, vision: 95, empathy: 70, leadership: 95 },
     },
+    'lvl_age_16_taylor': {
+        scenarioId: 'lvl_age_16_taylor',
+        dilemmaType: 'Institutional Safety vs Authentic Artistic Freedom',
+        lifeTheme: 'risk_vs_safety',
+        situationalTags: ['big_decision', 'career_uncertainty', 'starting_something_new', 'feeling_stuck', 'finding_purpose', 'creative_control'],
+        protagonistLens: 'How Taylor Swift rejected a safe corporate development deal that shelved her songs in order to bet everything on her own writing with an indie startup.',
+        historicalContext: 'At 14-15 in Nashville, Swift walked away from an RCA development deal holding her back until 18, choosing Scott Borchetta\'s unproven Big Machine Records to release her debut album.',
+        reflectionPrompt: 'Where in your life are you trading creative authenticity or independence for the illusion of corporate security?',
+        microActionPrompt: 'Identify one project where you have been waiting for someone else\'s approval, and take one independent action on it today.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 95, creativity: 100, vision: 95, empathy: 90, leadership: 90 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

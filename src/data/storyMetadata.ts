@@ -3750,6 +3750,61 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_16_taylor",
+    "situationTags": [
+      "big_decision",
+      "career_uncertainty",
+      "starting_something_new",
+      "feeling_stuck",
+      "finding_purpose"
+    ],
+    "problemTags": [
+      "undervalued_by_institution",
+      "security_vs_creative_control",
+      "risking_family_investment"
+    ],
+    "emotionalTags": [
+      "frustrated",
+      "hopeful",
+      "determined",
+      "conflicted"
+    ],
+    "intentTags": [
+      "challenge_myself",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 15,
+    "ageMax": 18,
+    "dominantTrait": "risk",
+    "resolutionArchetype": "courage",
+    "lessonTags": [
+      "risk",
+      "courage",
+      "authenticity",
+      "vision"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "global",
+    "semanticDescription": "A story about Taylor Swift at age 16 turning down a major label development deal that would keep her shelved until 18, choosing instead the immense risk of releasing authentic songs with an unproven indie startup.",
+    "triggerPhrases": [
+      "taylor swift",
+      "the development deal",
+      "big decision",
+      "record label",
+      "big machine records",
+      "nashville songwriting"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Taylor Swift at age 16 faced a pivotal choice in The Development Deal — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

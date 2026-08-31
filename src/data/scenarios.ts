@@ -4036,6 +4036,75 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 16: Taylor Swift
+    'lvl_age_16_taylor': {
+        title: "The Development Deal",
+        source: "Source: CBS Sunday Morning & American Songwriter (2025)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'hopeful',
+                bg: '/assets/bg_taylor_awards.png',
+                text: "Your family moved across the country to Nashville to support your dream of becoming a songwriter. At 14, you land a development deal with an established major record label.",
+                choices: [
+                    { text: "Read the label's terms", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'frustrated',
+                bg: '/assets/bg_taylor_awards.png',
+                text: "The label refuses to let you cut your own songs, wanting to keep you shelved until you turn 18. Meanwhile, an executive starting a brand-new label with no staff and no building offers to release your music immediately.",
+                choices: [
+                    { text: "Weigh the two paths", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'conflicted',
+                bg: '/assets/bg_taylor_awards.png',
+                text: "Which path do you take for your music career?",
+                choices: [
+                    {
+                        text: "Stay with the major label and wait until you are 18, securing guaranteed corporate backing for your debut.",
+                        next: 'corporate',
+                        score: 3,
+                        feedbackTitle: "Institutional Safety",
+                        feedback: "You debut safely with songs chosen for you, but you never develop the authentic, personal songwriting that defines greatness."
+                    },
+                    {
+                        text: "Walk away from the major label and sign with the unproven start-up, betting everything on your own songwriting.",
+                        next: 'startup',
+                        score: 10,
+                        feedbackTitle: "Betting on Authenticity",
+                        feedback: "You take the massive risk, unleashing the raw storytelling power that will connect with millions of fans worldwide."
+                    }
+                ]
+            },
+            {
+                id: 'corporate',
+                emotion: 'resigned',
+                bg: '/assets/bg_taylor_awards.png',
+                text: "You play by industry rules and achieve moderate radio success, but your authentic voice remains muted by committee decisions.",
+                choices: [
+                    { text: "Rethink your decision", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'startup',
+                emotion: 'determined',
+                bg: '/assets/avatar_taylor_swift.png',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_taylor_swift.png',
+                text: "You bet everything on your own words. Your honest, diary-like songwriting connects with millions, turning that tiny startup (Big Machine Records) into an empire and launching Taylor Swift to global superstardom.\n\nLESSONS:\n1. Institutional validation isn't worth sacrificing your authentic voice.\n2. Sometimes the biggest risk is waiting for someone else's permission to be yourself.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

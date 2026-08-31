@@ -209,6 +209,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_16_jordan',
             idolTraits: { discipline: 100, resilience: 98, risk: 90, leadership: 95, creativity: 90, empathy: 70, vision: 95 }
         },
+        // Age 16: Taylor Swift
+        {
+            id: 'lvl_16_taylor_1',
+            title: 'The Development Deal',
+            description: 'At 16, facing a major record deal that shelves your songs until age 18, you must choose between corporate security and a brand-new, unproven indie startup.',
+            requiredStars: 0,
+            year: 2005,
+            age: 16,
+            theme: 'Music',
+            age_mirror_text: 'weighing a safe corporate contract that shelves your original songs against the terrifying risk of launching with an unproven startup',
+            archetype: 'The Artist',
+            personality: 'Taylor Swift',
+            bio: 'A 16-year-old songwriter choosing between corporate label security and the risky freedom of releasing her own authentic music.',
+            fame: '14-time Grammy Award winner and global music icon.',
+            achievements: ['14 Grammy Awards including 4 Album of the Year wins', 'Built Big Machine Records from zero into a music powerhouse', 'First billionaire artist driven primarily by songwriting and touring'],
+            lesson: 'Institutional validation isn\'t worth sacrificing your authentic voice; the biggest risk is waiting for someone else\'s permission.',
+            avatarUrl: '/assets/avatar_taylor_swift.png',
+            scenarioId: 'lvl_age_16_taylor',
+            idolTraits: { discipline: 95, resilience: 95, risk: 100, leadership: 90, creativity: 100, empathy: 90, vision: 100 }
+        },
         // Age 20: Billie Eilish (Story 2)
         {
             id: 'lvl_20_billie_2', title: 'The Person Who Left You On Seen', description: 'At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.',

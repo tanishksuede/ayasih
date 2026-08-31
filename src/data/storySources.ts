@@ -869,6 +869,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── TAYLOR SWIFT (Age 16) ────────────────────────────────────────────────
+  'lvl_age_16_taylor': [
+    {
+      title: 'CBS Sunday Morning (2019)',
+      type: 'article',
+      detail: 'Details how her family relocated from Pennsylvania to Nashville so she could pursue songwriting in Music Row.',
+    },
+    {
+      title: 'American Songwriter, "They Wanted to Shelf Me" (2025)',
+      type: 'article',
+      detail: 'Chronicles how RCA Records offered a development deal that planned to hold her unreleased until age 18, prompting her to walk away.',
+    },
+    {
+      title: 'Wikipedia / Big Machine Records History',
+      type: 'article',
+      detail: 'Documents her signing with Scott Borchetta\'s brand-new indie startup label Big Machine Records when it had no employees and no infrastructure.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {
