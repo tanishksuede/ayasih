@@ -171,8 +171,13 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
     // Whether any field was changed
     const isUsernameChanged = usernameInput.trim() !== (profile?.username ?? '');
     const isAgeChanged = newAge !== (profile?.age ?? 18);
-    const isMobileChanged = (isRealMobile(profile?.mobile) ? profile?.mobile : '') !== mobileInput.trim();
-    const canSave = (!isUsernameChanged || usernameAvailability.status === 'available') && !isSaving && (isUsernameChanged || isAgeChanged || isMobileChanged);
+    const currentMobile = isRealMobile(profile?.mobile) ? profile!.mobile! : '';
+    const isMobileChanged = currentMobile !== mobileInput.trim();
+    const hasChanges = isUsernameChanged || isAgeChanged || isMobileChanged;
+
+    const isUsernameValid = !isUsernameChanged || usernameAvailability.status === 'available';
+    const isMobileValid = !mobileInput.trim() || mobileInput.trim().length === 10;
+    const canSave = hasChanges && isUsernameValid && isMobileValid && !isSaving;
 
     return (
         <div className={clsx(
@@ -413,7 +418,7 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                     
                                     <button 
                                         onClick={handleSaveProfile}
-                                        disabled={!canSave || (!isUsernameChanged && !isAgeChanged)}
+                                        disabled={!canSave}
                                         className={clsx(
                                             "flex-1 flex items-center justify-center gap-2 py-4 font-bold rounded-2xl transition-colors shadow-md disabled:opacity-50 disabled:text-slate-500",
                                             isCandyMode
