@@ -3968,6 +3968,63 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_17_aujla",
+    "situationTags": [
+      "failure_setback",
+      "career_uncertainty",
+      "starting_something",
+      "feeling_stuck",
+      "identity_question",
+      "starting_with_little"
+    ],
+    "problemTags": [
+      "debut_project_flops",
+      "facing_public_indifference",
+      "ghostwriting_vs_lead_singing"
+    ],
+    "emotionalTags": [
+      "frustrated",
+      "confused",
+      "determined",
+      "motivated"
+    ],
+    "intentTags": [
+      "challenge_myself",
+      "courage_to_commit",
+      "find_direction"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 16,
+    "ageMax": 19,
+    "dominantTrait": "resilience",
+    "resolutionArchetype": "persistence",
+    "lessonTags": [
+      "resilience",
+      "persistence",
+      "humility",
+      "discipline"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Karan Aujla at age 17 experiencing the humiliating flop of his debut single 'Cell Phone' and choosing to aggressively improve his vocals instead of retreating to safe ghostwriting.",
+    "triggerPhrases": [
+      "karan aujla",
+      "the failed debut",
+      "cell phone song",
+      "recent failure",
+      "flop project",
+      "ghostwriting"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 17 faced a pivotal choice in The Failed Debut — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

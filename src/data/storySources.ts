@@ -945,6 +945,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── KARAN AUJLA (Age 17) ─────────────────────────────────────────────────
+  'lvl_age_17_aujla': [
+    {
+      title: 'Wikipedia / PTC Punjabi Biographies',
+      type: 'article',
+      detail: 'Documents his debut single "Cell Phone" released in 2014 when he was 17 years old.',
+    },
+    {
+      title: 'Times of India / Artist Retrospectives',
+      type: 'article',
+      detail: 'Notes that his early vocal releases gained zero traction and required years of independent perseverance.',
+    },
+    {
+      title: 'Film Companion Interview with Anupama Chopra (2023)',
+      type: 'interview',
+      detail: 'Details his determination to refine his vocal delivery in the studio despite the easy safety net of ghostwriting for established stars.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

@@ -186,6 +186,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'deep',
         targetTraits: { risk: 95, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
     },
+    'lvl_age_17_aujla': {
+        scenarioId: 'lvl_age_17_aujla',
+        dilemmaType: 'Absorbing Public Failure vs Safe Ghostwriting',
+        lifeTheme: 'failure_setback',
+        situationalTags: ['failure_setback', 'career_uncertainty', 'starting_something', 'feeling_stuck', 'identity_question', 'starting_with_little'],
+        protagonistLens: 'How Karan Aujla handled the failure of his debut single as a lead singer, choosing to aggressively improve his vocals rather than retreating to the safe profit of ghostwriting.',
+        historicalContext: 'At 17 in 2014, his debut song "Cell Phone" flopped, but instead of quitting performing to remain a ghostwriter, he used the failure to obsessively develop his vocal style.',
+        reflectionPrompt: 'When your first major attempt at a dream flops, do you retreat to what is comfortable or double down on your craft?',
+        microActionPrompt: 'Review one project or attempt that did not succeed, identify the exact weakness without making excuses, and practice that skill for 20 minutes today.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 90, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

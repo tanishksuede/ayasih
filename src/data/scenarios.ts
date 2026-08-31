@@ -4312,6 +4312,91 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 17: Karan Aujla
+    'lvl_age_17_aujla': {
+        title: "The Failed Debut",
+        source: "Source: Wikipedia, PTC Punjabi & Film Companion (2023)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'frustrated',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You are 17, living in Canada, and already known in industry circles for writing hit lyrics for other artists. You finally save enough money from dock-working shifts to record your debut single as a lead singer: 'Cell Phone'.",
+                choices: [
+                    { text: "Check the track's release", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'confused',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "When the song drops, it completely flops. There is zero mainstream traction, no radio buzz, and total public indifference. The dream you poured your savings into feels like an embarrassing failure.",
+                choices: [
+                    { text: "Decide your next move", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'conflicted',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "Your highly anticipated debut as a singer is a flop. What is your next move?",
+                choices: [
+                    {
+                        text: "Accept that your voice isn't meant for the spotlight and stick exclusively to writing hits for established singers.",
+                        next: 'ghostwrite',
+                        score: 3,
+                        feedbackTitle: "The Safe Safety Net",
+                        feedback: "You earn good money writing for others, but you always watch them perform your words, forever wondering what if."
+                    },
+                    {
+                        text: "Blame the producers and marketing, deciding the industry is rigged against independent newcomers.",
+                        next: 'blame',
+                        score: 0,
+                        feedbackTitle: "Bitterness & Stagnation",
+                        feedback: "Defensive excuses protect your ego, but prevent you from identifying the weaknesses in your own craft."
+                    },
+                    {
+                        text: "Swallow your pride, accept the failure as a baseline, and go back to the studio to aggressively improve your vocals.",
+                        next: 'improve',
+                        score: 10,
+                        feedbackTitle: "Mastering the Craft",
+                        feedback: "You treat public indifference as a training ground, obsessively grinding until your voice is undeniable."
+                    }
+                ]
+            },
+            {
+                id: 'ghostwrite',
+                emotion: 'resigned',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You retreat to your comfort zone. The money is steady, but your original dream of being the voice on stage fades away.",
+                choices: [
+                    { text: "Rethink your potential", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'blame',
+                emotion: 'frustrated',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "Blaming external factors leaves you feeling bitter and stuck, slowly killing your creative motivation.",
+                choices: [
+                    { text: "Take ownership of your craft", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'improve',
+                emotion: 'determined',
+                bg: '/assets/avatar_KaranAujla.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_KaranAujla.jpg',
+                text: "You spend the next few years relentlessly refining your vocal delivery and style. That early failure becomes the grit that catapults Karan Aujla to billions of streams and global stardom.\n\nLESSONS:\n1. Your first attempt at your true dream will likely fail; that failure is a filter, not a final verdict.\n2. It is always tempting to retreat to what you are already good at, but growth requires enduring being bad at something new.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

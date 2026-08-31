@@ -311,6 +311,26 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-justin-19.png', scenarioId: 'lvl_age_19_justin',
             idolTraits: { discipline: 70, resilience: 90, risk: 85, leadership: 85, creativity: 95, empathy: 90, vision: 70 }
         },
+        // Age 17: Karan Aujla
+        {
+            id: 'lvl_17_aujla_1',
+            title: 'The Failed Debut',
+            description: 'At 17, after your self-funded debut single flops and gets completely ignored, you must choose between retreating to the safe profit of ghostwriting or absorbing the embarrassment to improve your vocals.',
+            requiredStars: 0,
+            year: 2014,
+            age: 17,
+            theme: 'Music',
+            age_mirror_text: 'staring at the disappointing streaming numbers of your first self-funded project and deciding whether to quit performing or double down on vocal practice',
+            archetype: 'The Resilient',
+            personality: 'Karan Aujla',
+            bio: 'A 17-year-old immigrant lyricist in Canada facing public indifference after his debut track as a lead singer flops.',
+            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
+            achievements: ['Turned early flop into relentless motivation', 'Won Juno Award for Fan Choice (2024)', 'Billions of global streams across iconic chart-topping albums'],
+            lesson: 'Your first attempt at your true dream will likely fail; that failure is a filter, not a final verdict.',
+            avatarUrl: '/assets/avatar_KaranAujla.jpg',
+            scenarioId: 'lvl_age_17_aujla',
+            idolTraits: { discipline: 95, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
+        },
         // Age 17: Shah Rukh Khan
         {
             id: 'lvl_17_srk', title: 'The Stage or The Books', description: 'At 17, SRK faces an impossible choice — grieve, study, or chase the stage.',
