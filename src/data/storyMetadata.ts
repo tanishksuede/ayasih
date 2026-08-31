@@ -3701,6 +3701,64 @@ export const STORY_METADATA: StoryMetadata[] = [
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Bhuvan Bam at age 16 faced a pivotal choice in The Night Shift Stage — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
+  },
+  {
+    "storyId": "lvl_age_16_virat_kohli",
+    "situationTags": [
+      "big_decision",
+      "loneliness",
+      "purpose",
+      "discipline"
+    ],
+    "problemTags": [
+      "sudden_death_of_parent",
+      "profound_personal_grief_team_dependency",
+      "family_tragedy",
+      "team_dependency"
+    ],
+    "emotionalTags": [
+      "numb",
+      "sad",
+      "conflicted",
+      "determined"
+    ],
+    "intentTags": [
+      "get_inspired",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 15,
+    "ageMax": 20,
+    "dominantTrait": "resilience",
+    "resolutionArchetype": "courage",
+    "lessonTags": [
+      "discipline",
+      "courage",
+      "resilience",
+      "duty",
+      "grief"
+    ],
+    "difficulty": 5,
+    "relatability": 4,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Virat Kohli at age 16 facing the sudden death of his father at 2:30 AM before walking out to score a vital 90 for Delhi.",
+    "triggerPhrases": [
+      "virat kohli",
+      "the morning at kotla",
+      "virat kohli age 16",
+      "big_decision",
+      "feroz shah kotla",
+      "father death",
+      "ranji trophy",
+      "delhi vs karnataka"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Virat Kohli at age 16 faced a pivotal choice in The Morning at Kotla — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
   }
 ];
 

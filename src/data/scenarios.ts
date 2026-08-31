@@ -7539,5 +7539,100 @@ export const STORY_DATABASE: Record<string, any> = {
                 ]
             }
         ]
+    },
+    'lvl_age_16_virat_kohli': {
+        title: 'The Morning at Kotla',
+        source: 'Source: Graham Bensinger Interview & Times of India (2025), Driven by Vijay Lokapally',
+        frames: [
+            {
+                id: 'intro',
+                emotion: 'conflicted',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                text: "You are playing a crucial match for your state team at Feroz Shah Kotla. You finish the day unbeaten on 40, knowing your team is staring at a follow-on and desperately needs you tomorrow to avoid defeat.\n\nAt 2:30 AM, you are woken by a nightmare: your father has suffered a stroke and suddenly passed away. It is only hours before you are supposed to walk out to bat. Your family is shattered, and you feel completely numb.",
+                choices: [
+                    {
+                        text: "Stay home to grieve with your family and prepare for the last rites.",
+                        next: 'stay_home',
+                        score: 5,
+                        feedbackTitle: "Honoring Family Duty",
+                        feedback: "You choose to be with your family in their darkest hour—a completely honorable and deeply human decision."
+                    },
+                    {
+                        text: "Go to the stadium to bat for your team, and attend the funeral immediately afterward.",
+                        next: 'go_bat',
+                        score: 10,
+                        feedbackTitle: "Courage Through Grief",
+                        feedback: "You choose to fulfill your obligation to your team and honor the work your father championed, despite feeling numb."
+                    }
+                ]
+            },
+            {
+                id: 'stay_home',
+                emotion: 'sad',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                text: "You stay home by your father's side, surrounded by weeping relatives and funeral preparations. Your team collapses and loses the match, but your presence comforts your family during the hardest morning of their lives.",
+                choices: [
+                    {
+                        text: "Channel this heartbreak into a solemn vow never to give up on your craft.",
+                        next: 'vow_step',
+                        score: 10,
+                        feedbackTitle: "Unbreakable Resolve",
+                        feedback: "You realize that honoring his memory means dedicating every future inning to him."
+                    }
+                ]
+            },
+            {
+                id: 'go_bat',
+                emotion: 'determined',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                text: "You walk into the quiet dressing room at Kotla. Your teammates and coach are stunned into silence seeing you in your whites. Stepping onto the pitch, you block out the overwhelming pain and score a fighting, vital 90 runs to save Delhi from the follow-on.\n\nAs soon as you are dismissed, you walk off the pitch, pack your kit, and head straight to your father's cremation.",
+                choices: [
+                    {
+                        text: "Reflect on this defining morning.",
+                        next: 'lesson',
+                        score: 10,
+                        feedbackTitle: "The Defining Crucible",
+                        feedback: "Stepping up when you feel least capable transforms talent into undeniable greatness."
+                    }
+                ]
+            },
+            {
+                id: 'vow_step',
+                emotion: 'determined',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                text: "The days after the funeral are heavy, but the fire inside you rekindles with singular purpose. You commit to rigorous, uncompromising discipline in every practice session from that day forward.",
+                choices: [
+                    {
+                        text: "Reflect on the lesson.",
+                        next: 'lesson',
+                        score: 10,
+                        feedbackTitle: "Lifelong Dedication",
+                        feedback: "Honoring a loved one means carrying their belief in you forward."
+                    }
+                ]
+            },
+            {
+                id: 'lesson',
+                emotion: 'hope',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                text: "Virat Kohli's decision to bat on the morning after his father passed away became the crucible that forged his career.\n\nLESSONS:\n1. True discipline often means stepping up when you feel the least capable of doing so.\n2. Honoring a loved one can mean continuing the work they supported.",
+                choices: [
+                    {
+                        text: "Complete Level",
+                        next: 'COMPLETE',
+                        score: 10,
+                        feedbackTitle: "Crucible Overcome",
+                        feedback: ""
+                    }
+                ]
+            }
+        ]
     }
 };

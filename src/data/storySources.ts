@@ -850,4 +850,23 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── VIRAT KOHLI (Age 16) ──────────────────────────────────────────────────
+  'lvl_age_16_virat_kohli': [
+    {
+      title: 'Virat Kohli interview with Graham Bensinger / Times of India (2025)',
+      type: 'interview',
+      detail: 'Recalls waking up at 2:30 AM to his father passing away from a sudden stroke just hours before batting for Delhi.',
+    },
+    {
+      title: 'Times of India (2025) — Recalling the 2006 Delhi vs Karnataka match',
+      type: 'article',
+      detail: 'Details him being overnight 40 not out, returning to the ground to score 90 to save Delhi from the follow-on.',
+    },
+    {
+      title: 'Driven: The Virat Kohli Story — Vijay Lokapally / Hindustan Times (2017)',
+      type: 'book',
+      detail: 'Documents him heading straight to his father\'s cremation immediately after being dismissed.',
+    },
+  ],
+
 };

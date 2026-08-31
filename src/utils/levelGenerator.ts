@@ -149,6 +149,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_16_bhuvan',
             idolTraits: { discipline: 95, resilience: 92, risk: 88, leadership: 85, creativity: 98, empathy: 90, vision: 92 }
         },
+        // Age 16: Virat Kohli
+        {
+            id: 'lvl_16_virat_kohli',
+            title: 'The Morning at Kotla',
+            description: 'At 16, hours after your father suddenly passes away at 2:30 AM, your state team is staring at a collapse. You face an agonizing choice between grief and duty.',
+            requiredStars: 0,
+            year: 2006,
+            age: 16,
+            theme: 'Sports',
+            age_mirror_text: 'sitting in an empty locker room at Feroz Shah Kotla, deciding between mourning at home and walking out to save your team',
+            archetype: 'The Resilient',
+            personality: 'Virat Kohli',
+            bio: 'A 16-year-old batsman waking up at 2:30 AM to sudden personal tragedy hours before a crucial Ranji match for Delhi.',
+            fame: 'Indian cricket icon and one of the greatest batsmen of all time.',
+            achievements: ['Scored 90 runs under profound grief for Delhi', 'U-19 World Cup winning captain (2008)', '2011 ICC World Cup & 2024 T20 World Cup Champion'],
+            lesson: 'True discipline often means stepping up when you feel the least capable of doing so. Honoring a loved one can mean continuing the work they supported.',
+            avatarUrl: '/assets/avatar_virat_kohli.jpg',
+            scenarioId: 'lvl_age_16_virat_kohli',
+            idolTraits: { discipline: 100, resilience: 100, risk: 90, leadership: 95, creativity: 80, empathy: 75, vision: 95 }
+        },
         // Age 20: Billie Eilish (Story 2)
         {
             id: 'lvl_20_billie_2', title: 'The Person Who Left You On Seen', description: 'At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.',
