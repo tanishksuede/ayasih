@@ -166,16 +166,16 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
-                    className="w-full flex flex-col items-center text-center mt-4 md:mt-8 mb-10 md:mb-16"
+                    className="w-full flex flex-col items-center text-center mt-2 sm:mt-4 md:mt-8 mb-8 sm:mb-10 md:mb-16"
                 >
-                    <div className="relative mb-4">
-                        <h1 className="text-7xl md:text-[8rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/60 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
-                            {animatedPercent}<span className="text-5xl md:text-7xl text-[#00D9FF]">%</span>
+                    <div className="relative mb-3 sm:mb-4">
+                        <h1 className="text-6xl sm:text-7xl md:text-[8rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-white/60 drop-shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                            {animatedPercent}<span className="text-4xl sm:text-5xl md:text-7xl text-[#00D9FF]">%</span>
                         </h1>
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#00D9FF]/20 blur-[60px] -z-10 rounded-full" />
                     </div>
                     
-                    <h2 className="text-xl md:text-3xl font-medium text-white/90 mb-8 max-w-2xl leading-tight">
+                    <h2 className="text-lg sm:text-xl md:text-3xl font-medium text-white/90 mb-6 sm:mb-8 max-w-2xl px-2 leading-tight">
                         Great match! You share strong qualities with <span className="text-[#00D9FF] font-bold">{cleanIdolName}</span>.
                     </h2>
 
@@ -191,7 +191,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
                 </motion.div>
 
                 {/* Main 3-Column Layout */}
-                <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 flex-1">
+                <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 md:gap-8 flex-1">
                     
                     {/* LEFT COLUMN: Motivation Power-Up */}
                     <div className="md:col-span-3 flex flex-col gap-6 order-2 md:order-1">
@@ -254,12 +254,12 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
                     </div>
 
                     {/* CENTER COLUMN: Hero Avatar */}
-                    <div className="md:col-span-6 flex flex-col items-center justify-start order-1 md:order-2 mb-8 md:mb-0">
+                    <div className="md:col-span-6 flex flex-col items-center justify-start order-1 md:order-2 mb-6 sm:mb-8 md:mb-0">
                         <motion.div 
                             initial={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.8, delay: 0.3, type: "spring" }}
-                            className="relative w-[280px] h-[280px] md:w-[360px] md:h-[360px] rounded-full p-2 group"
+                            className="relative w-[230px] h-[230px] sm:w-[280px] sm:h-[280px] md:w-[360px] md:h-[360px] rounded-full p-2 group"
                         >
                             {/* Outer animated rings */}
                             <div className="absolute inset-0 rounded-full border border-[#00D9FF]/30 animate-[spin_10s_linear_infinite]" />
@@ -282,7 +282,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.6 }}
-                            className="mt-8 text-4xl md:text-5xl font-black tracking-tight text-white"
+                            className="mt-6 sm:mt-8 text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white"
                         >
                             {cleanIdolName}
                         </motion.h2>

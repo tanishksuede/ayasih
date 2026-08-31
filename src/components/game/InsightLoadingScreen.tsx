@@ -71,7 +71,7 @@ export function InsightLoadingScreen({ character, storyTitle }: InsightLoadingSc
             <div className="relative z-10 w-full max-w-lg flex flex-col items-center text-center">
                 
                 {/* Mascot with Orbiting Neon Glow */}
-                <div className="relative w-44 h-44 md:w-56 md:h-56 mb-4 flex items-center justify-center">
+                <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-56 md:h-56 mb-3 sm:mb-4 flex items-center justify-center">
                     {/* Animated Holographic Rings */}
                     <div className="absolute inset-0 rounded-full border border-[#00D9FF]/30 animate-[spin_8s_linear_infinite]" />
                     <div className="absolute inset-3 rounded-full border border-[#8B5CF6]/30 border-dashed animate-[spin_12s_linear_infinite_reverse]" />
@@ -100,16 +100,16 @@ export function InsightLoadingScreen({ character, storyTitle }: InsightLoadingSc
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#111A38]/90 border border-white/10 shadow-lg mb-4"
+                    className="flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-[#111A38]/90 border border-white/10 shadow-lg mb-3 sm:mb-4"
                 >
-                    <CurrentIcon size={15} style={{ color: currentAccent }} className="animate-pulse" />
-                    <span className="text-[11px] md:text-xs font-bold uppercase tracking-widest text-white/90">
+                    <CurrentIcon size={14} style={{ color: currentAccent }} className="animate-pulse sm:w-[15px] sm:h-[15px]" />
+                    <span className="text-[10px] sm:text-[11px] md:text-xs font-bold uppercase tracking-widest text-white/90">
                         {STAGES[stageIndex].title}
                     </span>
                 </motion.div>
 
                 {/* Dynamic Rotating Insight Text */}
-                <div className="min-h-[56px] flex items-center justify-center px-4 mb-6">
+                <div className="min-h-[50px] sm:min-h-[56px] flex items-center justify-center px-4 mb-4 sm:mb-6">
                     <AnimatePresence mode="wait">
                         <motion.p
                             key={stageIndex}
@@ -117,7 +117,7 @@ export function InsightLoadingScreen({ character, storyTitle }: InsightLoadingSc
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -8 }}
                             transition={{ duration: 0.35 }}
-                            className="text-base md:text-lg font-medium text-white/90 leading-snug max-w-md"
+                            className="text-sm sm:text-base md:text-lg font-medium text-white/90 leading-snug max-w-md"
                         >
                             {STAGES[stageIndex].text(cleanCharacter)}
                         </motion.p>
