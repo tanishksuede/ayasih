@@ -269,6 +269,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_16_bhagat',
             idolTraits: { discipline: 98, resilience: 100, risk: 100, leadership: 95, creativity: 85, empathy: 90, vision: 100 }
         },
+        // Age 16: Karan Aujla
+        {
+            id: 'lvl_16_aujla_1',
+            title: 'The Cargo Grind',
+            description: 'At 16, orphaned and broke despite writing a hit song, you must choose between staying with relatives in Punjab or taking massive loans to work grueling dock jobs in Canada to fund your music.',
+            requiredStars: 0,
+            year: 2014,
+            age: 16,
+            theme: 'Music',
+            age_mirror_text: 'working freezing morning shifts unloading cargo containers as an immigrant student while writing lyrics in your head to fund studio time',
+            archetype: 'The Resilient',
+            personality: 'Karan Aujla',
+            bio: 'A 16-year-old orphan choosing between the relative comfort of relatives in Punjab and grueling immigrant manual labor in Canada to fund his music independence.',
+            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
+            achievements: ['Wrote hit songs in high school before emigrating', 'Funded breakthrough albums through longshoreman manual labor', 'Global chart-topping Punjabi artist and Juno Award winner'],
+            lesson: 'Having talent isn\'t enough; you must be willing to fund your own dream through unglamorous work.',
+            avatarUrl: '/assets/avatar_KaranAujla.jpg',
+            scenarioId: 'lvl_age_16_aujla',
+            idolTraits: { discipline: 95, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
+        },
         // Age 20: Billie Eilish (Story 2)
         {
             id: 'lvl_20_billie_2', title: 'The Person Who Left You On Seen', description: 'At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.',

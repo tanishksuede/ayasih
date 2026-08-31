@@ -3914,6 +3914,60 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_16_aujla",
+    "situationTags": [
+      "starting_with_little",
+      "financial_stress",
+      "loneliness",
+      "big_decision",
+      "starting_something"
+    ],
+    "problemTags": [
+      "orphan_no_safety_net",
+      "family_support_vs_immigrant_risk",
+      "funding_music_with_manual_labor"
+    ],
+    "emotionalTags": [
+      "lonely",
+      "determined",
+      "hopeful"
+    ],
+    "intentTags": [
+      "courage_to_commit",
+      "find_direction"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 15,
+    "ageMax": 18,
+    "dominantTrait": "resilience",
+    "resolutionArchetype": "persistence",
+    "lessonTags": [
+      "resilience",
+      "persistence",
+      "discipline",
+      "creativity"
+    ],
+    "difficulty": 4,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Karan Aujla at age 16 surviving as an orphan and choosing the brutal immigrant longshoreman grind in Canada to independently fund his breakthrough music career.",
+    "triggerPhrases": [
+      "karan aujla",
+      "the cargo grind",
+      "starting from the bottom",
+      "surrey canada",
+      "punjabi music",
+      "dock worker"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 16 faced a pivotal choice in The Cargo Grind — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

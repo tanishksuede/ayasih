@@ -174,6 +174,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'deep',
         targetTraits: { risk: 100, creativity: 85, vision: 100, empathy: 90, leadership: 95 },
     },
+    'lvl_age_16_aujla': {
+        scenarioId: 'lvl_age_16_aujla',
+        dilemmaType: 'Blue-Collar Survival vs Creative Independence',
+        lifeTheme: 'risk_vs_safety',
+        situationalTags: ['starting_with_little', 'financial_stress', 'loneliness', 'big_decision', 'starting_something', 'immigrant_grind'],
+        protagonistLens: 'How Karan Aujla endured working as a longshoreman on freezing Canadian shipping docks to fund his studio time and become a global superstar without compromising his independence.',
+        historicalContext: 'Orphaned by age 11 in Punjab, he moved to Surrey, BC in 2014, working grueling dock shifts to finance his breakthrough recordings.',
+        reflectionPrompt: 'Are you willing to embrace unglamorous, difficult work right now in order to fund your ultimate creative independence?',
+        microActionPrompt: 'Identify one necessary sacrifice or unglamorous task you have been avoiding, and complete it with full focus today.',
+        difficulty: 'deep',
+        targetTraits: { risk: 95, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

@@ -4243,6 +4243,75 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 16: Karan Aujla
+    'lvl_age_16_aujla': {
+        title: "The Cargo Grind",
+        source: "Source: Film Companion, PTC Punjabi & Apple Music (2023)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'lonely',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "By age 11, you lost both your parents in Punjab and were raised by your uncle and sisters. Writing lyrics became your escape—you even penned a song that a famous singer turned into a hit.",
+                choices: [
+                    { text: "Face the financial reality", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'conflicted',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "Despite the hit, you are completely broke with no safety net. You have a chance to move to Canada on a student visa, but it requires massive loans and surviving entirely on your own.",
+                choices: [
+                    { text: "Choose your path forward", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'determined',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "How do you build your future and fund your music career without a safety net?",
+                choices: [
+                    {
+                        text: "Stay in Punjab, rely on your relatives for support, and try to hustle in the local scene.",
+                        next: 'local',
+                        score: 3,
+                        feedbackTitle: "Relative Comfort",
+                        feedback: "You stay safe with family, but without deep financial backing, you struggle to break through the crowded local industry."
+                    },
+                    {
+                        text: "Move to Canada, work exhausting dock jobs in the freezing cold, and fund your own studio time.",
+                        next: 'cargo',
+                        score: 10,
+                        feedbackTitle: "Uncompromising Independence",
+                        feedback: "You embrace the brutal immigrant hustle, pouring every hard-earned dollar from the docks into recording your authentic voice."
+                    }
+                ]
+            },
+            {
+                id: 'local',
+                emotion: 'resigned',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You depend on others to survive, but waiting for financial favors holds your creative career hostage.",
+                choices: [
+                    { text: "Rethink your independence", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'cargo',
+                emotion: 'determined',
+                bg: '/assets/avatar_KaranAujla.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_KaranAujla.jpg',
+                text: "You work grueling pre-dawn shifts unloading cargo containers as a longshoreman in Surrey, BC. The exhaustion and isolation sharpen your pen, funding the studio time that turns Karan Aujla into a global superstar.\n\nLESSONS:\n1. Having talent isn't enough; you must be willing to fund your own dream through unglamorous work.\n2. Extreme isolation and hardship can become the most powerful material for your art.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

@@ -926,6 +926,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── KARAN AUJLA (Age 16) ─────────────────────────────────────────────────
+  'lvl_age_16_aujla': [
+    {
+      title: 'Film Companion Interview with Anupama Chopra (2023)',
+      type: 'interview',
+      detail: 'Recounts losing his father at age 9 and mother at age 11 in Ghurala, Punjab, before being raised by his uncle and sisters.',
+    },
+    {
+      title: 'PTC Punjabi / Various Artist Interviews',
+      type: 'article',
+      detail: 'Details penning the hit song "Range" for Jassi Gill while still a high school student in 9th grade.',
+    },
+    {
+      title: 'Apple Music & GQ India Interviews (2023)',
+      type: 'article',
+      detail: 'Documents moving to Canada in 2014 as an international student and working grueling shifts as a longshoreman on Surrey, BC cargo docks to fund studio recordings.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {
