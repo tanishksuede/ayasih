@@ -7634,5 +7634,100 @@ export const STORY_DATABASE: Record<string, any> = {
                 ]
             }
         ]
+    },
+    'lvl_age_21_virat_kohli': {
+        title: 'The Ego Check',
+        source: 'Source: ESPNcricinfo & 2009 Emerging Players Tournament, Australia',
+        frames: [
+            {
+                id: 'intro',
+                emotion: 'frustrated',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                text: "At 19, you achieved your ultimate dream by debuting for the Indian national team. But within months, distractions, inconsistent scores, and the sudden spotlight take their toll. You are abruptly dropped from the senior squad.\n\nThe media brands you a 'flash in the pan' with a flashy lifestyle and an attitude problem. Now, at 21, you find yourself demoted to a developmental 'Emerging Players' squad playing in front of empty stands under the blazing Australian sun.",
+                choices: [
+                    {
+                        text: "Blame the selectors for not backing you and rely on your natural talent to eventually get recalled.",
+                        next: 'blame_path',
+                        score: -5,
+                        feedbackTitle: "Externalizing Blame",
+                        feedback: "Entitlement and victim mentality blind you from addressing the technical and mental gaps in your game."
+                    },
+                    {
+                        text: "Drop the ego, take extreme ownership of your mistakes, and treat this developmental tournament like a World Cup.",
+                        next: 'ownership_path',
+                        score: 10,
+                        feedbackTitle: "Extreme Ownership",
+                        feedback: "You choose unglamorous grind over wounded pride, committing to total professionalism."
+                    }
+                ]
+            },
+            {
+                id: 'blame_path',
+                emotion: 'angry',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                text: "You carry resentment onto the field. Your focus wavers, your shot selection gets reckless, and you produce mediocre scores. The selectors look elsewhere, and your teenage breakthrough threatens to become just another cautionary tale.",
+                choices: [
+                    {
+                        text: "Swallow your pride, accept reality, and double down on fitness and shot discipline.",
+                        next: 'ownership_path',
+                        score: 10,
+                        feedbackTitle: "The Awakening",
+                        feedback: "You realize nobody owes you a spot—you must make yourself undeniable."
+                    }
+                ]
+            },
+            {
+                id: 'ownership_path',
+                emotion: 'determined',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                text: "You arrive early at the nets, overhaul your physical conditioning, and approach every single innings with relentless intensity. You finish the tournament as the leading run-scorer and walk out to bat in the final against South Africa Emerging Players under intense pressure.",
+                choices: [
+                    {
+                        text: "Play a disciplined, match-winning knock to silence all doubts.",
+                        next: 'final_knock',
+                        score: 10,
+                        feedbackTitle: "Clinical Execution",
+                        feedback: "Focusing on every single ball transforms your frustration into unmatched run-scoring hunger."
+                    }
+                ]
+            },
+            {
+                id: 'final_knock',
+                emotion: 'motivated',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                text: "You anchor the chase with a flawless, unbeaten 104* in the final to seal the championship for India. Your hunger, maturity, and transformed discipline leave the national selectors with no choice: you are immediately recalled to the senior Indian team—this time, to stay.",
+                choices: [
+                    {
+                        text: "Reflect on the Ego Check",
+                        next: 'lesson',
+                        score: 10,
+                        feedbackTitle: "The Turning Point",
+                        feedback: "Overcoming your own ego and accepting unglamorous work cements a championship mindset."
+                    }
+                ]
+            },
+            {
+                id: 'lesson',
+                emotion: 'hope',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                portrait: '/assets/avatar_virat_kohli.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                text: "Virat Kohli's response to being dropped in 2009 turned his potential into a legendary international career.\n\nLESSONS:\n1. Natural talent only gets you to the door; extreme ownership and discipline keep you in the room.\n2. Your response to demotion or failure defines your actual character.",
+                choices: [
+                    {
+                        text: "Complete Level",
+                        next: 'COMPLETE',
+                        score: 10,
+                        feedbackTitle: "Mission Accomplished",
+                        feedback: ""
+                    }
+                ]
+            }
+        ]
     }
 };

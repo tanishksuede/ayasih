@@ -3759,6 +3759,65 @@ export const STORY_METADATA: StoryMetadata[] = [
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Virat Kohli at age 16 faced a pivotal choice in The Morning at Kotla — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
+  },
+  {
+    "storyId": "lvl_age_21_virat_kohli",
+    "situationTags": [
+      "failure_setback",
+      "career_uncertainty",
+      "discipline",
+      "feeling_stuck",
+      "starting_with_little"
+    ],
+    "problemTags": [
+      "dropped_from_national_team",
+      "media_criticism",
+      "sophomore_slump",
+      "proving_oneself"
+    ],
+    "emotionalTags": [
+      "frustrated",
+      "angry",
+      "determined",
+      "motivated"
+    ],
+    "intentTags": [
+      "challenge_myself",
+      "build_confidence"
+    ],
+    "lifeStageTags": [
+      "early_20s"
+    ],
+    "ageMin": 18,
+    "ageMax": 25,
+    "dominantTrait": "discipline",
+    "resolutionArchetype": "persist",
+    "lessonTags": [
+      "humility",
+      "discipline",
+      "resilience",
+      "ownership",
+      "persistence"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Virat Kohli at age 21 navigating being dropped from the national team, battling critics, and earning his recall through a match-winning century in Australia.",
+    "triggerPhrases": [
+      "virat kohli",
+      "the ego check",
+      "virat kohli age 21",
+      "failure_setback",
+      "dropped",
+      "emerging players",
+      "australia 2009",
+      "century"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Virat Kohli at age 21 faced a pivotal choice in The Ego Check — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
   }
 ];
 

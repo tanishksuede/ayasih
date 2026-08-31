@@ -869,4 +869,23 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── VIRAT KOHLI (Age 21) ──────────────────────────────────────────────────
+  'lvl_age_21_virat_kohli': [
+    {
+      title: 'ESPNcricinfo — Virat Kohli Player Profile & Match Records',
+      type: 'article',
+      detail: 'Documents his international debut in August 2008 in Sri Lanka, followed by being dropped from the senior squad in early 2009 due to inconsistent form.',
+    },
+    {
+      title: '2009 Emerging Players Tournament Records (Australia)',
+      type: 'article',
+      detail: 'Records his participation in the Brisbane tournament for India Emerging Players as a key proving ground to win back his national spot.',
+    },
+    {
+      title: 'ESPNcricinfo Scorecard — India Emerging Players vs South Africa Emerging Players Final (Aug 2009)',
+      type: 'article',
+      detail: 'Details his match-winning 104* off 102 balls to lead India to the title, which led directly to his recall for the 2009 ICC Champions Trophy.',
+    },
+  ],
+
 };

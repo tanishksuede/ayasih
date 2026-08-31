@@ -579,6 +579,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_20_modi',
             idolTraits: { discipline: 98, resilience: 95, risk: 90, leadership: 98, creativity: 80, empathy: 85, vision: 95 }
         },
+        // Age 21: Virat Kohli
+        {
+            id: 'lvl_21_virat_kohli',
+            title: 'The Ego Check',
+            description: 'At 21, dropped from the national team and labeled an arrogant flash-in-the-pan, you are sent to play in empty Australian grounds. How do you respond?',
+            requiredStars: 0,
+            year: 2009,
+            age: 21,
+            theme: 'Sports',
+            age_mirror_text: 'standing in an empty sun-baked stadium in Australia, deciding whether to nurse a bruised ego or rebuild through relentless discipline',
+            archetype: 'The Resilient',
+            personality: 'Virat Kohli',
+            bio: 'A 21-year-old batsman experiencing his first major career demotion after early international hype.',
+            fame: 'Indian cricket icon and one of the greatest batsmen of all time.',
+            achievements: ['Scored 104* in the 2009 Emerging Players Tournament Final', 'Earned immediate senior team recall', 'ICC Cricketer of the Decade'],
+            lesson: 'Natural talent only gets you to the door; extreme ownership and discipline keep you in the room. Your response to demotion defines your actual character.',
+            avatarUrl: '/assets/avatar_virat_kohli.jpg',
+            scenarioId: 'lvl_age_21_virat_kohli',
+            idolTraits: { discipline: 100, resilience: 95, risk: 85, leadership: 95, creativity: 80, empathy: 75, vision: 95 }
+        },
         
         {
             id: 'lvl_21_sheeran_1', title: 'The Photo She Might See', description: 'At 21, you must choose how to handle the painful intersection of a recent breakup and sudden public attention.',
