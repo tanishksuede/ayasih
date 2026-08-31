@@ -831,4 +831,23 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
+  'lvl_age_16_bhuvan': [
+    {
+      title: 'StartupTalky (2021)',
+      type: 'article',
+      detail: 'Documents Bhuvan Bam scoring 74% in his Class 12 board exams and the ensuing family conversations on traditional degrees vs. his artistic interests.',
+    },
+    {
+      title: 'Wikipedia / Shaheed Bhagat Singh College Records',
+      type: 'article',
+      detail: 'Details his graduation with a Bachelor\'s degree in History (BA History) from Shaheed Bhagat Singh College (University of Delhi) rather than a traditional commerce/science path.',
+    },
+    {
+      title: 'Quartz India (2022)',
+      type: 'article',
+      detail: 'Chronicles how every night of the week, from 8 PM to 12 AM, he played guitar and sang live at a Mughlai restaurant in Delhi before his YouTube breakthrough.',
+    },
+  ],
+
 };

@@ -129,6 +129,26 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-cristiano-ronaldo.png', scenarioId: 'lvl_age_15_ronaldo',
             idolTraits: { discipline: 100, resilience: 100, risk: 95, leadership: 95, creativity: 90, empathy: 75, vision: 100 }
         },
+        // Age 16: Bhuvan Bam
+        {
+            id: 'lvl_16_bhuvan',
+            title: 'The Night Shift Stage',
+            description: 'At 16, balancing parental pressure for a corporate degree with exhausting late-night guitar gigs at a Delhi restaurant.',
+            requiredStars: 0,
+            year: 2010,
+            age: 16,
+            theme: 'Arts',
+            age_mirror_text: 'playing guitar at a Delhi restaurant from 8 PM to midnight after scoring 74% in Class 12, balancing family expectations with passion',
+            archetype: 'The Creator',
+            personality: 'Bhuvan Bam',
+            bio: 'A 16-year-old high school graduate choosing between a conventional commerce degree and grueling late-night restaurant gigs to fund his musical craft.',
+            fame: 'Creator of BB Ki Vines, Actor, Musician & Producer.',
+            achievements: ['Creator of BB Ki Vines (26M+ subscribers)', 'Filmfare Award Winner for Plus Minus', 'Star & Producer of Taaza Khabar'],
+            lesson: 'Your board exam marks don\'t dictate your future. Pursuing a passion often requires unglamorous, exhausting work first.',
+            avatarUrl: '/assets/avatar_bhuvan bam.jpg',
+            scenarioId: 'lvl_age_16_bhuvan',
+            idolTraits: { discipline: 95, resilience: 92, risk: 88, leadership: 85, creativity: 98, empathy: 90, vision: 92 }
+        },
         // Age 20: Billie Eilish (Story 2)
         {
             id: 'lvl_20_billie_2', title: 'The Person Who Left You On Seen', description: 'At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.',

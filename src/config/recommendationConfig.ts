@@ -172,6 +172,7 @@ export const CHECKIN_TAGS = {
     { value: 'purpose',                label: 'Finding my purpose / calling' },
     { value: 'starting_with_little',   label: 'Starting from the bottom' },
     { value: 'discipline',             label: 'Building discipline' },
+    { value: 'parents_vs_own_path',     label: 'Parents vs own path' },
   ],
   emotional: [
     { value: 'anxious',     label: 'Anxious' },
@@ -200,6 +201,7 @@ export const CHECKIN_TAGS = {
     { value: 'understand_myself',   label: 'Understand myself better' },
     { value: 'get_inspired',        label: 'Get inspired' },
     { value: 'courage_to_commit',   label: 'Courage to commit to a path' },
+    { value: 'find_courage_non_traditional_path', label: 'Courage for non-traditional path' },
   ],
 } as const;
 

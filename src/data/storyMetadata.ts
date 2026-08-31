@@ -3644,6 +3644,63 @@ export const STORY_METADATA: StoryMetadata[] = [
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Narendra Modi at age 20 faced a pivotal choice in The Canteen and the Calling — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
+  },
+  {
+    "storyId": "lvl_age_16_bhuvan",
+    "situationTags": [
+      "parents_vs_own_path",
+      "career_uncertainty",
+      "starting_with_little",
+      "discipline"
+    ],
+    "problemTags": [
+      "average_academic_scores",
+      "parental_pressure_education",
+      "financial_insecurity_arts"
+    ],
+    "emotionalTags": [
+      "anxious",
+      "frustrated",
+      "determined"
+    ],
+    "intentTags": [
+      "find_courage_non_traditional_path",
+      "find_direction",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 15,
+    "ageMax": 20,
+    "dominantTrait": "discipline",
+    "resolutionArchetype": "action_step",
+    "lessonTags": [
+      "discipline",
+      "courage",
+      "persistence",
+      "compromise",
+      "passion"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Bhuvan Bam at age 16 navigating the night shift stage: At 16, scoring 74% in Class 12, balancing parental pressure for commerce with late-night restaurant music gigs.",
+    "triggerPhrases": [
+      "bhuvan bam",
+      "the night shift stage",
+      "bhuvan bam age 16",
+      "parents_vs_own_path",
+      "class 12",
+      "board exams",
+      "guitar",
+      "delhi restaurant"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Bhuvan Bam at age 16 faced a pivotal choice in The Night Shift Stage — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
   }
 ];
 

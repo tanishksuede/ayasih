@@ -2085,6 +2085,32 @@ INSERT INTO public.story_metadata (
     NULL,
     NOW(),
     NOW()
+),
+(
+    'lvl_age_16_bhuvan',
+    ARRAY['parents_vs_own_path', 'career_uncertainty', 'starting_with_little', 'discipline'],
+    ARRAY['average_academic_scores', 'parental_pressure_education', 'financial_insecurity_arts'],
+    ARRAY['anxious', 'frustrated', 'determined'],
+    ARRAY['find_courage_non_traditional_path', 'find_direction', 'courage_to_commit'],
+    ARRAY['late_teens'],
+    15,
+    20,
+    'discipline',
+    '{"discipline":0.95,"creativity":0.98,"resilience":0.92,"risk":0.88,"vision":0.92,"empathy":0.9,"leadership":0.85}'::jsonb,
+    'action_step',
+    ARRAY['discipline', 'courage', 'persistence', 'compromise', 'passion'],
+    3,
+    5,
+    'modern',
+    'indian',
+    'A story about Bhuvan Bam at age 16 navigating the night shift stage: At 16, scoring 74% in Class 12, balancing parental pressure for commerce with late-night restaurant music gigs.',
+    ARRAY['bhuvan bam', 'the night shift stage', 'bhuvan bam age 16', 'parents_vs_own_path', 'class 12', 'board exams', 'guitar', 'delhi restaurant'],
+    'challenge',
+    'You are dealing with {user_problem}. Bhuvan Bam at age 16 faced a pivotal choice in The Night Shift Stage — where {trait} guided their path.',
+    false,
+    NULL,
+    NOW(),
+    NOW()
 )
 ON CONFLICT (story_id) DO UPDATE SET
     situation_tags = EXCLUDED.situation_tags,

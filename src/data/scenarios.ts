@@ -3762,6 +3762,110 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 16: Bhuvan Bam
+    'lvl_age_16_bhuvan': {
+        title: "The Night Shift Stage",
+        source: "Source: StartupTalky (2021), Wikipedia / Shaheed Bhagat Singh College, Quartz India (2022)",
+        frames: [
+            {
+                id: 'intro',
+                emotion: 'seeking',
+                bg: '/assets/bg_Bhuvan bam.png',
+                portrait: '/assets/avatar_bhuvan bam.jpg',
+                text: "You just scored 74% in your Class 12 board exams. Your parents want you to pursue a respectable commerce degree for a safe corporate future, but your real passion is music. A local Mughlai restaurant offers you a gig playing guitar from 8 PM to midnight every night, but balancing that with rigorous academics feels impossible.\n\nHow do you handle the pressure from your parents and your passion for music?",
+                choices: [
+                    {
+                        text: "A) Focus on the commerce degree and keep music as a weekend hobby.",
+                        next: 'commerce_path',
+                        score: 5,
+                        feedbackTitle: "The Safe Route",
+                        feedback: "It satisfies family expectations, but keeping music to weekends starves your real creative drive."
+                    },
+                    {
+                        text: "B) Drop out of college to pursue music full-time and risk your parents' anger.",
+                        next: 'dropout_path',
+                        score: 5,
+                        feedbackTitle: "High Stakes Rebellion",
+                        feedback: "Full rebellion creates financial panic and family friction that can suffocate your art."
+                    },
+                    {
+                        text: "C) Enroll in a lighter arts degree to free up your nights for the restaurant gig.",
+                        next: 'arts_degree_path',
+                        score: 10,
+                        feedbackTitle: "The Strategic Compromise",
+                        feedback: "A lighter academic load keeps family peace while buying you nightly stage time to hone your craft."
+                    }
+                ]
+            },
+            {
+                id: 'commerce_path',
+                emotion: 'frustration',
+                bg: '/assets/bg_Bhuvan bam.png',
+                portrait: '/assets/avatar_bhuvan bam.jpg',
+                text: "It's the safe path, but you lose the daily practice and live audience that would have shaped your stage presence. You realize that playing it safe is quietly killing your creative spark.",
+                choices: [
+                    {
+                        text: "Pivot: Choose a manageable degree and take the night gig.",
+                        next: 'arts_degree_path',
+                        score: 10,
+                        feedbackTitle: "Action Step",
+                        feedback: "Recognizing that comfort comes at the expense of your craft."
+                    }
+                ]
+            },
+            {
+                id: 'dropout_path',
+                emotion: 'tension',
+                bg: '/assets/bg_Bhuvan bam.png',
+                portrait: '/assets/avatar_bhuvan bam.jpg',
+                text: "The financial instability and family tension drain your creative energy, turning your passion into a stressful burden. You need a foundation that gives you time without destroying family trust.",
+                choices: [
+                    {
+                        text: "Find a middle ground: get the degree while playing nightly gigs.",
+                        next: 'arts_degree_path',
+                        score: 10,
+                        feedbackTitle: "Action Step",
+                        feedback: "Strategic compromise buys you the freedom to build your skills."
+                    }
+                ]
+            },
+            {
+                id: 'arts_degree_path',
+                emotion: 'determination',
+                bg: '/assets/bg_Bhuvan bam.png',
+                portrait: '/assets/avatar_bhuvan bam.jpg',
+                text: "You endure exhausting late nights singing from 8 PM to midnight to diners who are just there to eat. The work is unglamorous and tiring, but in that noisy Delhi restaurant, you slowly master the art of holding a crowd's attention and commanding any room.",
+                choices: [
+                    {
+                        text: "Reflect on the Grind and the Growth",
+                        next: 'lesson',
+                        score: 10,
+                        feedbackTitle: "Stage Presence Forged",
+                        feedback: "Putting in the unglamorous hours when no one is watching."
+                    }
+                ]
+            },
+            {
+                id: 'lesson',
+                emotion: 'determination',
+                bg: '/assets/avatar_bhuvan bam.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_bhuvan bam.jpg',
+                text: "After scoring 74% in Class 12, Bhuvan Bam chose a BA in History at Shaheed Bhagat Singh College and played live acoustic gigs 8 PM to midnight every single night at a Mughlai restaurant in Delhi, forging the work ethic and performance mastery that later created BB Ki Vines.\n\nLESSONS:\n1. Your board exam marks don't dictate your future.\n2. Pursuing a passion often requires unglamorous, exhausting work first.\n3. Sometimes you have to make a compromise to buy time for your real goals.",
+                choices: [
+                    {
+                        text: "Complete Level",
+                        next: 'COMPLETE',
+                        score: 10,
+                        feedbackTitle: "Mission Accomplished",
+                        feedback: ""
+                    }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",
