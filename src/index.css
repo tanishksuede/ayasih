@@ -37,7 +37,24 @@ html, body {
   height: -webkit-fill-available;
   overflow-x: hidden;
   position: relative;
-  -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
+  scroll-behavior: smooth !important;
+  -webkit-scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important; /* iOS momentum scrolling */
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+/* Hide scrollbars globally on all browsers while preserving scrollability */
+* {
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+*::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 body {
@@ -45,6 +62,7 @@ body {
   color: white;
   font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+  scroll-behavior: smooth !important;
   /* Prevent scrollbar flickering from animations */
   /* iOS Safe Areas */
   padding-top: env(safe-area-inset-top);
@@ -489,28 +507,25 @@ body {
   animation: shine 2s infinite;
 }
 
-/* Custom Scrollbar Utilities */
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-}
-.scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-}
-.scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 20px;
+/* Custom Scrollbar Utilities — Hidden with smooth scrolling */
+.scrollbar-hide,
+.custom-scrollbar,
+.scrollbar-thin,
+.neon-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch !important;
 }
 
-.neon-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgba(139, 92, 246, 0.4);
+.scrollbar-hide::-webkit-scrollbar,
+.custom-scrollbar::-webkit-scrollbar,
+.scrollbar-thin::-webkit-scrollbar,
+.neon-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
 }
 
 /* --- New Ambient Animations --- */
