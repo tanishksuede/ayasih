@@ -13,8 +13,8 @@ export function AppLayout() {
         <div className="flex flex-col min-h-[100dvh] bg-slate-950 text-white overflow-x-hidden">
             {/* Premium Neon PWA Header */}
             {!hideHeader && <PwaHeader />}
-            {/* Main Content Area */}
-            <main className="flex-1 relative">
+            {/* Main Content Area - Starts directly below the header */}
+            <main className="flex-1 relative flex flex-col min-h-0 w-full">
                 <Outlet />
             </main>
         </div>

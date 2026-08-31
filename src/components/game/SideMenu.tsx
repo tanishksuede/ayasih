@@ -58,7 +58,7 @@ export function SideMenu({
     };
 
     return (
-        <div className="absolute top-20 right-4 md:top-24 md:right-6 z-[110] flex flex-col items-end pointer-events-none">
+        <div className="absolute top-4 right-4 md:top-6 md:right-6 z-[110] flex flex-col items-end pointer-events-none">
             {/* Hamburger Button */}
             <button
                 onClick={toggleMenu}

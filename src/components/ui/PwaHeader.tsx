@@ -14,7 +14,7 @@ export const PwaHeader: FC = () => {
 
     return (
         <header className={clsx(
-            "w-full h-[60px] max-h-[60px] shrink-0 fixed top-0 left-0 z-[110] flex items-center justify-between px-4 sm:px-6 md:px-8 backdrop-blur-xl transition-all duration-300",
+            "w-full h-[60px] max-h-[60px] shrink-0 sticky top-0 z-[110] flex items-center justify-between px-4 sm:px-6 md:px-8 backdrop-blur-xl transition-all duration-300",
             isCandyMode 
                 ? "bg-white/90 border-b-2 border-pink-300 shadow-[0_2px_15px_rgba(244,114,182,0.3)]"
                 : "bg-slate-950/80 border-b border-[#00f2ff]/40 shadow-[0_2px_20px_rgba(0,242,255,0.25)]"

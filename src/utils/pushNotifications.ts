@@ -188,8 +188,6 @@ export async function subscribeUserToPush(passedUserId?: string): Promise<PushSu
   }
 }
 
-const DEFAULT_VAPID_PUBLIC_KEY = 'BL34YH1kxlIMpfBjqFSF8rMn4QY0w8Z90LNJGH-lB70uZ28aArkE68z8p_ZOvJNEmNxaYjLqpu9pub7btgBT-Jc';
-
 /**
  * Internal implementation of push subscription.
  */
@@ -218,18 +216,24 @@ async function _subscribeUserToPushInternal(passedUserId?: string): Promise<Push
     }
   }
 
-  // ── 3. Validate VAPID Public Key with fallback ─────────────────────────
+  // ── 3. Validate VAPID Public Key from Env ─────────────────────────────
   console.log('[Push] Validating VAPID public key...');
-  const envVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
-  const rawVapidKey = (envVapidKey && envVapidKey.trim()) ? envVapidKey.trim() : DEFAULT_VAPID_PUBLIC_KEY;
+  const rawVapidKey = (import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined)?.trim();
+
+  if (!rawVapidKey) {
+    console.warn('[Push] VITE_VAPID_PUBLIC_KEY is not configured in environment variables.');
+    // Browser notification permission is granted even if remote WebPush VAPID key is omitted
+    return null;
+  }
 
   const keyValidation = validateVapidPublicKey(rawVapidKey);
   console.log(`[Push] VAPID key format check: valid=${keyValidation.valid}, byteLength=${keyValidation.length ?? 'unknown'}`);
 
   if (!keyValidation.valid) {
-    console.warn(`[Push] Provided VAPID invalid, falling back to default key: ${keyValidation.error}`);
+    console.error(`[Push] VAPID key validation failed: ${keyValidation.error}`);
+    return null;
   }
-  const effectiveVapidKey = keyValidation.valid ? rawVapidKey : DEFAULT_VAPID_PUBLIC_KEY;
+  const effectiveVapidKey = rawVapidKey;
 
   // ── 4. Register & Get Service Worker ──────────────────────────────────
   if (!('serviceWorker' in navigator)) {
@@ -364,9 +368,11 @@ async function _subscribeUserToPushInternal(passedUserId?: string): Promise<Push
 export async function runIsolatedPushDiagnostic(): Promise<{ success: boolean; error?: string; endpointHost?: string }> {
   console.log('[Push Diagnostic] Running isolated browser PushManager test...');
   try {
-    const envVapidKey = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
-    const rawVapidKey = (envVapidKey && envVapidKey.trim()) ? envVapidKey.trim() : DEFAULT_VAPID_PUBLIC_KEY;
-    const applicationServerKey = rawVapidKey ? urlBase64ToUint8Array(rawVapidKey) : null;
+    const rawVapidKey = (import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined)?.trim();
+    if (!rawVapidKey) {
+      return { success: false, error: 'VITE_VAPID_PUBLIC_KEY environment variable is not configured' };
+    }
+    const applicationServerKey = urlBase64ToUint8Array(rawVapidKey);
     const registration = typeof navigator !== 'undefined' && 'serviceWorker' in navigator ? await navigator.serviceWorker.getRegistration('/sw.js') : null;
     const existing = registration ? await registration.pushManager.getSubscription() : null;
 

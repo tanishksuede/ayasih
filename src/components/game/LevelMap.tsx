@@ -325,7 +325,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     }, []);
 
     return (
-        <div className="fixed inset-0 w-full h-[100dvh] bg-slate-900 overflow-hidden">
+        <div className="relative w-full h-[calc(100dvh-60px)] bg-slate-900 overflow-hidden flex flex-col">
             <AudioController />
             {/* --- FIXED UI LAYER (Stays on Top) --- */}
 
@@ -349,7 +349,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
 
             {/* Filter Header Banner */}
             {activeSituationFilter && (
-                <div className="fixed top-20 md:top-24 left-1/2 -translate-x-1/2 z-40 bg-slate-950/90 border border-purple-500/40 backdrop-blur-md px-4 py-2 rounded-full shadow-2xl flex items-center gap-3 animate-fade-in pointer-events-auto">
+                <div className="absolute top-4 md:top-6 left-1/2 -translate-x-1/2 z-40 bg-slate-950/90 border border-purple-500/40 backdrop-blur-md px-4 py-2 rounded-full shadow-2xl flex items-center gap-3 animate-fade-in pointer-events-auto">
                     <div className="flex items-center gap-1.5 text-xs font-bold text-purple-300">
                         <Filter size={14} className="text-cyan-400 animate-pulse" />
                         <span>Stories for:</span>

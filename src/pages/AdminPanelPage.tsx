@@ -209,7 +209,7 @@ export function AdminPanelPage() {
     ] as const;
 
     return (
-        <div className="flex h-screen bg-[#0a0510] text-slate-300 font-sans overflow-hidden">
+        <div className="flex h-[calc(100dvh-60px)] bg-[#0a0510] text-slate-300 font-sans overflow-hidden">
             {/* Sidebar */}
             <aside className="w-64 bg-slate-950 border-r border-slate-800/60 flex flex-col z-20 shrink-0">
                 <div className="p-6">
