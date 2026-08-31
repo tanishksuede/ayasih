@@ -100,6 +100,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const clearSituationFilter = useUserStore((state) => state.clearSituationFilter);
     const [notified, setNotified] = useState(false);
     const [notifyError, setNotifyError] = useState(false);
+    const [isSubmittingNotify, setIsSubmittingNotify] = useState(false);
 
     useEffect(() => {
         if (activeSituationFilter) {
@@ -111,6 +112,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 setNotified(false);
             }
             setNotifyError(false);
+            setIsSubmittingNotify(false);
         }
     }, [activeSituationFilter]);
 
@@ -441,30 +443,50 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                                 </p>
 
                                 {notified ? (
-                                    <div className="p-3 bg-emerald-950/80 border border-emerald-500/40 rounded-2xl text-emerald-300 text-xs font-bold mb-4 flex items-center justify-center gap-2">
+                                    <div className="p-3 bg-emerald-950/80 border border-emerald-500/40 rounded-2xl text-emerald-300 text-xs font-bold mb-4 flex items-center justify-center gap-2 animate-fade-in">
                                         <span>✓ Request saved! We'll notify you when published.</span>
                                     </div>
                                 ) : (
                                     <button
+                                        disabled={isSubmittingNotify}
                                         onClick={async () => {
-                                            trackSituationEvent('notify_me_clicked', { situation: activeSituationFilter });
+                                            audioSynth.playClick();
+                                            setIsSubmittingNotify(true);
                                             setNotifyError(false);
-                                            const { logStoryRequest } = await import('../../services/storyRequestService');
-                                            const result = await logStoryRequest(
-                                                profile?.id, 
-                                                activeSituationFilter, 
-                                                getSituationLabel(activeSituationFilter),
-                                                Number(activeAge) || profile?.age || 18
-                                            );
-                                            if (result.success) {
-                                                setNotified(true);
-                                            } else {
+                                            trackSituationEvent('notify_me_clicked', { situation: activeSituationFilter });
+
+                                            try {
+                                                const { logStoryRequest } = await import('../../services/storyRequestService');
+                                                const result = await logStoryRequest(
+                                                    profile?.id, 
+                                                    activeSituationFilter, 
+                                                    getSituationLabel(activeSituationFilter),
+                                                    Number(activeAge) || profile?.age || 18
+                                                );
+
+                                                // Also attempt to register for push notifications if not already granted
+                                                try {
+                                                    const { subscribeUserToPush } = await import('../../utils/pushNotifications');
+                                                    await subscribeUserToPush(profile?.id);
+                                                } catch (pushErr) {
+                                                    console.warn('[NotifyMe] Push notice:', pushErr);
+                                                }
+
+                                                if (result.success) {
+                                                    setNotified(true);
+                                                } else {
+                                                    setNotifyError(true);
+                                                }
+                                            } catch (err) {
+                                                console.error('[NotifyMe] Error:', err);
                                                 setNotifyError(true);
+                                            } finally {
+                                                setIsSubmittingNotify(false);
                                             }
                                         }}
-                                        className="w-full py-3 mb-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 font-bold text-xs uppercase tracking-wider text-white shadow-lg shadow-purple-600/30 hover:scale-105 active:scale-95 transition-all"
+                                        className="w-full py-3 mb-3 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 font-bold text-xs uppercase tracking-wider text-white shadow-lg shadow-purple-600/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        Notify me
+                                        {isSubmittingNotify ? 'Saving Request...' : 'Notify me'}
                                     </button>
                                 )}
 
