@@ -3866,6 +3866,91 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 16: Shahrukh Khan
+    'lvl_age_16_srk': {
+        title: "The Sword of Honour",
+        source: "Source: Biography / Hindustan Times",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'sad',
+                bg: '/assets/bg_Shah_Rukh_Khan.jpg',
+                text: "You are 15 years old. Your father, who struggled through various business ventures to provide for your middle-class family, suddenly passes away from cancer. Overnight, your world shatters.",
+                choices: [
+                    { text: "Take a breath", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'lonely',
+                bg: '/assets/bg_Shah_Rukh_Khan.jpg',
+                text: "Your older sister falls into a deep depression. Your mother is left to manage the household and debts alone, and you are thrust into the role of the 'man of the house.'",
+                choices: [
+                    { text: "Face the decision", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'conflicted',
+                bg: '/assets/bg_Shah_Rukh_Khan.jpg',
+                text: "With your family in emotional and financial turmoil, how do you handle your future?",
+                choices: [
+                    {
+                        text: "Step back from extracurriculars to focus purely on helping your mother run the family business.",
+                        next: 'business',
+                        score: 3,
+                        feedbackTitle: "A Reliable Support",
+                        feedback: "You survive, but your world remains small. You abandon the activities that develop your unique talents."
+                    },
+                    {
+                        text: "Retreat into your grief, letting your grades slip as you struggle to process the profound loss.",
+                        next: 'grief',
+                        score: 0,
+                        feedbackTitle: "Consumed by Tragedy",
+                        feedback: "You lose your momentum at school, letting your potential slip away in the shadow of your loss."
+                    },
+                    {
+                        text: "Channel your pain into extreme drive, pushing yourself to the absolute limit in academics and sports.",
+                        next: 'drive',
+                        score: 10,
+                        feedbackTitle: "Fueled by Pain",
+                        feedback: "You use the pain as fuel. You build a relentless work ethic."
+                    }
+                ]
+            },
+            {
+                id: 'business',
+                emotion: 'resigned',
+                bg: '/assets/bg_Shah_Rukh_Khan.jpg',
+                text: "You manage the day-to-day survival, but you always wonder what could have happened if you pushed your own boundaries.",
+                choices: [
+                    { text: "Rethink your response to tragedy", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'grief',
+                emotion: 'sad',
+                bg: '/assets/bg_Shah_Rukh_Khan.jpg',
+                text: "The weight of the tragedy keeps you grounded, preventing you from ever taking flight.",
+                choices: [
+                    { text: "Find another way to process the loss", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'drive',
+                emotion: 'determined',
+                bg: '/assets/avatar_Shah_Rukh_Khan.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_Shah_Rukh_Khan.jpg',
+                text: "You excel so fiercely that you are awarded the 'Sword of Honour'—St. Columba's highest award. This extreme drive forged in tragedy will eventually make you a global icon: Shahrukh Khan.\n\nLESSONS:\n1. Extreme grief can either consume you or be converted into extreme drive.\n2. True discipline often means pushing forward when your world feels like it's falling apart.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

@@ -3646,6 +3646,58 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_16_srk",
+    "situationTags": [
+      "feeling_alone",
+      "family_pressure",
+      "financial_stress",
+      "discipline"
+    ],
+    "problemTags": [
+      "sudden_death_parent",
+      "unexpected_financial_emotional_burden",
+      "dealing_with_profound_grief"
+    ],
+    "emotionalTags": [
+      "sad",
+      "lonely",
+      "determined"
+    ],
+    "intentTags": [
+      "process_how_i_feel",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 15,
+    "ageMax": 18,
+    "dominantTrait": "resilience",
+    "resolutionArchetype": "persistence",
+    "lessonTags": [
+      "resilience",
+      "persistence",
+      "courage"
+    ],
+    "difficulty": 5,
+    "relatability": 3,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Shahrukh Khan at age 16 dealing with the sudden death of his father, feeling alone, and channeling profound grief into extreme drive to win the Sword of Honour.",
+    "triggerPhrases": [
+      "shahrukh khan",
+      "the sword of honour",
+      "father died",
+      "feeling alone",
+      "grief",
+      "srk"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Shahrukh Khan at age 16 faced a pivotal choice in The Sword of Honour — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

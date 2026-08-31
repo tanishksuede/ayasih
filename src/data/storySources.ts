@@ -831,6 +831,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── SHAHRUKH KHAN (Age 16) ────────────────────────────────────────────────
+  'lvl_age_16_srk': [
+    {
+      title: 'Wikipedia / FNP Biography',
+      type: 'article',
+      detail: 'Father died of cancer in 1981 when SRK was 15.',
+    },
+    {
+      title: 'Wikipedia',
+      type: 'article',
+      detail: 'Sister Shahnaz fell into a depressed state after parents\' deaths.',
+    },
+    {
+      title: 'Hindustan Times, "Shah Rukh Khan\'s life unwrapped in a book", 2007',
+      type: 'article',
+      detail: 'Graduated in 1985 with the Sword of Honor.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

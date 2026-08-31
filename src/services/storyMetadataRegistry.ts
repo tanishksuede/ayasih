@@ -114,6 +114,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'deep',
         targetTraits: { risk: 90, creativity: 80, vision: 95, empathy: 85, leadership: 98 },
     },
+    'lvl_age_16_srk': {
+        scenarioId: 'lvl_age_16_srk',
+        dilemmaType: 'Channeling Extreme Grief',
+        lifeTheme: 'family_trauma',
+        situationalTags: ['feeling_alone', 'family_pressure', 'financial_stress', 'discipline', 'grief', 'sudden_death_parent'],
+        protagonistLens: 'How Shahrukh Khan dealt with the sudden death of his father and assumed the mantle of man of the house while excelling in school.',
+        historicalContext: 'His father died of cancer in 1981 when he was 15. His sister fell into depression, yet he pushed himself to win the Sword of Honour in 1985.',
+        reflectionPrompt: 'When you experience a major setback or tragedy, do you use it as an excuse to retreat, or fuel to expand your capacity?',
+        microActionPrompt: 'Write down one constructive, disciplined action you will take the next time you feel emotionally overwhelmed.',
+        difficulty: 'deep',
+        targetTraits: { risk: 90, creativity: 95, vision: 95, empathy: 85, leadership: 90 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

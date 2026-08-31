@@ -129,6 +129,26 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-cristiano-ronaldo.png', scenarioId: 'lvl_age_15_ronaldo',
             idolTraits: { discipline: 100, resilience: 100, risk: 95, leadership: 95, creativity: 90, empathy: 75, vision: 100 }
         },
+        // Age 16: Shahrukh Khan
+        {
+            id: 'lvl_16_srk_1',
+            title: 'The Sword of Honour',
+            description: 'At 15, your father suddenly passes away. With your family in emotional and financial turmoil, you must choose how to channel your profound grief.',
+            requiredStars: 0,
+            year: 1981,
+            age: 16,
+            theme: 'Arts',
+            age_mirror_text: 'dealing with the sudden loss of your father and deciding whether to retreat into grief or push harder at school',
+            archetype: 'The Resilient',
+            personality: 'Shahrukh Khan',
+            bio: 'A 15-year-old schoolboy in New Delhi thrust into the role of "man of the house" after his father\'s sudden death.',
+            fame: 'One of the most successful film stars in the world.',
+            achievements: ['Awarded the Sword of Honour at St. Columba\'s School', 'Built a global acting empire with zero industry connections', 'Padma Shri recipient and global icon'],
+            lesson: 'Extreme grief can either consume you or be converted into extreme drive.',
+            avatarUrl: '/assets/avatar_Shah_Rukh_Khan.jpg',
+            scenarioId: 'lvl_age_16_srk',
+            idolTraits: { discipline: 95, resilience: 98, risk: 90, leadership: 90, creativity: 95, empathy: 85, vision: 95 }
+        },
         // Age 16: Bhuvan Bam
         {
             id: 'lvl_16_bhuvan',
