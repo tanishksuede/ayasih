@@ -119,11 +119,11 @@ export function StoryMetadataAuthoring() {
     };
 
     return (
-        <div className="glass-panel rounded-3xl p-6 md:p-8 text-white">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-xl text-white">
+            <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
                 <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-2xl bg-gradient-to-r from-purple-600 to-cyan-500 shadow-md">
-                        <BookOpen size={22} className="text-white" />
+                    <div className="p-2.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 shadow-sm">
+                        <BookOpen size={22} className="text-indigo-400" />
                     </div>
                     <div>
                         <h2 className="text-xl font-bold text-white">Story Metadata & 13-D Fingerprinting</h2>
@@ -134,7 +134,7 @@ export function StoryMetadataAuthoring() {
                 <button
                     onClick={handleSave}
                     disabled={saveStatus === 'saving'}
-                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 font-bold text-xs uppercase tracking-wider text-white flex items-center gap-2 shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
+                    className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-xs uppercase tracking-wider text-white flex items-center gap-2 shadow-lg shadow-indigo-600/20 hover:scale-105 active:scale-95 transition-all disabled:opacity-50"
                 >
                     {saveStatus === 'saved' ? <Check size={16} /> : <Save size={16} />}
                     <span>{saveStatus === 'saving' ? 'Saving...' : saveStatus === 'saved' ? 'Saved!' : 'Save Fingerprint'}</span>

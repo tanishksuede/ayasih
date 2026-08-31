@@ -72,39 +72,39 @@ export function StoryRequestsDashboard() {
 
     if (loading) {
         return (
-            <div className="glass-panel rounded-3xl p-8 text-center text-slate-400 font-mono text-sm animate-pulse border border-purple-500/20">
+            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 text-center text-slate-400 font-mono text-sm animate-pulse shadow-xl">
                 Loading story demand signals & age breakdowns...
             </div>
         );
     }
 
     return (
-        <div className="glass-panel rounded-3xl p-6 md:p-8 mb-8 text-white border border-purple-500/20 shadow-2xl">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 shadow-xl text-white">
             
             {/* Header with Title & Aggregate Stats */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-purple-500/20">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
                 <div>
                     <div className="flex items-center gap-2.5 mb-1">
-                        <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+                        <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
                             <BarChart2 size={22} />
                         </div>
-                        <h2 className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-cyan-200 to-white">
+                        <h2 className="text-xl md:text-2xl font-black text-white">
                             Required Stories Demand
                         </h2>
                     </div>
                     <p className="text-xs text-slate-400">
-                        Real-time signals showing <span className="text-cyan-300 font-semibold">what stories</span>, <span className="text-purple-300 font-semibold">which tags</span>, and <span className="text-pink-300 font-semibold">which target ages</span> users are actively asking for.
+                        Real-time signals showing <span className="text-cyan-400 font-semibold">what stories</span>, <span className="text-indigo-400 font-semibold">which tags</span>, and <span className="text-rose-400 font-semibold">which target ages</span> users are actively asking for.
                     </p>
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
-                    <div className="px-4 py-2 rounded-2xl bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 font-mono text-xs shadow-inner">
-                        <span className="text-slate-400 uppercase text-[10px] block font-bold">Total Demand</span>
-                        <span className="text-base font-black">{totalRequestsCount}</span> Requests
+                    <div className="px-4 py-2 rounded-2xl bg-slate-950 border border-slate-800 text-cyan-400 font-mono text-xs">
+                        <span className="text-slate-500 uppercase text-[10px] block font-bold">Total Demand</span>
+                        <span className="text-base font-black text-white">{totalRequestsCount}</span> <span className="text-slate-400">Requests</span>
                     </div>
-                    <div className="px-4 py-2 rounded-2xl bg-purple-950/80 border border-purple-500/40 text-purple-300 font-mono text-xs shadow-inner">
-                        <span className="text-slate-400 uppercase text-[10px] block font-bold">Unique Topics</span>
-                        <span className="text-base font-black">{requests.length}</span> Tags
+                    <div className="px-4 py-2 rounded-2xl bg-slate-950 border border-slate-800 text-indigo-400 font-mono text-xs">
+                        <span className="text-slate-500 uppercase text-[10px] block font-bold">Unique Topics</span>
+                        <span className="text-base font-black text-white">{requests.length}</span> <span className="text-slate-400">Tags</span>
                     </div>
                 </div>
             </div>
@@ -113,13 +113,13 @@ export function StoryRequestsDashboard() {
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-6">
                 
                 {/* Tab Switcher */}
-                <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-950/80 border border-slate-800 self-start">
+                <div className="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-950 border border-slate-800 self-start">
                     <button
                         onClick={() => setActiveTab('requests')}
                         className={clsx(
                             "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all",
                             activeTab === 'requests'
-                                ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg shadow-purple-600/30"
+                                ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20"
                                 : "text-slate-400 hover:text-slate-200"
                         )}
                     >
@@ -131,7 +131,7 @@ export function StoryRequestsDashboard() {
                         className={clsx(
                             "flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all",
                             activeTab === 'gaps'
-                                ? "bg-gradient-to-r from-pink-600 to-purple-600 text-white shadow-lg shadow-pink-600/30"
+                                ? "bg-rose-600 text-white shadow-md shadow-rose-600/20"
                                 : "text-slate-400 hover:text-slate-200"
                         )}
                     >

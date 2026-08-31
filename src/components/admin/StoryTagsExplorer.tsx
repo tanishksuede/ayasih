@@ -165,12 +165,12 @@ export function StoryTagsExplorer() {
     const activeTags = activeLevel ? (storyTagsMap[activeLevel.scenarioId || activeLevel.id] || []) : [];
 
     return (
-        <div className="glass-panel rounded-3xl p-6 md:p-8 mt-8 border border-purple-500/20 bg-slate-900/60 backdrop-blur-xl">
+        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 md:p-8 mt-8 shadow-xl">
             {/* Header */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
                 <div>
-                    <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-[#00f2ff] to-fuchsia-300 flex items-center gap-2">
-                        <Sparkles size={20} className="text-[#00f2ff]" /> Personality Story Tags & Embeddings Explorer
+                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                        <Sparkles size={20} className="text-cyan-400" /> Personality Story Tags & Embeddings Explorer
                     </h2>
                     <p className="text-slate-400 text-xs mt-1">
                         Select any age or personality to inspect its complete AI topic tags ({tagsData.length} tag connections across {Object.keys(storyTagsMap).length} stories)
