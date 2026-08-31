@@ -888,6 +888,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── BILLIE EILISH (Age 16) ───────────────────────────────────────────────
+  'lvl_age_16_billie': [
+    {
+      title: 'Rolling Stone, "Billie Eilish and the Triumph of the Weird" (2019)',
+      type: 'article',
+      detail: 'Details her viral rise from early singles to the intense expectations surrounding her debut studio album.',
+    },
+    {
+      title: 'Sound on Sound, "Finneas O\'Connell" (2019)',
+      type: 'article',
+      detail: 'Notes the industry meetings pushing for expensive commercial studios and top-tier pop producers before they decided to produce it alone.',
+    },
+    {
+      title: 'Apple TV+, "Billie Eilish: The World\'s A Little Blurry" (2021)',
+      type: 'article',
+      detail: 'Documents the entire recording process of the multi-Grammy-winning debut album inside Finneas\'s Highland Park childhood bedroom.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

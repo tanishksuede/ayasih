@@ -150,6 +150,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'moderate',
         targetTraits: { risk: 95, creativity: 100, vision: 95, empathy: 90, leadership: 90 },
     },
+    'lvl_age_16_billie': {
+        scenarioId: 'lvl_age_16_billie',
+        dilemmaType: 'Raw DIY Intimacy vs Commercial Studio Polish',
+        lifeTheme: 'identity_reinvention',
+        situationalTags: ['identity_question', 'career_uncertainty', 'starting_something', 'big_decision', 'creative_block', 'raw_authenticity'],
+        protagonistLens: 'How Billie Eilish resisted industry pressure to hire hit-making producers and record in expensive studios, choosing her brother\'s tiny bedroom to create a multi-Grammy-winning album.',
+        historicalContext: 'In 2018 at age 16, Billie Eilish and Finneas rejected big-studio commercial sessions to write and record \'When We All Fall Asleep, Where Do We Go?\' in their childhood home in Highland Park.',
+        reflectionPrompt: 'Where are you doubting your own unconventional methods because they don\'t look like the traditional standard?',
+        microActionPrompt: 'Work on your creative project in your most comfortable, distraction-free environment for 20 minutes without worrying about perfection.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 95, creativity: 100, vision: 100, empathy: 95, leadership: 85 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

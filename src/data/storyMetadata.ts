@@ -3805,6 +3805,61 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_16_billie",
+    "situationTags": [
+      "identity_question",
+      "career_uncertainty",
+      "starting_something",
+      "big_decision",
+      "creative_block"
+    ],
+    "problemTags": [
+      "industry_pressure_to_conform",
+      "protecting_creative_intimacy",
+      "balancing_hit_vs_authenticity"
+    ],
+    "emotionalTags": [
+      "anxious",
+      "conflicted",
+      "restless",
+      "determined"
+    ],
+    "intentTags": [
+      "courage_to_commit",
+      "find_direction"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 15,
+    "ageMax": 18,
+    "dominantTrait": "risk",
+    "resolutionArchetype": "courage",
+    "lessonTags": [
+      "risk",
+      "courage",
+      "authenticity",
+      "creativity"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "global",
+    "semanticDescription": "A story about Billie Eilish at age 16 rejecting massive LA recording studios and hit-making producers, choosing the risk of recording in her brother's tiny childhood bedroom to protect her authentic sound.",
+    "triggerPhrases": [
+      "billie eilish",
+      "the bedroom studio",
+      "figuring out who i am",
+      "bedroom recording",
+      "finneas",
+      "debut album"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Billie Eilish at age 16 faced a pivotal choice in The Bedroom Studio — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

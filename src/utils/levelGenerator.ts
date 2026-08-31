@@ -229,6 +229,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_16_taylor',
             idolTraits: { discipline: 95, resilience: 95, risk: 100, leadership: 90, creativity: 100, empathy: 90, vision: 100 }
         },
+        // Age 16: Billie Eilish
+        {
+            id: 'lvl_16_billie_1',
+            title: 'The Bedroom Studio',
+            description: 'At 16, under massive pressure to work with famous producers in big LA studios, you must choose between pop conformity and recording in a tiny childhood bedroom.',
+            requiredStars: 0,
+            year: 2018,
+            age: 16,
+            theme: 'Music',
+            age_mirror_text: 'facing industry pressure to make polished radio pop in expensive studios instead of staying in your brother\'s intimate bedroom studio',
+            archetype: 'The Authentic',
+            personality: 'Billie Eilish',
+            bio: 'A 16-year-old artist choosing between the sterile polish of major LA recording studios and the raw, intimate sound of her brother\'s bedroom.',
+            fame: '9-time Grammy Award winner, 2-time Oscar winner, and voice of a generation.',
+            achievements: ['Debut album made in a bedroom swept major Grammy categories', 'Youngest artist to write and record an official James Bond theme', '2-time Academy Award winner for Best Original Song'],
+            lesson: 'Authentic weirdness will always connect deeper than sterile perfection; you don\'t need experts to validate your vision.',
+            avatarUrl: '/assets/portrait-billie-20.png',
+            scenarioId: 'lvl_age_16_billie',
+            idolTraits: { discipline: 90, resilience: 95, risk: 100, leadership: 85, creativity: 100, empathy: 95, vision: 100 }
+        },
         // Age 20: Billie Eilish (Story 2)
         {
             id: 'lvl_20_billie_2', title: 'The Person Who Left You On Seen', description: 'At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.',

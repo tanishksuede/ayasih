@@ -4105,6 +4105,75 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 16: Billie Eilish
+    'lvl_age_16_billie': {
+        title: "The Bedroom Studio",
+        source: "Source: Rolling Stone & Sound on Sound (2019)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'restless',
+                bg: '/assets/bg-billie-studio-3am-2022.png',
+                text: "You are 16 and your debut EP just blew up online. As expectations skyrocket for your first full album, the music industry pushes you toward the standard pop-star playbook.",
+                choices: [
+                    { text: "Hear the label's pitch", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'anxious',
+                bg: '/assets/bg-billie-studio-3am-2022.png',
+                text: "Executives offer massive LA studios and A-list hit-making producers. But you and your brother Finneas create your best, darkest sounds huddled around a single mic in his cramped childhood bedroom.",
+                choices: [
+                    { text: "Decide where to record", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'conflicted',
+                bg: '/assets/bg-billie-studio-3am-2022.png',
+                text: "How do you produce your debut album with the whole world watching?",
+                choices: [
+                    {
+                        text: "Work with famous producers in a major studio to guarantee a polished, radio-friendly pop hit.",
+                        next: 'industry',
+                        score: 3,
+                        feedbackTitle: "Sterile Polish",
+                        feedback: "You get radio play, but your songs lose their dark, intimate soul and blend into the commercial pop machine."
+                    },
+                    {
+                        text: "Reject the industry experts and record entirely in a small bedroom to protect your unique sound.",
+                        next: 'bedroom',
+                        score: 10,
+                        feedbackTitle: "Authentic Weirdness",
+                        feedback: "You bet entirely on raw intimacy, producing a revolutionary sound that changes pop music forever."
+                    }
+                ]
+            },
+            {
+                id: 'industry',
+                emotion: 'resigned',
+                bg: '/assets/bg-billie-studio-3am-2022.png',
+                text: "Too many opinions in the room dilute your vision until the music sounds like everyone else.",
+                choices: [
+                    { text: "Rethink your creative space", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'bedroom',
+                emotion: 'determined',
+                bg: '/assets/portrait-billie-20.png',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/portrait-billie-20.png',
+                text: "Sitting on a messy bed, you and Finneas record 'When We All Fall Asleep, Where Do We Go?' The DIY record sweeps the Grammys and turns Billie Eilish into a global cultural phenomenon.\n\nLESSONS:\n1. Authentic weirdness will always connect deeper than sterile perfection.\n2. You don't need massive infrastructure or 'experts' to validate your creative vision.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

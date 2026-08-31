@@ -13,6 +13,7 @@ export const PERSONALITY_AVATAR_MAP: Record<string, string> = {
     'Shahrukh Khan': '/assets/avatar_Shah_Rukh_Khan.jpg',
     'Michael Jordan': '/assets/portrait-michael-jackson.png',
     'Taylor Swift': '/assets/avatar_taylor_swift.png',
+    'Billie Eilish': '/assets/portrait-billie-20.png',
 };
 
 export const resolvePersonalityAvatar = (name: string): string => {
