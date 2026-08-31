@@ -703,7 +703,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             const latestProfile = useUserStore.getState().profile;
             if (latestProfile) {
                 setProfile({
-                    ...latestProfile,
                     futureArchetype: futureMatchResult.archetype.name,
                     futureArchetypeScore: futureMatchResult.score,
                     lifeTraits: futureLT,
@@ -717,7 +716,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                         empathy: recalibratedTraits.empathy,
                         leadership: recalibratedTraits.leadership
                     }
-                });
+                } as any);
             }
 
             if (userProfile?.id && !hasInsertedSession.current) {
@@ -747,11 +746,9 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
                     console.log('[AYA] ✓ DNA + story completion persisted via dnaService:', dnaResult);
 
-                    // Sync the verified database values back to Zustand store
                     const latestProfileAfterSave = useUserStore.getState().profile;
                     if (latestProfileAfterSave) {
                         useUserStore.getState().setProfile({
-                            ...latestProfileAfterSave,
                             traits: {
                                 ...latestProfileAfterSave.traits,
                                 risk: dnaResult.traits.risk,
@@ -760,10 +757,10 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                                 empathy: dnaResult.traits.empathy,
                                 leadership: dnaResult.traits.leadership,
                             },
-                            total_xp: dnaResult.totalXp,
-                            level: dnaResult.level,
-                            stories_completed: dnaResult.storiesCompleted,
-                        });
+                            total_xp: Math.max(dnaResult.totalXp, latestProfileAfterSave.total_xp || 0),
+                            level: Math.max(dnaResult.level, latestProfileAfterSave.level || 1),
+                            stories_completed: Math.max(dnaResult.storiesCompleted, latestProfileAfterSave.stories_completed || 0),
+                        } as any);
                     }
                     setSaveStatus('saved');
                 } catch (e) {

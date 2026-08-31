@@ -99,22 +99,25 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
         (async () => {
             try {
                 const dbProfile = await fetchUserDnaProfile();
-                if (dbProfile && profile) {
+                if (dbProfile) {
                     console.log('[DnaProfile] Hydrating store from Supabase DNA:', dbProfile.traits);
-                    setProfile({
-                        ...profile,
-                        traits: {
-                            ...profile.traits,
-                            risk: dbProfile.traits.risk,
-                            creativity: dbProfile.traits.creativity,
-                            vision: dbProfile.traits.vision,
-                            empathy: dbProfile.traits.empathy,
-                            leadership: dbProfile.traits.leadership,
-                        },
-                        total_xp: dbProfile.totalXp || profile.total_xp,
-                        level: dbProfile.level || profile.level,
-                        stories_completed: dbProfile.storiesCompleted || profile.stories_completed,
-                    });
+                    const currentState = useUserStore.getState().profile;
+                    if (currentState) {
+                        setProfile({
+                            traits: {
+                                ...currentState.traits,
+                                risk: dbProfile.traits.risk,
+                                creativity: dbProfile.traits.creativity,
+                                vision: dbProfile.traits.vision,
+                                empathy: dbProfile.traits.empathy,
+                                leadership: dbProfile.traits.leadership,
+                            },
+                            // Only update if DB is ahead to avoid downgrading local session progress
+                            total_xp: Math.max(dbProfile.totalXp, currentState.total_xp || 0),
+                            level: Math.max(dbProfile.level, currentState.level || 1),
+                            stories_completed: Math.max(dbProfile.storiesCompleted, currentState.stories_completed || 0),
+                        } as any);
+                    }
                 }
             } catch (e) {
                 console.warn('[DnaProfile] Could not fetch fresh DNA from Supabase, using store values:', e);
