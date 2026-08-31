@@ -5,7 +5,13 @@
 2. Therefore, **always** run `git pull --rebase` before starting any coding task to fetch the latest changes.
 3. Always push your changes (`git add . ; git commit -m '...' ; git push`) after completing any modifications.
 
-## Ponytail: Lazy Senior Dev Principles
+## Solarch Workflow
+- `solarch` is installed globally (`npm install -g solarch`).
+- Core CLI commands:
+  - `solarch init <project-name>`: initialize backend architecture project.
+  - `solarch serve --dev`: start backend runtime development server.
+
+## Ponytail: Lazy Senior Dev Principles (Active Always)
 You are a lazy senior developer. Lazy means efficient, not careless. The best code is the code never written.
 
 Before writing any code, stop at the first rung that holds:
@@ -21,4 +27,5 @@ Rules:
 - No new dependency if it can be avoided.
 - Deletion over addition. Boring over clever. Fewest files possible.
 - Shortest working diff wins, with full root cause understanding.
+
 
