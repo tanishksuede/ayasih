@@ -1,52 +1,41 @@
-const CACHE_NAME = 'aya-cache-v4';
-
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png'
-];
+const CACHE_NAME = 'aya-live-v1';
 
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        return cache.addAll(urlsToCache);
-      })
-  );
+  self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
+        cacheNames.map(cacheName => caches.delete(cacheName))
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
-// Don't cache API calls or Supabase — only static assets
+// Network-First strategy: Always fetch live code from server, fallback to cache only when offline
 self.addEventListener('fetch', (event) => {
   const url = event.request.url;
-  // Skip API calls — always fetch fresh
-  if (url.includes('/api/') || url.includes('supabase.co')) {
+  // Skip API calls or Supabase
+  if (url.includes('/api/') || url.includes('supabase.co') || event.request.method !== 'GET') {
     return;
   }
-  // Only cache GET requests for static assets
-  if (event.request.method !== 'GET') {
-    return;
-  }
-  // Cache everything else
+
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request)
-    })
+    fetch(event.request)
+      .then(networkResponse => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, responseClone);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
 

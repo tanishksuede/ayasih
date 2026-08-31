@@ -5,7 +5,7 @@ import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 import { syncExistingSubscriptionIfGranted } from './utils/pushNotifications.ts';
 
-const FORCE_RELOAD_VERSION = 'v1.1.6';
+const FORCE_RELOAD_VERSION = 'v2.0.0';
 
 // iOS Safari guard: prevent infinite reload loop
 // Only allow a version-bump reload once every 10 seconds
@@ -30,6 +30,11 @@ try {
             }
         } catch (e) {
             console.error('[Cache Clear] Failed to parse local store', e);
+        }
+
+        // Wipe browser cache storage
+        if ('caches' in window) {
+            caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))).catch(() => {});
         }
 
         // Record reload time before reloading (prevents iOS loop)
