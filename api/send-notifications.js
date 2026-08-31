@@ -13,8 +13,11 @@ try {
   console.error('[send-notifications] Supabase init error:', error);
 }
 
-const publicVapidKey = process.env.VAPID_PUBLIC_KEY || process.env.VITE_VAPID_PUBLIC_KEY;
-const privateVapidKey = process.env.VAPID_PRIVATE_KEY;
+const DEFAULT_PUBLIC_VAPID = 'BL34YH1kxlIMpfBjqFSF8rMn4QY0w8Z90LNJGH-lB70uZ28aArkE68z8p_ZOvJNEmNxaYjLqpu9pub7btgBT-Jc';
+const DEFAULT_PRIVATE_VAPID = '6TF1c62TLfIxvsOVN1f9ZlTPzxshNholivXfQvKFRkw';
+
+const publicVapidKey = process.env.VAPID_PUBLIC_KEY || process.env.VITE_VAPID_PUBLIC_KEY || DEFAULT_PUBLIC_VAPID;
+const privateVapidKey = process.env.VAPID_PRIVATE_KEY || DEFAULT_PRIVATE_VAPID;
 const vapidSubject = process.env.VAPID_SUBJECT || 'mailto:support@aya-game.com';
 
 if (publicVapidKey && privateVapidKey) {

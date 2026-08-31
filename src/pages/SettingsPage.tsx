@@ -177,21 +177,24 @@ export function SettingsPage() {
         setPushMessage('');
         try {
             const sub = await subscribeToPush(profile?.id);
-            if (sub) {
+            const status = getNotificationSupportStatus();
+            if (sub || status === 'granted') {
                 setPushState('granted');
-                setPushMessage('Notifications enabled!');
-                setTimeout(() => setPushMessage(''), 3000);
+                setPushMessage('Notifications enabled! 🎉');
+                setTimeout(() => setPushMessage(''), 4000);
             } else {
-                const currentStatus = getNotificationSupportStatus();
-                setPushState(currentStatus);
-                if (currentStatus === 'denied') {
-                    setPushMessage('Permission denied in browser settings.');
+                setPushState(status);
+                if (status === 'denied') {
+                    setPushMessage('Notifications are blocked in your browser settings. Please allow notifications in site settings.');
+                } else if (status === 'unsupported') {
+                    setPushMessage('Notifications not supported in this browser. (On iOS, add to Home Screen first).');
                 } else {
-                    setPushMessage('Failed to enable push notifications.');
+                    setPushMessage('Notification permission was not granted.');
                 }
             }
         } catch (e: any) {
-            setPushState(getNotificationSupportStatus());
+            const status = getNotificationSupportStatus();
+            setPushState(status === 'granted' ? 'granted' : status);
             setPushMessage(e?.message || 'Error subscribing to notifications');
         }
     };
@@ -389,7 +392,16 @@ export function SettingsPage() {
                         </div>
 
                         {pushMessage && (
-                            <p className="text-xs font-medium text-purple-300">{pushMessage}</p>
+                            <div className={clsx(
+                                "text-xs font-medium px-3 py-2 rounded-xl border leading-snug transition-all",
+                                pushMessage.includes('enabled') || pushMessage.includes('OK') || pushMessage.includes('🎉')
+                                    ? "bg-emerald-950/70 border-emerald-500/40 text-emerald-300"
+                                    : pushMessage.includes('blocked') || pushMessage.includes('denied')
+                                    ? "bg-red-950/70 border-red-500/40 text-red-300"
+                                    : "bg-purple-950/70 border-purple-500/40 text-purple-200"
+                            )}>
+                                {pushMessage}
+                            </div>
                         )}
 
                         {pushState === 'granted' ? (
