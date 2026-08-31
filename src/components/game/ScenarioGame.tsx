@@ -143,6 +143,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
     // Save status toast state
     const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+    const [narrationToast, setNarrationToast] = useState<string | null>(null);
 
     useJourneyTracking(level.id);
 
@@ -1117,23 +1118,36 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                     {typeSoundEnabled ? '⌨️' : '🔕'}
                 </button>
 
-                {/* Voice Narration toggle */}
-                <button
-                    onClick={() => {
-                        toggleNarrationMute();
-                        // If we are currently not muted, muting it should pause the audio
-                        if (!isNarrationMuted && audioRef.current) {
-                            audioRef.current.pause();
-                        } else if (isNarrationMuted && audioRef.current && activeAudio) {
-                            audioRef.current.play().catch(console.warn);
-                        }
-                    }}
-                    className={`cinematic-toggle flex items-center justify-center w-10 h-10 rounded-full border border-white/15 hover:bg-white/10 transition-colors shadow-lg ${isNarrationMuted ? 'bg-red-500/10 text-red-400' : 'text-[#00f1fe] bg-[#00f1fe]/10'}`}
-                    style={{ borderColor: `${currentTheme.badgeColor}80` }}
-                    title="Voice Narration"
-                >
-                    {!isNarrationMuted ? <Volume2 size={18} /> : <VolumeX size={18} />}
-                </button>
+                {/* Voice Narration toggle (Test Feature) */}
+                <div className="relative">
+                    <button
+                        onClick={() => {
+                            const willEnable = isNarrationMuted;
+                            toggleNarrationMute();
+                            // If we are currently not muted, muting it should pause the audio
+                            if (!isNarrationMuted && audioRef.current) {
+                                audioRef.current.pause();
+                            } else if (isNarrationMuted && audioRef.current && activeAudio) {
+                                audioRef.current.play().catch(console.warn);
+                            }
+                            setNarrationToast(
+                                willEnable
+                                    ? (activeAudio ? 'Voice Narration Enabled (Test Feature)' : 'Voice Narration Enabled (Test feature — select stories only)')
+                                    : 'Voice Narration Muted'
+                            );
+                            setTimeout(() => setNarrationToast(null), 2500);
+                        }}
+                        className={`cinematic-toggle flex items-center justify-center w-10 h-10 rounded-full border border-white/15 hover:bg-white/10 transition-colors shadow-lg relative ${isNarrationMuted ? 'bg-red-500/10 text-red-400' : 'text-[#00f1fe] bg-[#00f1fe]/10'}`}
+                        style={{ borderColor: `${currentTheme.badgeColor}80` }}
+                        title="Voice Narration (Test feature: available in select stories only)"
+                        aria-label="Voice Narration (Test feature: available in select stories only)"
+                    >
+                        {!isNarrationMuted ? <Volume2 size={18} /> : <VolumeX size={18} />}
+                        <span className="absolute -top-1 -right-1 text-[7px] font-black uppercase tracking-wider bg-amber-400 text-slate-950 px-1 py-0.5 rounded-full border border-black shadow-sm pointer-events-none">
+                            Test
+                        </span>
+                    </button>
+                </div>
             </div>
 
             {/* Top Bar (Stats) */}
@@ -1456,6 +1470,13 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                         : "bg-red-900/80 border-red-400/50 text-red-300"
                 )}>
                     {saveStatus === 'saved' ? '✓ Progress Saved' : '✗ Save Failed — check connection'}
+                </div>
+            )}
+
+            {/* Voice Narration Test Feature Toast */}
+            {narrationToast && (
+                <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[9999] px-4 py-2 rounded-full font-bold text-xs tracking-wide shadow-2xl border backdrop-blur-md bg-slate-900/90 border-[#00f1fe]/40 text-[#00f1fe] animate-fade-in text-center max-w-[90vw]">
+                    {narrationToast}
                 </div>
             )}
 

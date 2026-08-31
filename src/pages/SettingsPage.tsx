@@ -271,11 +271,21 @@ export function SettingsPage() {
                             />
                         </div>
                         <div className="pt-2 border-t border-slate-700">
-                            <div className="flex justify-between items-center">
-                                <span className="text-xs font-bold text-slate-400 uppercase">Voice Narration</span>
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-xs font-bold text-slate-400 uppercase">Voice Narration</span>
+                                        <span className="text-[9px] font-bold text-amber-400 bg-amber-400/10 border border-amber-400/30 px-1.5 py-0.5 rounded tracking-wider uppercase">
+                                            Test Feature
+                                        </span>
+                                    </div>
+                                    <p className="text-[11px] text-slate-400 mt-1 max-w-xs leading-snug">
+                                        Voice narration is a test feature currently available only in select stories.
+                                    </p>
+                                </div>
                                 <button
                                     onClick={() => { audioSynth.playClick(); toggleNarrationMute(); }}
-                                    className={clsx("p-1 px-3 text-xs font-bold rounded transition-colors uppercase tracking-widest", isNarrationMuted ? "text-red-400 bg-red-900/30" : "text-[#00f1fe] bg-[#00f1fe]/20")}
+                                    className={clsx("p-1 px-3 text-xs font-bold rounded transition-colors uppercase tracking-widest shrink-0 ml-2 mt-0.5", isNarrationMuted ? "text-red-400 bg-red-900/30" : "text-[#00f1fe] bg-[#00f1fe]/20")}
                                 >
                                     {isNarrationMuted ? 'Muted' : 'Enabled'}
                                 </button>
