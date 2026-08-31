@@ -389,6 +389,17 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_srk.jpg', scenarioId: 'lvl_age_19_srk_2',
             idolTraits: { discipline: 85, resilience: 100, risk: 90, leadership: 90, creativity: 98, empathy: 95, vision: 85 }
         },
+        // Age 20: Narendra Modi
+        {
+            id: 'lvl_20_modi', title: 'The Canteen and the Calling', description: 'At 20, working in a canteen, a young man feels a deep pull toward a life of ascetic national service.',
+            requiredStars: 0, year: 1970, age: 20, theme: 'Leadership', age_mirror_text: 'serving tea in a canteen while dreaming of dedicating your entire life to a larger cause', archetype: 'The Ascetic', personality: 'Narendra Modi',
+            bio: 'A 20-year-old running a tea stall in Ahmedabad, torn between a regular livelihood and joining the RSS as a full-time Pracharak.',
+            fame: 'Prime Minister of India.',
+            achievements: ['Longest-serving non-Congress Prime Minister of India', 'Chief Minister of Gujarat for 12 years', 'Time Person of the Year Reader\'s Poll Winner'],
+            lesson: 'PURPOSE REQUIRES SACRIFICE — choosing a calling often means leaving conventional security behind.',
+            avatarUrl: '/assets/avatar_Narendra Modi.jpg', scenarioId: 'lvl_age_20_modi',
+            idolTraits: { discipline: 100, resilience: 95, risk: 85, leadership: 100, creativity: 70, empathy: 80, vision: 100 }
+        },
         // Age 20: Prajakta Koli
         {
             id: 'lvl_20_prajakta', title: 'The 2 AM Panic', description: 'At 20, Prajakta quit her 10-year dream job for a risky YouTube career.',
