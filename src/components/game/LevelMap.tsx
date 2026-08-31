@@ -67,10 +67,10 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const masterLevels = generateLevels(activeAge);
     const storeLevelsMap = new Map((levels || []).map(l => [l.id, l]));
 
-    let processedLevels = masterLevels.map(l => {
+    let processedLevels: any[] = masterLevels.map(l => {
         const storeLevel = storeLevelsMap.get(l.id);
         const localScore = levelScores[l.id];
-        let status = storeLevel?.status || l.status || 'unlocked';
+        let status = (storeLevel?.status || l.status || 'unlocked') as 'locked' | 'unlocked' | 'completed';
         let stars = l.stars || 0;
         if (storeLevel?.stars) stars = Math.max(stars, storeLevel.stars);
         if (localScore !== undefined && localScore > 0) {
@@ -90,7 +90,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const extraDbLevels = (levels || []).filter(l => !masterLevelIds.has(l.id)).map(l => {
         const localScore = levelScores[l.id];
         if (localScore !== undefined && localScore > 0) {
-            return { ...l, status: 'completed', stars: Math.max(l.stars || 0, localScore) };
+            return { ...l, status: 'completed' as const, stars: Math.max(l.stars || 0, localScore) };
         }
         return l;
     });

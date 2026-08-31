@@ -123,7 +123,7 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         historicalContext: 'Scored 74% in Class 12 and enrolled in BA History at Shaheed Bhagat Singh College to free up nights for playing guitar 8 PM to midnight at a Mughlai restaurant in Delhi.',
         reflectionPrompt: 'Where are you avoiding the unglamorous, exhausting ground-level work required to turn your passion into a real skill?',
         microActionPrompt: 'Spend 30 uninterrupted minutes today practicing your core craft, regardless of how tired or uninspired you feel.',
-        difficulty: 'medium',
+        difficulty: 'moderate',
         targetTraits: { risk: 88, creativity: 98, vision: 92, empathy: 90, leadership: 85 },
     },
 };
