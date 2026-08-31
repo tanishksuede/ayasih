@@ -270,6 +270,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'deep',
         targetTraits: { risk: 100, creativity: 100, vision: 95, empathy: 85, leadership: 95 },
     },
+    'lvl_age_22_moosewala': {
+        scenarioId: 'lvl_age_22_moosewala',
+        dilemmaType: 'Safe Engineering Career vs International Leap',
+        lifeTheme: 'career_transition',
+        situationalTags: ['career_transition', 'career_uncertainty', 'starting_something', 'family_pressure', 'big_decision', 'identity_question'],
+        protagonistLens: 'How Siddhu Moosewala completed his electrical engineering degree for his family, then took on massive student loans to move to Canada and pursue his music career.',
+        historicalContext: 'In 2016 at age 22, he graduated in Electrical Engineering in Punjab, but chose to move to Brampton, Canada on a student visa to enter the diaspora music world.',
+        reflectionPrompt: 'Are you staying in a comfortable, predictable path out of guilt or fear of the unknown struggle required to chase what you love?',
+        microActionPrompt: 'Identify the single biggest barrier preventing you from pivoting toward your real ambition, and research one practical step to overcome it.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 100, creativity: 100, vision: 95, empathy: 85, leadership: 95 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

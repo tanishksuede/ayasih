@@ -945,6 +945,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_22_aujla',
             idolTraits: { discipline: 95, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
         },
+        // Age 22: Siddhu Moosewala
+        {
+            id: 'lvl_22_moosewala_1',
+            title: 'The One-Way Ticket',
+            description: 'At 22, freshly graduated with an electrical engineering degree in Punjab, you must decide whether to take a safe corporate job or take on massive student loans to move to Canada and chase your music.',
+            requiredStars: 0,
+            year: 2016,
+            age: 22,
+            theme: 'Music',
+            age_mirror_text: 'staring at your freshly printed engineering degree in Punjab while holding a one-way visa to Canada, deciding whether to take the safe corporate job or leap into the unknown',
+            archetype: 'The Audacious',
+            personality: 'Siddhu Moosewala',
+            bio: 'A 22-year-old engineering graduate in Punjab choosing between local corporate security and taking on international student debt to forge his musical identity in Canada.',
+            fame: 'Iconic Punjabi singer, lyricist, and global cultural legend.',
+            achievements: ['Graduated in Electrical Engineering before taking the leap to Canada', 'Embraced massive immigrant struggle to build an original sound', 'Global phenomenon who revolutionized modern Punjabi music'],
+            lesson: 'Sometimes you have to finish the path others laid out for you before you can forge your own; true growth requires leaving behind home safety to struggle in an unknown environment.',
+            avatarUrl: '/assets/avatar_SiddhuMoosewala.jpg',
+            scenarioId: 'lvl_age_22_moosewala',
+            idolTraits: { discipline: 95, resilience: 100, risk: 100, leadership: 95, creativity: 100, empathy: 85, vision: 100 }
+        },
         {
             id: 'lvl_22', title: 'The Dreamer', description: 'At 22, Walt lost everything and drew a mouse on a train.',
             requiredStars: 12, year: 1923, age: 22, theme: 'Art', archetype: 'The Dreamer', personality: 'Walt Disney',

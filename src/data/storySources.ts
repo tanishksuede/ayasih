@@ -1073,6 +1073,20 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── SIDDHU MOOSEWALA (Age 22) ─────────────────────────────────────────────
+  'lvl_age_22_moosewala': [
+    {
+      title: 'The Tribune / Biographical Profiles',
+      type: 'article',
+      detail: 'Documents his graduation with a Bachelor\'s in Electrical Engineering from Guru Nanak Dev Engineering College, Ludhiana in 2016.',
+    },
+    {
+      title: 'Times of India / Various Artist Retrospectives',
+      type: 'article',
+      detail: 'Details his decision to take on student loans to enroll at Humber College in Canada immediately after graduation to immerse himself in the diaspora music scene.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

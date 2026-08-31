@@ -4906,6 +4906,91 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 22: Siddhu Moosewala
+    'lvl_age_22_moosewala': {
+        title: "The One-Way Ticket",
+        source: "Source: The Tribune & Times of India (2015–2016)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'conflicted',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "At 22, you hold your freshly printed Electrical Engineering degree from GNDEC Ludhiana. Your parents are overjoyed, expecting you to take a secure, prestigious corporate engineering post in Punjab.",
+                choices: [
+                    { text: "Look at your options", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'restless',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "Behind closed doors, your notebooks are overflowing with explosive, original lyrics. You have secured admission to Humber College in Canada, but going means taking on massive student loans, working grueling manual labor, and abandoning your degree's immediate safety.",
+                choices: [
+                    { text: "Make the pivotal life decision", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'determined',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "What do you do with your newly earned degree and secret musical ambition?",
+                choices: [
+                    {
+                        text: "Take the safe engineering job in Punjab to respect your parents' investment.",
+                        next: 'corporate_safety',
+                        score: 3,
+                        feedbackTitle: "Corporate Safety",
+                        feedback: "You fulfill traditional societal expectations, but your creative fire slowly suffocates under the weight of routine."
+                    },
+                    {
+                        text: "Stay in Punjab and try to pitch your lyrics to local artists while living at home.",
+                        next: 'local_pitch',
+                        score: 4,
+                        feedbackTitle: "Local Stagnation",
+                        feedback: "You earn minor credits selling lyrics locally, but remain trapped in a saturated scene without developing your own global voice."
+                    },
+                    {
+                        text: "Move to Canada on a student visa, embracing the international hustle to build your sound.",
+                        next: 'canada_leap',
+                        score: 10,
+                        feedbackTitle: "The Audacious Leap",
+                        feedback: "You take on debt and manual labor in a foreign country, forging the gritty immigrant perspective that makes your music immortal."
+                    }
+                ]
+            },
+            {
+                id: 'corporate_safety',
+                emotion: 'resigned',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "You take the desk job and collect steady paychecks, but watching other artists dominate the airwaves leaves you forever asking 'what if'.",
+                choices: [
+                    { text: "Rethink your potential", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'local_pitch',
+                emotion: 'frustrated',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "Staying on safe home turf keeps your living costs low, but you never develop the raw independence needed to lead an entire genre.",
+                choices: [
+                    { text: "Take the bolder path", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'canada_leap',
+                emotion: 'determined',
+                bg: '/assets/avatar_SiddhuMoosewala.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_SiddhuMoosewala.jpg',
+                text: "You board the flight to Canada with a one-way ticket and heavy loans. The harsh struggle in Brampton becomes the crucible that transforms Sidhu Moose Wala into a generational global icon.\n\nLESSONS:\n1. Sometimes you have to finish the path others laid out for you before you can forge your own.\n2. True growth often requires leaving behind the safety of your home turf to struggle in an unknown environment.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

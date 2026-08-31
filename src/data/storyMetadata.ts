@@ -4365,6 +4365,63 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_22_moosewala",
+    "situationTags": [
+      "career_transition",
+      "career_uncertainty",
+      "starting_something",
+      "family_pressure",
+      "big_decision",
+      "identity_question"
+    ],
+    "problemTags": [
+      "abandoning_engineering_degree",
+      "local_comfort_vs_international_struggle",
+      "taking_massive_student_debt"
+    ],
+    "emotionalTags": [
+      "conflicted",
+      "determined",
+      "anxious",
+      "hopeful"
+    ],
+    "intentTags": [
+      "find_direction",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "early_twenties"
+    ],
+    "ageMin": 20,
+    "ageMax": 24,
+    "dominantTrait": "risk",
+    "resolutionArchetype": "action_step",
+    "lessonTags": [
+      "risk",
+      "courage",
+      "independence",
+      "vision",
+      "authenticity"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Siddhu Moosewala at age 22 graduating with an Electrical Engineering degree and choosing to take on heavy student loans to move to Canada on a one-way ticket to chase music.",
+    "triggerPhrases": [
+      "siddhu moosewala",
+      "sidhu moose wala",
+      "the one-way ticket",
+      "engineering graduate",
+      "move to canada",
+      "humber college"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Siddhu Moosewala at age 22 faced a pivotal choice in The One-Way Ticket — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",
