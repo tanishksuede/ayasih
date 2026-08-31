@@ -508,6 +508,26 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_bill_gates.png', scenarioId: 'lvl_age_20',
             idolTraits: { discipline: 92, resilience: 85, risk: 90, leadership: 95, creativity: 85, empathy: 70, vision: 98 }
         },
+        // Age 20: Narendra Modi
+        {
+            id: 'lvl_20_modi',
+            title: 'The Canteen and the Calling',
+            description: 'At 20, serving tea at a bus depot canteen while torn between monastic life, family business, and grassroots national service.',
+            requiredStars: 0,
+            year: 1970,
+            age: 20,
+            theme: 'Leadership',
+            age_mirror_text: 'working at a bustling bus depot canteen, balancing spiritual ideals against the reality of grassroots national service',
+            archetype: 'The Pracharak',
+            personality: 'Narendra Modi',
+            bio: 'A 20-year-old serving tea at Ahmedabad bus depot canteen after two years in the Himalayas, deciding how to ground spiritual ideals into disciplined national service.',
+            fame: 'Prime Minister of India and grassroots organizer.',
+            achievements: ['Prime Minister of India (2014–present)', 'Chief Minister of Gujarat (2001–2014)', 'Full-time grassroots pracharak from youth'],
+            lesson: 'True purpose often lies at the intersection of your highest ideals and the gritty reality of everyday work.',
+            avatarUrl: '/assets/avatar_Narendra Modi.jpg',
+            scenarioId: 'lvl_age_20_modi',
+            idolTraits: { discipline: 98, resilience: 95, risk: 90, leadership: 98, creativity: 80, empathy: 85, vision: 95 }
+        },
         
         {
             id: 'lvl_21_sheeran_1', title: 'The Photo She Might See', description: 'At 21, you must choose how to handle the painful intersection of a recent breakup and sudden public attention.',

@@ -3762,6 +3762,110 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 20: Narendra Modi
+    'lvl_age_20_modi': {
+        title: "The Canteen and the Calling",
+        source: "Source: BJP Biography, The Economic Times & Andy Marino (2014)",
+        frames: [
+            {
+                id: 'intro',
+                emotion: 'seeking',
+                bg: '/assets/bg_Narendra Modi.jpg',
+                portrait: '/assets/avatar_Narendra Modi.jpg',
+                text: "After spending two years wandering the Himalayas and visiting ashrams in search of spiritual truth, your reality has abruptly shifted. At 20, you are back in the noisy, grueling environment of a city. You are living in Ahmedabad, working at a bustling canteen at the Geeta Mandir bus depot run by your family. From dawn to dusk, you serve tea to weary travelers. Yet, your mind remains restless. In your free time, you volunteer at the local Rashtriya Swayamsevak Sangh (RSS) headquarters—sweeping floors and making tea for senior organizers. You know you want your life to mean something bigger, but you are torn on how to actually channel your energy.\n\nYour spiritual journey changed you, but now you must make a definitive choice about how to spend your life's energy in the real world.",
+                choices: [
+                    {
+                        text: "A) Return to the monasteries to become a traditional monk.",
+                        next: 'monk_path',
+                        score: 5,
+                        feedbackTitle: "Spiritual Seeking",
+                        feedback: "The spiritual pull is immense and offers deep internal peace, but it isolates you from the immediate, daily struggles of the people you want to help."
+                    },
+                    {
+                        text: "B) Focus on building a secure life through the canteen business.",
+                        next: 'canteen_path',
+                        score: 5,
+                        feedbackTitle: "Financial Security",
+                        feedback: "It is the expected path, offering financial stability and family approval, but it feels far too small for the fire burning inside you."
+                    },
+                    {
+                        text: "C) Commit fully to the RSS as a grassroots organizer (pracharak).",
+                        next: 'pracharak_path',
+                        score: 10,
+                        feedbackTitle: "Austere Service",
+                        feedback: "This path demands extreme austerity, constant travel, and abandoning any prospect of personal wealth or family life, but it allows you to serve the nation directly."
+                    }
+                ]
+            },
+            {
+                id: 'monk_path',
+                emotion: 'uncertainty',
+                bg: '/assets/bg_Narendra Modi.jpg',
+                portrait: '/assets/avatar_Narendra Modi.jpg',
+                text: "You realize that retreating from the world won't solve its problems. A mentor advises you that true spirituality is found in serving people where they suffer most. You decide that your spiritual energy must be converted into social action.",
+                choices: [
+                    {
+                        text: "Channel spiritual ideals into disciplined grassroots service.",
+                        next: 'pracharak_path',
+                        score: 10,
+                        feedbackTitle: "Action Step",
+                        feedback: "True purpose requires translating high ideals into practical daily work."
+                    }
+                ]
+            },
+            {
+                id: 'canteen_path',
+                emotion: 'tension',
+                bg: '/assets/bg_Narendra Modi.jpg',
+                portrait: '/assets/avatar_Narendra Modi.jpg',
+                text: "The security of the canteen brings routine, but the restlessness never fades. You quickly realize that financial comfort cannot substitute for a life of purpose. You step away from the business to seek a role that impacts society at large.",
+                choices: [
+                    {
+                        text: "Step away from comfort and commit to the larger mission.",
+                        next: 'pracharak_path',
+                        score: 10,
+                        feedbackTitle: "Action Step",
+                        feedback: "Comfort cannot substitute for a calling."
+                    }
+                ]
+            },
+            {
+                id: 'pracharak_path',
+                emotion: 'determination',
+                bg: '/assets/bg_Narendra Modi.jpg',
+                portrait: '/assets/avatar_Narendra Modi.jpg',
+                text: "You embrace the grueling life of a pracharak. You realize that changing a nation requires more than spiritual philosophy—it requires relentless, organized, unglamorous hard work. You take the oath of service, accepting a life of strict discipline that will ultimately shape your entire future and the future of the country.",
+                choices: [
+                    {
+                        text: "Reflect on the Path of Purpose",
+                        next: 'lesson',
+                        score: 10,
+                        feedbackTitle: "The Calling Embraced",
+                        feedback: "Grueling discipline and service become the crucible of leadership."
+                    }
+                ]
+            },
+            {
+                id: 'lesson',
+                emotion: 'determination',
+                bg: '/assets/avatar_Narendra Modi.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_Narendra Modi.jpg',
+                text: "At 20, Narendra Modi moved from the bus depot canteen to full-time national service as an RSS pracharak, living with absolute austerity and discipline.\n\nLESSONS:\n1. True purpose often lies at the intersection of your highest ideals and the gritty reality of everyday work.\n2. Serving a massive cause requires grueling discipline, not just good intentions.",
+                choices: [
+                    {
+                        text: "Complete Level",
+                        next: 'COMPLETE',
+                        score: 10,
+                        feedbackTitle: "Mission Accomplished",
+                        feedback: ""
+                    }
+                ]
+            }
+        ]
+    },
+
     // AGE 20 (shown as 19 in-game): Falguni Nayar
     'lvl_age_19_falguni': {
         title: "Science or Business",

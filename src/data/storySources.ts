@@ -812,4 +812,23 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── NARENDRA MODI (Age 20) ──────────────────────────────────────────────────
+  'lvl_age_20_modi': [
+    {
+      title: 'Bharatiya Janata Party Official Biography',
+      type: 'article',
+      detail: 'bjp.org — Documents Modi spending two years wandering the Himalayas seeking spiritual truth before returning to Gujarat.',
+    },
+    {
+      title: 'The Economic Times & The Times of India (2014, 2015)',
+      type: 'article',
+      detail: 'Historical records documenting that at age 20 (1970), he worked in his uncle/brother\'s canteen at the Gujarat State Road Transport Corporation (Gita Mandir bus depot) in Ahmedabad.',
+    },
+    {
+      title: 'Narendra Modi: A Political Biography',
+      type: 'book',
+      detail: 'Andy Marino (2014) — Traces his time volunteering at the RSS headquarters doing chores, before becoming a full-time pracharak (campaigner/organizer) and leaving the family business.',
+    },
+  ],
+
 };

@@ -102,6 +102,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'deep',
         targetTraits: { risk: 75, creativity: 80, vision: 95, empathy: 60, leadership: 70 },
     },
+    'lvl_age_20_modi': {
+        scenarioId: 'lvl_age_20_modi',
+        dilemmaType: 'Spiritual Idealism vs Grassroots Service',
+        lifeTheme: 'finding_purpose',
+        situationalTags: ['purpose', 'starting_with_little', 'discipline', 'career_uncertainty', 'austerity', 'national_service'],
+        protagonistLens: 'How Narendra Modi chose grueling, unglamorous grassroots organizing over monastic isolation and business security.',
+        historicalContext: 'At age 20 (1970), after two years in the Himalayas, Modi worked in an Ahmedabad bus depot canteen and volunteered doing chores at RSS headquarters before becoming a full-time pracharak.',
+        reflectionPrompt: 'Where in your life are you waiting for ideal conditions instead of doing the unglamorous daily work of your calling?',
+        microActionPrompt: 'Pick one difficult, disciplined action today that serves your long-term purpose rather than your short-term comfort.',
+        difficulty: 'deep',
+        targetTraits: { risk: 90, creativity: 80, vision: 95, empathy: 85, leadership: 98 },
+    },
 };
 
 /**

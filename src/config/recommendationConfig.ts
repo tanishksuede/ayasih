@@ -169,6 +169,9 @@ export const CHECKIN_TAGS = {
     { value: 'loneliness',             label: 'Feeling alone' },
     { value: 'comparison_trap',        label: 'Comparing myself to others' },
     { value: 'big_decision',           label: 'A big decision to make' },
+    { value: 'purpose',                label: 'Finding my purpose / calling' },
+    { value: 'starting_with_little',   label: 'Starting from the bottom' },
+    { value: 'discipline',             label: 'Building discipline' },
   ],
   emotional: [
     { value: 'anxious',     label: 'Anxious' },
@@ -183,6 +186,9 @@ export const CHECKIN_TAGS = {
     { value: 'determined',  label: 'Determined' },
     { value: 'curious',     label: 'Curious' },
     { value: 'burnt_out',   label: 'Burnt out' },
+    { value: 'restless',    label: 'Restless' },
+    { value: 'seeking',     label: 'Seeking' },
+    { value: 'conflicted',  label: 'Conflicted' },
   ],
   intent: [
     { value: 'find_direction',      label: 'Find direction' },
@@ -193,6 +199,7 @@ export const CHECKIN_TAGS = {
     { value: 'feel_less_alone',     label: 'Feel less alone' },
     { value: 'understand_myself',   label: 'Understand myself better' },
     { value: 'get_inspired',        label: 'Get inspired' },
+    { value: 'courage_to_commit',   label: 'Courage to commit to a path' },
   ],
 } as const;
 

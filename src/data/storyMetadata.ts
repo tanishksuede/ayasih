@@ -3585,6 +3585,65 @@ export const STORY_METADATA: StoryMetadata[] = [
     "whyThisStoryTemplate": "You are dealing with {user_problem}. J.K. Rowling at age 25 faced a pivotal choice in The Storyteller — where {trait} guided their path.",
     "isPremium": true,
     "premiumTier": "aya_plus"
+  },
+  {
+    "storyId": "lvl_age_20_modi",
+    "situationTags": [
+      "purpose",
+      "starting_with_little",
+      "discipline",
+      "career_uncertainty"
+    ],
+    "problemTags": [
+      "unfulfilled_by_work",
+      "spiritual_vs_practical",
+      "security_vs_service",
+      "uncertainty"
+    ],
+    "emotionalTags": [
+      "restless",
+      "seeking",
+      "determined",
+      "conflicted"
+    ],
+    "intentTags": [
+      "find_direction",
+      "build_discipline",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "early_20s"
+    ],
+    "ageMin": 16,
+    "ageMax": 25,
+    "dominantTrait": "purpose",
+    "resolutionArchetype": "action_step",
+    "lessonTags": [
+      "purpose",
+      "discipline",
+      "service",
+      "courage",
+      "resilience"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Narendra Modi at age 20 navigating the canteen and the calling: At 20, working in a bus depot canteen after two years in the Himalayas, torn between monastic life, business security, and full-time national service.",
+    "triggerPhrases": [
+      "narendra modi",
+      "the canteen and the calling",
+      "narendra modi age 20",
+      "purpose",
+      "starting_with_little",
+      "discipline",
+      "pracharak",
+      "canteen"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Narendra Modi at age 20 faced a pivotal choice in The Canteen and the Calling — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
   }
 ];
 

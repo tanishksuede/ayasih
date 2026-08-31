@@ -2059,6 +2059,32 @@ INSERT INTO public.story_metadata (
     'aya_plus',
     NOW(),
     NOW()
+),
+(
+    'lvl_age_20_modi',
+    ARRAY['purpose', 'starting_with_little', 'discipline', 'career_uncertainty'],
+    ARRAY['unfulfilled_by_work', 'spiritual_vs_practical', 'security_vs_service', 'uncertainty'],
+    ARRAY['restless', 'seeking', 'determined', 'conflicted'],
+    ARRAY['find_direction', 'build_discipline', 'courage_to_commit'],
+    ARRAY['early_20s'],
+    16,
+    25,
+    'purpose',
+    '{"leadership":0.98,"discipline":0.98,"vision":0.95,"risk":0.9,"resilience":0.95,"empathy":0.85,"creativity":0.8}'::jsonb,
+    'action_step',
+    ARRAY['purpose', 'discipline', 'service', 'courage', 'resilience'],
+    3,
+    5,
+    'modern',
+    'indian',
+    'A story about Narendra Modi at age 20 navigating the canteen and the calling: At 20, working in a bus depot canteen after two years in the Himalayas, torn between monastic life, business security, and full-time national service.',
+    ARRAY['narendra modi', 'the canteen and the calling', 'narendra modi age 20', 'purpose', 'starting_with_little', 'discipline', 'pracharak', 'canteen'],
+    'challenge',
+    'You are dealing with {user_problem}. Narendra Modi at age 20 faced a pivotal choice in The Canteen and the Calling — where {trait} guided their path.',
+    false,
+    NULL,
+    NOW(),
+    NOW()
 )
 ON CONFLICT (story_id) DO UPDATE SET
     situation_tags = EXCLUDED.situation_tags,

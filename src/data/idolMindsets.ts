@@ -1403,6 +1403,33 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
             coreValue: 'Impact'
         },
         avatarUrl: '/assets/portrait-rani-lakshmibai.png'
+    },
+    "Narendra Modi": {
+        name: "Narendra Modi",
+        archetypeTitle: "The Pracharak",
+        quote: "Hard work never brings fatigue. It brings satisfaction.",
+        voice: {
+            tone: "Determined, Disciplined, Purpose-Driven",
+            intro: "True purpose lies at the intersection of your highest ideals and the gritty reality of everyday work."
+        },
+        missions: {
+            discipline: { title: "The Unglamorous Grind", desc: "Complete the single most tedious, unglamorous chore on your list without complaining.", xp: "+50 Pure Discipline" },
+            resilience: { title: "Austerity & Resolve", desc: "Deny yourself one immediate comfort today to stay focused on your larger mission.", xp: "+50 Resolve" },
+            risk: { title: "Commit to the Mission", desc: "Make a decisive commitment to a cause larger than yourself.", xp: "+50 Conviction" },
+            leadership: { title: "Grassroots Connection", desc: "Serve or listen to someone whose background is completely different from yours.", xp: "+50 Grounding" },
+            creativity: { title: "Organize the Effort", desc: "Create a simple, structured system to solve a chaotic daily problem.", xp: "+50 Execution" },
+            empathy: { title: "Service Without Spotlight", desc: "Do something genuinely helpful for your community or workplace with zero recognition.", xp: "+50 Humility" },
+            vision: { title: "The Larger Purpose", desc: "Write down how your daily efforts connect to a purpose bigger than your own comfort.", xp: "+50 Vision" }
+        },
+        profile: {
+            motivation: 'Service',
+            risk: 'Bold',
+            emotional: 'Disciplined',
+            social: 'Organizer',
+            passion: 'National Service',
+            coreValue: 'Duty'
+        },
+        avatarUrl: '/assets/avatar_Narendra Modi.jpg'
     }
 };
 
@@ -1458,4 +1485,5 @@ export const IDOL_PROFILES: Record<string, Record<string, number>> = {
     "Ed Sheeran": { analytical: 40, ambitious: 75, risk: 60, creativity: 90, social: 85 },
     "Tanmay Bhat": { analytical: 75, ambitious: 90, risk: 95, creativity: 100, social: 85 },
     "Selena Gomez": { analytical: 45, ambitious: 80, risk: 65, creativity: 85, social: 95 },
+    "Narendra Modi": { analytical: 85, ambitious: 95, risk: 90, creativity: 80, social: 95 },
 };
