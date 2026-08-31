@@ -440,7 +440,12 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                                             trackSituationEvent('notify_me_clicked', { situation: activeSituationFilter });
                                             setNotifyError(false);
                                             const { logStoryRequest } = await import('../../services/storyRequestService');
-                                            const result = await logStoryRequest(profile?.id, activeSituationFilter);
+                                            const result = await logStoryRequest(
+                                                profile?.id, 
+                                                activeSituationFilter, 
+                                                getSituationLabel(activeSituationFilter),
+                                                Number(activeAge) || profile?.age || 18
+                                            );
                                             if (result.success) {
                                                 setNotified(true);
                                             } else {
