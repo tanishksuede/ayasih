@@ -561,10 +561,35 @@ export async function getStoryAnalytics(journeyId: string) {
   }
 }
 
-export async function getUserAnalytics(userId: string) {
-  if (!isValidUuid(userId)) return null;
+export async function getUserAnalytics(userQuery: string) {
+  if (!userQuery?.trim()) return null;
+  let userId = userQuery.trim();
+  let userProfile: any = null;
 
   try {
+    if (!isValidUuid(userId)) {
+      // Lookup by username or mobile
+      const { data: foundUser } = await supabase
+        .from('users')
+        .select('id, username, name, age, mobile')
+        .or(`username.eq.${userId},mobile.eq.${userId}`)
+        .maybeSingle();
+
+      if (foundUser) {
+        userId = foundUser.id;
+        userProfile = foundUser;
+      } else {
+        return null;
+      }
+    } else {
+      const { data: foundUser } = await supabase
+        .from('users')
+        .select('id, username, name, age, mobile')
+        .eq('id', userId)
+        .maybeSingle();
+      userProfile = foundUser;
+    }
+
     const { data: events, error: evErr } = await supabase
       .from('journey_events')
       .select('event_type, event_data, journey_id, created_at')
@@ -579,7 +604,9 @@ export async function getUserAnalytics(userId: string) {
 
     events?.forEach((ev: any) => {
       if (ev.journey_id) storiesStarted.add(ev.journey_id);
-      if (ev.event_type === 'story_completed') storiesCompleted.add(ev.journey_id);
+      if (ev.event_type === 'story_completed' || ev.event_type === 'journey_complete') {
+        storiesCompleted.add(ev.journey_id);
+      }
       if (ev.event_type === 'frame_completed' && ev.event_data?.time_taken_ms) {
         avgTimes.push(ev.event_data.time_taken_ms);
       }
@@ -599,12 +626,14 @@ export async function getUserAnalytics(userId: string) {
       : 'N/A';
 
     return {
+      userId,
+      userProfile,
       totalStoriesStarted: storiesStarted.size,
       totalStoriesCompleted: storiesCompleted.size,
       completionRate: storiesStarted.size > 0 ? ((storiesCompleted.size / storiesStarted.size) * 100).toFixed(1) + '%' : '0%',
       avgDecisionTimeS,
       avgSentiment,
-      recentActivity: events?.slice(0, 5) || []
+      recentActivity: events?.slice(0, 15) || []
     };
   } catch (err) {
     return null;
