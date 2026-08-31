@@ -6,7 +6,7 @@ import { subscribeUserToPush } from '../utils/pushNotifications';
 import { safeStorage } from '../utils/storage';
 import { useUserStore } from '../store/userStore';
 
-const NOTIF_KEY = 'notificationPromptShown';
+const NOTIF_KEY = 'aya_daily_notif_prompt_date';
 
 export function HomePage() {
     const navigate = useNavigate();
@@ -14,14 +14,11 @@ export function HomePage() {
     const profile = useUserStore((state) => state.profile);
 
     useEffect(() => {
-        // Show the modal only if:
-        //  1. The user has NOT been prompted before (localStorage key absent/falsy)
-        //  2. The browser permission is still 'default' (not yet granted or denied)
-        const alreadyShown = safeStorage.get(NOTIF_KEY);
-        const permission =
-            'Notification' in window ? Notification.permission : 'denied';
+        const todayDateStr = new Date().toISOString().split('T')[0];
+        const lastPromptDate = safeStorage.get(NOTIF_KEY);
+        const permission = typeof window !== 'undefined' && 'Notification' in window ? Notification.permission : 'denied';
 
-        if (!alreadyShown && permission === 'default' && (profile?.stories_completed || 0) > 0) {
+        if (lastPromptDate !== todayDateStr && permission !== 'granted' && (profile?.stories_completed || 0) > 0) {
             const timer = setTimeout(() => {
                 setShowNotificationPrompt(true);
             }, 2000);
@@ -30,13 +27,15 @@ export function HomePage() {
     }, [profile?.stories_completed]);
 
     const handleAccept = async () => {
-        await subscribeUserToPush();
-        safeStorage.set(NOTIF_KEY, 'true');
+        const todayDateStr = new Date().toISOString().split('T')[0];
+        safeStorage.set(NOTIF_KEY, todayDateStr);
         setShowNotificationPrompt(false);
+        await subscribeUserToPush(profile?.id);
     };
 
     const handleDecline = () => {
-        safeStorage.set(NOTIF_KEY, 'true');
+        const todayDateStr = new Date().toISOString().split('T')[0];
+        safeStorage.set(NOTIF_KEY, todayDateStr);
         setShowNotificationPrompt(false);
     };
 

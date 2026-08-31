@@ -10,6 +10,8 @@ import { getSession, clearSession, markQuizDone, isQuizDone } from '../utils/ses
 import { withTimeout } from '../utils/withTimeout';
 import { useUserStore } from '../store/userStore';
 import { safeStorage } from '../utils/storage';
+import { NotificationPrompt } from '../components/ui/NotificationPrompt';
+import { subscribeUserToPush } from '../utils/pushNotifications';
 
 export function GameRoot() {
     const profile = useUserStore((state) => state.profile);
@@ -434,6 +436,51 @@ export function GameRoot() {
         location.pathname === '/game/journal' ||
         location.pathname.startsWith('/game/admin');
 
+    // Daily Notification Prompt Check
+    const [showDailyNotifPrompt, setShowDailyNotifPrompt] = useState(false);
+
+    useEffect(() => {
+        if (sessionStatus !== 'found' || !profile) return;
+        
+        // Skip on initial onboarding / assessment steps
+        if (!profile.assessmentCompleted || location.pathname.startsWith('/game/onboarding') || location.pathname.startsWith('/game/assessment')) {
+            return;
+        }
+
+        // Only prompt if notifications are not already enabled in browser
+        const hasNotificationSupport = typeof window !== 'undefined' && 'Notification' in window;
+        if (!hasNotificationSupport) return;
+        if (Notification.permission === 'granted') return;
+
+        // Check if we already prompted the user today
+        const todayDateStr = new Date().toISOString().split('T')[0];
+        const lastPromptDate = safeStorage.get('aya_daily_notif_prompt_date');
+
+        if (lastPromptDate !== todayDateStr) {
+            const timer = setTimeout(() => {
+                setShowDailyNotifPrompt(true);
+            }, 3500);
+            return () => clearTimeout(timer);
+        }
+    }, [sessionStatus, profile, location.pathname]);
+
+    const handleAcceptDailyNotif = async () => {
+        const todayDateStr = new Date().toISOString().split('T')[0];
+        safeStorage.set('aya_daily_notif_prompt_date', todayDateStr);
+        setShowDailyNotifPrompt(false);
+        try {
+            await subscribeUserToPush(profile?.id);
+        } catch (err) {
+            console.warn('[DailyNotif] Subscription notice:', err);
+        }
+    };
+
+    const handleDeclineDailyNotif = () => {
+        const todayDateStr = new Date().toISOString().split('T')[0];
+        safeStorage.set('aya_daily_notif_prompt_date', todayDateStr);
+        setShowDailyNotifPrompt(false);
+    };
+
     return (
         <div className={`relative w-full font-sans bg-slate-900 text-slate-100 ${
             isScrollableRoute
@@ -446,6 +493,11 @@ export function GameRoot() {
                 onClose={() => setShowSubscriptionModal(false)} 
             />
             <Outlet />
+            <NotificationPrompt 
+                isOpen={showDailyNotifPrompt}
+                onAccept={handleAcceptDailyNotif}
+                onDecline={handleDeclineDailyNotif}
+            />
             {pendingStreakData && (
                 <div className="absolute inset-0 z-[9999]">
                     <StreakCelebration 
