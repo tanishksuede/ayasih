@@ -216,12 +216,12 @@ export function AntiGravityCanvas({ progress, onReady }: AntiGravityCanvasProps)
         const tick = () => {
             const currentProgress = progress.get() || 0; 
             const index = Math.floor(currentProgress * (totalFrames - 1));
-            
-            // Always ask FrameManager to fetch around the target
-            frameManager.current?.updateTargetFrame(Math.max(0, Math.min(totalFrames - 1, index)));
+            const safeTarget = Math.max(0, Math.min(totalFrames - 1, index));
 
-            // Only draw if the target frame index changed
-            if (index !== lastDrawnIndexRef.current) {
+            // Only update target frame & compute nearest frame if target frame index changed
+            if (safeTarget !== lastDrawnIndexRef.current) {
+                frameManager.current?.updateTargetFrame(safeTarget);
+
                 // Try to find the closest loaded frame to prevent visual freezing
                 let bestImg = null;
                 let bestIndex = -1;
@@ -229,7 +229,7 @@ export function AntiGravityCanvas({ progress, onReady }: AntiGravityCanvasProps)
                 // Search outwards from target index to find the nearest loaded frame
                 for (let offset = 0; offset <= 20; offset++) {
                     // Try exact or ahead
-                    let checkIdx = Math.max(0, Math.min(totalFrames - 1, index + offset));
+                    let checkIdx = Math.min(totalFrames - 1, safeTarget + offset);
                     let img = frameManager.current?.getFrame(checkIdx);
                     if (img && img.complete) {
                         bestImg = img;
@@ -239,7 +239,7 @@ export function AntiGravityCanvas({ progress, onReady }: AntiGravityCanvasProps)
                     
                     // Try behind
                     if (offset > 0) {
-                        checkIdx = Math.max(0, Math.min(totalFrames - 1, index - offset));
+                        checkIdx = Math.max(0, safeTarget - offset);
                         img = frameManager.current?.getFrame(checkIdx);
                         if (img && img.complete) {
                             bestImg = img;

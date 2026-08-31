@@ -257,12 +257,12 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
 
     const { scrollYProgress, scrollY: motionScrollY } = useScroll({ container: containerRef });
 
-    // The "Liquid Scroll" feel
+    // Fast, zero-lag liquid spring tracking
     const smoothProgress = useSpring(scrollYProgress, {
-        stiffness: 400, // Increased for sharper response
-        damping: 40,    // Increased to prevent wobble
-        mass: 0.5,      // Lighter mass for immediate start
-        restDelta: 0.001
+        stiffness: 800, // Instant response
+        damping: 55,    // Smooth settling without wobble
+        mass: 0.08,     // Ultra-light mass for immediate 1:1 finger/wheel tracking
+        restDelta: 0.0001
     });
 
     const scrollableDistance = Math.max(0, totalHeight - windowHeight);
@@ -285,34 +285,40 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
         return () => clearTimeout(timer);
     }, [ageLevels.length]);
 
-    // --- SCROLL AUDIO GLIDE ---
+    // --- SCROLL AUDIO GLIDE (THROTTLED TO RAF) ---
     useEffect(() => {
         const container = containerRef.current;
         if (!container) return;
 
         let lastScrollTop = container.scrollTop;
         let scrollTimeout: any;
+        let rafId: number | null = null;
 
         const handleScroll = () => {
-            const currentScrollTop = container.scrollTop;
-            const delta = Math.abs(currentScrollTop - lastScrollTop);
-            
-            if (delta > 2) {
-                audioSynth.startGlide();
-                audioSynth.updateGlide(delta);
+            if (rafId !== null) return;
+            rafId = requestAnimationFrame(() => {
+                rafId = null;
+                const currentScrollTop = container.scrollTop;
+                const delta = Math.abs(currentScrollTop - lastScrollTop);
                 
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(() => {
-                    audioSynth.stopGlide();
-                }, 150);
-            }
-            
-            lastScrollTop = currentScrollTop;
+                if (delta > 3) {
+                    audioSynth.startGlide();
+                    audioSynth.updateGlide(delta);
+                    
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        audioSynth.stopGlide();
+                    }, 120);
+                }
+                
+                lastScrollTop = currentScrollTop;
+            });
         };
 
-        container.addEventListener('scroll', handleScroll);
+        container.addEventListener('scroll', handleScroll, { passive: true });
         return () => {
             container.removeEventListener('scroll', handleScroll);
+            if (rafId !== null) cancelAnimationFrame(rafId);
             clearTimeout(scrollTimeout);
             audioSynth.stopGlide();
         };
@@ -385,7 +391,11 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
             {/* --- SCROLLABLE MAP CONTENT --- */}
             <div
                 ref={containerRef}
-                className="w-full h-full overflow-y-auto overflow-x-hidden relative scroll-smooth"
+                className="w-full h-full overflow-y-auto overflow-x-hidden relative"
+                style={{
+                    WebkitOverflowScrolling: 'touch',
+                    overscrollBehavior: 'contain',
+                }}
             >
                 {/* Dummy div to enforce native scroll height */}
                 <div style={{ height: totalHeight, width: '100%' }} />
