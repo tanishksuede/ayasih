@@ -397,6 +397,26 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_nooyi.jpg', scenarioId: 'lvl_age_17_nooyi',
             idolTraits: { discipline: 95, resilience: 90, risk: 90, leadership: 100, creativity: 85, empathy: 85, vision: 95 }
         },
+        // Age 18: Karan Aujla
+        {
+            id: 'lvl_18_aujla_1',
+            title: 'The Double Shift',
+            description: 'At 18, living alone in Canada after a flopped debut, you must choose between safe ghostwriting, quitting music for dock jobs, or enduring brutal all-night studio sessions with producer Deep Jandu.',
+            requiredStars: 0,
+            year: 2015,
+            age: 18,
+            theme: 'Music',
+            age_mirror_text: 'stumbling into a basement studio exhausted after an 8-hour dock shift, deciding whether to sleep or push through another all-night recording session',
+            archetype: 'The Resilient',
+            personality: 'Karan Aujla',
+            bio: 'An 18-year-old immigrant laborer in Canada balancing the physical exhaustion of cargo dock shifts with late-night recording studio sessions.',
+            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
+            achievements: ['Pushed through extreme physical exhaustion to record breakout tracks', 'Formed powerhouse Canadian collaborative team', 'Multi-platinum recording artist and global headliner'],
+            lesson: 'Building a dream from the bottom often requires enduring extreme, unglamorous physical and mental exhaustion.',
+            avatarUrl: '/assets/avatar_KaranAujla.jpg',
+            scenarioId: 'lvl_age_18_aujla',
+            idolTraits: { discipline: 100, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
+        },
         {
             id: 'lvl_18', title: 'The Beginning (Country)', description: 'At 18, Taylor faced a choice: Security or Authenticity.',
             requiredStars: 0, year: 2008, age: 18, theme: 'Music', archetype: 'The Artist', personality: 'Taylor Swift',

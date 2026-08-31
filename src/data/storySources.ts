@@ -964,6 +964,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── KARAN AUJLA (Age 18) ─────────────────────────────────────────────────
+  'lvl_age_18_aujla': [
+    {
+      title: 'GQ India / Apple Music Interviews (2023)',
+      type: 'interview',
+      detail: 'Recounts working exhausting shifts at Surrey shipping docks by day while finishing school and writing lyrics.',
+    },
+    {
+      title: 'Times of India / PTC Punjabi',
+      type: 'article',
+      detail: 'Details meeting producer Deep Jandu and collaborator Elly Mangat in Canada, leading to all-night recording sessions.',
+    },
+    {
+      title: 'Film Companion Interview with Anupama Chopra (2023)',
+      type: 'interview',
+      detail: 'Describes the intense, sleepless studio grind that forged his signature punchy lyrical delivery and built his core fanbase.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

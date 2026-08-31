@@ -198,6 +198,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'moderate',
         targetTraits: { risk: 90, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
     },
+    'lvl_age_18_aujla': {
+        scenarioId: 'lvl_age_18_aujla',
+        dilemmaType: 'Extreme Burnout & The Double Shift',
+        lifeTheme: 'discipline',
+        situationalTags: ['career_uncertainty', 'financial_stress', 'discipline', 'loneliness', 'failure_setback', 'feeling_stuck'],
+        protagonistLens: 'How Karan Aujla balanced daytime longshoreman manual labor with all-night studio sessions with Deep Jandu to make his breakthrough comeback.',
+        historicalContext: 'In 2015 at age 18, recovering from a flopped debut, he worked dock shifts by day and recorded in Canadian basement studios until dawn.',
+        reflectionPrompt: 'When you are physically and mentally exhausted, what keeps you disciplined enough to keep working on your core passion?',
+        microActionPrompt: 'Carve out one uninterrupted hour today for your primary goal, even if you feel tired, and execute without distraction.',
+        difficulty: 'deep',
+        targetTraits: { risk: 90, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

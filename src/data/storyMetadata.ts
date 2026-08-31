@@ -4025,6 +4025,62 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_18_aujla",
+    "situationTags": [
+      "career_uncertainty",
+      "financial_stress",
+      "discipline",
+      "loneliness",
+      "failure_setback",
+      "feeling_stuck"
+    ],
+    "problemTags": [
+      "labor_vs_creative_schedule",
+      "recovering_from_flop",
+      "extreme_burnout_physical_exhaustion"
+    ],
+    "emotionalTags": [
+      "burnout",
+      "conflicted",
+      "determined",
+      "hopeful"
+    ],
+    "intentTags": [
+      "find_direction",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 17,
+    "ageMax": 20,
+    "dominantTrait": "discipline",
+    "resolutionArchetype": "persistence",
+    "lessonTags": [
+      "discipline",
+      "persistence",
+      "resilience",
+      "creativity"
+    ],
+    "difficulty": 4,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Karan Aujla at age 18 enduring extreme burnout and physical exhaustion, working dock shifts by day and recording in the basement studio with Deep Jandu by night to make his breakthrough comeback.",
+    "triggerPhrases": [
+      "karan aujla",
+      "the double shift",
+      "deep jandu",
+      "career uncertainty",
+      "dock worker burnout",
+      "basement studio grind"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 18 faced a pivotal choice in The Double Shift — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

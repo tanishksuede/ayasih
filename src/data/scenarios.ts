@@ -4397,6 +4397,91 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 18: Karan Aujla
+    'lvl_age_18_aujla': {
+        title: "The Double Shift",
+        source: "Source: GQ India, Apple Music & Times of India (2023)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'exhausted',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You are 18, living alone in Canada, and still recovering from the public flop of your debut track. You wake up before dawn to work as a longshoreman on the docks while trying to finish school.",
+                choices: [
+                    { text: "Head to the studio", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'conflicted',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "A rising Canadian producer, Deep Jandu, recognizes your raw gift and invites you into his basement studio. But the sessions only start after midnight and run until sunrise, leaving zero time for sleep.",
+                choices: [
+                    { text: "Face the grueling schedule", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'determined',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "How do you balance your exhausting survival job with this new studio opportunity?",
+                choices: [
+                    {
+                        text: "Stick to writing lyrics for others to make safe, quick cash without losing sleep.",
+                        next: 'ghostwrite',
+                        score: 3,
+                        feedbackTitle: "Behind the Scenes",
+                        feedback: "You earn easy cash without physical strain, but you remain an anonymous writer, watching others perform your words."
+                    },
+                    {
+                        text: "Focus entirely on your dock job and school, accepting the music dream is too risky.",
+                        next: 'quit',
+                        score: 0,
+                        feedbackTitle: "Abandoning the Dream",
+                        feedback: "You secure a stable living, but you live with the quiet heartbreak of quitting just when doors began opening."
+                    },
+                    {
+                        text: "Work the docks by day and stay in the studio all night, pushing through extreme exhaustion.",
+                        next: 'double_shift',
+                        score: 10,
+                        feedbackTitle: "The Relentless Grind",
+                        feedback: "You push your body to the limit, turning sleepless nights into the definitive musical chemistry that launches your career."
+                    }
+                ]
+            },
+            {
+                id: 'ghostwrite',
+                emotion: 'resigned',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You protect your sleep and pay your bills, but your own artistic voice is permanently locked in the background.",
+                choices: [
+                    { text: "Rethink your ambition", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'quit',
+                emotion: 'sad',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You choose safe survival, but the regret of what could have been haunts you every time you hear music.",
+                choices: [
+                    { text: "Give your passion another chance", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'double_shift',
+                emotion: 'determined',
+                bg: '/assets/avatar_KaranAujla.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_KaranAujla.jpg',
+                text: "Running on pure adrenaline and coffee between dock shifts and all-night recording, you and Deep Jandu forge a brand-new sound. That brutal double shift transforms Karan Aujla from an exhausted immigrant laborer into an unstoppable global star.\n\nLESSONS:\n1. Building a dream from the bottom often requires enduring extreme, unglamorous physical and mental exhaustion.\n2. The people who truly believe in your potential will demand your time and effort, even when you have nothing left to give.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",
