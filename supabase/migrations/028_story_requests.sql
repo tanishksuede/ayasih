@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.story_requests (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
+    user_id UUID,
     requested_tag TEXT NOT NULL,
     requested_problem TEXT,
     status TEXT DEFAULT 'active', -- 'active' | 'notified' | 'dismissed'

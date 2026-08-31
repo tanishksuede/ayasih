@@ -101,6 +101,19 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     const [notified, setNotified] = useState(false);
     const [notifyError, setNotifyError] = useState(false);
 
+    useEffect(() => {
+        if (activeSituationFilter) {
+            try {
+                const stored = JSON.parse(localStorage.getItem('aya_user_story_requests') || '[]');
+                const already = stored.some((r: any) => r.tag === activeSituationFilter);
+                setNotified(already);
+            } catch {
+                setNotified(false);
+            }
+            setNotifyError(false);
+        }
+    }, [activeSituationFilter]);
+
     const getSituationLabel = (tag: string | null) => {
         if (!tag) return '';
         const found = CHECKIN_TAGS.situation.find(s => s.value === tag);

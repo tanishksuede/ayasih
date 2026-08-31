@@ -32,10 +32,23 @@ export async function logStoryRequest(
     requestedTag: string,
     requestedProblem?: string
 ): Promise<{ success: boolean; id?: string }> {
+    // 1. Save to LocalStorage immediately (Always succeeds & offline-first)
+    try {
+        const stored = JSON.parse(localStorage.getItem('aya_user_story_requests') || '[]');
+        if (!stored.some((r: any) => r.tag === requestedTag)) {
+            stored.push({
+                tag: requestedTag,
+                problem: requestedProblem || requestedTag,
+                timestamp: new Date().toISOString()
+            });
+            localStorage.setItem('aya_user_story_requests', JSON.stringify(stored));
+        }
+    } catch {}
+
     try {
         const cleanUserId = userId && !userId.startsWith('offline-') ? userId : null;
         
-        const { data, error } = await supabase
+        let { data, error } = await supabase
             .from('story_requests')
             .insert({
                 user_id: cleanUserId,
@@ -44,17 +57,33 @@ export async function logStoryRequest(
                 status: 'active',
             })
             .select('id')
-            .single();
+            .maybeSingle();
+
+        // If foreign key constraint failed on user_id, retry with user_id: null
+        if (error && (error.code === '23503' || error.message?.includes('foreign key') || error.message?.includes('violates'))) {
+            const retry = await supabase
+                .from('story_requests')
+                .insert({
+                    user_id: null,
+                    requested_tag: requestedTag,
+                    requested_problem: requestedProblem || requestedTag,
+                    status: 'active',
+                })
+                .select('id')
+                .maybeSingle();
+            data = retry.data;
+            error = retry.error;
+        }
 
         if (error) {
-            console.warn('[storyRequestService] Failed to insert request (non-critical):', error.message);
-            return { success: false };
+            console.warn('[storyRequestService] Supabase insert note (stored locally):', error.message);
+            return { success: true };
         }
 
         return { success: true, id: data?.id };
     } catch (err) {
-        console.error('[storyRequestService] Error logging story request:', err);
-        return { success: false };
+        console.warn('[storyRequestService] Stored locally:', err);
+        return { success: true };
     }
 }
 
