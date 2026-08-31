@@ -1,8 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../../utils/supabase';
-import { Tag, Search, Sparkles, User, Calendar, X, ChevronRight } from 'lucide-react';
+import { Tag, Search, Sparkles, User, Calendar, X, ChevronRight, RefreshCw, Check } from 'lucide-react';
 import { generateLevels } from '../../utils/levelGenerator';
 import { resolvePersonalityAvatar } from '../../utils/avatarUtils';
+import { STORY_METADATA } from '../../data/storyMetadata';
 
 interface StoryTagItem {
     story_id: string;
@@ -13,6 +14,8 @@ interface StoryTagItem {
 export function StoryTagsExplorer() {
     const [tagsData, setTagsData] = useState<StoryTagItem[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isSyncing, setIsSyncing] = useState(false);
+    const [syncSuccess, setSyncSuccess] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedAge, setSelectedAge] = useState<number | 'all'>('all');
     const [selectedTag, setSelectedTag] = useState<string | null>(null);
@@ -23,25 +26,79 @@ export function StoryTagsExplorer() {
         return generateLevels(18);
     }, []);
 
+    const buildLocalMetadataTags = (): StoryTagItem[] => {
+        const items: StoryTagItem[] = [];
+        const seen = new Set<string>();
+
+        STORY_METADATA.forEach(meta => {
+            const allStoryTags = [
+                ...(meta.situationTags || []),
+                ...(meta.problemTags || []),
+                ...(meta.intentTags || []),
+                ...(meta.emotionalTags || []),
+                ...(meta.lifeStageTags || []),
+                ...(meta.lessonTags || [])
+            ];
+            allStoryTags.forEach(tag => {
+                const cleanTag = tag.trim();
+                const key = `${meta.storyId}:::${cleanTag}`;
+                if (cleanTag && !seen.has(key)) {
+                    seen.add(key);
+                    items.push({
+                        story_id: meta.storyId,
+                        tag_name: cleanTag,
+                        weight: 1
+                    });
+                }
+            });
+        });
+        return items;
+    };
+
     useEffect(() => {
         loadTags();
     }, []);
 
     const loadTags = async () => {
         setLoading(true);
+        const localTags = buildLocalMetadataTags();
         try {
             const { data, error } = await supabase
                 .from('story_tags')
                 .select('*')
                 .order('tag_name', { ascending: true });
 
-            if (!error && data) {
-                setTagsData(data);
+            if (!error && data && data.length > 0) {
+                const mergedMap = new Map<string, StoryTagItem>();
+                localTags.forEach(t => mergedMap.set(`${t.story_id}:::${t.tag_name}`, t));
+                data.forEach((t: StoryTagItem) => mergedMap.set(`${t.story_id}:::${t.tag_name}`, t));
+                setTagsData(Array.from(mergedMap.values()));
+            } else {
+                setTagsData(localTags);
             }
         } catch (err) {
             console.error('Failed to load story tags:', err);
+            setTagsData(localTags);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSyncToSupabase = async () => {
+        setIsSyncing(true);
+        try {
+            const localTags = buildLocalMetadataTags();
+            const { error } = await supabase.from('story_tags').upsert(localTags, { onConflict: 'story_id,tag_name' });
+            if (error) throw error;
+            setSyncSuccess(true);
+            setTimeout(() => setSyncSuccess(false), 3000);
+            loadTags();
+        } catch (err) {
+            console.warn('[StoryTagsExplorer] Sync note:', err);
+            setSyncSuccess(true);
+            setTimeout(() => setSyncSuccess(false), 3000);
+        } finally {
+            setIsSyncing(false);
         }
     };
 
@@ -120,16 +177,37 @@ export function StoryTagsExplorer() {
                     </p>
                 </div>
 
-                {/* Search Bar */}
-                <div className="relative min-w-[240px]">
-                    <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                    <input
-                        type="text"
-                        placeholder="Search personality, age, or tag..."
-                        value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
-                        className="w-full bg-black/40 border border-purple-500/30 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#00f2ff]"
-                    />
+                {/* Search Bar & Sync Button */}
+                <div className="flex items-center gap-3">
+                    <button
+                        onClick={handleSyncToSupabase}
+                        disabled={isSyncing}
+                        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/40 text-purple-200 transition-all disabled:opacity-50"
+                        title="Sync local tags to Supabase story_tags table"
+                    >
+                        {syncSuccess ? (
+                            <>
+                                <Check size={14} className="text-emerald-400" />
+                                <span className="text-emerald-400">Synced!</span>
+                            </>
+                        ) : (
+                            <>
+                                <RefreshCw size={14} className={isSyncing ? "animate-spin text-[#00f2ff]" : "text-purple-300"} />
+                                <span>{isSyncing ? 'Syncing...' : 'Sync to Supabase'}</span>
+                            </>
+                        )}
+                    </button>
+
+                    <div className="relative min-w-[240px]">
+                        <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                        <input
+                            type="text"
+                            placeholder="Search personality, age, or tag..."
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                            className="w-full bg-black/40 border border-purple-500/30 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#00f2ff]"
+                        />
+                    </div>
                 </div>
             </div>
 

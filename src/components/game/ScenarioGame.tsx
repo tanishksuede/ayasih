@@ -365,16 +365,17 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
         // Do not start typing until the background image finishes loading
         if (!isBgLoaded) return;
 
-        typingSpeedRef.current = 20;
+        // Snappy typing speed (default ~10ms per char)
+        typingSpeedRef.current = 10;
 
         if (activeAudio && !feedbackChoice && !isNarrationMuted && audioRef.current) {
             audioRef.current.currentTime = 0;
             
-            // Calculate dynamic typing speed based on audio duration
+            // Calculate dynamic typing speed based on audio duration, capped so it never drags
             const updateSpeed = () => {
                 if (audioRef.current && activeText.length > 0) {
                     const durationMs = audioRef.current.duration * 1000;
-                    typingSpeedRef.current = Math.max(20, (durationMs - 500) / activeText.length);
+                    typingSpeedRef.current = Math.min(16, Math.max(8, (durationMs - 500) / activeText.length));
                 }
             };
 
@@ -405,7 +406,6 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
 
         // Small delay
         const startDelay = setTimeout(() => {
-            // We use a recursive timeout instead of setInterval so dynamicSpeed can update if metadata loads late
             const typeNextCharacter = () => {
                 i++;
                 if (i <= activeText.length) {
@@ -417,7 +417,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 }
             };
             timer = setTimeout(typeNextCharacter, typingSpeedRef.current);
-        }, 100);
+        }, 50);
 
         return () => {
             clearTimeout(startDelay);
@@ -935,8 +935,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
         // Check if there is feedback to show
         if (choice.feedback) {
             const addedScore = choice.score || 0;
-            // Updated to handle negative scores (simple addition works since choice.score can be -10)
-            setScore(prev => prev + addedScore);
+            setScore(prev => Math.max(0, prev + addedScore));
             updateXpLocally(addedScore); // Sync with global header in real-time
             setFeedbackChoice(choice);
 
@@ -949,7 +948,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
         } else {
             const addedScore = choice.score || 0;
             // No feedback (e.g. navigation only), just go
-            setScore(prev => prev + addedScore);
+            setScore(prev => Math.max(0, prev + addedScore));
             updateXpLocally(addedScore); // Sync with global header in real-time
             setCurrentFrameId(choice.next);
         }
@@ -1171,7 +1170,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                             : "bg-slate-900/80 border-yellow-500/50 text-yellow-500"
                     )} style={{ borderColor: `${currentTheme.badgeColor}80`, color: currentTheme.badgeColor }}>
                         <Star className={clsx("w-6 h-6", isCandyTheme ? "text-yellow-500 fill-yellow-500" : "fill-current")} />
-                        <span className="text-2xl font-black">{score} XP</span>
+                        <span className="text-2xl font-black">{Math.max(0, score)} XP</span>
                     </div>
                 </div>
             </div>

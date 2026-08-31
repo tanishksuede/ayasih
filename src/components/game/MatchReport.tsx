@@ -22,14 +22,12 @@ interface MatchReportProps {
 // Reusable UI Components
 const GlassCard = ({ children, className = '', delay = 0 }: { children: React.ReactNode, className?: string, delay?: number }) => (
     <motion.div 
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}
-        className={clsx("relative rounded-3xl overflow-hidden group", className)}
+        transition={{ duration: 0.5, delay, ease: [0.16, 1, 0.3, 1] }}
+        className={clsx("relative rounded-3xl overflow-hidden bg-[#0D1530]/95 border border-[#506EFF]/30 p-5 sm:p-6 flex flex-col shadow-2xl backdrop-blur-md", className)}
     >
-        <div className="absolute inset-0 bg-[#0D1530]/70 backdrop-blur-md z-0" />
-        <div className="absolute inset-0 border border-[#506EFF]/20 rounded-3xl z-0 transition-colors group-hover:border-[#506EFF]/40" />
-        <div className="relative z-10 p-6 h-full flex flex-col">
+        <div className="relative z-10 w-full flex flex-col">
             {children}
         </div>
     </motion.div>
@@ -154,12 +152,11 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
         <div className={clsx("w-full min-h-[100dvh] flex flex-col font-sans overflow-x-hidden overflow-y-auto scroll-smooth bg-[#050817] text-white relative transition-opacity duration-300", isClosing && "opacity-0")}>
             {/* Background Effects */}
             <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6]/10 blur-[120px] mix-blend-screen" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#00D9FF]/10 blur-[120px] mix-blend-screen" />
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.03] mix-blend-overlay" />
+                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#8B5CF6]/15 blur-[120px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#00D9FF]/15 blur-[120px]" />
             </div>
 
-            <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 pt-8 pb-44 min-h-[100dvh] flex flex-col">
+            <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 md:px-8 pt-8 pb-36 min-h-[100dvh] flex flex-col">
                 
                 {/* Hero Header */}
                 <motion.div 
@@ -432,18 +429,18 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1 }}
-                className="fixed bottom-0 left-0 w-full p-4 md:p-6 bg-gradient-to-t from-[#050817] via-[#050817]/90 to-transparent z-50 flex flex-col items-center pb-safe"
+                className="fixed bottom-0 left-0 w-full p-4 sm:p-5 md:p-6 bg-gradient-to-t from-[#050817] via-[#050817]/95 to-transparent z-50 flex flex-col items-center pb-[max(1.25rem,env(safe-area-inset-bottom))]"
             >
                 <button
                     onClick={handleContinue}
-                    className="group relative w-full max-w-[400px] h-16 rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_40px_rgba(0,217,255,0.4)]"
+                    className="group relative w-full max-w-[400px] h-14 sm:h-16 rounded-full overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(139,92,246,0.3)] hover:shadow-[0_0_40px_rgba(0,217,255,0.4)]"
                 >
                     <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6] via-[#EC3B9A] to-[#00D9FF]" />
                     <div className="absolute inset-[2px] bg-[#050817] rounded-full transition-opacity group-hover:opacity-0" />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6] via-[#EC3B9A] to-[#00D9FF] opacity-0 group-hover:opacity-100 transition-opacity" />
                     
-                    <span className="relative z-10 flex items-center justify-center h-full gap-3 text-sm md:text-base font-bold text-white tracking-[0.2em] uppercase px-4">
-                        Continue Your Journey <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    <span className="relative z-10 flex items-center justify-center h-full gap-3 text-xs sm:text-sm md:text-base font-bold text-white tracking-[0.2em] uppercase px-4">
+                        Continue Your Journey <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                     </span>
                 </button>
             </motion.div>
