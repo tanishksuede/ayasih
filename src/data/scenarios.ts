@@ -4736,6 +4736,91 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 18: Siddhu Moosewala
+    'lvl_age_18_moosewala': {
+        title: "The Engineering Vault",
+        source: "Source: The Tribune, Times of India & PTC Punjabi (2011–2016)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'restless',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "At 18, you leave your small farming village of Moosa for the city of Ludhiana to study electrical engineering at GNDEC. Your parents have pinned their life savings and family dignity on you earning a respectable degree.",
+                choices: [
+                    { text: "Enter the college dorm", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'conflicted',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "While your desk is piled high with heavy engineering textbooks, your headphones are blaring Tupac Shakur tapes. Late at night, you fill notebook after notebook with raw, poetic Punjabi rhymes that reflect the pride and grit of your village roots.",
+                choices: [
+                    { text: "Face the clash of duties", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'determined',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "How do you handle the clash between your family's expectations and your obsession with music?",
+                choices: [
+                    {
+                        text: "Abandon music to focus entirely on engineering and secure a safe corporate job.",
+                        next: 'conform',
+                        score: 3,
+                        feedbackTitle: "Safe Conformity",
+                        feedback: "You earn a stable living, but your authentic genius is suffocated by a routine corporate existence."
+                    },
+                    {
+                        text: "Drop out of college immediately to chase music, risking your family's savings.",
+                        next: 'dropout',
+                        score: 0,
+                        feedbackTitle: "Reckless Rebellion",
+                        feedback: "Breaking your parents' trust creates massive emotional turmoil, leaving you without the discipline needed to build an enduring catalog."
+                    },
+                    {
+                        text: "Finish the degree for your parents, but use every spare minute to write and master lyrics.",
+                        next: 'dual_discipline',
+                        score: 10,
+                        feedbackTitle: "Dual Discipline",
+                        feedback: "You honor your family by completing your degree while quietly building a legendary catalog of songs."
+                    }
+                ]
+            },
+            {
+                id: 'conform',
+                emotion: 'resigned',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "You pass your exams comfortably, but every time you hear a beat, you are haunted by the songs you never allowed yourself to write.",
+                choices: [
+                    { text: "Reclaim your creative voice", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dropout',
+                emotion: 'frustrated',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "Without structure or emotional grounding, impulsiveness turns your passion into chaos and distress for your loved ones.",
+                choices: [
+                    { text: "Build a disciplined foundation", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dual_discipline',
+                emotion: 'determined',
+                bg: '/assets/avatar_SiddhuMoosewala.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_SiddhuMoosewala.jpg',
+                text: "You graduate in Electrical Engineering, handing your proud parents their degree, while your secret notebooks hold hundreds of finished masterworks. That relentless discipline launches Sidhu Moose Wala into a global phenomenon and voice of a generation.\n\nLESSONS:\n1. Fulfilling a practical responsibility does not mean you have to surrender your true passion.\n2. The discipline required to finish a tough degree can forge the work ethic needed to dominate the music industry.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

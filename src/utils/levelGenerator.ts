@@ -437,6 +437,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_18_aujla',
             idolTraits: { discipline: 100, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
         },
+        // Age 18: Siddhu Moosewala
+        {
+            id: 'lvl_18_moosewala_1',
+            title: 'The Engineering Vault',
+            description: 'At 18, leaving Moosa village for GNDEC Ludhiana to study electrical engineering, you must choose between abandoning music for a safe corporate job, dropping out recklessly, or finishing your degree while secretly building a lyrical vault.',
+            requiredStars: 0,
+            year: 2011,
+            age: 18,
+            theme: 'Music',
+            age_mirror_text: 'sitting in a Ludhiana engineering dorm room late at night, balancing electrical circuit diagrams with handwritten Punjabi lyrics inspired by Tupac',
+            archetype: 'The Resilient',
+            personality: 'Siddhu Moosewala',
+            bio: 'An 18-year-old engineering student from Moosa village carrying his family\'s dreams of a safe degree while secretly building a vast lyrical vault inspired by Tupac Shakur.',
+            fame: 'Iconic Punjabi singer, lyricist, and global cultural legend.',
+            achievements: ['Completed Electrical Engineering degree while mastering lyricism', 'Built a vault of hundreds of iconic original songs in college', 'Global Billboard chart-topper and voice of Punjabi youth'],
+            lesson: 'Fulfilling a practical responsibility does not mean you have to surrender your true passion; the discipline of a tough degree forges the work ethic to dominate your craft.',
+            avatarUrl: '/assets/avatar_SiddhuMoosewala.jpg',
+            scenarioId: 'lvl_age_18_moosewala',
+            idolTraits: { discipline: 100, resilience: 100, risk: 90, leadership: 95, creativity: 100, empathy: 85, vision: 95 }
+        },
         {
             id: 'lvl_18', title: 'The Beginning (Country)', description: 'At 18, Taylor faced a choice: Security or Authenticity.',
             requiredStars: 0, year: 2008, age: 18, theme: 'Music', archetype: 'The Artist', personality: 'Taylor Swift',

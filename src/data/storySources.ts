@@ -1035,6 +1035,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── SIDDHU MOOSEWALA (Age 18) ─────────────────────────────────────────────
+  'lvl_age_18_moosewala': [
+    {
+      title: 'The Tribune / Biography Profiles (2011)',
+      type: 'article',
+      detail: 'Documents his enrollment in Guru Nanak Dev Engineering College (GNDEC), Ludhiana in 2011 to study Electrical Engineering.',
+    },
+    {
+      title: 'Times of India / Various Artist Interviews',
+      type: 'article',
+      detail: 'Highlights how Tupac Shakur\'s music inspired him to begin writing raw, authentic Punjabi lyrics late at night in his college hostel.',
+    },
+    {
+      title: 'PTC Punjabi / Career Retrospective',
+      type: 'article',
+      detail: 'Details how he successfully completed his Electrical Engineering degree in 2016 for his parents before moving to Canada to pursue music.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

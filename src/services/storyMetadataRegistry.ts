@@ -246,6 +246,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'moderate',
         targetTraits: { risk: 95, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
     },
+    'lvl_age_18_moosewala': {
+        scenarioId: 'lvl_age_18_moosewala',
+        dilemmaType: 'Familial Duty & Safe Degree vs Underground Music Vault',
+        lifeTheme: 'family_expectations',
+        situationalTags: ['family_pressure', 'career_uncertainty', 'academic_pressure', 'identity_question', 'starting_something', 'purpose', 'discipline'],
+        protagonistLens: 'How Siddhu Moosewala fulfilled his parents\' dream by completing his Electrical Engineering degree while secretly writing hundreds of iconic songs at night.',
+        historicalContext: 'In 2011 at age 18, moving from Moosa village to GNDEC Ludhiana, he balanced rigorous engineering coursework with late-night lyric writing inspired by Tupac Shakur.',
+        reflectionPrompt: 'Are you using practical responsibilities as an excuse to quit, or as the discipline to strengthen your real craft in secret?',
+        microActionPrompt: 'Dedicate 30 focused minutes tonight to your hidden creative craft after fulfilling your daily responsibilities.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 90, creativity: 100, vision: 95, empathy: 85, leadership: 95 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

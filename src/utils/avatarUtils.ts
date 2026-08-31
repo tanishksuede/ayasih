@@ -15,6 +15,8 @@ export const PERSONALITY_AVATAR_MAP: Record<string, string> = {
     'Taylor Swift': '/assets/avatar_taylor_swift.png',
     'Billie Eilish': '/assets/portrait-billie-20.png',
     'Karan Aujla': '/assets/avatar_KaranAujla.jpg',
+    'Siddhu Moosewala': '/assets/avatar_SiddhuMoosewala.jpg',
+    'Sidhu Moose Wala': '/assets/avatar_SiddhuMoosewala.jpg',
 };
 
 export const resolvePersonalityAvatar = (name: string): string => {

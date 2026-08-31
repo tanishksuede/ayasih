@@ -4250,6 +4250,63 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_18_moosewala",
+    "situationTags": [
+      "family_pressure",
+      "career_uncertainty",
+      "academic_pressure",
+      "identity_question",
+      "starting_something",
+      "purpose",
+      "discipline"
+    ],
+    "problemTags": [
+      "family_expectations_safe_career",
+      "engineering_workload_vs_secret_music",
+      "village_to_city_culture_shock"
+    ],
+    "emotionalTags": [
+      "conflicted",
+      "restless",
+      "determined"
+    ],
+    "intentTags": [
+      "find_direction",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 17,
+    "ageMax": 20,
+    "dominantTrait": "discipline",
+    "resolutionArchetype": "persistence",
+    "lessonTags": [
+      "discipline",
+      "persistence",
+      "duty",
+      "authenticity",
+      "creativity"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Siddhu Moosewala at age 18 moving from Moosa village to study Electrical Engineering in Ludhiana, balancing his parents' degree expectations while secretly writing a legendary vault of lyrics.",
+    "triggerPhrases": [
+      "siddhu moosewala",
+      "sidhu moose wala",
+      "the engineering vault",
+      "electrical engineering",
+      "moosa village",
+      "ludhiana college"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Siddhu Moosewala at age 18 faced a pivotal choice in The Engineering Vault — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",
