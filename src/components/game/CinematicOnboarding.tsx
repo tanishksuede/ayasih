@@ -1,28 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUserStore } from '../../store/userStore';
 import { audioManager as audioSynth } from "../../utils/audioManager";
-import { supabase } from '../../utils/supabase';
-import { Brain, Gamepad2, Dna, ChevronRight, Check } from 'lucide-react';
+import { Brain, Gamepad2, Dna, ChevronRight } from 'lucide-react';
 import { safeStorage } from '../../utils/storage';
 import { bgmManager } from '../../utils/bgmManager';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const EXAMS = [
-  { id: 'neet', label: 'NEET', icon: '🩺' },
-  { id: 'jee', label: 'JEE', icon: '⚙️' },
-  { id: 'upsc', label: 'UPSC', icon: '⚖️' },
-  { id: 'others', label: 'Others', icon: '🌟' },
-];
-
 export function CinematicOnboarding({ onComplete }: { onComplete?: () => void }) {
   const profile = useUserStore((state) => state.profile);
-  const setProfile = useUserStore((state) => state.setProfile);
   const navigate = useNavigate();
   const { step: stepParam } = useParams<{ step: string }>();
   const slide = parseInt(stepParam || '1') || 1;
-  const [selectedExam, setSelectedExam] = useState<typeof EXAMS[0] | null>(null);
-  const [isSaving, setIsSaving] = useState(false);
+
 
   const completeFlow = () => {
       safeStorage.set('onboarding_done', 'true');
@@ -45,31 +35,13 @@ export function CinematicOnboarding({ onComplete }: { onComplete?: () => void })
   };
 
   const handleFinish = async () => {
-    if (slide === 3 && selectedExam && profile?.id) {
-      setIsSaving(true);
-      const newPreferredMap = selectedExam.id === 'others' ? 'standard' : selectedExam.id;
-      try {
-        await supabase
-          .from('users')
-          .update({ 
-            daily_struggle: selectedExam.label, // Keeping this for backward compatibility in case it's used elsewhere
-            preferred_map: newPreferredMap,
-            last_struggle_update: new Date().toISOString() 
-          })
-          .eq('mobile', profile.mobile);
-          
-        setProfile({ ...profile, preferred_map: newPreferredMap });
-      } catch (e) {
-        console.error('Failed to save exam preference', e);
-      }
-      setIsSaving(false);
-      nextSlide();
-    } else if (slide === 4) {
+    if (slide === 3) {
       completeFlow();
     } else {
       nextSlide();
     }
   };
+
 
   const welcomeWords = "Your journey begins now.".split(" ");
 
@@ -85,12 +57,12 @@ export function CinematicOnboarding({ onComplete }: { onComplete?: () => void })
       </div>
 
       {/* Top Navigation — FIXED */}
-      {slide > 1 && slide < 4 && (
+      {slide > 1 && slide < 3 && (
         <button onClick={prevSlide} className="fixed top-6 left-6 z-[200] text-[#acaab5] hover:text-[#99f7ff] transition-colors text-sm uppercase tracking-widest font-bold">
             ← Back
         </button>
       )}
-      {(slide === 1 || slide === 2) && (
+      {slide < 3 && (
         <button onClick={completeFlow} className="fixed top-6 right-6 z-[200] text-[#acaab5] hover:text-[#99f7ff] transition-colors text-sm uppercase tracking-widest font-bold">
             Skip
         </button>
@@ -210,60 +182,10 @@ export function CinematicOnboarding({ onComplete }: { onComplete?: () => void })
             </motion.div>
           )}
 
-          {/* SLIDE 3: Daily Struggle / Exam Selection */}
+          {/* SLIDE 3: Ready Screen */}
           {slide === 3 && (
             <motion.div
               key="slide3"
-              initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.1 }}
-              transition={{ duration: 0.6 }}
-              className="w-full max-w-md mx-auto px-4 md:px-0 text-center"
-            >
-              <h2 className="text-2xl sm:text-4xl font-black mb-4 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">Which exam are you preparing for?</h2>
-              <p className="text-base sm:text-lg text-[#acaab5] mb-8 font-['Manrope']">We'll suggest the perfect story for you today</p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 [transform-style:preserve-3d]">
-                 {EXAMS.map((exam, idx) => (
-                    <motion.button
-                      key={exam.id}
-                      initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }}
-                      whileHover={{ scale: 1.05, y: -8, z: 100, rotateX: -5, rotateY: 5 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => {
-                        audioSynth.playClick();
-                        setSelectedExam(exam);
-                      }}
-                      className={`relative p-6 rounded-3xl sm:backdrop-blur-2xl border-2 transition-all flex flex-col items-center gap-4 shadow-[0_20px_40px_rgba(0,0,0,0.5)] ${
-                          selectedExam?.id === exam.id 
-                          ? 'bg-[#d575ff]/20 border-[#fe00fe] shadow-[0_0_50px_rgba(254,0,254,0.6)] scale-105 z-50' 
-                          : 'bg-[#191923]/80 border-[#2b2b38]'
-                      }`}
-                    >
-                       <span className={`text-3xl sm:text-4xl ${selectedExam?.id === exam.id ? 'drop-shadow-[0_0_20px_rgba(254,0,254,0.8)]' : ''}`}>{exam.icon}</span>
-                       <span className={`text-lg sm:text-xl font-bold ${selectedExam?.id === exam.id ? 'text-white' : 'text-[#acaab5]'}`}>{exam.label}</span>
-                       {selectedExam?.id === exam.id && (
-                           <div className="absolute top-4 right-4 text-[#fe00fe] drop-shadow-[0_0_10px_#fe00fe]"><Check size={24} strokeWidth={4} /></div>
-                       )}
-                    </motion.button>
-                 ))}
-              </div>
-
-              <div className="flex flex-col items-center mt-10 space-y-4">
-                 <button 
-                   disabled={!selectedExam || isSaving}
-                   onClick={handleFinish} 
-                   className="px-8 py-4 sm:px-12 sm:py-4 bg-gradient-to-r from-[#9800d0] to-[#b90afc] text-white rounded-full text-lg sm:text-xl font-black uppercase tracking-wider hover:brightness-125 transition-all shadow-[0_0_50px_rgba(185,10,252,0.8)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-                 >
-                    {isSaving ? "SAVING..." : "THIS IS ME →"}
-                 </button>
-                 <p className="text-base text-[#76747f]">You can change this anytime</p>
-              </div>
-            </motion.div>
-          )}
-
-          {/* SLIDE 4: Ready Screen */}
-          {slide === 4 && (
-            <motion.div
-              key="slide4"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 1 }}
               className="w-full max-w-[680px] mx-auto px-4 md:px-0 text-center"
@@ -296,12 +218,6 @@ export function CinematicOnboarding({ onComplete }: { onComplete?: () => void })
                    className="space-y-4 mb-16 relative z-10 flex flex-col items-center"
                  >
                     <p className="text-base sm:text-2xl text-[#99f7ff] font-light">Welcome, <span className="font-bold text-white drop-shadow-[0_0_15px_#ffffff]">{profile?.name || 'Traveler'}</span></p>
-                    {selectedExam && (
-                      <div className="flex items-center gap-3 sm:gap-4 bg-[#1f1f2a]/80 sm:backdrop-blur-xl px-5 py-2 sm:px-6 sm:py-3 rounded-full border border-[#2b2b38] shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
-                          <span className="text-xl sm:text-2xl drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">{selectedExam.icon}</span>
-                          <p className="text-sm sm:text-lg text-[#acaab5] font-['Manrope']">Today's focus: <span className="text-[#d575ff] font-bold drop-shadow-[0_0_10px_rgba(213,117,255,0.8)]">{selectedExam.label}</span></p>
-                      </div>
-                    )}
                  </motion.div>
 
                  <motion.button

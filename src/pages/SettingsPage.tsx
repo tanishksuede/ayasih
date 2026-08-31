@@ -281,21 +281,6 @@ export function SettingsPage() {
                         </div>
                     </div>
 
-                    <hr className="border-slate-700" />
-                    <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Preferred Exam Focus</label>
-                        <select
-                            value={newPreferredMap}
-                            onChange={(e) => setNewPreferredMap(e.target.value)}
-                            className="w-full bg-slate-800 text-white rounded-lg px-4 py-3 border border-slate-700 focus:outline-none focus:border-[#00f1fe]"
-                        >
-                            <option value="standard">None (Standard)</option>
-                            <option value="neet">NEET</option>
-                            <option value="jee">JEE</option>
-                            <option value="upsc">UPSC</option>
-                        </select>
-                    </div>
-
 
                     {/* Push Notifications Section */}
                     <div className="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700 space-y-3">

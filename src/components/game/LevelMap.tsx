@@ -81,16 +81,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
 
     if (activeSituationFilter) {
         // Situation filter: restrict to the current age first, then match tags.
-        let agePool = processedLevels;
-        if (profile?.preferred_map === 'jee') {
-            agePool = processedLevels.filter(l => l.theme === 'JEE');
-        } else if (profile?.preferred_map === 'neet') {
-            agePool = processedLevels.filter(l => l.theme === 'NEET');
-        } else if (profile?.preferred_map === 'upsc') {
-            agePool = processedLevels.filter(l => l.theme === 'UPSC');
-        } else {
-            agePool = processedLevels.filter(l => Number(l.age) === Number(activeAge));
-        }
+        const agePool = processedLevels.filter(l => Number(l.age) === Number(activeAge));
         ageLevels = agePool.filter(l => {
             const metadata = getStoryMetadata(l.scenarioId);
             return metadata?.situationTags.includes(activeSituationFilter)
@@ -98,21 +89,13 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 || metadata?.intentTags.includes(activeSituationFilter);
         });
     } else {
-        // STANDARD MAP FLOW (No situation filter active)
-        if (profile?.preferred_map === 'jee') {
-            ageLevels = processedLevels.filter(l => l.theme === 'JEE').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
-        } else if (profile?.preferred_map === 'neet') {
-            ageLevels = processedLevels.filter(l => l.theme === 'NEET').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
-        } else if (profile?.preferred_map === 'upsc') {
-            ageLevels = processedLevels.filter(l => l.theme === 'UPSC').sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
-        } else {
-            let ageFiltered = processedLevels.filter(l => Number(l.age) === Number(activeAge));
-            const hasRealStories = ageFiltered.some(l => !l.title.toLowerCase().includes('coming soon'));
-            if (hasRealStories) {
-                ageFiltered = ageFiltered.filter(l => !l.title.toLowerCase().includes('coming soon'));
-            }
-            ageLevels = ageFiltered;
+        // STANDARD MAP FLOW
+        let ageFiltered = processedLevels.filter(l => Number(l.age) === Number(activeAge));
+        const hasRealStories = ageFiltered.some(l => !l.title.toLowerCase().includes('coming soon'));
+        if (hasRealStories) {
+            ageFiltered = ageFiltered.filter(l => !l.title.toLowerCase().includes('coming soon'));
         }
+        ageLevels = ageFiltered;
     }
 
     const filteredScenarioIds = activeSituationFilter
