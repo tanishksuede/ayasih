@@ -414,7 +414,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     <div className="absolute top-0 w-full pointer-events-auto z-50">
                         <ForYouCarousel onPlayLevel={onPlayLevel} allLevels={levels} />
                     </div>
-                    <div className="relative w-full max-w-md mx-auto mt-72 md:mt-80 pointer-events-none h-full map-content">
+                    <div className="relative w-full max-w-md mx-auto mt-36 md:mt-40 pointer-events-none h-full map-content">
                         {/* NODES */}
 
                         {/* Local metadata makes this result immediate and offline-safe. */}
