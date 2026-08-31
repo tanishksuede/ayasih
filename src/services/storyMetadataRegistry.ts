@@ -258,6 +258,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'moderate',
         targetTraits: { risk: 90, creativity: 100, vision: 95, empathy: 85, leadership: 95 },
     },
+    'lvl_age_23_moosewala': {
+        scenarioId: 'lvl_age_23_moosewala',
+        dilemmaType: 'Immigrant Survival & Tuition Safety vs Solo Track Gamble',
+        lifeTheme: 'risk_vs_safety',
+        situationalTags: ['starting_with_little', 'career_uncertainty', 'financial_stress', 'loneliness', 'starting_something', 'big_decision', 'identity_question'],
+        protagonistLens: 'How Siddhu Moosewala risked his hard-earned manual labor savings and tuition security in Brampton to fund his solo debut track "G-Wagon", launching his global career.',
+        historicalContext: 'In 2016 at age 23 as an international student in Canada, he gambled his survival savings to record his first solo single instead of remaining an anonymous songwriter.',
+        reflectionPrompt: 'When you are clinging to practical safety, what makes you willing to risk your security to back your true calling?',
+        microActionPrompt: 'Identify one investment in yourself or your dream that you have been hesitating to make out of fear, and commit to one concrete step forward.',
+        difficulty: 'deep',
+        targetTraits: { risk: 100, creativity: 100, vision: 95, empathy: 85, leadership: 95 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

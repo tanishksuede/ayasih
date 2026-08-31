@@ -4821,6 +4821,91 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 23: Siddhu Moosewala
+    'lvl_age_23_moosewala': {
+        title: "The Brampton Hustle",
+        source: "Source: GQ India, The Tribune & Times of India (2016–2017)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'lonely',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "At 23, you arrive in Brampton, Canada on a study visa. In the biting cold, you work exhausting manual labor shifts just to pay rent and keep up with college tuition payments.",
+                choices: [
+                    { text: "Look at your savings", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'conflicted',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "Back home in Punjab, your pen has already scored hits like 'License' for famous singers. But in Canada, you are unknown, and your dream of becoming a lead vocalist demands thousands of dollars for studio time and music videos.",
+                choices: [
+                    { text: "Make the high-stakes financial choice", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'determined',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "You finally save a small pool of hard-earned cash from manual labor. What do you do with it?",
+                choices: [
+                    {
+                        text: "Save the money for tuition to secure your student visa and legal status.",
+                        next: 'safe_tuition',
+                        score: 3,
+                        feedbackTitle: "Legal Safety",
+                        feedback: "You protect your immigration status and graduate safely, but your solo vocal dreams are indefinitely delayed."
+                    },
+                    {
+                        text: "Sell your new lyrics to an established artist for guaranteed, safe rent money.",
+                        next: 'ghostwrite',
+                        score: 2,
+                        feedbackTitle: "The Ghostwriter's Comfort",
+                        feedback: "You pay your immediate living expenses, but watch other singers build fame on the foundation of your raw genius."
+                    },
+                    {
+                        text: "Gamble your survival money on recording and shooting a video for your own track.",
+                        next: 'solo_gamble',
+                        score: 10,
+                        feedbackTitle: "All In On Yourself",
+                        feedback: "You bet your entire livelihood on your own voice, funding the debut track that alters the course of Punjabi music history."
+                    }
+                ]
+            },
+            {
+                id: 'safe_tuition',
+                emotion: 'resigned',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "You play it safe and stay comfortable, but the burning hunger to be heard on your own terms slowly fades away.",
+                choices: [
+                    { text: "Re-evaluate your risk tolerance", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'ghostwrite',
+                emotion: 'frustrated',
+                bg: '/assets/bg_SiddhuMoosewala.jpg',
+                text: "The quick cash keeps a roof over your head, but listening to other voices sing your deepest truths leaves you deeply unfulfilled.",
+                choices: [
+                    { text: "Bet on your own voice", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'solo_gamble',
+                emotion: 'determined',
+                bg: '/assets/avatar_SiddhuMoosewala.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_SiddhuMoosewala.jpg',
+                text: "You empty your pockets to record and drop 'G-Wagon'. The track explodes across the Punjabi diaspora, launching Sidhu Moose Wala from an impoverished international student into an iconic global superstar.\n\nLESSONS:\n1. True independence often requires risking the very safety nets you worked incredibly hard to build.\n2. Betting on yourself is terrifying when you have nothing to fall back on, but it is the only way to truly own your future.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",

@@ -1054,6 +1054,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── SIDDHU MOOSEWALA (Age 23) ─────────────────────────────────────────────
+  'lvl_age_23_moosewala': [
+    {
+      title: 'GQ India / The Tribune Biographies (2016)',
+      type: 'article',
+      detail: 'Recounts moving to Brampton, Canada on a study visa in 2016 and working grueling manual labor shifts to fund his living expenses.',
+    },
+    {
+      title: 'PTC Punjabi / Music Industry Profiles',
+      type: 'article',
+      detail: 'Details his success penning the breakthrough hit "License" for Ninja in 2016 prior to launching his solo recording career.',
+    },
+    {
+      title: 'Times of India / Discography Archives (2017)',
+      type: 'article',
+      detail: 'Documents his self-funded solo debut single "G-Wagon", recorded and released while living as an international student in Canada.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

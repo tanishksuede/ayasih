@@ -1045,6 +1045,26 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-tanmay-bhat.png', scenarioId: 'lvl_age_22_tanmay_2',
             idolTraits: { discipline: 80, resilience: 90, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
         },
+        // Age 23: Siddhu Moosewala
+        {
+            id: 'lvl_23_moosewala_1',
+            title: 'The Brampton Hustle',
+            description: 'At 23, an international student doing manual labor in Brampton, you must decide whether to save your money for tuition safety or gamble it on recording your solo debut track, \'G-Wagon\'.',
+            requiredStars: 0,
+            year: 2016,
+            age: 23,
+            theme: 'Music',
+            age_mirror_text: 'standing in a cold Brampton basement apartment in 2016, deciding whether to put your hard-earned labor savings into tuition or gamble it on your first music video',
+            archetype: 'The Audacious',
+            personality: 'Siddhu Moosewala',
+            bio: 'A 23-year-old international student in Brampton, Canada balancing manual labor survival with a high-stakes gamble to fund his solo singing debut.',
+            fame: 'Iconic Punjabi singer, lyricist, and global cultural legend.',
+            achievements: ['Self-funded debut solo track "G-Wagon" as an immigrant student', 'Pioneered modern gangster-folk Punjabi rap globally', 'First Indian artist to perform at Wireless Festival and chart on Global Billboard 200'],
+            lesson: 'True independence often requires risking the very safety nets you worked hard to build; betting on yourself is terrifying, but it is the only way to own your future.',
+            avatarUrl: '/assets/avatar_SiddhuMoosewala.jpg',
+            scenarioId: 'lvl_age_23_moosewala',
+            idolTraits: { discipline: 95, resilience: 100, risk: 100, leadership: 95, creativity: 100, empathy: 85, vision: 100 }
+        },
         // Age 23: Shah Rukh Khan
         {
             id: 'lvl_23_srk', title: 'Gauri or Career', description: 'At 23, SRK must choose between love and the career opportunity of a lifetime.',

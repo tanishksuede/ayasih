@@ -4307,6 +4307,64 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_23_moosewala",
+    "situationTags": [
+      "starting_with_little",
+      "career_uncertainty",
+      "financial_stress",
+      "loneliness",
+      "starting_something",
+      "big_decision",
+      "identity_question"
+    ],
+    "problemTags": [
+      "immigrant_student_survival",
+      "manual_labor_to_pay_bills",
+      "tuition_vs_music_gamble"
+    ],
+    "emotionalTags": [
+      "lonely",
+      "burnout",
+      "determined",
+      "hopeful"
+    ],
+    "intentTags": [
+      "courage_to_commit",
+      "find_direction"
+    ],
+    "lifeStageTags": [
+      "early_twenties"
+    ],
+    "ageMin": 21,
+    "ageMax": 25,
+    "dominantTrait": "risk",
+    "resolutionArchetype": "action_step",
+    "lessonTags": [
+      "risk",
+      "courage",
+      "persistence",
+      "independence",
+      "creativity"
+    ],
+    "difficulty": 4,
+    "relatability": 5,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Siddhu Moosewala at age 23 in Brampton, Canada working grueling manual labor and gambling his tuition savings to fund his solo debut track 'G-Wagon'.",
+    "triggerPhrases": [
+      "siddhu moosewala",
+      "sidhu moose wala",
+      "the brampton hustle",
+      "g wagon",
+      "brampton canada",
+      "international student"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Siddhu Moosewala at age 23 faced a pivotal choice in The Brampton Hustle — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",
