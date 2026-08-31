@@ -759,6 +759,26 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_20_modi',
             idolTraits: { discipline: 98, resilience: 95, risk: 90, leadership: 98, creativity: 80, empathy: 85, vision: 95 }
         },
+        // Age 21: Karan Aujla
+        {
+            id: 'lvl_21_aujla_1',
+            title: 'The Crossover Gamble',
+            description: 'At 21, with loyal underground hip-hop credibility, you must choose between staying in your safe niche or risking your street cred by fusing rap with traditional folk vocals on \'Don\'t Worry\'.',
+            requiredStars: 0,
+            year: 2018,
+            age: 21,
+            theme: 'Music',
+            age_mirror_text: 'standing in a high-end recording studio in 2018, deciding whether to protect your underground hip-hop street cred or gamble on a commercial folk fusion',
+            archetype: 'The Innovator',
+            personality: 'Karan Aujla',
+            bio: 'A 21-year-old rising Punjabi hip-hop artist deciding whether to risk his underground street credibility to attempt a bold mainstream folk crossover.',
+            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
+            achievements: ['Pioneered modern hip-hop and Punjabi folk genre fusion', 'Broke international streaming records with "Don\'t Worry"', 'Became first Punjabi artist to win Juno Fan Choice Award'],
+            lesson: 'True artistic growth often requires risking the approval of your earliest supporters; blending your unique edge with unexpected traditions creates culture-shifting breakthroughs.',
+            avatarUrl: '/assets/avatar_KaranAujla.jpg',
+            scenarioId: 'lvl_age_21_aujla',
+            idolTraits: { discipline: 95, resilience: 95, risk: 100, leadership: 90, creativity: 100, empathy: 85, vision: 100 }
+        },
         // Age 21: Virat Kohli
         {
             id: 'lvl_21_virat_kohli',

@@ -4138,6 +4138,61 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_21_aujla",
+    "situationTags": [
+      "big_decision",
+      "career_transition",
+      "starting_something",
+      "identity_question",
+      "career_uncertainty"
+    ],
+    "problemTags": [
+      "risking_underground_credibility",
+      "niche_vs_mainstream_appeal",
+      "blending_clashing_genres"
+    ],
+    "emotionalTags": [
+      "conflicted",
+      "motivated",
+      "hopeful"
+    ],
+    "intentTags": [
+      "challenge_myself",
+      "courage_to_commit"
+    ],
+    "lifeStageTags": [
+      "early_twenties"
+    ],
+    "ageMin": 19,
+    "ageMax": 23,
+    "dominantTrait": "risk",
+    "resolutionArchetype": "courage",
+    "lessonTags": [
+      "risk",
+      "courage",
+      "vision",
+      "creativity",
+      "authenticity"
+    ],
+    "difficulty": 2,
+    "relatability": 4,
+    "era": "modern",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about Karan Aujla at age 21 risking his underground street credibility to blend gritty hip-hop with traditional Punjabi folk vocals on 'Don't Worry', achieving a massive global breakthrough.",
+    "triggerPhrases": [
+      "karan aujla",
+      "the crossover gamble",
+      "dont worry song",
+      "gurlez akhtar",
+      "genre fusion",
+      "mainstream breakthrough"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 21 faced a pivotal choice in The Crossover Gamble — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

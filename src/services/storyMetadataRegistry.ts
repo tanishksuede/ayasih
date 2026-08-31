@@ -222,6 +222,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'moderate',
         targetTraits: { risk: 85, creativity: 100, vision: 100, empathy: 85, leadership: 90 },
     },
+    'lvl_age_21_aujla': {
+        scenarioId: 'lvl_age_21_aujla',
+        dilemmaType: 'Niche Underground Credibility vs Mainstream Commercial Fusion',
+        lifeTheme: 'risk_vs_safety',
+        situationalTags: ['big_decision', 'career_transition', 'starting_something', 'identity_question', 'career_uncertainty'],
+        protagonistLens: 'How Karan Aujla risked his underground hip-hop street cred to collaborate with traditional folk singer Gurlez Akhtar on "Don\'t Worry", unlocking global superstardom.',
+        historicalContext: 'In October 2018 at age 21, he released "Don\'t Worry", a high-risk genre fusion that became an international smash hit and redefined modern Punjabi music.',
+        reflectionPrompt: 'Are you holding onto a comfortable niche or identity because you fear the criticism that comes with reaching a larger audience?',
+        microActionPrompt: 'Identify one creative idea or connection outside your comfort zone and take one small action today to test it.',
+        difficulty: 'accessible',
+        targetTraits: { risk: 100, creativity: 100, vision: 95, empathy: 85, leadership: 90 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

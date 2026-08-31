@@ -997,6 +997,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── KARAN AUJLA (Age 21) ─────────────────────────────────────────────────
+  'lvl_age_21_aujla': [
+    {
+      title: 'Times of India / PTC Punjabi Profiles (2018)',
+      type: 'article',
+      detail: 'Highlights his rise through gritty underground hip-hop before expanding his sonic palette for mainstream audiences.',
+    },
+    {
+      title: 'Spotify Discography & Production Credits',
+      type: 'article',
+      detail: 'Documents the release of "Don\'t Worry" in October 2018, featuring iconic traditional folk singer Gurlez Akhtar.',
+    },
+    {
+      title: 'Wikipedia / YouTube Analytics (2018–Present)',
+      type: 'article',
+      detail: 'Details "Don\'t Worry" surpassing hundreds of millions of streams and becoming his definitive mainstream breakout track.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

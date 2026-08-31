@@ -4567,6 +4567,75 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 21: Karan Aujla
+    'lvl_age_21_aujla': {
+        title: "The Crossover Gamble",
+        source: "Source: Times of India, Spotify & YouTube Analytics (2018)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'confident',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You are 21 and have built a fiercely loyal underground following for your raw, hard-hitting Punjabi hip-hop. You've proven your lyrical edge, but mainstream global superstardom still eludes you.",
+                choices: [
+                    { text: "Listen to the demo of 'Don't Worry'", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'conflicted',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "You compose 'Don't Worry' and consider a risky collaboration: blending your aggressive modern rap verses with the high-pitched traditional folk vocals of legendary singer Gurlez Akhtar. It is a massive stylistic gamble that could alienate your underground purist fans.",
+                choices: [
+                    { text: "Make the critical release decision", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'motivated',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "How do you approach this critical release to grow your career?",
+                choices: [
+                    {
+                        text: "Stick strictly to your raw, aggressive solo hip-hop to protect your hard-earned street credibility.",
+                        next: 'niche_safe',
+                        score: 4,
+                        feedbackTitle: "The Purist Trap",
+                        feedback: "You maintain respect in underground rap circles, but your reach plateaus and you miss the opportunity to shape mainstream music culture."
+                    },
+                    {
+                        text: "Take the risk and blend your rap with traditional folk vocals, gambling on a massive crossover.",
+                        next: 'crossover_gamble',
+                        score: 10,
+                        feedbackTitle: "Culture-Shifting Fusion",
+                        feedback: "You gamble on your creative vision, fusing roots with modern flow to create an explosive global anthem."
+                    }
+                ]
+            },
+            {
+                id: 'niche_safe',
+                emotion: 'resigned',
+                bg: '/assets/bg_KaranAujla.jpg',
+                text: "Playing it safe keeps your existing fans happy, but fear of criticism prevents you from ever crossing over into the mainstream.",
+                choices: [
+                    { text: "Rethink your musical boundaries", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'crossover_gamble',
+                emotion: 'triumphant',
+                bg: '/assets/avatar_KaranAujla.jpg',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/avatar_KaranAujla.jpg',
+                text: "'Don't Worry' becomes a colossal worldwide phenomenon, amassing hundreds of millions of streams and cementing Karan Aujla as a global superstar who redefined the Punjabi soundscape.\n\nLESSONS:\n1. True artistic growth often requires risking the approval of your earliest supporters.\n2. Blending your unique edge with unexpected traditions can create culture-shifting breakthroughs.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",
