@@ -21,6 +21,7 @@ import { CheckInCard } from './CheckInCard';
 import { MessageSquarePlus, X, BellRing, Filter } from 'lucide-react';
 import { CHECKIN_TAGS } from '../../config/recommendationConfig';
 import { getStoryMetadata } from '../../data/storyMetadata';
+import { generateLevels } from '../../utils/levelGenerator';
 
 interface LevelMapProps {
     onPlayLevel: (level: any) => void;
@@ -54,25 +55,49 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
         };
         checkAdmin();
     }, [profile?.isAdmin]);
-    const activeSituationFilter = useUserStore((state) => state.activeSituationFilter);
-    const clearSituationFilter = useUserStore((state) => state.clearSituationFilter);
-    const browseAge = useUserStore((state) => state.browseAge);
-    const setBrowseAge = useUserStore((state) => state.setBrowseAge);
-    const [notified, setNotified] = useState(false);
-    const [notifyError, setNotifyError] = useState(false);
-
-    const activeAge = browseAge ?? profile?.age ?? 18;
+    const activeAge = profile?.age || 18;
     
     let ageLevels: any[] = [];
     
-    // Process levels and forcefully sync with levelScores to guarantee perfect UI reactivity
-    let processedLevels = (levels || []).map(l => {
+    // Merge master code definitions from generateLevels with store levels and levelScores.
+    // This guarantees that all stories (including newly added ones like Age 16 Bhuvan Bam)
+    // are ALWAYS available immediately, even if the store has not synced or has a stale cached list.
+    const masterLevels = generateLevels(activeAge);
+    const storeLevelsMap = new Map((levels || []).map(l => [l.id, l]));
+
+    let processedLevels = masterLevels.map(l => {
+        const storeLevel = storeLevelsMap.get(l.id);
+        const localScore = levelScores[l.id];
+        let status = storeLevel?.status || l.status || 'unlocked';
+        let stars = l.stars || 0;
+        if (storeLevel?.stars) stars = Math.max(stars, storeLevel.stars);
+        if (localScore !== undefined && localScore > 0) {
+            status = 'completed';
+            stars = Math.max(stars, localScore);
+        }
+        return {
+            ...l,
+            ...(storeLevel || {}),
+            age: l.age,
+            status,
+            stars
+        };
+    });
+
+    const masterLevelIds = new Set(masterLevels.map(l => l.id));
+    const extraDbLevels = (levels || []).filter(l => !masterLevelIds.has(l.id)).map(l => {
         const localScore = levelScores[l.id];
         if (localScore !== undefined && localScore > 0) {
             return { ...l, status: 'completed', stars: Math.max(l.stars || 0, localScore) };
         }
         return l;
     });
+    processedLevels = [...processedLevels, ...extraDbLevels];
+
+    const activeSituationFilter = useUserStore((state) => state.activeSituationFilter);
+    const clearSituationFilter = useUserStore((state) => state.clearSituationFilter);
+    const [notified, setNotified] = useState(false);
+    const [notifyError, setNotifyError] = useState(false);
 
     const getSituationLabel = (tag: string | null) => {
         if (!tag) return '';
@@ -317,26 +342,6 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     >
                         <X size={12} />
                         <span>Clear filter</span>
-                    </button>
-                </div>
-            )}
-
-            {/* Browse Age Indicator Banner */}
-            {browseAge !== null && browseAge !== profile?.age && (
-                <div className={`fixed ${activeSituationFilter ? 'top-32 md:top-36' : 'top-20 md:top-24'} left-1/2 -translate-x-1/2 z-40 bg-slate-950/90 border border-amber-500/40 backdrop-blur-md px-4 py-2 rounded-full shadow-2xl flex items-center gap-3 animate-fade-in pointer-events-auto`}>
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-amber-300">
-                        <span>Exploring Age {browseAge}</span>
-                        <span className="text-amber-400/60 text-[11px] font-normal">(Original: {profile?.age || 18})</span>
-                    </div>
-                    <button
-                        onClick={() => {
-                            setBrowseAge(null);
-                            useUserStore.getState().syncLevels();
-                        }}
-                        className="px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/40 text-amber-200 text-[11px] font-bold rounded-full transition-colors flex items-center gap-1 hover:text-white"
-                    >
-                        <X size={12} />
-                        <span>Reset</span>
                     </button>
                 </div>
             )}

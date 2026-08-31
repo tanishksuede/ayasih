@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserStore } from '../store/userStore';
 import { audioManager as audioSynth } from "../utils/audioManager";
 import { bgmManager } from '../utils/bgmManager';
-import { Volume2, VolumeX, Trash2, AlertTriangle, Bell, Compass, Lock, RotateCcw } from 'lucide-react';
+import { Volume2, VolumeX, Trash2, AlertTriangle, Bell } from 'lucide-react';
 import clsx from 'clsx';
 import { supabase } from '../utils/supabase';
 import { clearAllUserData } from '../utils/session';
@@ -40,29 +40,6 @@ export function SettingsPage() {
     const setProfile = useUserStore((state) => state.setProfile);
     const resetProgress = useUserStore((state) => state.resetProgress);
     const clearUserData = useUserStore((state) => state.clearUserData);
-
-    const browseAge = useUserStore((state) => state.browseAge);
-    const setBrowseAge = useUserStore((state) => state.setBrowseAge);
-
-    const realAge = profile?.age || 18;
-    const currentBrowseAge = browseAge ?? realAge;
-    const isBrowsingDifferent = browseAge !== null && browseAge !== realAge;
-
-    const handleAgeChange = (newAge: number) => {
-        audioSynth.playClick();
-        if (newAge === realAge) {
-            setBrowseAge(null);
-        } else {
-            setBrowseAge(newAge);
-        }
-        useUserStore.getState().syncLevels();
-    };
-
-    const handleResetAge = () => {
-        audioSynth.playClick();
-        setBrowseAge(null);
-        useUserStore.getState().syncLevels();
-    };
 
     const musicVolume = useUserStore((state) => state.musicVolume);
     const sfxVolume = useUserStore((state) => state.sfxVolume);
@@ -304,58 +281,6 @@ export function SettingsPage() {
                         </div>
                     </div>
 
-                    {/* Explore Stories by Age */}
-                    <div className="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700 space-y-3">
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-2">
-                                <Compass size={16} className="text-cyan-400" />
-                                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Explore by Age</span>
-                            </div>
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider bg-slate-900 border border-slate-700 text-slate-400 flex items-center gap-1">
-                                <Lock size={10} className="text-slate-500" />
-                                <span>Real Age: {realAge}</span>
-                            </span>
-                        </div>
-
-                        <p className="text-[11px] text-slate-400 leading-relaxed">
-                            Temporarily browse and play stories from any age. Your original age remains fixed.
-                        </p>
-
-                        <div className="space-y-2 pt-1">
-                            <div className="flex justify-between items-center text-xs font-bold">
-                                <span className="text-slate-400">Target Age</span>
-                                <span className={clsx("px-2 py-0.5 rounded-md text-xs font-extrabold", isBrowsingDifferent ? "bg-amber-500/20 text-amber-300 border border-amber-500/40" : "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40")}>
-                                    Age {currentBrowseAge} {isBrowsingDifferent && "(Browsing)"}
-                                </span>
-                            </div>
-                            <input
-                                type="range"
-                                min={13}
-                                max={25}
-                                step={1}
-                                value={currentBrowseAge}
-                                onChange={(e) => handleAgeChange(parseInt(e.target.value, 10))}
-                                className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-400"
-                            />
-                            <div className="flex justify-between text-[10px] text-slate-500 font-mono">
-                                <span>13</span>
-                                <span>16</span>
-                                <span>18</span>
-                                <span>21</span>
-                                <span>25</span>
-                            </div>
-                        </div>
-
-                        {isBrowsingDifferent && (
-                            <button
-                                onClick={handleResetAge}
-                                className="w-full bg-slate-900/80 hover:bg-slate-900 text-amber-300 hover:text-amber-200 border border-amber-500/30 hover:border-amber-500/60 font-bold py-2 rounded-xl text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-1.5"
-                            >
-                                <RotateCcw size={12} />
-                                <span>Reset to My Real Age ({realAge})</span>
-                            </button>
-                        )}
-                    </div>
 
                     {/* Push Notifications Section */}
                     <div className="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700 space-y-3">

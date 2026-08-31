@@ -97,10 +97,6 @@ interface UserState {
     activeSituationFilter: string | null;
     setActiveSituationFilter: (filter: string | null) => void;
     clearSituationFilter: () => void;
-
-    // Browse Age — session-only override (never persisted to Supabase)
-    browseAge: number | null;
-    setBrowseAge: (age: number | null) => void;
 }
 const syncStoreToBackend = async (profile: any, currentLevelScores: Record<string, number>) => {
     if (!profile || !profile.id || profile.id.startsWith('offline-')) return;
@@ -293,10 +289,6 @@ export const useUserStore = create<UserState>()(
             setActiveSituationFilter: (filter) => set({ activeSituationFilter: filter }),
             clearSituationFilter: () => set({ activeSituationFilter: null, checkinData: null }),
 
-            // Browse Age — session-only, not in persist keys
-            browseAge: null,
-            setBrowseAge: (age) => set({ browseAge: age }),
-
             sessionPreferences: {},
             updateSessionPreference: (tag, weight) => set((state) => {
                 const current = state.sessionPreferences[tag] || 0;
@@ -315,17 +307,14 @@ export const useUserStore = create<UserState>()(
                 const { data, error } = await supabase.from('levels').select('*');
                 if (error || !data || data.length === 0) {
                     console.warn('[Store] Failed to fetch levels from Supabase or table empty. Using local fallback.');
-                    const store = get();
-                    if (store.profile) {
-                        try {
-                            const { generateLevels } = await import('../utils/levelGenerator');
-                            const ageToUse = store.browseAge ?? store.profile!.age;
-                            const fallbackLevels = generateLevels(ageToUse);
-                            set({ levels: fallbackLevels });
-                            console.log('[Store] Fallback levels generated:', fallbackLevels.length);
-                        } catch (err) {
-                            console.error("Failed to load local fallback levels", err);
-                        }
+                    try {
+                        const { generateLevels } = await import('../utils/levelGenerator');
+                        const ageToUse = get().profile?.age || 18;
+                        const fallbackLevels = generateLevels(ageToUse);
+                        set({ levels: fallbackLevels });
+                        console.log('[Store] Fallback levels generated:', fallbackLevels.length);
+                    } catch (err) {
+                        console.error("Failed to load local fallback levels", err);
                     }
                     return;
                 }
@@ -360,8 +349,8 @@ export const useUserStore = create<UserState>()(
                 let localLevels: Level[] = [];
                 try {
                     const { generateLevels } = await import('../utils/levelGenerator');
-                    const ageToUse = get().browseAge ?? get().profile?.age ?? 18;
-                    localLevels = generateLevels(ageToUse);
+                    const profileAge = get().profile?.age || 18;
+                    localLevels = generateLevels(profileAge);
                 } catch (e) {
                     console.error('[Store] Failed to generate local levels during sync:', e);
                 }
