@@ -391,51 +391,6 @@ export function GameRoot() {
         }
     }, [profile?.level, profile?.total_xp, navigate]);
 
-    if (sessionStatus === 'checking') {
-        return (
-            <div className="w-full h-[100dvh] bg-[#0d0d16] flex flex-col items-center justify-center gap-4 p-6 text-center">
-                <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-                <p className="text-cyan-400 text-lg font-bold tracking-widest animate-pulse">
-                    LOADING YOUR UNIVERSE...
-                </p>
-                {connectionError && (
-                    <div className="mt-4 p-4 bg-red-900/40 border border-red-500/50 rounded-xl text-red-200 text-sm max-w-sm animate-fade-in">
-                        {connectionError}
-                    </div>
-                )}
-            </div>
-        )
-    }
-
-    if (!profile && location.pathname !== '/game/welcome' && location.pathname !== '/game/setup') {
-        return <Navigate to="/signin" replace />;
-    }
-
-    if (profile && profile.assessmentCompleted && (location.pathname === '/game/welcome' || location.pathname === '/game/setup')) {
-        return <Navigate to="/game" replace />;
-    }
-
-    if (profile && !profile.assessmentCompleted && !onboardingComplete && !location.pathname.startsWith('/game/onboarding')) {
-        return <Navigate to="/game/onboarding/1" replace />;
-    }
-
-    if (profile && !profile.assessmentCompleted && onboardingComplete && !location.pathname.startsWith('/game/assessment')) {
-        return <Navigate to="/game/assessment/1" replace />;
-    }
-    if (profile && profile.assessmentCompleted && location.pathname === '/game') {
-        // No longer redirecting to notifications
-    }
-
-    const isScrollableRoute = 
-        location.pathname.startsWith('/game/report') ||
-        location.pathname === '/game/welcome' ||
-        location.pathname === '/game/setup' ||
-        location.pathname === '/game/dna' ||
-        location.pathname === '/game/profile' ||
-        location.pathname === '/game/settings' ||
-        location.pathname === '/game/journal' ||
-        location.pathname.startsWith('/game/admin');
-
     // Daily Notification Prompt Check
     const [showDailyNotifPrompt, setShowDailyNotifPrompt] = useState(false);
 
@@ -480,6 +435,51 @@ export function GameRoot() {
         safeStorage.set('aya_daily_notif_prompt_date', todayDateStr);
         setShowDailyNotifPrompt(false);
     };
+
+    if (sessionStatus === 'checking') {
+        return (
+            <div className="w-full h-[100dvh] bg-[#0d0d16] flex flex-col items-center justify-center gap-4 p-6 text-center">
+                <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                <p className="text-cyan-400 text-lg font-bold tracking-widest animate-pulse">
+                    LOADING YOUR UNIVERSE...
+                </p>
+                {connectionError && (
+                    <div className="mt-4 p-4 bg-red-900/40 border border-red-500/50 rounded-xl text-red-200 text-sm max-w-sm animate-fade-in">
+                        {connectionError}
+                    </div>
+                )}
+            </div>
+        )
+    }
+
+    if (!profile && location.pathname !== '/game/welcome' && location.pathname !== '/game/setup') {
+        return <Navigate to="/signin" replace />;
+    }
+
+    if (profile && profile.assessmentCompleted && (location.pathname === '/game/welcome' || location.pathname === '/game/setup')) {
+        return <Navigate to="/game" replace />;
+    }
+
+    if (profile && !profile.assessmentCompleted && !onboardingComplete && !location.pathname.startsWith('/game/onboarding')) {
+        return <Navigate to="/game/onboarding/1" replace />;
+    }
+
+    if (profile && !profile.assessmentCompleted && onboardingComplete && !location.pathname.startsWith('/game/assessment')) {
+        return <Navigate to="/game/assessment/1" replace />;
+    }
+    if (profile && profile.assessmentCompleted && location.pathname === '/game') {
+        // No longer redirecting to notifications
+    }
+
+    const isScrollableRoute = 
+        location.pathname.startsWith('/game/report') ||
+        location.pathname === '/game/welcome' ||
+        location.pathname === '/game/setup' ||
+        location.pathname === '/game/dna' ||
+        location.pathname === '/game/profile' ||
+        location.pathname === '/game/settings' ||
+        location.pathname === '/game/journal' ||
+        location.pathname.startsWith('/game/admin');
 
     return (
         <div className={`relative w-full font-sans bg-slate-900 text-slate-100 ${
