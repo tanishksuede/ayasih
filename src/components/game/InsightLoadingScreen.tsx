@@ -127,7 +127,7 @@ export function InsightLoadingScreen({ character, storyTitle }: InsightLoadingSc
                 {/* Progress Bar Container */}
                 <div className="w-full max-w-sm px-4">
                     <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-white/50 mb-2">
-                        <span>Generating AI Insights</span>
+                        <span>Generating Insights</span>
                         <span style={{ color: currentAccent }}>{progress}%</span>
                     </div>
 

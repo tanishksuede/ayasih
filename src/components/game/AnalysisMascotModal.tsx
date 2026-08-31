@@ -59,7 +59,7 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
                 {/* Progress Header */}
                 <div className="flex justify-between items-center px-4 w-full relative z-20">
                     <div className="flex items-center gap-3">
-                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#00D9FF]">AI Insights</span>
+                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#00D9FF]">Insights</span>
                         <div className="flex gap-1.5">
                             {parts.map((_, i) => (
                                 <motion.div 
