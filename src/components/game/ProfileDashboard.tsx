@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useUserStore } from '../../store/userStore';
 import { audioManager as audioSynth } from "../../utils/audioManager";
-import { ArrowLeft, Edit3, Check, X } from 'lucide-react';
+import { ArrowLeft, Edit3, Check, X, Phone, Trophy, Flame } from 'lucide-react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useUsernameAvailability } from '../../hooks/useUsernameAvailability';
 import { supabase } from '../../utils/supabase';
@@ -9,11 +9,14 @@ import { UsernameField } from './UsernameField';
 import clsx from 'clsx';
 import { getFollowerCount, getFollowingCount } from '../../services/followService';
 import { calculateLevelInfo } from '../../utils/levelSystem';
-import { Trophy, Flame } from 'lucide-react';
+import { normalizePhone } from '../../utils/authHelpers';
+import { saveSession } from '../../utils/session';
 
 interface ProfileDashboardProps {
     onBack: () => void;
 }
+
+const isRealMobile = (m?: string | null) => Boolean(m && !m.startsWith('local_') && m.trim().length > 0);
 
 export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
     const profile = useUserStore((state) => state.profile);
@@ -40,6 +43,7 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
     // Edit state
     const [newAge, setNewAge] = useState(18);
     const [usernameInput, setUsernameInput] = useState('');
+    const [mobileInput, setMobileInput] = useState('');
     const [usernameError, setUsernameError] = useState('');
     const [usernameSuccess, setUsernameSuccess] = useState('');
     const [isSaving, setIsSaving] = useState(false);
@@ -53,6 +57,7 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
         if (profile) {
             setNewAge(profile.age || 18);
             setUsernameInput(profile.username || '');
+            setMobileInput(isRealMobile(profile.mobile) ? profile.mobile! : '');
         }
     }, [profile, isEditing]);
 
@@ -60,14 +65,15 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
         if (!profile?.id) return;
         audioSynth.playClick();
         
-        const trimmed = usernameInput.trim();
+        const trimmedUsername = usernameInput.trim();
+        const trimmedMobile = mobileInput.trim();
         
-        if (!trimmed) {
+        if (!trimmedUsername) {
             setUsernameError('Please enter a username.');
             return;
         }
 
-        if (usernameAvailability.status !== 'available' && trimmed !== profile.username) {
+        if (usernameAvailability.status !== 'available' && trimmedUsername !== profile.username) {
             setUsernameError(
                 usernameAvailability.errorMessage ||
                 'Please wait for the availability check to finish, or choose a different username.'
@@ -75,28 +81,56 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
             return;
         }
 
+        let finalMobile: string | null = null;
+        if (trimmedMobile) {
+            const cleanPhone = normalizePhone(trimmedMobile);
+            if (cleanPhone.length !== 10) {
+                setUsernameError('Please enter a valid 10-digit mobile number.');
+                return;
+            }
+            finalMobile = cleanPhone;
+
+            // Check if phone number is already attached to a DIFFERENT user in Supabase
+            if (finalMobile !== profile.mobile) {
+                const { data: existingPhoneUser } = await supabase
+                    .from('users')
+                    .select('id')
+                    .eq('mobile', finalMobile)
+                    .neq('id', profile.id)
+                    .is('deleted_at', null)
+                    .maybeSingle();
+
+                if (existingPhoneUser) {
+                    setUsernameError('This phone number is already linked to another AYA account.');
+                    return;
+                }
+            }
+        }
+
         setIsSaving(true);
         setUsernameError('');
         setUsernameSuccess('');
 
         try {
-            // Upsert / Update user details
+            // Update user details in backend Supabase table
             const { error: updateError } = await supabase
                 .from('users')
-                .upsert({
-                    id: profile.id,
-                    name: profile.name || 'User',
+                .update({
+                    name: profile.name || trimmedUsername,
                     age: newAge,
-                    mobile: profile.mobile || `local_${profile.id.slice(0, 8)}`,
-                    username: trimmed,
-                    access_type: profile.access_type || 'open',
-                    access_start_date: profile.access_start_date || new Date().toISOString().split('T')[0],
+                    mobile: finalMobile,
+                    username: trimmedUsername,
                 })
+                .eq('id', profile.id)
                 .select();
 
             if (updateError) {
                 if (updateError.code === '23505') {
-                    setUsernameError('Username is already taken. Please choose another.');
+                    if (updateError.message?.includes('mobile')) {
+                        setUsernameError('This phone number is already taken.');
+                    } else {
+                        setUsernameError('Username is already taken. Please choose another.');
+                    }
                 } else {
                     setUsernameError(`Failed to save profile: ${updateError.message}`);
                 }
@@ -104,8 +138,22 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                 return;
             }
 
-            // Success 
-            setProfile({ ...profile, username: trimmed, age: newAge });
+            // Sync session and Zustand state
+            saveSession({
+                id: profile.id,
+                username: trimmedUsername,
+                name: profile.name || trimmedUsername,
+                age: newAge,
+                mobile: finalMobile || '',
+            });
+
+            setProfile({ 
+                ...profile, 
+                username: trimmedUsername, 
+                age: newAge,
+                mobile: finalMobile || undefined 
+            });
+
             setUsernameSuccess('Profile updated successfully!');
             setTimeout(() => {
                 setUsernameSuccess('');
@@ -120,10 +168,11 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
         }
     };
 
-    // Whether the username save button should be active
+    // Whether any field was changed
     const isUsernameChanged = usernameInput.trim() !== (profile?.username ?? '');
     const isAgeChanged = newAge !== (profile?.age ?? 18);
-    const canSave = (!isUsernameChanged || usernameAvailability.status === 'available') && !isSaving;
+    const isMobileChanged = (isRealMobile(profile?.mobile) ? profile?.mobile : '') !== mobileInput.trim();
+    const canSave = (!isUsernameChanged || usernameAvailability.status === 'available') && !isSaving && (isUsernameChanged || isAgeChanged || isMobileChanged);
 
     return (
         <div className={clsx(
@@ -246,12 +295,16 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                         <span className="text-2xl font-black">{profile?.longest_streak || 0}</span>
                                         <span className={clsx("text-[10px] font-bold uppercase tracking-widest", isCandyMode ? "text-slate-500" : "text-slate-400")}>Longest Streak</span>
                                     </div>
-                                    {profile?.mobile && (
-                                        <div className={clsx("col-span-2 p-4 rounded-2xl flex flex-col items-center justify-center border", isCandyMode ? "bg-slate-50 border-slate-200" : "bg-slate-800/40 border-slate-700")}>
-                                            <span className={clsx("text-[10px] font-bold uppercase tracking-widest mb-1", isCandyMode ? "text-slate-500" : "text-slate-400")}>Linked Mobile</span>
-                                            <span className="font-medium text-sm">{profile.mobile}</span>
-                                        </div>
-                                    )}
+                                    <div className={clsx("col-span-2 p-4 rounded-2xl flex flex-col items-center justify-center border", isCandyMode ? "bg-slate-50 border-slate-200" : "bg-slate-800/40 border-slate-700")}>
+                                        <span className={clsx("text-[10px] font-bold uppercase tracking-widest mb-1 flex items-center gap-1.5", isCandyMode ? "text-slate-500" : "text-slate-400")}>
+                                            <Phone size={12} /> Linked Mobile
+                                        </span>
+                                        <span className="font-medium text-sm">
+                                            {isRealMobile(profile?.mobile) ? profile?.mobile : (
+                                                <span className="text-slate-500 text-xs italic">Not linked (tap Edit Profile to add)</span>
+                                            )}
+                                        </span>
+                                    </div>
                                 </div>
 
                                 {(followerCount !== null || followingCount !== null) && (
@@ -319,6 +372,28 @@ export function ProfileDashboard({ onBack }: ProfileDashboardProps) {
                                                 : "bg-slate-900 text-white border-slate-700 focus:border-[#00f2ff] focus:ring-4 focus:ring-[#00f2ff]/20"
                                         )}
                                     />
+                                </div>
+
+                                <div className="w-full">
+                                    <label className={clsx("block text-xs font-bold uppercase tracking-wider mb-2 ml-1 flex items-center gap-1.5", isCandyMode ? "text-slate-500" : "text-slate-400")}>
+                                        <Phone size={12} /> Phone Number
+                                    </label>
+                                    <input
+                                        type="tel"
+                                        placeholder="e.g. 9876543210 (10 digits)"
+                                        value={mobileInput}
+                                        onChange={(e) => setMobileInput(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                                        disabled={isSaving}
+                                        className={clsx(
+                                            "w-full font-bold rounded-2xl px-5 py-4 border focus:outline-none transition-all",
+                                            isCandyMode
+                                                ? "bg-slate-50 text-slate-800 border-slate-200 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-400/10"
+                                                : "bg-slate-900 text-white border-slate-700 focus:border-[#00f2ff] focus:ring-4 focus:ring-[#00f2ff]/20"
+                                        )}
+                                    />
+                                    <p className="text-[11px] text-slate-500 mt-1.5 ml-1">
+                                        Optional. Used to sign in to your AYA account via phone.
+                                    </p>
                                 </div>
 
                                 <div className="w-full flex gap-3 mt-4">
