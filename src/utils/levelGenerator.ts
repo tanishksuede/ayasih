@@ -184,10 +184,30 @@ export function generateLevels(_age: number): Level[] {
             bio: 'A 16-year-old batsman waking up at 2:30 AM to sudden personal tragedy hours before a crucial Ranji match for Delhi.',
             fame: 'Indian cricket icon and one of the greatest batsmen of all time.',
             achievements: ['Scored 90 runs under profound grief for Delhi', 'U-19 World Cup winning captain (2008)', '2011 ICC World Cup & 2024 T20 World Cup Champion'],
-            lesson: 'True discipline often means stepping up when you feel the least capable of doing so. Honoring a loved one can mean continuing the work they supported.',
+            lesson: 'When personal tragedy strikes, stepping forward for your team and honoring duty builds unbreakable resilience.',
             avatarUrl: '/assets/avatar_virat_kohli.jpg',
             scenarioId: 'lvl_age_16_virat_kohli',
-            idolTraits: { discipline: 100, resilience: 100, risk: 90, leadership: 95, creativity: 80, empathy: 75, vision: 95 }
+            idolTraits: { discipline: 98, resilience: 100, risk: 85, leadership: 95, creativity: 80, empathy: 75, vision: 90 }
+        },
+        // Age 16: Michael Jordan
+        {
+            id: 'lvl_16_jordan_1',
+            title: 'The Roster',
+            description: 'At 16, after being cut from the varsity basketball team and assigned to junior varsity, you must decide how to handle the public rejection.',
+            requiredStars: 0,
+            year: 1978,
+            age: 16,
+            theme: 'Sports',
+            age_mirror_text: 'staring at a posted team roster without your name on it and deciding whether to coast or channel the humiliation into relentless practice',
+            archetype: 'The Competitor',
+            personality: 'Michael Jordan',
+            bio: 'A sophomore high school basketball player dealing with the public humiliation of being placed on the junior varsity team.',
+            fame: '6-time NBA Champion, 5-time MVP, and global basketball icon.',
+            achievements: ['6-time NBA Champion with Chicago Bulls', '5-time NBA Most Valuable Player', 'Turned high school cut into legendary relentless drive'],
+            lesson: 'Rejection isn\'t an assessment of your final potential; only structured, relentless practice turns anger into greatness.',
+            avatarUrl: '/assets/portrait-michael-jackson.png',
+            scenarioId: 'lvl_age_16_jordan',
+            idolTraits: { discipline: 100, resilience: 98, risk: 90, leadership: 95, creativity: 90, empathy: 70, vision: 95 }
         },
         // Age 20: Billie Eilish (Story 2)
         {

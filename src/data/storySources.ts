@@ -850,6 +850,25 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
+  // ── MICHAEL JORDAN (Age 16) ───────────────────────────────────────────────
+  'lvl_age_16_jordan': [
+    {
+      title: 'Basketball Network (1978)',
+      type: 'article',
+      detail: 'Michael Jordan says he was embarrassed not to make the HS Varsity team in 1978 at Laney High School.',
+    },
+    {
+      title: 'Education Week (1997)',
+      type: 'article',
+      detail: 'His 6-foot-8-inch buddy, Leroy Smith, was the only sophomore to make the team that year, and Jordan admitted the omission made him weep in his room.',
+    },
+    {
+      title: 'Basketball Network (2024)',
+      type: 'article',
+      detail: 'He recorded multiple 40-point games on the junior varsity team and turned Laney HS JV games into a must-watch event.',
+    },
+  ],
+
   // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
   'lvl_age_16_bhuvan': [
     {

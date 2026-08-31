@@ -126,6 +126,18 @@ export const STORY_METADATA_REGISTRY: Record<string, StoryMetadata> = {
         difficulty: 'deep',
         targetTraits: { risk: 90, creativity: 95, vision: 95, empathy: 85, leadership: 90 },
     },
+    'lvl_age_16_jordan': {
+        scenarioId: 'lvl_age_16_jordan',
+        dilemmaType: 'Public Rejection & Channeling Anger into Mastery',
+        lifeTheme: 'failure_setback',
+        situationalTags: ['failure_setback', 'comparing_to_others', 'discipline', 'starting_with_little', 'cut_from_varsity', 'public_humiliation'],
+        protagonistLens: 'How Michael Jordan processed being cut from the varsity basketball team and channeled humiliation into unstoppable work ethic on junior varsity.',
+        historicalContext: 'In 1978, sophomore Michael Jordan was cut from Laney High varsity basketball in favor of a taller classmate, weeping alone before dominating on JV with 40-point games.',
+        reflectionPrompt: 'When you face a public rejection or setback, do you let it define your limits, or use it to sharpen your focus?',
+        microActionPrompt: 'Identify one area where you were recently rejected or criticized, and dedicate 30 minutes of focused effort to improving that exact skill.',
+        difficulty: 'moderate',
+        targetTraits: { risk: 85, creativity: 90, vision: 95, empathy: 70, leadership: 95 },
+    },
     'lvl_age_16_bhuvan': {
         scenarioId: 'lvl_age_16_bhuvan',
         dilemmaType: 'Parental Expectations vs Passion for the Arts',

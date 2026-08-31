@@ -3698,6 +3698,58 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
+    "storyId": "lvl_age_16_jordan",
+    "situationTags": [
+      "failure_setback",
+      "comparing_to_others",
+      "discipline",
+      "starting_with_little"
+    ],
+    "problemTags": [
+      "cut_from_varsity",
+      "rejected_for_peer",
+      "public_humiliation"
+    ],
+    "emotionalTags": [
+      "sad",
+      "frustrated",
+      "determined"
+    ],
+    "intentTags": [
+      "challenge_myself",
+      "build_confidence"
+    ],
+    "lifeStageTags": [
+      "late_teens"
+    ],
+    "ageMin": 15,
+    "ageMax": 18,
+    "dominantTrait": "discipline",
+    "resolutionArchetype": "persistence",
+    "lessonTags": [
+      "discipline",
+      "persistence",
+      "resilience"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "historical",
+    "culturalContext": "global",
+    "semanticDescription": "A story about Michael Jordan at age 16 getting cut from the varsity basketball roster and channeling the pain and public humiliation into relentless daily practice on the junior varsity team.",
+    "triggerPhrases": [
+      "michael jordan",
+      "the roster",
+      "cut from team",
+      "varsity basketball",
+      "junior varsity",
+      "failure_setback"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Michael Jordan at age 16 faced a pivotal choice in The Roster — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
     "storyId": "lvl_age_16_bhuvan",
     "situationTags": [
       "parents_vs_own_path",

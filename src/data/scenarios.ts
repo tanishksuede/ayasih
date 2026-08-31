@@ -3951,6 +3951,91 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
+    // AGE 16: Michael Jordan
+    'lvl_age_16_jordan': {
+        title: "The Roster",
+        source: "Source: Basketball Network & Education Week (1997)",
+        frames: [
+            {
+                id: 'start',
+                emotion: 'sad',
+                bg: '/assets/bg-michael-jackson-van-nuys-1981.png',
+                text: "You are a high school sophomore who lives and breathes basketball. You pour everything into varsity tryouts. But when the final roster is taped to the gym wall, your name is missing.",
+                choices: [
+                    { text: "Look closer at the list", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'reality',
+                emotion: 'sad',
+                bg: '/assets/bg-michael-jackson-van-nuys-1981.png',
+                text: "You're assigned to junior varsity, while your 6-foot-8 close friend is picked for varsity because the team needed height. You go home, lock yourself in your room, and weep.",
+                choices: [
+                    { text: "Face the upcoming season", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'dilemma',
+                emotion: 'conflicted',
+                bg: '/assets/bg-michael-jackson-van-nuys-1981.png',
+                text: "You have to play on the junior varsity team now. How do you approach the season after this public humiliation?",
+                choices: [
+                    {
+                        text: "Protect your ego by treating JV as a joke, refusing to give full effort since you believe you belong on varsity.",
+                        next: 'ego',
+                        score: 0,
+                        feedbackTitle: "Stagnation & Excuses",
+                        feedback: "You save face in the short term, but your skills stagnate. You never make the varsity roster."
+                    },
+                    {
+                        text: "Play it safe and focus entirely on being a quiet team player, hoping the coach notices your good attitude.",
+                        next: 'safe',
+                        score: 4,
+                        feedbackTitle: "Average Role Player",
+                        feedback: "You become well-liked on JV, but without pushing your limits, you never develop the killer instinct to dominate."
+                    },
+                    {
+                        text: "Channel your anger into ruthless aggression, treating every JV practice and game like a personal showcase to prove the coach wrong.",
+                        next: 'drive',
+                        score: 10,
+                        feedbackTitle: "Fuel from Rejection",
+                        feedback: "You use the cut as pure fuel, forging the relentless discipline that will define your career."
+                    }
+                ]
+            },
+            {
+                id: 'ego',
+                emotion: 'resigned',
+                bg: '/assets/bg-michael-jackson-van-nuys-1981.png',
+                text: "By acting like you don't care, you protect your pride, but let your true potential slip away.",
+                choices: [
+                    { text: "Rethink your mindset", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'safe',
+                emotion: 'neutral',
+                bg: '/assets/bg-michael-jackson-van-nuys-1981.png',
+                text: "You play quietly and blend in, but greatness is never built on just playing it safe.",
+                choices: [
+                    { text: "Aim higher", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
+                ]
+            },
+            {
+                id: 'drive',
+                emotion: 'determined',
+                bg: '/assets/portrait-michael-jackson.png',
+                bgSize: 'object-contain',
+                bgPosition: 'object-center bg-black',
+                portrait: '/assets/portrait-michael-jackson.png',
+                text: "You dominate the JV circuit with multiple 40-point games, turning every match into a must-watch spectacle. That sting of being cut created the legendary, obsessive drive of Michael Jordan.\n\nLESSONS:\n1. Rejection isn't an assessment of your final potential; it is just a snapshot of your current reality.\n2. When you are told you aren't enough, anger is natural, but only structured, relentless practice turns anger into greatness.",
+                choices: [
+                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
+                ]
+            }
+        ]
+    },
+
     // AGE 20: Narendra Modi
     'lvl_age_20_modi': {
         title: "The Canteen and the Calling",
