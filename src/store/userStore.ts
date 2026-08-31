@@ -98,6 +98,9 @@ interface UserState {
     activeSituationFilter: string | null;
     setActiveSituationFilter: (filter: string | null) => void;
     clearSituationFilter: () => void;
+    
+    browseAge: number | null;
+    setBrowseAge: (age: number | null) => void;
 }
 const syncStoreToBackend = async (profile: any, currentLevelScores: Record<string, number>) => {
     if (!profile || !profile.id || profile.id.startsWith('offline-')) return;
@@ -289,6 +292,9 @@ export const useUserStore = create<UserState>()(
             activeSituationFilter: null,
             setActiveSituationFilter: (filter) => set({ activeSituationFilter: filter }),
             clearSituationFilter: () => set({ activeSituationFilter: null, checkinData: null }),
+            
+            browseAge: null,
+            setBrowseAge: (age) => set({ browseAge: age }),
 
             sessionPreferences: {},
             updateSessionPreference: (tag, weight) => set((state) => {
