@@ -80,9 +80,18 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     };
 
     if (activeSituationFilter) {
-        // Situation Map uses the full playable library. Age is display context,
-        // not a requirement that can hide a valid situation match.
-        ageLevels = processedLevels.filter(l => {
+        // Situation filter: restrict to the current age first, then match tags.
+        let agePool = processedLevels;
+        if (profile?.preferred_map === 'jee') {
+            agePool = processedLevels.filter(l => l.theme === 'JEE');
+        } else if (profile?.preferred_map === 'neet') {
+            agePool = processedLevels.filter(l => l.theme === 'NEET');
+        } else if (profile?.preferred_map === 'upsc') {
+            agePool = processedLevels.filter(l => l.theme === 'UPSC');
+        } else {
+            agePool = processedLevels.filter(l => Number(l.age) === Number(activeAge));
+        }
+        ageLevels = agePool.filter(l => {
             const metadata = getStoryMetadata(l.scenarioId);
             return metadata?.situationTags.includes(activeSituationFilter)
                 || metadata?.problemTags.includes(activeSituationFilter)
