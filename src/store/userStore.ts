@@ -4,6 +4,7 @@ import type { UserProfile, Level, Lesson, PersonalityTraits, PsychologicalProfil
 import { calculateLevelInfo } from '../utils/levelSystem';
 import { safeStorage } from '../utils/storage';
 import { supabase } from '../utils/supabase';
+import { generateLevels } from '../utils/levelGenerator';
 
 export type MapTheme = 'city_dark' | 'solar' | 'light';
 
@@ -162,7 +163,7 @@ export const useUserStore = create<UserState>()(
         (set, get) => ({
             profile: null,
             completedOnboarding: false,
-            levels: [], // Start empty
+            levels: generateLevels(18),
             levelScores: {},
             xp: 0, // Legacy fallback. New stats live on profile
             showSubscriptionModal: false,
@@ -601,7 +602,6 @@ export const useUserStore = create<UserState>()(
             partialize: (state) => ({
                 profile: state.profile,
                 completedOnboarding: state.completedOnboarding,
-                levels: state.levels,
                 levelScores: state.levelScores,
                 mapTheme: state.mapTheme,
                 musicVolume: state.musicVolume,
@@ -618,6 +618,25 @@ export const useUserStore = create<UserState>()(
                         console.error('[Store] Hydration failed:', error);
                     } else {
                         console.log('[Store] Hydration complete. Profile:', rehydratedState?.profile?.name || 'none');
+                        try {
+                            const master = generateLevels(rehydratedState?.profile?.age || 18);
+                            const currentScores = rehydratedState?.levelScores || {};
+                            const rehydratedMap = new Map((rehydratedState?.levels || []).map((l: any) => [l.id, l]));
+                            const merged = master.map((ml: any) => {
+                                const stored = rehydratedMap.get(ml.id);
+                                const score = currentScores[ml.id];
+                                return {
+                                    ...ml,
+                                    ...(stored || {}),
+                                    age: ml.age,
+                                    status: (score !== undefined && score > 0) ? 'completed' : (stored?.status || ml.status || 'unlocked'),
+                                    stars: Math.max(ml.stars || 0, score || 0, stored?.stars || 0)
+                                };
+                            });
+                            useUserStore.setState({ levels: merged });
+                        } catch (e) {
+                            console.error('[Store] Level merge error during hydration:', e);
+                        }
                     }
                 };
             },

@@ -5,7 +5,7 @@ import App from './App.tsx'
 import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 import { syncExistingSubscriptionIfGranted } from './utils/pushNotifications.ts';
 
-const FORCE_RELOAD_VERSION = 'v1.1.4';
+const FORCE_RELOAD_VERSION = 'v1.1.5';
 
 // iOS Safari guard: prevent infinite reload loop
 // Only allow a version-bump reload once every 10 seconds
