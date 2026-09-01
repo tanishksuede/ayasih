@@ -1,75 +1,30 @@
-# React + TypeScript + Vite
+# Aya: AI-Powered Insights & Stories
 
-<!-- Trigger Vercel Preview Deployment -->
+Aya is an interactive, AI-driven storytelling and learning platform designed to help users navigate personal growth, mindset development, and real-world challenges. It blends personalized, gamified scenarios with robust psychometric insights.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+The platform uses interactive decision-making scenarios where your choices dynamically impact your core traits (e.g., Risk-taking, Creativity, Vision, Empathy, Leadership). Your progress is visualized as an evolving "DNA Profile", matching you to archetypes and providing actionable feedback.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+*   **Interactive Scenarios**: Play through stories based on diverse themes, idols, and realistic challenges.
+*   **Dynamic Trait Tracking**: Your decisions directly shift your core DNA scores.
+*   **Gamified Progression**: Earn XP, level up, maintain streaks, and complete daily challenges.
+*   **Insight Breakdowns**: Get detailed, step-by-step analysis of how your choices align with your growth areas.
+*   **PWA Ready**: Installable as a Progressive Web App for a native-like experience on mobile devices.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+*   **Frontend**: React (TypeScript), Vite, Tailwind CSS, Framer Motion
+*   **State Management**: Zustand
+*   **Backend / DB**: Supabase (PostgreSQL)
+*   **Hosting**: Vercel
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Running Locally
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1.  Clone the repository.
+2.  Run `npm install`.
+3.  Set up your `.env.local` based on `.env.example`.
+4.  Run `npm run dev` to start the local server.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
