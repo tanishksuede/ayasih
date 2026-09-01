@@ -121,9 +121,9 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
                     </div>
 
                     {/* Mascot Area */}
-                    <div className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 shrink-0 relative flex items-center justify-center mx-auto mt-2">
+                    <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 shrink-0 relative flex items-center justify-center mx-auto -mt-2">
                         <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full" />
-                        <div className="w-full h-full relative z-10 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                        <div className="w-full h-full relative z-10 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)] scale-[1.75] sm:scale-[1.5] origin-center">
                             <DotLottieReact
                                 src={encodeURI(activeMascot)}
                                 loop
