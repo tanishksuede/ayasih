@@ -1,14 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, ChevronRight, ChevronLeft, Check } from 'lucide-react';
 import { clsx } from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 export const MASCOT_ASSETS = {
-    WATCHING_LEFT: '/assets/Macot/watching left mascot.lottie',
-    BIRD: '/assets/Macot/mascot with bird.lottie',
-    HAPPY: '/assets/Macot/happy mascot.lottie',
-    WINNER: '/assets/Macot/Winner mascot.lottie',
+    CHAIR_CELEBRATE: '/mascot/chair_celebrate_mascot.lottie',
 } as const;
 
 interface AnalysisMascotModalProps {
@@ -19,6 +16,25 @@ interface AnalysisMascotModalProps {
 
 export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts, onComplete }) => {
     const [step, setStep] = useState(0);
+    const [displayedText, setDisplayedText] = useState("");
+    const [isTyping, setIsTyping] = useState(true);
+
+    useEffect(() => {
+        setDisplayedText("");
+        setIsTyping(true);
+        let i = 0;
+        const text = parts[step] || "";
+        // 20ms per character for smooth type-in
+        const interval = setInterval(() => {
+            setDisplayedText(text.slice(0, i));
+            i++;
+            if (i > text.length) {
+                setIsTyping(false);
+                clearInterval(interval);
+            }
+        }, 20);
+        return () => clearInterval(interval);
+    }, [step, parts]);
 
     const handleNext = () => {
         if (step < parts.length - 1) {
@@ -34,13 +50,7 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
         }
     };
 
-    const getMascotAsset = (idx: number) => {
-        if (idx === 0) return MASCOT_ASSETS.BIRD; // Empathetic/listening
-        if (idx === 1) return MASCOT_ASSETS.WATCHING_LEFT; // Explaining/thoughtful
-        return MASCOT_ASSETS.HAPPY; // Encouraging/Happy
-    };
-
-    const activeMascot = getMascotAsset(step);
+    const activeMascot = MASCOT_ASSETS.CHAIR_CELEBRATE;
 
     return (
         <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#050817]/95 backdrop-blur-xl p-3 sm:p-4 md:p-6 overflow-y-auto min-h-[100dvh]">
@@ -84,47 +94,44 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
                     </button>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-12 flex-1 mt-2 sm:mt-4 relative z-10">
-                    {/* Mascot Area */}
-                    <div className="w-32 h-32 sm:w-44 sm:h-44 md:w-72 md:h-72 shrink-0 relative flex items-center justify-center">
-                        <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full" />
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={activeMascot}
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.9 }}
-                                transition={{ duration: 0.3 }}
-                                className="w-full h-full relative z-10 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)]"
-                            >
-                                <DotLottieReact
-                                    src={encodeURI(activeMascot)}
-                                    loop
-                                    autoplay
-                                    style={{ width: '100%', height: '100%' }}
-                                    className="object-contain"
-                                />
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
-                    
+                <div className="flex flex-col items-center justify-center gap-2 sm:gap-4 flex-1 mt-2 sm:mt-4 relative z-10 w-full max-w-2xl mx-auto">
                     {/* Dialog Box Area */}
-                    <div className="w-full flex-1 flex flex-col justify-center max-w-lg min-h-[120px] sm:min-h-[150px] md:min-h-[160px] relative">
+                    <div className="w-full relative min-h-[140px] sm:min-h-[150px] md:min-h-[160px] flex flex-col justify-end">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={step}
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ duration: 0.4 }}
-                                className="relative bg-[#111A38]/80 backdrop-blur-md p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-white/5 shadow-2xl"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.3 }}
+                                className="relative bg-[#111A38]/90 backdrop-blur-md p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-[#00D9FF]/20 shadow-[0_10px_30px_rgba(0,0,0,0.5)] mb-4"
                             >
-                                <span className="absolute -top-5 -left-1 sm:-top-6 sm:-left-2 text-4xl sm:text-6xl text-[#00D9FF]/20 font-serif leading-none">"</span>
-                                <p className="text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed text-white/90 font-medium relative z-10">
-                                    {parts[step]}
+                                {/* Speech Bubble Tail pointing to the mascot below */}
+                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[16px] border-transparent border-t-[#111A38]/90 filter drop-shadow-[0_4px_2px_rgba(0,0,0,0.1)]" />
+                                
+                                {/* Inner tail border overlay to match the bubble's border */}
+                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[16px] border-transparent border-t-[#00D9FF]/20 -z-10 scale-110 translate-y-[1px]" />
+                                
+                                <p className="text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed text-white/95 font-medium relative z-10 min-h-[4rem]">
+                                    {displayedText}
+                                    {isTyping && <span className="inline-block w-1.5 h-4 sm:h-5 ml-1 bg-[#00D9FF] animate-pulse align-middle" />}
                                 </p>
                             </motion.div>
                         </AnimatePresence>
+                    </div>
+
+                    {/* Mascot Area */}
+                    <div className="w-32 h-32 sm:w-44 sm:h-44 md:w-72 md:h-72 shrink-0 relative flex items-center justify-center">
+                        <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full" />
+                        <div className="w-full h-full relative z-10 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)]">
+                            <DotLottieReact
+                                src={encodeURI(activeMascot)}
+                                loop
+                                autoplay
+                                style={{ width: '100%', height: '100%' }}
+                                className="object-contain pointer-events-none"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -162,3 +169,4 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
         </div>
     );
 };
+
