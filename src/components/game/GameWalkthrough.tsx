@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, ChevronLeft, Check } from 'lucide-react';
 import clsx from 'clsx';
+import { useUserStore } from '../../store/userStore';
 
 const STEPS = [
     {
@@ -55,23 +56,47 @@ export function GameWalkthrough() {
 
     // Initialization check
     useEffect(() => {
+        let interval: any;
         const checkTutorialState = () => {
             const hasSeen = localStorage.getItem('aya_game_tutorial_done') === 'true';
-            if (!hasSeen) {
-                // Wait for the app to settle
-                setTimeout(() => setIsActive(true), 2000);
-            }
+            if (hasSeen) return;
+
+            // Wait until no overlays/modals are present
+            interval = setInterval(() => {
+                const state = useUserStore.getState();
+                const profile = state.profile;
+                
+                const isCheckInOpen = !sessionStorage.getItem('hasCheckedInSession');
+                const isTopicSurveyOpen = profile?.stories_completed === 3 && !localStorage.getItem('aya_topic_survey_done');
+                const isSubscriptionOpen = state.showSubscriptionModal;
+
+                // Also check if any generic modals (z-[9999] or higher) are visible in the DOM
+                const hasDomModals = Array.from(document.querySelectorAll('.fixed.inset-0')).some((el: any) => {
+                    const cn = el.className || '';
+                    return !cn.includes('z-[99999]') && (cn.includes('z-[9999]') || cn.includes('z-[10000]'));
+                });
+
+                if (!isCheckInOpen && !isTopicSurveyOpen && !isSubscriptionOpen && !hasDomModals) {
+                    clearInterval(interval);
+                    // Add a small buffer after the last modal disappears
+                    setTimeout(() => setIsActive(true), 1500);
+                }
+            }, 1000);
         };
 
         checkTutorialState();
 
         const handleStart = () => {
+            if (interval) clearInterval(interval);
             setCurrentStep(0);
             setIsActive(true);
         };
 
         window.addEventListener('tutorial-start', handleStart);
-        return () => window.removeEventListener('tutorial-start', handleStart);
+        return () => {
+            if (interval) clearInterval(interval);
+            window.removeEventListener('tutorial-start', handleStart);
+        };
     }, []);
 
     // Effect to run onEnter logic and find target element
