@@ -90,6 +90,17 @@ export interface UserProfile {
     last_active_date?: string; // ISO Date String
     daily_challenge_completed?: boolean;
     daily_challenge_personality?: string;
+
+    // Backend Persistent Flags & Preferences
+    tutorial_completed?: boolean;
+    topic_survey_completed?: boolean;
+    choice_history?: any[];
+    music_volume?: number;
+    sfx_volume?: number;
+    is_music_muted?: boolean;
+    is_sfx_muted?: boolean;
+    daily_spins_used?: number;
+    spin_reset_date?: string;
 }
 
 export interface Lesson {

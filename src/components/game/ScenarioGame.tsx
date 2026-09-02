@@ -573,6 +573,9 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             }));
             choiceHistory = [...choiceHistory, ...newChoicesToSave];
             localStorage.setItem('aya_choice_history', JSON.stringify(choiceHistory));
+            if (userProfile?.id && !userProfile.id.startsWith('offline-')) {
+                supabase.from('users').update({ choice_history: choiceHistory }).eq('id', userProfile.id).catch(() => {});
+            }
 
             // Aggregate from FULL history
             let fullAccumulator = { risk: 0, creativity: 0, analytical: 0, social: 0, ambitious: 0 };

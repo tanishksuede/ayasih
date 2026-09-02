@@ -253,6 +253,13 @@ export function GameRoot() {
                     onboarding_scores: user.onboarding_scores || undefined,
                     gameplay_scores: user.gameplay_scores || undefined,
                     story_count: user.story_count || 0,
+                    tutorial_completed: user.tutorial_completed || false,
+                    topic_survey_completed: user.topic_survey_completed || false,
+                    choice_history: user.choice_history || [],
+                    music_volume: user.music_volume,
+                    sfx_volume: user.sfx_volume,
+                    is_music_muted: user.is_music_muted,
+                    is_sfx_muted: user.is_sfx_muted,
                     traits: {
                         risk: profileData?.trait_risk_taker || 50,
                         creativity: profileData?.trait_creative || 50,
@@ -313,6 +320,21 @@ export function GameRoot() {
 
                 const savedTheme = user.preferred_theme || 'city_dark';
                 store.setMapTheme(savedTheme as any);
+
+                // Restore persistent backend preferences & flags
+                if (user.tutorial_completed) localStorage.setItem('aya_game_tutorial_done', 'true');
+                if (user.topic_survey_completed) localStorage.setItem('aya_topic_survey_done', 'true');
+                if (user.choice_history && Array.isArray(user.choice_history) && user.choice_history.length > 0) {
+                    localStorage.setItem('aya_choice_history', JSON.stringify(user.choice_history));
+                }
+                if (typeof user.music_volume === 'number') store.setMusicVolume(user.music_volume);
+                if (typeof user.sfx_volume === 'number') store.setSfxVolume(user.sfx_volume);
+                if (typeof user.is_music_muted === 'boolean' && user.is_music_muted !== store.isMusicMuted) {
+                    store.toggleMusicMute();
+                }
+                if (typeof user.is_sfx_muted === 'boolean' && user.is_sfx_muted !== store.isSfxMuted) {
+                    store.toggleSfxMute();
+                }
 
                 // ── STEP 3: SYNC LEVELS AND APPLY SCORES ──
                 // Everyone needs levels, so we always sync them.

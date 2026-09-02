@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronRight, ChevronLeft, Check } from 'lucide-react';
 import clsx from 'clsx';
 import { useUserStore } from '../../store/userStore';
+import { supabase } from '../../utils/supabase';
 
 const STEPS = [
     {
@@ -61,7 +62,8 @@ export function GameWalkthrough() {
             // Never show tutorial on mobile/tablet screens
             if (window.innerWidth < 1024) return;
 
-            const hasSeen = localStorage.getItem('aya_game_tutorial_done') === 'true';
+            const profile = useUserStore.getState().profile;
+            const hasSeen = localStorage.getItem('aya_game_tutorial_done') === 'true' || profile?.tutorial_completed === true;
             if (hasSeen) return;
 
             // Wait until no overlays/modals are present
@@ -182,6 +184,11 @@ export function GameWalkthrough() {
 
     const handleFinish = () => {
         localStorage.setItem('aya_game_tutorial_done', 'true');
+        const userProfile = useUserStore.getState().profile;
+        if (userProfile?.id && !userProfile.id.startsWith('offline-')) {
+            useUserStore.getState().setProfile({ ...userProfile, tutorial_completed: true });
+            supabase.from('users').update({ tutorial_completed: true }).eq('id', userProfile.id).then(() => {}).catch(() => {});
+        }
         setIsActive(false);
         window.dispatchEvent(new CustomEvent('tutorial-menu-toggle', { detail: { open: false } }));
     };

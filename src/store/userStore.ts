@@ -117,6 +117,12 @@ const syncStoreToBackend = async (profile: any, currentLevelScores: Record<strin
             onboarding_scores: profile.onboarding_scores,
             gameplay_scores: profile.gameplay_scores,
             story_count: profile.story_count,
+            tutorial_completed: profile.tutorial_completed,
+            topic_survey_completed: profile.topic_survey_completed,
+            music_volume: profile.music_volume,
+            sfx_volume: profile.sfx_volume,
+            is_music_muted: profile.is_music_muted,
+            is_sfx_muted: profile.is_sfx_muted,
         }).eq('id', profile.id);
 
         if (userError) {
@@ -255,10 +261,52 @@ export const useUserStore = create<UserState>()(
             isSfxMuted: false,
             isNarrationMuted: false,
 
-            setMusicVolume: (vol) => set({ musicVolume: vol }),
-            setSfxVolume: (vol) => set({ sfxVolume: vol }),
-            toggleMusicMute: () => set((state) => ({ isMusicMuted: !state.isMusicMuted })),
-            toggleSfxMute: () => set((state) => ({ isSfxMuted: !state.isSfxMuted })),
+            setMusicVolume: (vol) => {
+                set((state) => ({
+                    musicVolume: vol,
+                    profile: state.profile ? { ...state.profile, music_volume: vol } : null
+                }));
+                const pid = get().profile?.id;
+                if (pid && !pid.startsWith('offline-')) {
+                    supabase.from('users').update({ music_volume: vol }).eq('id', pid).catch(() => {});
+                }
+            },
+            setSfxVolume: (vol) => {
+                set((state) => ({
+                    sfxVolume: vol,
+                    profile: state.profile ? { ...state.profile, sfx_volume: vol } : null
+                }));
+                const pid = get().profile?.id;
+                if (pid && !pid.startsWith('offline-')) {
+                    supabase.from('users').update({ sfx_volume: vol }).eq('id', pid).catch(() => {});
+                }
+            },
+            toggleMusicMute: () => {
+                set((state) => {
+                    const next = !state.isMusicMuted;
+                    const pid = state.profile?.id;
+                    if (pid && !pid.startsWith('offline-')) {
+                        supabase.from('users').update({ is_music_muted: next }).eq('id', pid).catch(() => {});
+                    }
+                    return {
+                        isMusicMuted: next,
+                        profile: state.profile ? { ...state.profile, is_music_muted: next } : null
+                    };
+                });
+            },
+            toggleSfxMute: () => {
+                set((state) => {
+                    const next = !state.isSfxMuted;
+                    const pid = state.profile?.id;
+                    if (pid && !pid.startsWith('offline-')) {
+                        supabase.from('users').update({ is_sfx_muted: next }).eq('id', pid).catch(() => {});
+                    }
+                    return {
+                        isSfxMuted: next,
+                        profile: state.profile ? { ...state.profile, is_sfx_muted: next } : null
+                    };
+                });
+            },
             toggleNarrationMute: () => set((state) => ({ isNarrationMuted: !state.isNarrationMuted })),
 
             collectedLessons: [],
