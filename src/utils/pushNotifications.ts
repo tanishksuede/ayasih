@@ -171,6 +171,45 @@ export async function subscribeToPush(userId?: string): Promise<PushSubscription
 }
 
 /**
+ * Log notification status (enabled / not enabled / permission) to Supabase.
+ */
+export async function logNotificationStatus(
+  userId?: string | null,
+  enabled: boolean = false,
+  permissionState: string = 'default'
+): Promise<void> {
+  const targetId = userId || useUserStore.getState().profile?.id || localStorage.getItem('aya_user_id') || null;
+  if (!targetId) {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.id) {
+        await supabase.from('users').update({
+          notifications_enabled: enabled,
+          notification_permission: permissionState,
+          notification_updated_at: new Date().toISOString()
+        }).eq('id', user.id);
+      }
+    } catch (e) {
+      console.warn('[Push] Notice logging notification status to Supabase:', e);
+    }
+    return;
+  }
+
+  try {
+    const { error } = await supabase.from('users').update({
+      notifications_enabled: enabled,
+      notification_permission: permissionState,
+      notification_updated_at: new Date().toISOString()
+    }).eq('id', targetId);
+    if (error) {
+      console.warn('[Push] Notice updating user notification status:', error.message);
+    }
+  } catch (err) {
+    console.warn('[Push] Error updating user notification status in Supabase:', err);
+  }
+}
+
+/**
  * Public function to subscribe user to push notifications.
  * Idempotent & protected with an in-flight guard.
  */
@@ -197,6 +236,7 @@ async function _subscribeUserToPushInternal(passedUserId?: string): Promise<Push
   // ── 1. Feature Detection & Permission Check ───────────────────────────
   console.log('[Push] Checking notification permission');
   if (typeof window === 'undefined' || !('Notification' in window)) {
+    await logNotificationStatus(passedUserId, false, 'unsupported');
     throw new Error('Notifications are not supported by this browser. (On iOS, add AYA to Home Screen first).');
   }
 
@@ -204,6 +244,7 @@ async function _subscribeUserToPushInternal(passedUserId?: string): Promise<Push
   console.log('[Push] Current notification permission state:', initialPermission);
 
   if (initialPermission === 'denied') {
+    await logNotificationStatus(passedUserId, false, 'denied');
     throw new Error('Notifications are blocked in browser settings. Please allow notifications for this site in your browser.');
   }
 
@@ -212,9 +253,13 @@ async function _subscribeUserToPushInternal(passedUserId?: string): Promise<Push
     console.log('[Push] Requesting Notification permission from user...');
     const permissionResult = await Notification.requestPermission();
     if (permissionResult !== 'granted') {
+      await logNotificationStatus(passedUserId, false, permissionResult);
       throw new Error('Notification permission was not granted.');
     }
   }
+
+  // Permission is granted! Log to Supabase immediately
+  await logNotificationStatus(passedUserId, true, 'granted');
 
   // ── 3. Validate VAPID Public Key from Env ─────────────────────────────
   console.log('[Push] Validating VAPID public key...');

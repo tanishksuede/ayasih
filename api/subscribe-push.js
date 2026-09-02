@@ -126,6 +126,18 @@ export default async function handler(req, res) {
           return res.status(500).json({ success: false, error: updateError.message });
         }
 
+        if (targetUserId) {
+          try {
+            await supabase.from('users').update({
+              notifications_enabled: true,
+              notification_permission: 'granted',
+              notification_updated_at: new Date().toISOString()
+            }).eq('id', targetUserId);
+          } catch (userUpdErr) {
+            console.warn('[subscribe-push] Notice updating user notification status:', userUpdErr);
+          }
+        }
+
         console.log('[subscribe-push] Subscription updated successfully in DB. ID:', updated?.id || existingSub.id);
         return res.status(200).json({ success: true, id: updated?.id || existingSub.id, updated: true });
       } else {
@@ -160,6 +172,18 @@ export default async function handler(req, res) {
         if (insertError) {
           console.error('[subscribe-push] Insert error:', insertError);
           return res.status(500).json({ success: false, error: insertError.message });
+        }
+
+        if (targetUserId) {
+          try {
+            await supabase.from('users').update({
+              notifications_enabled: true,
+              notification_permission: 'granted',
+              notification_updated_at: new Date().toISOString()
+            }).eq('id', targetUserId);
+          } catch (userUpdErr) {
+            console.warn('[subscribe-push] Notice updating user notification status:', userUpdErr);
+          }
         }
 
         console.log('[subscribe-push] Subscription inserted successfully in DB. ID:', inserted?.id);

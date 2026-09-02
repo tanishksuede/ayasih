@@ -7,7 +7,7 @@ import { Volume2, VolumeX, Trash2, AlertTriangle, Bell, Compass, Lock, RotateCcw
 import clsx from 'clsx';
 import { supabase } from '../utils/supabase';
 import { clearAllUserData } from '../utils/session';
-import { subscribeToPush, unsubscribeFromPush, sendTestNotification, getNotificationSupportStatus, getExistingSubscription, runIsolatedPushDiagnostic } from '../utils/pushNotifications';
+import { subscribeToPush, getNotificationSupportStatus, getExistingSubscription, logNotificationStatus } from '../utils/pushNotifications';
 
 export function SettingsPage() {
     const navigate = useNavigate();
@@ -179,14 +179,15 @@ export function SettingsPage() {
             const status = getNotificationSupportStatus();
             if (sub || status === 'granted') {
                 setPushState('granted');
+                await logNotificationStatus(profile?.id, true, 'granted');
                 setPushMessage('Notifications enabled! 🎉');
-                setTimeout(() => setPushMessage(''), 4000);
             } else {
                 setPushState(status);
+                await logNotificationStatus(profile?.id, false, status);
                 if (status === 'denied') {
                     setPushMessage('Notifications are blocked in your browser settings. Please allow notifications in site settings.');
                 } else if (status === 'unsupported') {
-                    setPushMessage('Notifications not supported in this browser. (On iOS, add to Home Screen first).');
+                    setPushMessage('Notifications not supported in this browser.');
                 } else {
                     setPushMessage('Notification permission was not granted.');
                 }
@@ -194,38 +195,8 @@ export function SettingsPage() {
         } catch (e: any) {
             const status = getNotificationSupportStatus();
             setPushState(status === 'granted' ? 'granted' : status);
+            await logNotificationStatus(profile?.id, status === 'granted', status);
             setPushMessage(e?.message || 'Error subscribing to notifications');
-        }
-    };
-
-    const handleTestPush = async () => {
-        audioSynth.playClick();
-        await sendTestNotification();
-    };
-
-    const handleDiagnosticPush = async () => {
-        audioSynth.playClick();
-        setPushMessage('Running isolated browser push test...');
-        const result = await runIsolatedPushDiagnostic();
-        if (result.success) {
-            setPushMessage(`Push Service OK! Endpoint host: ${result.endpointHost}`);
-        } else {
-            setPushMessage(`Push Diagnostic: ${result.error}`);
-        }
-        setTimeout(() => setPushMessage(''), 6000);
-    };
-
-    const handleDisablePush = async () => {
-        audioSynth.playClick();
-        setPushState('subscribing');
-        try {
-            await unsubscribeFromPush();
-            setPushState('default');
-            setPushMessage('Notifications disabled.');
-            setTimeout(() => setPushMessage(''), 3000);
-        } catch (e: any) {
-            setPushState('granted');
-            setPushMessage('Failed to disable notifications.');
         }
     };
 
@@ -368,80 +339,49 @@ export function SettingsPage() {
                         )}
                     </div>
 
-                    {/* Push Notifications Section */}
-                    <div className="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700 space-y-3">
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-2">
-                                <Bell size={16} className="text-purple-400" />
-                                <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Push Notifications</span>
+                    {/* Push Notifications Section — only shown if not yet granted */}
+                    {pushState !== 'granted' && (
+                        <div className="bg-slate-800/50 p-3.5 rounded-xl border border-slate-700 space-y-3">
+                            <div className="flex justify-between items-center">
+                                <div className="flex items-center gap-2">
+                                    <Bell size={16} className="text-purple-400" />
+                                    <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">Notifications</span>
+                                </div>
                             </div>
-                            <span className={clsx(
-                                "text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider",
-                                pushState === 'granted' ? "bg-emerald-900/50 text-emerald-400 border border-emerald-700/50" :
-                                pushState === 'denied' ? "bg-red-900/50 text-red-400 border border-red-700/50" :
-                                pushState === 'unsupported' ? "bg-amber-900/50 text-amber-400 border border-amber-700/50" :
-                                pushState === 'subscribing' ? "bg-blue-900/50 text-blue-400 border border-blue-700/50 animate-pulse" :
-                                "bg-slate-700 text-slate-300"
-                            )}>
-                                {pushState === 'granted' ? 'Enabled' :
-                                 pushState === 'denied' ? 'Blocked' :
-                                 pushState === 'unsupported' ? 'Unsupported' :
-                                 pushState === 'subscribing' ? 'Enabling...' : 'Disabled'}
-                            </span>
+
+                            {pushMessage && (
+                                <div className={clsx(
+                                    "text-xs font-medium px-3 py-2 rounded-xl border leading-snug transition-all",
+                                    pushMessage.includes('enabled') || pushMessage.includes('OK') || pushMessage.includes('🎉')
+                                        ? "bg-emerald-950/70 border-emerald-500/40 text-emerald-300"
+                                        : pushMessage.includes('blocked') || pushMessage.includes('denied')
+                                        ? "bg-red-950/70 border-red-500/40 text-red-300"
+                                        : "bg-purple-950/70 border-purple-500/40 text-purple-200"
+                                )}>
+                                    {pushMessage}
+                                </div>
+                            )}
+
+                            {pushState === 'denied' ? (
+                                <p className="text-[11px] text-slate-400 leading-snug">
+                                    Notifications are blocked in your browser settings. Unblock them in your browser URL bar to enable notifications.
+                                </p>
+                            ) : pushState === 'unsupported' ? (
+                                <p className="text-[11px] text-slate-400 leading-snug">
+                                    Push notifications are not supported in this browser.
+                                </p>
+                            ) : (
+                                <button
+                                    onClick={handleEnablePush}
+                                    disabled={pushState === 'subscribing'}
+                                    className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-md transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                                >
+                                    <Bell size={14} />
+                                    {pushState === 'subscribing' ? 'Enabling Notifications...' : 'Allow Notifications'}
+                                </button>
+                            )}
                         </div>
-
-                        {pushMessage && (
-                            <div className={clsx(
-                                "text-xs font-medium px-3 py-2 rounded-xl border leading-snug transition-all",
-                                pushMessage.includes('enabled') || pushMessage.includes('OK') || pushMessage.includes('🎉')
-                                    ? "bg-emerald-950/70 border-emerald-500/40 text-emerald-300"
-                                    : pushMessage.includes('blocked') || pushMessage.includes('denied')
-                                    ? "bg-red-950/70 border-red-500/40 text-red-300"
-                                    : "bg-purple-950/70 border-purple-500/40 text-purple-200"
-                            )}>
-                                {pushMessage}
-                            </div>
-                        )}
-
-                        {pushState === 'granted' ? (
-                            <div className="flex flex-col gap-2">
-                                <button
-                                    onClick={handleTestPush}
-                                    className="w-full bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 border border-purple-500/40 font-bold py-2 rounded-xl text-xs uppercase tracking-wider transition-all"
-                                >
-                                    🔔 Send Test Notification
-                                </button>
-                                <button
-                                    onClick={handleDiagnosticPush}
-                                    className="w-full bg-slate-800/80 hover:bg-slate-800 text-purple-300 border border-purple-500/30 font-semibold py-1.5 rounded-xl text-[11px] uppercase tracking-wider transition-all"
-                                >
-                                    🛠️ Run Push Hardware Test
-                                </button>
-                                <button
-                                    onClick={handleDisablePush}
-                                    className="w-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 border border-slate-700 font-semibold py-1.5 rounded-xl text-[11px] uppercase tracking-wider transition-all"
-                                >
-                                    Disable Notifications
-                                </button>
-                            </div>
-                        ) : pushState === 'denied' ? (
-                            <p className="text-[11px] text-slate-400 leading-snug">
-                                Notifications are blocked in your browser settings. Unblock them in your browser URL bar.
-                            </p>
-                        ) : pushState === 'unsupported' ? (
-                            <p className="text-[11px] text-slate-400 leading-snug">
-                                Push notifications are not supported in this browser.
-                            </p>
-                        ) : (
-                            <button
-                                onClick={handleEnablePush}
-                                disabled={pushState === 'subscribing'}
-                                className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-md transition-all disabled:opacity-50"
-                            >
-                                {pushState === 'subscribing' ? 'Enabling Notifications...' : 'Enable Notifications'}
-                            </button>
-                        )}
-                    </div>
+                    )}
                     <button onClick={() => { audioSynth.playClick(); handleSave(); }} className="w-full bg-pink-600 hover:bg-pink-500 text-white font-bold py-3 rounded-xl shadow-lg transform active:scale-95 transition-all mt-4">
                         UPDATE TIMELINE
                     </button>
