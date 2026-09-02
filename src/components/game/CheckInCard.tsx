@@ -4,11 +4,12 @@ import { detectCrisis } from '../../services/crisisDetection';
 import { SafetyCard } from './SafetyCard';
 import { useUserStore } from '../../store/userStore';
 import { supabase } from '../../utils/supabase';
-import { Sparkles, MessageSquare, ChevronRight } from 'lucide-react';
+import { Sparkles, MessageSquare, ChevronRight, X } from 'lucide-react';
 import type { CheckInData, CrisisRiskLevel } from '../../types/ayaTypes';
 
 interface CheckInCardProps {
     onCheckInComplete?: (checkinData: CheckInData) => void;
+    onClose?: () => void;
 }
 
 const trackSituationEvent = (eventName: string, parameters: Record<string, unknown> = {}) => {
@@ -18,7 +19,7 @@ const trackSituationEvent = (eventName: string, parameters: Record<string, unkno
     analyticsWindow.gtag?.('event', eventName, parameters);
 };
 
-export const CheckInCard: React.FC<CheckInCardProps> = ({ onCheckInComplete }) => {
+export const CheckInCard: React.FC<CheckInCardProps> = ({ onCheckInComplete, onClose }) => {
     const profile = useUserStore(state => state.profile);
     const updateSessionPreference = useUserStore(state => state.updateSessionPreference);
     const setCheckinData = useUserStore(state => state.setCheckinData);
@@ -137,7 +138,15 @@ export const CheckInCard: React.FC<CheckInCardProps> = ({ onCheckInComplete }) =
     }
 
     return (
-        <div className="w-full p-6 rounded-3xl bg-slate-950/80 border border-purple-500/20 backdrop-blur-xl shadow-2xl text-white mb-8">
+        <div className="relative w-full p-6 rounded-3xl bg-slate-950/80 border border-purple-500/20 backdrop-blur-xl shadow-2xl text-white mb-8">
+            {onClose && (
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-full transition-colors z-10"
+                >
+                    <X size={20} />
+                </button>
+            )}
             <div className="flex items-center gap-3 mb-4">
                 <div className="p-2.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 shadow-lg">
                     <MessageSquare size={20} className="text-white" />

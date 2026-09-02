@@ -690,23 +690,15 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                 </button>
             </div>
 
-            {/* Check-In Modal */}
             {showCheckInModal && (
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto">
                     <div className="relative w-full max-w-xl my-auto animate-fade-in-up">
-                        {!!sessionStorage.getItem('hasCheckedInSession') && (
-                            <button
-                                onClick={() => setShowCheckInModal(false)}
-                                className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/80 text-slate-300 hover:text-white z-10"
-                            >
-                                <X size={18} />
-                            </button>
-                        )}
                         <CheckInCard
                             onCheckInComplete={() => {
                                 sessionStorage.setItem('hasCheckedInSession', 'true');
                                 setTimeout(() => setShowCheckInModal(false), 1500);
                             }}
+                            onClose={() => setShowCheckInModal(false)}
                         />
                     </div>
                 </div>

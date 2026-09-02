@@ -14,9 +14,18 @@ import { LevelUpCelebration } from '../components/game/LevelUpCelebration';
 import { calculateLevelInfo } from '../utils/levelSystem';
 import { generateLevels } from '../utils/levelGenerator';
 
+import { useState } from 'react';
+import { X, Dna } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+
 export function MapRouteHandler() {
     const navigate = useNavigate();
+    const location = useLocation();
     const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
+    
+    // Check if we just returned from MatchReport
+    const searchParams = new URLSearchParams(location.search);
+    const [showDnaUpdated, setShowDnaUpdated] = useState(searchParams.get('dnaUpdated') === 'true');
     
     useEffect(() => {
         const hasSeenPopup = sessionStorage.getItem('hasSeenSubscriptionPopup');
@@ -29,11 +38,54 @@ export function MapRouteHandler() {
         }
     }, [setShowSubscriptionModal]);
 
+    const closeDnaDialog = () => {
+        setShowDnaUpdated(false);
+        navigate('/game', { replace: true });
+    };
+
     return (
-        <LevelMap 
-            onPlayLevel={(level) => navigate(`/game/intro/${level.id}`)} 
-            onOpenDnaProfile={() => navigate('/game/dna')}
-        />
+        <>
+            <LevelMap 
+                onPlayLevel={(level) => navigate(`/game/intro/${level.id}`)} 
+                onOpenDnaProfile={() => navigate('/game/dna')}
+            />
+            
+            <AnimatePresence>
+                {showDnaUpdated && (
+                    <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            className="relative w-full max-w-sm p-8 rounded-[2rem] bg-slate-900 border border-[#00f2ff]/30 shadow-[0_0_40px_rgba(0,242,255,0.2)] text-center flex flex-col items-center"
+                        >
+                            <button
+                                onClick={closeDnaDialog}
+                                className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/80 text-slate-400 hover:text-white transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+                            
+                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00f2ff] to-[#00ff9d] flex items-center justify-center mb-6 shadow-lg shadow-[#00f2ff]/30">
+                                <Dna size={32} className="text-black" />
+                            </div>
+                            
+                            <h2 className="text-xl font-black text-white uppercase tracking-wider mb-2">DNA Updated!</h2>
+                            <p className="text-sm text-slate-400 mb-8">
+                                Based on your latest decisions, your behavioral DNA profile has evolved.
+                            </p>
+                            
+                            <button
+                                onClick={() => navigate('/game/dna')}
+                                className="w-full py-4 rounded-xl bg-gradient-to-r from-[#00f2ff] to-[#00ff9d] text-black font-bold uppercase tracking-widest text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#00f2ff]/20"
+                            >
+                                Check Your DNA Data
+                            </button>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+        </>
     );
 }
 
@@ -109,7 +161,7 @@ export function ReportRouteHandler() {
             userProfile={profile.psychologicalProfile}
             idolTraits={level.idolTraits || { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 }}
             idolName={level.personality || level.archetype}
-            onClose={() => navigate('/game')}
+            onClose={() => navigate('/game?dnaUpdated=true')}
         />
     );
 }
