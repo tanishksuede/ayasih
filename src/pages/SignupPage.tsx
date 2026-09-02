@@ -362,7 +362,7 @@ export function SignupPage() {
                         )}
 
                         {/* Navigation link to Sign In */}
-                        <div className="mt-8 text-center">
+                        <div className="mt-8 text-center space-y-6">
                             <p className="text-white/60 text-sm font-medium">
                                 Already have an account?{' '}
                                 <Link
@@ -372,6 +372,11 @@ export function SignupPage() {
                                 >
                                     Sign In
                                 </Link>
+                            </p>
+                            
+                            <p className="text-white/40 text-[11px] font-medium uppercase tracking-wider leading-relaxed">
+                                Signup or Signin to agree Terms and Conditions <br/>
+                                <a href="/docs/AYA_Terms_and_Conditions.pdf" target="_blank" rel="noopener noreferrer" className="text-[#00f1fe] font-bold hover:underline">T&C</a>
                             </p>
                         </div>
                     </motion.div>
