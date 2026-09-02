@@ -417,6 +417,12 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
 
                 {activeTab === 'genomic' ? (
                     <div className="w-full animate-fade-in-up">
+                        <div className="flex items-center gap-2 mb-4 px-1 py-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+                            <span className="text-lg">🧬</span>
+                            <p className="text-[12px] text-cyan-300 font-semibold leading-snug">
+                                Your DNA data updates automatically as you play more stories and improve your performance inside the app.
+                            </p>
+                        </div>
                         <GenomicReportCard username={profile?.username || profile?.name} />
                     </div>
                 ) : (

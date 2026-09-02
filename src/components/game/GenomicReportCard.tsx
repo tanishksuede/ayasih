@@ -318,11 +318,6 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
 
             <article className="space-y-7 text-slate-200 leading-relaxed font-sans">
 
-                {/* Title */}
-                <h1 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300">
-                    {activeUsername}&apos;s Career Report
-                </h1>
-
                 {/* Opening */}
                 <div className="p-7 rounded-3xl bg-gradient-to-br from-cyan-950/40 via-slate-900/90 to-purple-950/40 border border-cyan-500/30">
                     <p className="text-lg sm:text-xl text-slate-100 leading-relaxed font-medium">{reportText.opening}</p>
