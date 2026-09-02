@@ -58,6 +58,9 @@ export function GameWalkthrough() {
     useEffect(() => {
         let interval: any;
         const checkTutorialState = () => {
+            // Never show tutorial on mobile/tablet screens
+            if (window.innerWidth < 1024) return;
+
             const hasSeen = localStorage.getItem('aya_game_tutorial_done') === 'true';
             if (hasSeen) return;
 
@@ -88,6 +91,8 @@ export function GameWalkthrough() {
 
         const handleStart = () => {
             if (interval) clearInterval(interval);
+            // Never show tutorial on mobile/tablet screens
+            if (window.innerWidth < 1024) return;
             setCurrentStep(0);
             
             // Still wait for any newly opened overlays (like CheckIn on fresh navigate) to close
