@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Outlet, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, Navigate } from 'react-router-dom';
 import { SupabaseChecker } from '../components/SupabaseChecker';
 import { StreakCelebration } from '../components/game/StreakCelebration';
-import { LevelUpCelebration } from '../components/game/LevelUpCelebration';
-import { calculateLevelInfo } from '../utils/levelSystem';
 import { SubscriptionModal } from '../components/payment/SubscriptionModal';
 import { supabase } from '../utils/supabase';
 import { getSession, clearSession, markQuizDone, isQuizDone } from '../utils/session';
@@ -22,7 +20,6 @@ export function GameRoot() {
     const showSubscriptionModal = useUserStore((state) => state.showSubscriptionModal);
     const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
     const location = useLocation();
-    const navigate = useNavigate();
     const safetySyncStarted = useRef(false);
 
     // Sync theme from localStorage on mount; reset 'solar' → 'city_dark'
@@ -369,27 +366,16 @@ export function GameRoot() {
 
     // Track level for level-up screen — persist across logins so it doesn't
     // re-trigger every time the user opens the app at level 2+
-    const sessionEstablished = useRef(false);
     const prevLevelRef = useRef<number>(parseInt(localStorage.getItem('aya_last_seen_level') || '1', 10));
-    const [pendingLevelUp, setPendingLevelUp] = useState<{ levelNumber: number; levelName: string } | null>(null);
 
     useEffect(() => {
         if (!profile?.level) return;
-        if (!sessionEstablished.current) {
-            // First load after login — just sync the baseline, never show level-up
-            prevLevelRef.current = profile.level;
-            localStorage.setItem('aya_last_seen_level', String(profile.level));
-            sessionEstablished.current = true;
-            return;
-        }
-        // Only show level-up when level genuinely increases DURING this session
+        // Only update tracking, do not show celebration overlay
         if (profile.level > prevLevelRef.current) {
-            const levelInfo = calculateLevelInfo(profile.total_xp || 0);
-            setPendingLevelUp({ levelNumber: profile.level, levelName: levelInfo.title });
             prevLevelRef.current = profile.level;
             localStorage.setItem('aya_last_seen_level', String(profile.level));
         }
-    }, [profile?.level, profile?.total_xp, navigate]);
+    }, [profile?.level]);
 
     // Daily Notification Prompt Check
     const [showDailyNotifPrompt, setShowDailyNotifPrompt] = useState(false);
@@ -505,15 +491,6 @@ export function GameRoot() {
                         xpEarned={pendingStreakData.xpEarned}
                         isMilestone={pendingStreakData.isMilestone}
                         onComplete={() => setPendingStreakData(null)}
-                    />
-                </div>
-            )}
-            {pendingLevelUp && (
-                <div className="absolute inset-0 z-[10000]">
-                    <LevelUpCelebration 
-                        levelName={pendingLevelUp.levelName}
-                        levelNumber={pendingLevelUp.levelNumber}
-                        onComplete={() => setPendingLevelUp(null)}
                     />
                 </div>
             )}
