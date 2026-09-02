@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Menu, X, Settings, BookOpen, Users, Star, Activity, User } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X, Settings, BookOpen, Users, Star, Activity, User, HelpCircle } from 'lucide-react';
 import clsx from 'clsx';
 import { addToWishlist, logUnmatchedSearch } from '../../utils/feedbackUtils';
 import { useUserStore } from '../../store/userStore';
@@ -25,6 +25,15 @@ export function SideMenu({
     const [wishlistInput, setWishlistInput] = useState('');
     const [wishlistStatus, setWishlistStatus] = useState<'idle' | 'loading' | 'added'>('idle');
     const { isCandyMode, setShowSubscriptionModal } = useUserStore();
+
+    useEffect(() => {
+        const handleEvent = (e: any) => {
+            if (e.detail?.open) setIsOpen(true);
+            else setIsOpen(false);
+        };
+        window.addEventListener('tutorial-menu-toggle', handleEvent);
+        return () => window.removeEventListener('tutorial-menu-toggle', handleEvent);
+    }, []);
 
     const handleWishlistSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -61,6 +70,7 @@ export function SideMenu({
         <div className="absolute top-4 right-4 md:top-6 md:right-6 z-[110] flex flex-col items-end pointer-events-none">
             {/* Hamburger Button */}
             <button
+                data-tutorial="menu-toggle"
                 onClick={toggleMenu}
                 className={clsx(
                     "w-12 h-12 rounded-full flex items-center justify-center transition-all shadow-lg pointer-events-auto",
@@ -165,6 +175,7 @@ export function SideMenu({
                     
                     {/* Journal */}
                     <button
+                        data-tutorial="journal"
                         onClick={() => {
                             audioSynth.playClick();
                             navigate('/game/journal');
@@ -191,6 +202,7 @@ export function SideMenu({
 
                     {/* DNA Data */}
                     <button
+                        data-tutorial="dna"
                         onClick={() => {
                             audioSynth.playClick();
                             onOpenDnaProfile();
@@ -299,7 +311,22 @@ export function SideMenu({
                                 <span className="text-[9px] font-black uppercase tracking-widest opacity-90">Admin</span>
                             </button>
                         ) : (
-                            <div className="w-full"></div>
+                            <button
+                                onClick={() => {
+                                    audioSynth.playClick();
+                                    setIsOpen(false);
+                                    setTimeout(() => window.dispatchEvent(new CustomEvent('tutorial-start')), 300);
+                                }}
+                                className={clsx(
+                                    "flex flex-col items-center justify-center gap-2 p-3 rounded-2xl transition-all border shadow-sm w-full",
+                                    isCandyMode
+                                        ? "bg-white/60 border-slate-200 hover:bg-white text-slate-700"
+                                        : "bg-slate-800/40 border-slate-700 hover:bg-slate-700/80 text-slate-300"
+                                )}
+                            >
+                                <HelpCircle size={20} className="opacity-90 mb-1" />
+                                <span className="text-[8px] font-black uppercase tracking-widest opacity-90 text-center">Tutorial</span>
+                            </button>
                         )}
                     </div>
                 </div>
@@ -309,7 +336,7 @@ export function SideMenu({
                 {/* COMMUNITY */}
                 <div className="flex flex-col gap-3">
                     <span className={clsx("text-[10px] font-black uppercase tracking-widest ml-2 mt-2", isCandyMode ? "text-slate-400" : "text-slate-500")}>Community</span>
-                    <div className={clsx(
+                    <div data-tutorial="wishlist" className={clsx(
                         "w-full p-4 rounded-2xl border shadow-sm",
                         isCandyMode ? "bg-white/60 border-slate-200" : "bg-slate-800/40 border-slate-700"
                     )}>

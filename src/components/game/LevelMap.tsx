@@ -23,6 +23,8 @@ import { CHECKIN_TAGS } from '../../config/recommendationConfig';
 import { getStoryMetadata } from '../../data/storyMetadata';
 import { generateLevels } from '../../utils/levelGenerator';
 
+import { GameWalkthrough } from './GameWalkthrough';
+
 interface LevelMapProps {
     onPlayLevel: (level: any) => void;
     onOpenDnaProfile: () => void;
@@ -676,7 +678,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
             </div>
 
             {/* Floating Life Check-in FAB Button */}
-            <div className="fixed bottom-6 right-6 z-50 pointer-events-auto">
+            <div data-tutorial="checkin" className="fixed bottom-6 right-6 z-50 pointer-events-auto">
                 <button
                     onClick={() => {
                         audioSynth.playClick();
@@ -721,6 +723,8 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     </div>
                 </div>
             )}
+
+            <GameWalkthrough />
         </div >
     );
 }

@@ -30,7 +30,7 @@ export const PwaHeader: FC = () => {
             </div>
 
             {/* Stats Section */}
-            <div className="flex items-center justify-end gap-1.5 sm:gap-4 overflow-hidden pr-1">
+            <div data-tutorial="header-profile" className="flex items-center justify-end gap-1.5 sm:gap-4 overflow-hidden pr-1">
                 <div className={clsx(
                     "flex items-center gap-2 sm:gap-3 truncate",
                     "text-[#A5AFBF]"
