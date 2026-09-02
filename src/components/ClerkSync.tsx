@@ -63,7 +63,7 @@ export function ClerkSync() {
                         name: name,
                         email: email,
                         onboarding_complete: false,
-                        age: 18,
+                        age: null,
                         total_xp: 0,
                         level: 1,
                         stories_completed: 0

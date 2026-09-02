@@ -475,6 +475,10 @@ export function GameRoot() {
         )
     }
 
+    if (!profile.onboarding_complete && location.pathname !== '/signup/complete' && location.pathname !== '/game/welcome' && location.pathname !== '/game/setup') {
+        return <Navigate to="/signup/complete" replace />;
+    }
+
     if (profile && profile.assessmentCompleted && (location.pathname === '/game/welcome' || location.pathname === '/game/setup')) {
         return <Navigate to="/game" replace />;
     }
