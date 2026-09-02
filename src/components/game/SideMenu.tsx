@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Settings, BookOpen, Users, Star, Activity, User, HelpCircle } from 'lucide-react';
+import { Menu, X, Settings, BookOpen, Users, Star, Activity, User, HelpCircle, Volume2, VolumeX, Music } from 'lucide-react';
 import clsx from 'clsx';
 import { addToWishlist, logUnmatchedSearch } from '../../utils/feedbackUtils';
 import { useUserStore } from '../../store/userStore';
@@ -24,7 +24,21 @@ export function SideMenu({
     const [isOpen, setIsOpen] = useState(false);
     const [wishlistInput, setWishlistInput] = useState('');
     const [wishlistStatus, setWishlistStatus] = useState<'idle' | 'loading' | 'added'>('idle');
-    const { isCandyMode, setShowSubscriptionModal } = useUserStore();
+    const [hoveredAudio, setHoveredAudio] = useState<'music' | 'sfx' | null>(null);
+    const [expandedMobileAudio, setExpandedMobileAudio] = useState<'music' | 'sfx' | null>(null);
+
+    const {
+        isCandyMode,
+        setShowSubscriptionModal,
+        musicVolume,
+        sfxVolume,
+        isMusicMuted,
+        isSfxMuted,
+        setMusicVolume,
+        setSfxVolume,
+        toggleMusicMute,
+        toggleSfxMute
+    } = useUserStore();
 
     useEffect(() => {
         const handleEvent = (e: any) => {
@@ -379,6 +393,156 @@ export function SideMenu({
                             </button>
                         </form>
                     )}
+                    </div>
+                </div>
+
+                {/* AUDIO CONTROLS (Sound & Background Music) */}
+                <div className="flex flex-col gap-2 mt-1">
+                    <span className={clsx("text-[10px] font-black uppercase tracking-widest ml-2", isCandyMode ? "text-slate-400" : "text-slate-500")}>
+                        Audio Controls
+                    </span>
+                    <div className="grid grid-cols-2 gap-2">
+                        {/* Sound / SFX */}
+                        <div
+                            onMouseEnter={() => setHoveredAudio('sfx')}
+                            onMouseLeave={() => setHoveredAudio(null)}
+                            onClick={() => setExpandedMobileAudio((prev) => (prev === 'sfx' ? null : 'sfx'))}
+                            className={clsx(
+                                "flex flex-col p-2.5 rounded-2xl border transition-all duration-300 relative cursor-pointer select-none",
+                                isCandyMode
+                                    ? "bg-white/70 border-slate-200 hover:border-cyan-400"
+                                    : "bg-slate-800/50 border-slate-700 hover:border-cyan-400/60 hover:bg-slate-800/80"
+                            )}
+                        >
+                            <div className="flex items-center justify-between gap-1.5 w-full">
+                                <button
+                                    type="button"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        audioSynth.playClick();
+                                        toggleSfxMute();
+                                    }}
+                                    className={clsx(
+                                        "p-1.5 rounded-xl transition-all flex items-center justify-center shrink-0",
+                                        isSfxMuted
+                                            ? "bg-red-950/60 text-red-400 border border-red-800/50"
+                                            : isCandyMode
+                                            ? "bg-cyan-100 text-cyan-600 border border-cyan-200"
+                                            : "bg-cyan-950/60 text-cyan-400 border border-cyan-500/40 shadow-[0_0_10px_rgba(0,242,255,0.25)]"
+                                    )}
+                                    title={isSfxMuted ? "Unmute Sound" : "Mute Sound"}
+                                >
+                                    {isSfxMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
+                                </button>
+                                <div className="flex flex-col flex-1 min-w-0 text-left">
+                                    <span className={clsx(
+                                        "text-[10px] font-black uppercase tracking-wider truncate",
+                                        isCandyMode ? "text-slate-800" : "text-white"
+                                    )}>
+                                        Sound
+                                    </span>
+                                    <span className="text-[9px] font-bold text-slate-400 truncate">
+                                        {isSfxMuted ? 'Muted' : `${Math.round(sfxVolume * 100)}%`}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Expandable Volume Slider */}
+                            <div
+                                onClick={(e) => e.stopPropagation()}
+                                className={clsx(
+                                    "transition-all duration-300 ease-in-out overflow-hidden flex flex-col",
+                                    hoveredAudio === 'sfx' || expandedMobileAudio === 'sfx'
+                                        ? "max-h-12 opacity-100 mt-2 pt-1 border-t border-slate-700/50"
+                                        : "max-h-0 opacity-0 pointer-events-none"
+                                )}
+                            >
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="1"
+                                    step="0.05"
+                                    value={isSfxMuted ? 0 : sfxVolume}
+                                    onChange={(e) => {
+                                        const val = parseFloat(e.target.value);
+                                        setSfxVolume(val);
+                                        if (isSfxMuted && val > 0) toggleSfxMute();
+                                    }}
+                                    className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                                />
+                            </div>
+                        </div>
+
+                        {/* Music / BGM */}
+                        <div
+                            onMouseEnter={() => setHoveredAudio('music')}
+                            onMouseLeave={() => setHoveredAudio(null)}
+                            onClick={() => setExpandedMobileAudio((prev) => (prev === 'music' ? null : 'music'))}
+                            className={clsx(
+                                "flex flex-col p-2.5 rounded-2xl border transition-all duration-300 relative cursor-pointer select-none",
+                                isCandyMode
+                                    ? "bg-white/70 border-slate-200 hover:border-purple-400"
+                                    : "bg-slate-800/50 border-slate-700 hover:border-purple-400/60 hover:bg-slate-800/80"
+                            )}
+                        >
+                            <div className="flex items-center justify-between gap-1.5 w-full">
+                                <button
+                                    type="button"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        audioSynth.playClick();
+                                        toggleMusicMute();
+                                    }}
+                                    className={clsx(
+                                        "p-1.5 rounded-xl transition-all flex items-center justify-center shrink-0",
+                                        isMusicMuted
+                                            ? "bg-red-950/60 text-red-400 border border-red-800/50"
+                                            : isCandyMode
+                                            ? "bg-purple-100 text-purple-600 border border-purple-200"
+                                            : "bg-purple-950/60 text-purple-400 border border-purple-500/40 shadow-[0_0_10px_rgba(168,85,247,0.25)]"
+                                    )}
+                                    title={isMusicMuted ? "Unmute Music" : "Mute Music"}
+                                >
+                                    {isMusicMuted ? <VolumeX size={15} /> : <Music size={15} />}
+                                </button>
+                                <div className="flex flex-col flex-1 min-w-0 text-left">
+                                    <span className={clsx(
+                                        "text-[10px] font-black uppercase tracking-wider truncate",
+                                        isCandyMode ? "text-slate-800" : "text-white"
+                                    )}>
+                                        Music
+                                    </span>
+                                    <span className="text-[9px] font-bold text-slate-400 truncate">
+                                        {isMusicMuted ? 'Muted' : `${Math.round(musicVolume * 100)}%`}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Expandable Volume Slider */}
+                            <div
+                                onClick={(e) => e.stopPropagation()}
+                                className={clsx(
+                                    "transition-all duration-300 ease-in-out overflow-hidden flex flex-col",
+                                    hoveredAudio === 'music' || expandedMobileAudio === 'music'
+                                        ? "max-h-12 opacity-100 mt-2 pt-1 border-t border-slate-700/50"
+                                        : "max-h-0 opacity-0 pointer-events-none"
+                                )}
+                            >
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="1"
+                                    step="0.05"
+                                    value={isMusicMuted ? 0 : musicVolume}
+                                    onChange={(e) => {
+                                        const val = parseFloat(e.target.value);
+                                        setMusicVolume(val);
+                                        if (isMusicMuted && val > 0) toggleMusicMute();
+                                    }}
+                                    className="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-purple-400"
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
 
