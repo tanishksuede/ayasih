@@ -698,7 +698,10 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                                 sessionStorage.setItem('hasCheckedInSession', 'true');
                                 setTimeout(() => setShowCheckInModal(false), 1500);
                             }}
-                            onClose={() => setShowCheckInModal(false)}
+                            onClose={() => {
+                                sessionStorage.setItem('hasCheckedInSession', 'true');
+                                setShowCheckInModal(false);
+                            }}
                         />
                     </div>
                 </div>
