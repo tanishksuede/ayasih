@@ -6,9 +6,9 @@ import {
 } from 'lucide-react';
 import { audioManager as audioSynth } from '../../utils/audioManager';
 import { useUserStore } from '../../store/userStore';
-import { IDOL_PROFILES, IDOL_MINDSETS } from '../../data/idolMindsets';
 import { calculateCognitiveDissonance } from '../../utils/gapAnalysis';
 import { calculateLevelInfo } from '../../utils/levelSystem';
+import { generateLevels } from '../../utils/levelGenerator';
 
 // ─── Pentagon Radar Chart (pure SVG, no external libs) ────────────────────────
 function RadarChart({ traits }: { traits: { label: string; value: number; color: string }[] }) {
@@ -122,25 +122,47 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
     const getStrengthLevel = (score: number) =>
         score >= 75 ? 'Strong' : score >= 50 ? 'Developing' : 'Emerging';
 
-    // Idol Matches
+    // Idol Matches dynamically from level data
     const idolMatches = useMemo(() => {
+        const levels = generateLevels(18);
+        const uniqueIdols = new Map<string, { traits: any; avatarUrl: string }>();
+        
+        levels.forEach((lvl: any) => {
+            if (lvl.personality && lvl.idolTraits) {
+                if (!uniqueIdols.has(lvl.personality)) {
+                    uniqueIdols.set(lvl.personality, { 
+                        traits: lvl.idolTraits, 
+                        avatarUrl: lvl.avatarUrl || '' 
+                    });
+                }
+            }
+        });
+
         const matches: { name: string; matchPct: number; sharedTrait: string; avatarUrl: string }[] = [];
-        for (const [name, p] of Object.entries(IDOL_PROFILES)) {
+        
+        for (const [name, data] of uniqueIdols.entries()) {
             if (name === 'Default') continue;
+            const p = data.traits;
+            
+            // finalTraits: risk, creativity, vision, empathy, leadership
+            // p (idolTraits): risk, creativity, vision, empathy, leadership, discipline, resilience
             const diff =
-                Math.abs(finalTraits.risk       - p.risk)       +
-                Math.abs(finalTraits.creativity - p.creativity)  +
-                Math.abs(finalTraits.vision     - p.analytical)  +
-                Math.abs(finalTraits.empathy    - p.social)      +
-                Math.abs(finalTraits.leadership - p.ambitious);
+                Math.abs(finalTraits.risk       - (p.risk || 50))       +
+                Math.abs(finalTraits.creativity - (p.creativity || 50))  +
+                Math.abs(finalTraits.vision     - (p.vision || 50))  +
+                Math.abs(finalTraits.empathy    - (p.empathy || 50))      +
+                Math.abs(finalTraits.leadership - (p.leadership || 50));
+                
             const matchPct = Math.max(50, Math.min(98, Math.round(100 - diff / 5)));
+            
             let sharedTrait = 'relentless drive and passion';
-            if      (p.creativity > 75 && finalTraits.creativity > 70) sharedTrait = 'imaginative vision and creative courage';
-            else if (p.risk       > 75 && finalTraits.risk       > 70) sharedTrait = 'bold decision-making under uncertainty';
-            else if (p.analytical > 75 && finalTraits.vision     > 70) sharedTrait = 'strategic focus and analytical clarity';
-            else if (p.social     > 75 && finalTraits.empathy    > 70) sharedTrait = 'deep empathy and social awareness';
-            else if (p.ambitious  > 75 && finalTraits.leadership > 70) sharedTrait = 'confident leadership and conviction';
-            matches.push({ name, matchPct, sharedTrait, avatarUrl: IDOL_MINDSETS[name]?.avatarUrl || '' });
+            if      ((p.creativity || 0) > 75 && finalTraits.creativity > 70) sharedTrait = 'imaginative vision and creative courage';
+            else if ((p.risk || 0)       > 75 && finalTraits.risk       > 70) sharedTrait = 'bold decision-making under uncertainty';
+            else if ((p.vision || 0)     > 75 && finalTraits.vision     > 70) sharedTrait = 'strategic focus and analytical clarity';
+            else if ((p.empathy || 0)    > 75 && finalTraits.empathy    > 70) sharedTrait = 'deep empathy and social awareness';
+            else if ((p.leadership || 0) > 75 && finalTraits.leadership > 70) sharedTrait = 'confident leadership and conviction';
+            
+            matches.push({ name, matchPct, sharedTrait, avatarUrl: data.avatarUrl });
         }
         return matches.sort((a, b) => b.matchPct - a.matchPct).slice(0, 3);
     }, [finalTraits]);
@@ -148,15 +170,15 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
     // Sorted top traits
     const topTraits = useMemo(() => [
         { key: 'Creativity',             score: finalTraits.creativity, desc: 'exploring fresh ideas, storytelling, and imaginative problem-solving' },
-        { key: 'Risk',                   score: finalTraits.risk,        desc: 'embracing bold choices, taking initiative, and stepping into new territory' },
-        { key: 'Vision (Analytical)',    score: finalTraits.vision,      desc: 'strategic planning, logical analysis, and seeing the big picture' },
-        { key: 'Leadership (Ambitious)', score: finalTraits.leadership,  desc: 'guiding teams, taking ownership, and striving for excellence' },
+        { key: 'Risk',                   score: finalTraits.risk,       desc: 'acting boldly in uncertainty and challenging the status quo' },
+        { key: 'Vision (Analytical)',    score: finalTraits.vision,     desc: 'strategic planning, recognizing patterns, and long-term thinking' },
+        { key: 'Leadership (Ambitious)', score: finalTraits.leadership, desc: 'taking ownership, guiding groups, and setting high standards' },
         { key: 'Empathy (Social)',       score: finalTraits.empathy,     desc: 'understanding others, building strong bonds, and fostering collaboration' },
     ].sort((a, b) => b.score - a.score), [finalTraits]);
 
     const [showAllCareers, setShowAllCareers] = useState(false);
 
-    // Career directions (dynamic)
+    // Career directions (dynamic & expanded)
     const careerDirections = useMemo(() => {
         type TK = keyof typeof finalTraits;
         const MAP: { name: string; color: string; grad: string; icon: string; w: Partial<Record<TK, number>> }[] = [
@@ -164,10 +186,19 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
             { name: 'Entrepreneur',        color: 'text-amber-300',   grad: 'from-amber-500 to-orange-500',  icon: '🚀', w: { risk: 0.4, leadership: 0.4, creativity: 0.2 } },
             { name: 'Software Engineer',   color: 'text-purple-300',  grad: 'from-violet-500 to-purple-500', icon: '💻', w: { vision: 0.5, creativity: 0.3, leadership: 0.2 } },
             { name: 'Product Manager',     color: 'text-emerald-300', grad: 'from-emerald-500 to-teal-500',  icon: '📊', w: { vision: 0.4, leadership: 0.4, empathy: 0.2 } },
-            { name: 'Creative Director',   color: 'text-pink-300',    grad: 'from-pink-500 to-rose-500',     icon: '✨', w: { creativity: 0.6, empathy: 0.2, risk: 0.2 } },
-            { name: 'UX / UI Designer',    color: 'text-indigo-300',  grad: 'from-indigo-500 to-violet-500', icon: '🖌️', w: { empathy: 0.4, creativity: 0.4, vision: 0.2 } },
-            { name: 'Social Entrepreneur', color: 'text-teal-300',    grad: 'from-teal-500 to-cyan-500',     icon: '🌱', w: { empathy: 0.5, leadership: 0.3, risk: 0.2 } },
-            { name: 'Content Creator',     color: 'text-rose-300',    grad: 'from-rose-500 to-pink-500',     icon: '🎬', w: { creativity: 0.7, risk: 0.2, empathy: 0.1 } },
+            { name: 'Creative Director',   color: 'text-pink-300',    grad: 'from-pink-500 to-rose-500',     icon: '🎬', w: { creativity: 0.6, empathy: 0.2, risk: 0.2 } },
+            { name: 'UX / UI Designer',    color: 'text-indigo-300',  grad: 'from-indigo-500 to-violet-500', icon: '✨', w: { empathy: 0.4, creativity: 0.4, vision: 0.2 } },
+            { name: 'Social Entrepreneur', color: 'text-teal-300',    grad: 'from-teal-500 to-cyan-500',     icon: '🌍', w: { empathy: 0.5, leadership: 0.3, risk: 0.2 } },
+            { name: 'Content Creator',     color: 'text-rose-300',    grad: 'from-rose-500 to-pink-500',     icon: '🎥', w: { creativity: 0.7, risk: 0.2, empathy: 0.1 } },
+            { name: 'Data Scientist',      color: 'text-blue-300',    grad: 'from-blue-500 to-indigo-500',   icon: '📈', w: { vision: 0.6, creativity: 0.2, risk: 0.2 } },
+            { name: 'Growth Hacker',       color: 'text-green-300',   grad: 'from-green-500 to-emerald-500', icon: '🚀', w: { risk: 0.4, vision: 0.4, creativity: 0.2 } },
+            { name: 'Game Developer',      color: 'text-fuchsia-300', grad: 'from-fuchsia-500 to-purple-500',icon: '🎮', w: { creativity: 0.5, vision: 0.4, risk: 0.1 } },
+            { name: 'Strategy Consultant', color: 'text-slate-300',   grad: 'from-slate-400 to-slate-600',   icon: '♟️', w: { vision: 0.5, leadership: 0.3, empathy: 0.2 } },
+            { name: 'Venture Capitalist',  color: 'text-yellow-300',  grad: 'from-yellow-400 to-amber-600',  icon: '💰', w: { risk: 0.5, vision: 0.3, leadership: 0.2 } },
+            { name: 'Community Manager',   color: 'text-orange-300',  grad: 'from-orange-400 to-red-500',    icon: '🤝', w: { empathy: 0.6, leadership: 0.2, creativity: 0.2 } },
+            { name: 'Marketing Director',  color: 'text-red-300',     grad: 'from-red-500 to-rose-600',      icon: '📢', w: { creativity: 0.4, leadership: 0.3, empathy: 0.3 } },
+            { name: 'Filmmaker',           color: 'text-violet-300',  grad: 'from-violet-500 to-fuchsia-500',icon: '🍿', w: { creativity: 0.5, leadership: 0.3, risk: 0.2 } },
+            { name: 'Architect',           color: 'text-sky-300',     grad: 'from-sky-400 to-blue-600',      icon: '🏛️', w: { vision: 0.5, creativity: 0.4, empathy: 0.1 } },
         ];
         let scored = MAP.map(c => ({
             ...c,
