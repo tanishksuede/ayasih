@@ -12,10 +12,8 @@ import { useUserStore } from '../store/userStore';
 import { safeStorage } from '../utils/storage';
 import { NotificationPrompt } from '../components/ui/NotificationPrompt';
 import { subscribeUserToPush } from '../utils/pushNotifications';
-import { useUser } from '@clerk/clerk-react';
 
 export function GameRoot() {
-    const { isLoaded, isSignedIn } = useUser();
     const profile = useUserStore((state) => state.profile);
     const mapTheme = useUserStore((state) => state.mapTheme);
     const setMapTheme = useUserStore((state) => state.setMapTheme);
@@ -42,15 +40,6 @@ export function GameRoot() {
 
     const [sessionStatus, setSessionStatus] = useState<'checking' | 'found' | 'not_found'>('checking');
     const [connectionError, setConnectionError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const handleSessionUpdated = () => {
-            console.log('[GameRoot] Received aya_session_updated event, setting sessionStatus to found');
-            setSessionStatus('found');
-        };
-        window.addEventListener('aya_session_updated', handleSessionUpdated);
-        return () => window.removeEventListener('aya_session_updated', handleSessionUpdated);
-    }, []);
 
     useEffect(() => {
         if (sessionStatus === 'found') {
@@ -447,19 +436,7 @@ export function GameRoot() {
         setShowDailyNotifPrompt(false);
     };
 
-    if (!isLoaded) {
-        return (
-            <div className="w-full h-[100dvh] bg-[#0d0d16] flex flex-col items-center justify-center gap-4 p-6 text-center">
-                <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin" />
-            </div>
-        )
-    }
-
-    if (!isSignedIn) {
-        return <Navigate to="/signin" replace />;
-    }
-
-    if (sessionStatus === 'checking' || !profile) {
+    if (sessionStatus === 'checking') {
         return (
             <div className="w-full h-[100dvh] bg-[#0d0d16] flex flex-col items-center justify-center gap-4 p-6 text-center">
                 <div className="w-16 h-16 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin" />
@@ -475,8 +452,8 @@ export function GameRoot() {
         )
     }
 
-    if (!profile.onboarding_complete && location.pathname !== '/signup/complete' && location.pathname !== '/game/welcome' && location.pathname !== '/game/setup') {
-        return <Navigate to="/signup/complete" replace />;
+    if (!profile && location.pathname !== '/game/welcome' && location.pathname !== '/game/setup') {
+        return <Navigate to="/signin" replace />;
     }
 
     if (profile && profile.assessmentCompleted && (location.pathname === '/game/welcome' || location.pathname === '/game/setup')) {

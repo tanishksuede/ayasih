@@ -1,30 +1,27 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Calendar, Phone } from 'lucide-react';
+import { Check, Calendar } from 'lucide-react';
 import { AuthMascot } from '../components/auth/AuthMascot';
 import { UsernameField } from '../components/game/UsernameField';
 import { AgeSelector } from '../components/auth/AgeSelector';
 import { useUsernameAvailability } from '../hooks/useUsernameAvailability';
+import { authService } from '../services/authService';
 import { useUserStore } from '../store/userStore';
 import { supabase } from '../utils/supabase';
 import { audioManager as audioSynth } from '../utils/audioManager';
-import { useClerk } from '@clerk/clerk-react';
 
 export function SignupCompletePage() {
-    const clerk = useClerk();
     const navigate = useNavigate();
     const profile = useUserStore((state) => state.profile);
 
     const [username, setUsername] = useState(profile?.username || '');
     const [age, setAge] = useState<number | null>(profile?.age ? profile.age : null);
-    const [mobile, setMobile] = useState(profile?.mobile || '');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isHoveringBtn, setIsHoveringBtn] = useState(false);
 
     const needsAge = !profile?.age;
-    const needsMobile = !profile?.mobile;
 
     const usernameAvailability = useUsernameAvailability(
         username,
@@ -83,33 +80,13 @@ export function SignupCompletePage() {
             return;
         }
 
-        if (needsMobile && (!mobile || mobile.trim().length < 10)) {
-            setError('Please enter a valid phone number.');
-            return;
-        }
-
         setIsLoading(true);
         setError('');
 
         try {
-            const { error: updateError } = await supabase.from('users')
-                .update({ 
-                    username: username.trim(),
-                    age: age,
-                    mobile: mobile.trim(),
-                    onboarding_complete: true
-                })
-                .eq('id', profile?.id);
-
-            if (updateError) throw updateError;
-            
-            // Update local store
-            useUserStore.getState().setProfile({
-                ...profile!,
-                username: username.trim(),
-                age: age || profile!.age,
-                mobile: mobile.trim(),
-                onboarding_complete: true
+            await authService.completeProfileSetup({
+                username,
+                age: age ? age : undefined,
             });
             
             // Check if user is a returning user with completed assessment vs a new user
@@ -233,29 +210,6 @@ export function SignupCompletePage() {
                                 </motion.div>
                             )}
 
-                            {/* Mobile Selection */}
-                            {needsMobile && (
-                                <motion.div
-                                    whileHover={{ y: -2 }}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.25 }}
-                                    className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#00f1fe]/40 transition-all duration-300"
-                                >
-                                    <label className="block text-[11px] font-bold text-[#00f1fe] mb-2 uppercase tracking-[0.15em] flex items-center gap-1.5">
-                                        <Phone size={12} /> Mobile Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        placeholder="e.g. +1 234 567 8900"
-                                        value={mobile}
-                                        onChange={(e) => setMobile(e.target.value)}
-                                        disabled={isLoading}
-                                        className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-[#00f1fe]/50 focus:ring-1 focus:ring-[#00f1fe]/50 transition-all"
-                                    />
-                                </motion.div>
-                            )}
-
 
                             {/* Submit Button */}
                             <motion.button
@@ -268,11 +222,11 @@ export function SignupCompletePage() {
                                 transition={{ delay: 0.3 }}
                                 whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(0,241,254,0.5)' }}
                                 whileTap={{ scale: 0.98 }}
-                                disabled={isLoading || username.trim().length < 3 || usernameAvailability.status !== 'available' || (needsAge && !age) || (needsMobile && mobile.trim().length < 10)}
+                                disabled={isLoading || username.trim().length < 3 || usernameAvailability.status !== 'available' || (needsAge && !age)}
                                 type="submit"
                                 className="w-full py-4 bg-[#00f1fe] text-[#004145] font-black text-lg rounded-2xl shadow-[0_0_30px_rgba(0,241,254,0.35)] flex items-center justify-center space-x-2 relative overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#7ff9ff] transition-all mt-4"
                             >
-                                <span>{isLoading ? 'SAVING PROFILE...' : 'COMPLETE SETUP'}</span>
+                                <span>{isLoading ? 'SAVING PROFILE...' : 'SET USERNAME'}</span>
                                 {!isLoading && <Check size={22} className="stroke-[3]" />}
                             </motion.button>
                         </form>
@@ -280,7 +234,7 @@ export function SignupCompletePage() {
                         <div className="mt-6 text-center">
                             <button
                                 onClick={async () => {
-                                    await clerk.signOut();
+                                    await authService.signOut();
                                     navigate('/signin');
                                 }}
                                 className="text-[#00f1fe]/60 text-xs font-bold tracking-widest uppercase hover:text-[#00f1fe] transition-colors"
