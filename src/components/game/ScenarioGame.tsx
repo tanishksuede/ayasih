@@ -4,7 +4,7 @@ import { audioManager as audioSynth } from "../../utils/audioManager";
 import { detectEmotion, EMOTION_THEMES } from '../../utils/storyEmotion';
 import type { EmotionTheme } from '../../utils/storyEmotion';
 import { bgmManager } from '../../utils/bgmManager';
-import { CheckCircle, AlertCircle, ChevronRight, Volume2, VolumeX, Loader2, Star } from 'lucide-react';
+import { CheckCircle, AlertCircle, ChevronRight, Volume2, VolumeX, Star } from 'lucide-react';
 import { AnalysisMascotModal } from './AnalysisMascotModal';
 import { InsightLoadingScreen } from './InsightLoadingScreen';
 import { MascotLoader } from '../ui/MascotLoader';
