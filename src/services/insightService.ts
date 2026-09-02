@@ -155,28 +155,59 @@ export function getPotentiallyAlignedDirections(traits: PersonalityTraits | Reco
     const empathy = (traits as any).empathy ?? 50;
     const leadership = (traits as any).leadership ?? 50;
 
-    const directions: string[] = [];
+    const directions = new Set<string>();
 
     if (creativity > 65 && vision > 60) {
-        directions.push('Product Architecture & Creative Technology');
-        directions.push('Brand Strategy & Conceptual Direction');
+        directions.add('Product Architecture & Creative Technology');
+        directions.add('Brand Strategy & Conceptual Direction');
     }
     if (leadership > 65 && risk > 60) {
-        directions.push('Venture Incubation & Early-Stage Leadership');
-        directions.push('Operational Strategy in High-Pace Environments');
+        directions.add('Venture Incubation & Early-Stage Leadership');
+        directions.add('Operational Strategy in High-Pace Environments');
     }
     if (empathy > 65 && leadership > 55) {
-        directions.push('People & Organizational Culture Leadership');
-        directions.push('Community Ecosystem Strategy');
+        directions.add('People & Organizational Culture Leadership');
+        directions.add('Community Ecosystem Strategy');
     }
     if (vision > 65 && risk < 55) {
-        directions.push('Systems Research, Quantitative Policy & Strategic Foresight');
-        directions.push('Intelligence Analysis & Complex Modeling');
+        directions.add('Systems Research, Quantitative Policy & Strategic Foresight');
+        directions.add('Intelligence Analysis & Complex Modeling');
     }
-    if (directions.length === 0) {
-        directions.push('Interdisciplinary Creative Strategy');
-        directions.push('Emerging Technologies & Product Management');
+    if (creativity > 65 && empathy > 60) {
+        directions.add('Human-Centered Design & UX Architecture');
+        directions.add('Social Impact Innovation & Philanthropy');
+    }
+    if (risk > 70 && creativity > 65) {
+        directions.add('Disruptive Tech Founder & Growth Hacking');
+        directions.add('Creative Directing & Avant-Garde Media');
+    }
+    if (vision > 60 && empathy > 60) {
+        directions.add('Behavioral Economics & Policy Design');
+        directions.add('Organizational Psychology & Executive Coaching');
+    }
+    if (leadership > 70 && vision > 65) {
+        directions.add('Corporate Strategy & Turnaround Management');
+        directions.add('Global Supply Chain & Logistics Leadership');
+    }
+    if (risk < 45 && vision > 60) {
+        directions.add('Data Science, Actuarial & Risk Mitigation');
+        directions.add('Compliance, Governance & Cyber Security');
+    }
+    if (creativity > 75) {
+        directions.add('Original Content Creation & Narrative Design');
+    }
+    if (empathy > 75) {
+        directions.add('Clinical Therapy & Crisis Negotiation');
+    }
+    if (leadership > 75) {
+        directions.add('Public Sector Leadership & Diplomacy');
     }
 
-    return directions.slice(0, 3);
+    if (directions.size === 0) {
+        directions.add('Interdisciplinary Creative Strategy');
+        directions.add('Emerging Technologies & Product Management');
+        directions.add('Independent Consulting & Freelance Mastery');
+    }
+
+    return Array.from(directions).slice(0, 5);
 }
