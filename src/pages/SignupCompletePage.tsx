@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, Calendar } from 'lucide-react';
+import { Check, Calendar, Smartphone } from 'lucide-react';
 import { AuthMascot } from '../components/auth/AuthMascot';
 import { UsernameField } from '../components/game/UsernameField';
 import { AgeSelector } from '../components/auth/AgeSelector';
@@ -17,9 +17,12 @@ export function SignupCompletePage() {
 
     const [username, setUsername] = useState(profile?.username || '');
     const [age, setAge] = useState<number | null>(profile?.mobile ? profile.age : null);
+    const [mobile, setMobile] = useState(profile?.mobile || '');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isHoveringBtn, setIsHoveringBtn] = useState(false);
+
+    const needsMobile = !profile?.mobile;
 
     const usernameAvailability = useUsernameAvailability(
         username,
@@ -38,6 +41,7 @@ export function SignupCompletePage() {
                         username: undefined,
                         name: defaultName,
                         email: session.user.email,
+                        mobile: session.user.phone || null,
                         onboarding_complete: false,
                         age: 18,
                         total_xp: 0,
@@ -73,6 +77,14 @@ export function SignupCompletePage() {
             return;
         }
 
+        if (needsMobile) {
+            const cleanPhone = mobile.replace(/\D/g, '');
+            if (cleanPhone.length !== 10) {
+                setError('Please enter a valid 10-digit mobile number.');
+                return;
+            }
+        }
+
         if (!age || age < 13 || age > 30) {
             setError('Please select your age.');
             return;
@@ -85,6 +97,7 @@ export function SignupCompletePage() {
             await authService.completeProfileSetup({
                 username,
                 age: age ? age : undefined,
+                mobile: needsMobile ? mobile.replace(/\D/g, '') : undefined,
             });
             
             // Check if user is a returning user with completed assessment vs a new user
@@ -186,6 +199,34 @@ export function SignupCompletePage() {
                                 />
                             </motion.div>
 
+                                {needsMobile && (
+                                    <motion.div
+                                        whileHover={{ y: -2 }}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.18 }}
+                                        className="glass-panel p-4 rounded-2xl border border-white/10 hover:border-[#00f1fe]/40 transition-all duration-300"
+                                    >
+                                        <label className="block text-[11px] font-bold text-[#00f1fe] mb-2 uppercase tracking-[0.15em] flex items-center gap-1.5">
+                                            <Smartphone size={12} /> Mobile Number
+                                        </label>
+                                        <div className="relative">
+                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40 font-black">+91</span>
+                                            <input
+                                                type="tel"
+                                                value={mobile}
+                                                onChange={(e) => {
+                                                    const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                                    setMobile(val);
+                                                }}
+                                                placeholder="Enter 10 digit number"
+                                                disabled={isLoading}
+                                                className="w-full pl-12 pr-4 py-3 bg-black/20 border-2 border-white/10 focus:border-[#00f1fe] rounded-xl text-white font-black text-sm tracking-widest placeholder:text-white/20 outline-none transition-all"
+                                            />
+                                        </div>
+                                    </motion.div>
+                                )}
+
                                   <motion.div
                                       whileHover={{ y: -2 }}
                                       initial={{ opacity: 0, x: -20 }}
@@ -217,7 +258,7 @@ export function SignupCompletePage() {
                                 transition={{ delay: 0.3 }}
                                 whileHover={{ scale: 1.02, boxShadow: '0 0 40px rgba(0,241,254,0.5)' }}
                                 whileTap={{ scale: 0.98 }}
-                                disabled={isLoading || username.trim().length < 3 || usernameAvailability.status !== 'available' || !age}
+                                disabled={isLoading || username.trim().length < 3 || usernameAvailability.status !== 'available' || !age || (needsMobile && mobile.replace(/\D/g, '').length !== 10)}
                                 type="submit"
                                 className="w-full py-4 bg-[#00f1fe] text-[#004145] font-black text-lg rounded-2xl shadow-[0_0_30px_rgba(0,241,254,0.35)] flex items-center justify-center space-x-2 relative overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#7ff9ff] transition-all mt-4"
                             >
