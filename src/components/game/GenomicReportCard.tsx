@@ -7,7 +7,6 @@ import {
 import { audioManager as audioSynth } from '../../utils/audioManager';
 import { useUserStore } from '../../store/userStore';
 import { calculateCognitiveDissonance } from '../../utils/gapAnalysis';
-import { calculateLevelInfo } from '../../utils/levelSystem';
 import { generateLevels } from '../../utils/levelGenerator';
 
 // ─── Pentagon Radar Chart (pure SVG, no external libs) ────────────────────────
@@ -110,7 +109,6 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
     const storyCount    = profile?.stories_completed ?? 12;
     const totalXp       = profile?.total_xp          ?? 1250;
     const currentStreak = profile?.current_streak    ?? 7;
-    const levelInfo     = calculateLevelInfo(totalXp);
 
     // Cognitive Dissonance
     const dissonanceResult = useMemo(() => {
@@ -329,7 +327,7 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
                         <h3 className="text-sm font-black uppercase tracking-[0.2em] text-slate-400">Overall Progress</h3>
                         <span className="text-[12px] text-slate-500 font-mono">This Month</span>
                     </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                         <div className="rounded-xl p-4 border bg-amber-500/10 border-amber-500/20 flex flex-col gap-2">
                             <div className="flex items-center gap-2"><BookOpen size={18} className="text-amber-400" /><span className="text-[12px] uppercase tracking-wider text-slate-400 font-bold">Stories Played</span></div>
                             <span className="text-2xl font-black text-amber-300">{storyCount}</span>
@@ -341,10 +339,6 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
                         <div className="rounded-xl p-4 border bg-pink-500/10 border-pink-500/20 flex flex-col gap-2">
                             <div className="flex items-center gap-2"><Flame size={18} className="text-pink-400" /><span className="text-[12px] uppercase tracking-wider text-slate-400 font-bold">Current Streak</span></div>
                             <span className="text-2xl font-black text-pink-300">{currentStreak} Days</span>
-                        </div>
-                        <div className="rounded-xl p-4 border bg-purple-500/10 border-purple-500/20 flex flex-col gap-2">
-                            <div className="flex items-center gap-2"><Trophy size={18} className="text-purple-400" /><span className="text-[12px] uppercase tracking-wider text-slate-400 font-bold">Level</span></div>
-                            <span className="text-2xl font-black text-purple-300">{levelInfo.level}</span>
                         </div>
                     </div>
                 </div>

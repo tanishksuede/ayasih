@@ -1,6 +1,5 @@
 import { type FC } from 'react';
 import { useUserStore } from '../../store/userStore';
-import { calculateLevelInfo } from '../../utils/levelSystem';
 import clsx from 'clsx';
 import './PwaHeader.css';
 
@@ -8,8 +7,6 @@ export const PwaHeader: FC = () => {
     const profile = useUserStore((state) => state.profile);
 
     if (!profile) return null;
-
-    const levelInfo = calculateLevelInfo(profile.total_xp || 0);
 
     return (
         <header className={clsx(
@@ -47,15 +44,6 @@ export const PwaHeader: FC = () => {
                     </div>
                     
                     <div className="h-6 w-[1px] bg-[#111827] mx-1 sm:mx-2" />
-
-                    <div className="flex items-center gap-2 bg-[#0C1220] border border-[#111827] rounded-lg px-2 sm:px-3 py-1.5 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)]">
-                        <span className={clsx(
-                            "text-[10px] sm:text-[11px] font-bold uppercase tracking-widest truncate max-w-[90px] sm:max-w-[150px]",
-                            "text-[#F5F7FA]"
-                        )}>
-                            Lvl {profile.level || 1} <span className="hidden sm:inline text-[#667085] ml-1">{levelInfo.title}</span>
-                        </span>
-                    </div>
                 </div>
                 
                 {/* Optional Safe Area Padding for mobile notches if run in 'standalone' mode later */}
