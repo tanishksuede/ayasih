@@ -264,7 +264,7 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
 
     const handleCopyReport = () => {
         audioSynth.playClick();
-        navigator.clipboard.writeText(`# ${activeUsername}'s DNA Report\n\n${reportText.opening}\n\n### Growth Insight\n${reportText.dissonanceText}\n\n### Grounded Perspective\n${reportText.closing}`);
+        navigator.clipboard.writeText(`# ${activeUsername}'s Career Report\n\n${reportText.opening}\n\n### Growth Insight\n${reportText.dissonanceText}\n\n### Grounded Perspective\n${reportText.closing}`);
         setCopied(true);
         setTimeout(() => setCopied(false), 2500);
     };
@@ -300,10 +300,10 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
                     <div>
                         <div className="flex items-center gap-2 mb-1">
                             <span className="text-[12px] font-black uppercase tracking-[0.25em] text-[#00f2ff]">AYA Psychometric Engine</span>
-                            <span className="px-2 py-0.5 text-[11px] font-extrabold uppercase rounded bg-purple-500/30 text-purple-300 border border-purple-500/40">DNA Report</span>
+                            <span className="px-2 py-0.5 text-[11px] font-extrabold uppercase rounded bg-purple-500/30 text-purple-300 border border-purple-500/40">Career Report</span>
                         </div>
                         <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-200 via-white to-purple-200">
-                            {activeUsername}&apos;s DNA Report
+                            {activeUsername}&apos;s Career Report
                         </h2>
                     </div>
                 </div>
@@ -320,7 +320,7 @@ export function GenomicReportCard({ username: propUsername }: GenomicReportCardP
 
                 {/* Title */}
                 <h1 className="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-purple-300">
-                    {activeUsername}&apos;s DNA Report
+                    {activeUsername}&apos;s Career Report
                 </h1>
 
                 {/* Opening */}

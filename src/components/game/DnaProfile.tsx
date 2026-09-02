@@ -204,7 +204,7 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
     const [isGenerating, setIsGenerating] = useState(false);
     const [isFutureGenerating, setIsFutureGenerating] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
-    const [activeTab, setActiveTab] = useState<'telemetry' | 'genomic'>('telemetry');
+    const [activeTab, setActiveTab] = useState<'telemetry' | 'genomic'>('genomic');
     const cardRef = useRef<HTMLDivElement>(null);
     const futureSelfCardRef = useRef<HTMLDivElement>(null);
 
@@ -411,7 +411,7 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
                                 : 'text-slate-400 hover:text-white'
                         }`}
                     >
-                        <Dna size={15} /> Genomic Report 🧬
+                        <Dna size={15} /> Career Report 🧬
                     </button>
                 </div>
 
