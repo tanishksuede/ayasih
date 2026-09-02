@@ -88,7 +88,22 @@ export function SigninPage() {
         supabase.auth.getSession().then(async (response: any) => {
             const session = response.data?.session;
             if (session?.user) {
-                await processUserSession(session);
+                // If they have a session on load, check onboarding and navigate with pop-up flag
+                try {
+                    let { data: userRow } = await supabase.from('users').select('*').eq('auth_user_id', session.user.id).maybeSingle();
+                    if (!userRow && session.user.email) {
+                        const { data: emailRow } = await supabase.from('users').select('*').eq('email', session.user.email).maybeSingle();
+                        if (emailRow) userRow = emailRow;
+                    }
+                    if (userRow && userRow.onboarding_complete) {
+                        await authService.handlePostSignIn(userRow, session.user.id);
+                        navigate('/game?alreadySignedIn=true');
+                    } else {
+                        await processUserSession(session);
+                    }
+                } catch {
+                    await processUserSession(session);
+                }
             } else {
                 if (!window.location.hash.includes('access_token') && !window.location.search.includes('code=')) {
                     if (isMounted) setIsLoading(false);
@@ -357,7 +372,7 @@ export function SigninPage() {
                             
                             <p className="text-white/40 text-[11px] font-medium uppercase tracking-wider leading-relaxed">
                                 Signup or Signin to agree Terms and Conditions <br/>
-                                <a href="/docs/AYA_Terms_and_Conditions.pdf" target="_blank" rel="noopener noreferrer" className="text-[#00f1fe] font-bold hover:underline">T&C</a>
+                                <a href="/docs/AYA_Terms_and_Conditions.pdf" download target="_blank" rel="noopener noreferrer" className="text-[#00f1fe] font-bold hover:underline">T&C</a>
                             </p>
                         </div>
                     </motion.div>

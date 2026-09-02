@@ -23,9 +23,10 @@ export function MapRouteHandler() {
     const location = useLocation();
     const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
     
-    // Check if we just returned from MatchReport
+    // Check if we just returned from MatchReport or redirected from auth
     const searchParams = new URLSearchParams(location.search);
     const [showDnaUpdated, setShowDnaUpdated] = useState(searchParams.get('dnaUpdated') === 'true');
+    const [showAlreadySignedIn, setShowAlreadySignedIn] = useState(searchParams.get('alreadySignedIn') === 'true');
     
     useEffect(() => {
         const hasSeenPopup = sessionStorage.getItem('hasSeenSubscriptionPopup');
@@ -40,6 +41,11 @@ export function MapRouteHandler() {
 
     const closeDnaDialog = () => {
         setShowDnaUpdated(false);
+        navigate('/game', { replace: true });
+    };
+
+    const closeSignedInDialog = () => {
+        setShowAlreadySignedIn(false);
         navigate('/game', { replace: true });
     };
 
@@ -80,6 +86,36 @@ export function MapRouteHandler() {
                                 className="w-full py-4 rounded-xl bg-gradient-to-r from-[#00f2ff] to-[#00ff9d] text-black font-bold uppercase tracking-widest text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-[#00f2ff]/20"
                             >
                                 Check Your DNA Data
+                            </button>
+                        </motion.div>
+                    </div>
+                )}
+                
+                {showAlreadySignedIn && (
+                    <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+                        <motion.div 
+                            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                            className="relative w-full max-w-sm p-8 rounded-[2rem] bg-slate-900 border border-purple-500/30 shadow-[0_0_40px_rgba(168,85,247,0.2)] text-center flex flex-col items-center"
+                        >
+                            <button
+                                onClick={closeSignedInDialog}
+                                className="absolute top-4 right-4 p-2 rounded-full bg-slate-800/80 text-slate-400 hover:text-white transition-colors"
+                            >
+                                <X size={20} />
+                            </button>
+                            
+                            <h2 className="text-xl font-black text-white uppercase tracking-wider mb-2 mt-4">Welcome Back!</h2>
+                            <p className="text-sm text-slate-400 mb-8">
+                                You are already signed in. Resume your journey!
+                            </p>
+                            
+                            <button
+                                onClick={closeSignedInDialog}
+                                className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white font-bold uppercase tracking-widest text-sm hover:scale-105 active:scale-95 transition-all shadow-lg shadow-purple-500/20"
+                            >
+                                Continue to Game
                             </button>
                         </motion.div>
                     </div>

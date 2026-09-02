@@ -27,16 +27,25 @@ export function StoryMetadataAuthoring() {
     });
 
     useEffect(() => {
-        loadStories();
+        fetchLevels();
     }, []);
 
-    const loadStories = async () => {
+    const fetchLevels = async () => {
         try {
-            const { data: levels } = await supabase.from('levels').select('id, title, scenario_id, age, theme').order('age', { ascending: true });
+            // Use offline generator instead of empty DB table
+            const { generateLevels } = await import('../../utils/levelGenerator');
+            const levels = generateLevels(18).map(l => ({
+                id: l.id,
+                title: l.title,
+                scenario_id: l.scenarioId || l.id,
+                age: l.age,
+                theme: l.theme
+            }));
+            
             if (levels && levels.length > 0) {
                 setStoryList(levels);
-                setSelectedStoryId(levels[0].scenario_id || levels[0].id);
-                loadMetadataForStory(levels[0].scenario_id || levels[0].id);
+                setSelectedStoryId(levels[0].scenario_id);
+                loadMetadataForStory(levels[0].scenario_id);
             }
         } catch (err) {
             console.error('Failed to load stories:', err);

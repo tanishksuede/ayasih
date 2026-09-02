@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, useEffect, type ChangeEvent } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Lock, Phone, Eye, EyeOff, Calendar } from 'lucide-react';
@@ -6,6 +6,7 @@ import { AuthMascot } from '../components/auth/AuthMascot';
 import { AgeSelector } from '../components/auth/AgeSelector';
 import { authService } from '../services/authService';
 import { audioManager as audioSynth } from '../utils/audioManager';
+import { supabase } from '../utils/supabase';
 
 import { normalizePhone } from '../utils/authHelpers';
 
@@ -23,6 +24,29 @@ export function SignupPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [isHoveringBtn, setIsHoveringBtn] = useState(false);
+
+    useEffect(() => {
+        let isMounted = true;
+        supabase.auth.getSession().then(async (response: any) => {
+            const session = response.data?.session;
+            if (session?.user && isMounted) {
+                try {
+                    let { data: userRow } = await supabase.from('users').select('*').eq('auth_user_id', session.user.id).maybeSingle();
+                    if (!userRow && session.user.email) {
+                        const { data: emailRow } = await supabase.from('users').select('*').eq('email', session.user.email).maybeSingle();
+                        if (emailRow) userRow = emailRow;
+                    }
+                    if (userRow && userRow.onboarding_complete) {
+                        await authService.handlePostSignIn(userRow, session.user.id);
+                        navigate('/game?alreadySignedIn=true');
+                    }
+                } catch (err) {
+                    console.error('Session check error', err);
+                }
+            }
+        });
+        return () => { isMounted = false; };
+    }, [navigate]);
 
     const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
         // Allow only numeric digits, max 10
@@ -376,7 +400,7 @@ export function SignupPage() {
                             
                             <p className="text-white/40 text-[11px] font-medium uppercase tracking-wider leading-relaxed">
                                 Signup or Signin to agree Terms and Conditions <br/>
-                                <a href="/docs/AYA_Terms_and_Conditions.pdf" target="_blank" rel="noopener noreferrer" className="text-[#00f1fe] font-bold hover:underline">T&C</a>
+                                <a href="/docs/AYA_Terms_and_Conditions.pdf" download target="_blank" rel="noopener noreferrer" className="text-[#00f1fe] font-bold hover:underline">T&C</a>
                             </p>
                         </div>
                     </motion.div>
