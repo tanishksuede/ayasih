@@ -9,86 +9,78 @@ interface MascotLoaderProps {
 }
 
 const TOTAL_FRAMES = 60;
-const FRAME_PATHS = Array.from({ length: TOTAL_FRAMES }, (_, i) => `/assets/loading_frames/frame_${i + 1}.png`);
-
-export function MascotLoader({
+const COLS = 10;
+const FRAME_WIDTH = 140;
+const FRAME_HEIGHT = 140;
+export function MascotLoader( {
     fullscreen = true,
     message = 'LOADING YOUR UNIVERSE...',
     subMessage,
     transparentBg = false,
     fps = 24
 }: MascotLoaderProps) {
-    const [currentFrame, setCurrentFrame] = useState(1);
-    const [, setImagesLoaded] = useState(false);
-    const imagesRef = useRef<HTMLImageElement[]>([]);
-    const frameIndexRef = useRef(0);
-    const lastTimeRef = useRef(performance.now());
-    const animFrameRef = useRef<number | null>(null);
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    // Preload all 60 frames
     useEffect(() => {
-        let loadedCount = 0;
-        const images: HTMLImageElement[] = [];
-
-        FRAME_PATHS.forEach((path, idx) => {
-            const img = new Image();
-            img.src = path;
-            img.onload = () => {
-                loadedCount++;
-                if (loadedCount === TOTAL_FRAMES) {
-                    setImagesLoaded(true);
-                }
-            };
-            img.onerror = () => {
-                loadedCount++;
-                if (loadedCount === TOTAL_FRAMES) {
-                    setImagesLoaded(true);
-                }
-            };
-            images[idx] = img;
-        });
-
-        imagesRef.current = images;
-
-        return () => {
-            if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
-        };
-    }, []);
-
-    // 24 fps loop animation
-    useEffect(() => {
+        const img = new Image();
+        img.src = '/assets/mascot_anim_sheet.png';
+        
+        let animId: number;
+        let frameIndex = 0;
+        let lastTime = performance.now();
         const frameInterval = 1000 / fps;
 
-        const loop = (now: number) => {
-            const elapsed = now - lastTimeRef.current;
-            if (elapsed >= frameInterval) {
-                lastTimeRef.current = now - (elapsed % frameInterval);
-                frameIndexRef.current = (frameIndexRef.current + 1) % TOTAL_FRAMES;
-                setCurrentFrame(frameIndexRef.current + 1);
-            }
-            animFrameRef.current = requestAnimationFrame(loop);
+        img.onload = () => {
+            setIsLoaded(true);
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+
+            const render = (now: number) => {
+                const elapsed = now - lastTime;
+                if (elapsed >= frameInterval) {
+                    lastTime = now - (elapsed % frameInterval);
+                    frameIndex = (frameIndex + 1) % TOTAL_FRAMES;
+
+                    const col = frameIndex % COLS;
+                    const row = Math.floor(frameIndex / COLS);
+                    const sx = col * FRAME_WIDTH;
+                    const sy = row * FRAME_HEIGHT;
+                    
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(
+                        img,
+                        sx, sy, FRAME_WIDTH, FRAME_HEIGHT,
+                        0, 0, canvas.width, canvas.height
+                    );
+                }
+                animId = requestAnimationFrame(render);
+            };
+
+            animId = requestAnimationFrame(render);
         };
 
-        animFrameRef.current = requestAnimationFrame(loop);
-
         return () => {
-            if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current);
+            if (animId) cancelAnimationFrame(animId);
         };
     }, [fps]);
 
     const content = (
         <div className="flex flex-col items-center justify-center gap-6 select-none">
-            {/* Mascot Portal Frame Container */}
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
-                {/* Ambient glow behind portal */}
-                <div className="absolute inset-0 bg-purple-600/20 blur-3xl rounded-full pointer-events-none" />
-                <div className="absolute w-36 h-36 bg-pink-500/15 blur-2xl rounded-full pointer-events-none" />
+            {/* Mascot Portal Canvas Container */}
+            <div className="relative w-52 h-52 sm:w-60 sm:h-60 flex items-center justify-center">
+                {/* Ambient purple/cyan glows */}
+                <div className="absolute inset-0 bg-purple-600/30 blur-3xl rounded-full pointer-events-none" />
+                <div className="absolute w-36 h-36 bg-cyan-500/20 blur-2xl rounded-full pointer-events-none" />
 
-                {/* Active Frame */}
-                <img
-                    src={'/assets/loading_frames/frame_' + currentFrame + '.png'}
-                    alt="Loading animation"
-                    className="relative z-10 w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(213,117,255,0.4)] transition-none"
+                {/* 24 FPS Canvas Renderer */}
+                <canvas
+                    ref={canvasRef}
+                    width={FRAME_WIDTH}
+                    height={FRAME_HEIGHT}
+                    className={`relative z-i10 w-full h-full object-contain filter drop-shadow-[0_0_25px_rgba(213,117,255,0.5)] transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
                 />
             </div>
 
