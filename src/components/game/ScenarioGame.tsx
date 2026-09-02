@@ -659,7 +659,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             const lessonData: Lesson = {
                 id: level.scenarioId,
                 title: lessonKeyword,
-                description: frame.text.replace(/^LESSON:\s*[A-Z]+\.\s*/, ''), // Strip "LESSON: KEYWORD. " prefix
+                description: (frame?.text || '').replace(/^LESSON:\s*[A-Z]+\.\s*/, ''), // Strip "LESSON: KEYWORD. " prefix
                 source: level.archetype, // e.g. "The Icon"
                 age: level.age,
                 date: new Date().toISOString(),
@@ -842,19 +842,14 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             // Push final XP + stories_completed to local Zustand store (triggers syncStoreToBackend as backup)
             addSessionProgression(sessionTotalXp);
 
-            // Traits are already updated globally via setProfile and persisted via saveStoryCompletionDna
-
             // Float the XP events visually before demounting the view!
             triggerFloatText(`+50 XP`, 'positive');
             
-            let delayMs = 1200;
             if (matchPercent > 80) {
                 setTimeout(() => triggerFloatText(`+20 XP (Outstanding)`, 'positive'), 800);
-                delayMs += 800;
             }
             if (isFirstTime) {
                 setTimeout(() => triggerFloatText(`+30 XP (First Run)`, 'positive'), 1600);
-                delayMs += 800;
             }
 
             console.log('[AYA DEBUG] All done, calling handleLevelComplete with stars:', starCount, 'and session XP:', sessionTotalXp);
@@ -880,9 +875,36 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             const lessonFrame = safeScenario.frames.find((f: any) => f.id?.startsWith('LEARNING') || f.id === 'lesson' || f.id?.includes('outcome'));
             const introFrame = safeScenario.frames.find((f: any) => f.id === 'intro');
 
+            const choiceStr = lastChoiceObj?.chosen_option ? `"${lastChoiceObj.chosen_option}"` : 'to take action';
+            const consequenceStr = lastChoiceObj?.consequence && lastChoiceObj.consequence !== 'Completed the phase.' ? ` ${lastChoiceObj.consequence}` : '';
+            
+            const p1Pool = [
+                `When facing ${tagText}, ${cleanCharacter} proved that breakthrough moments come from decisive action. During ${safeScenario.title || 'this story'}, they leaned into discipline and took ownership of what they could control.`,
+                `Navigating ${tagText} requires the exact courage ${cleanCharacter} demonstrated. When their back was against the wall in ${safeScenario.title || 'this journey'}, they chose long-term conviction over temporary comfort.`
+            ];
+            const p2Pool = [
+                `When you chose ${choiceStr}, it revealed your instinct to step up rather than retreat.${consequenceStr} That aligns directly with the mindset ${cleanCharacter} used to push through obstacles.`,
+                `Opting for ${choiceStr} reflects a proactive approach.${consequenceStr} Like ${cleanCharacter}, you chose to shape the outcome rather than passively watch it unfold.`
+            ];
+            const p3Pool = [
+                `To handle ${tagText} right now, break your problem into the one decision you can make today. Focus purely on execution, block out the noise, and trust your momentum.`,
+                `Apply ${cleanCharacter}'s principle to your life today: don't wait for ideal conditions. Make your move with conviction, learn from the feedback, and keep pushing forward.`
+            ];
+
+            const fallbackParts = [
+                p1Pool[Math.floor(Math.random() * p1Pool.length)],
+                p2Pool[Math.floor(Math.random() * p2Pool.length)],
+                p3Pool[Math.floor(Math.random() * p3Pool.length)]
+            ];
+
+            // Use AbortController so AI insight never blocks or hangs
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 1800);
+
             fetch('/api/generate-analysis', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                signal: controller.signal,
                 body: JSON.stringify({
                     tags,
                     storyTitle: safeScenario.title,
@@ -895,6 +917,7 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                     userTraits: userProfile?.traits || {}
                 })
             }).then(res => {
+                clearTimeout(timeoutId);
                 if (!res.ok) throw new Error('API failed');
                 return res.json();
             }).then(data => {
@@ -904,30 +927,8 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
                 } else {
                     throw new Error('Invalid format');
                 }
-            }).catch(err => {
-                console.warn('Groq analysis fetch offline/failed, using dynamic tailored insight:', err);
-                const choiceStr = lastChoiceObj?.chosen_option ? `"${lastChoiceObj.chosen_option}"` : 'to take action';
-                const consequenceStr = lastChoiceObj?.consequence && lastChoiceObj.consequence !== 'Completed the phase.' ? ` ${lastChoiceObj.consequence}` : '';
-                
-                const p1Pool = [
-                    `When facing ${tagText}, ${cleanCharacter} proved that breakthrough moments come from decisive action. During ${safeScenario.title || 'this story'}, they leaned into discipline and took ownership of what they could control.`,
-                    `Navigating ${tagText} requires the exact courage ${cleanCharacter} demonstrated. When their back was against the wall in ${safeScenario.title || 'this journey'}, they chose long-term conviction over temporary comfort.`
-                ];
-                const p2Pool = [
-                    `When you chose ${choiceStr}, it revealed your instinct to step up rather than retreat.${consequenceStr} That aligns directly with the mindset ${cleanCharacter} used to push through obstacles.`,
-                    `Opting for ${choiceStr} reflects a proactive approach.${consequenceStr} Like ${cleanCharacter}, you chose to shape the outcome rather than passively watch it unfold.`
-                ];
-                const p3Pool = [
-                    `To handle ${tagText} right now, break your problem into the one decision you can make today. Focus purely on execution, block out the noise, and trust your momentum.`,
-                    `Apply ${cleanCharacter}'s principle to your life today: don't wait for ideal conditions. Make your move with conviction, learn from the feedback, and keep pushing forward.`
-                ];
-
-                const fallbackParts = [
-                    p1Pool[Math.floor(Math.random() * p1Pool.length)],
-                    p2Pool[Math.floor(Math.random() * p2Pool.length)],
-                    p3Pool[Math.floor(Math.random() * p3Pool.length)]
-                ];
-
+            }).catch(() => {
+                clearTimeout(timeoutId);
                 setAnalysisParts(fallbackParts);
                 setAnalysisState('done');
             });

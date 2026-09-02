@@ -9,6 +9,7 @@
 
 import { supabase } from '../utils/supabase';
 import { getMyUserId, formatSupabaseError } from './followService';
+import { useUserStore } from '../store/userStore';
 
 export interface UserDnaTraits {
   risk: number;
@@ -112,7 +113,12 @@ export async function fetchUserDnaProfile(): Promise<UserDnaProfile | null> {
 export async function saveStoryCompletionDna(
   payload: SaveStoryCompletionPayload
 ): Promise<UserDnaProfile> {
-  const myUserId = await getMyUserId();
+  let myUserId = '';
+  try {
+    myUserId = await getMyUserId();
+  } catch {
+    myUserId = useUserStore.getState().profile?.id || '';
+  }
 
   console.log('[dnaService] Saving story completion DNA for user:', myUserId, {
     levelId: payload.levelId,

@@ -160,8 +160,8 @@ export function PlayRouteHandler() {
     if (!level) return <Navigate to="/game" replace />;
 
     const handleComplete = (stars: number) => {
-        completeLevel(level.id, stars);
-        const currentIndex = levels.findIndex(l => l.id === level.id);
+        completeLevel(String(level.id), stars);
+        const currentIndex = levels.findIndex(l => String(l.id) === String(level.id));
         if (currentIndex !== -1 && currentIndex < levels.length - 1) {
             unlockLevel(levels[currentIndex + 1].id);
         }
