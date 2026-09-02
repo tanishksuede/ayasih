@@ -26,21 +26,17 @@ export const PwaHeader: FC = () => {
                 <div id="header-search-portal" className="ml-2 sm:ml-6 flex-1 max-w-[120px] sm:max-w-[220px] min-w-[100px]" />
             </div>
 
-            {/* Stats Section */}
+
+            {/* Profile Name Section (without @username) */}
             <div data-tutorial="header-profile" className="flex items-center justify-end gap-1.5 sm:gap-4 overflow-hidden pr-1">
                 <div className={clsx(
                     "flex items-center gap-2 sm:gap-3 truncate",
                     "text-[#A5AFBF]"
                 )}>
                     <div className="flex flex-col items-end truncate min-w-0 leading-tight">
-                        <span className="font-semibold tracking-wide text-[11px] sm:text-[13px] truncate max-w-[65px] sm:max-w-[120px] text-[#F5F7FA]">
-                            {profile.name || "GUEST"}
+                        <span className="font-semibold tracking-wide text-[12px] sm:text-[14px] truncate max-w-[100px] sm:max-w-[180px] text-[#F5F7FA]">
+                            {profile.name || profile.username || "GUEST"}
                         </span>
-                        {profile.username && (
-                            <span className="text-[10px] sm:text-[11px] font-medium text-[#667085] tracking-wide truncate max-w-[65px] sm:max-w-[120px]">
-                                @{profile.username}
-                            </span>
-                        )}
                     </div>
                     
                     <div className="h-6 w-[1px] bg-[#111827] mx-1 sm:mx-2" />
