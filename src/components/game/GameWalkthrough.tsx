@@ -97,12 +97,24 @@ export function GameWalkthrough() {
         };
 
         // Delay to allow UI to transition (e.g. side menu opening)
-        const timer = setTimeout(updateRect, 350);
+        const timer = setTimeout(() => {
+            if (step.target) {
+                const el = document.querySelector(step.target);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+            // Allow scroll to finish before initial rect calculation
+            setTimeout(updateRect, 350);
+        }, 100);
+        
         window.addEventListener('resize', updateRect);
+        window.addEventListener('scroll', updateRect, true); // capture phase to get nested scrolls
         
         return () => {
             clearTimeout(timer);
             window.removeEventListener('resize', updateRect);
+            window.removeEventListener('scroll', updateRect, true);
         };
     }, [isActive, currentStep]);
 
@@ -204,7 +216,7 @@ export function GameWalkthrough() {
                 <motion.div
                     initial={false}
                     animate={spotlightStyle}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 40 }}
                     className="absolute shadow-[0_0_0_9999px_rgba(2,6,23,0.75)] border-2 border-[#00E5FF] shadow-[0_0_20px_rgba(0,229,255,0.3)] bg-transparent pointer-events-none"
                     style={{
                         boxShadow: "0 0 0 9999px rgba(2, 6, 23, 0.75), 0 0 20px rgba(0, 229, 255, 0.3) inset, 0 0 20px rgba(0, 229, 255, 0.3)"

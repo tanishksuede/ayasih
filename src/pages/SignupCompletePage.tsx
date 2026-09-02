@@ -221,7 +221,7 @@ export function SignupCompletePage() {
                                                 }}
                                                 placeholder="Enter 10 digit number"
                                                 disabled={isLoading}
-                                                className="w-full pl-12 pr-4 py-3 bg-black/20 border-2 border-white/10 focus:border-[#00f1fe] rounded-xl text-white font-black text-sm tracking-widest placeholder:text-white/20 outline-none transition-all"
+                                                className="w-full pl-14 pr-4 py-3 bg-black/20 border-2 border-white/10 focus:border-[#00f1fe] rounded-xl text-white font-black text-sm tracking-widest placeholder:text-white/20 outline-none transition-all"
                                             />
                                         </div>
                                     </motion.div>
