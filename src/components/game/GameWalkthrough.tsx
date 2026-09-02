@@ -89,7 +89,25 @@ export function GameWalkthrough() {
         const handleStart = () => {
             if (interval) clearInterval(interval);
             setCurrentStep(0);
-            setIsActive(true);
+            
+            // Still wait for any newly opened overlays (like CheckIn on fresh navigate) to close
+            const startInterval = setInterval(() => {
+                const state = useUserStore.getState();
+                const isCheckInOpen = !sessionStorage.getItem('hasCheckedInSession');
+                const isSubscriptionOpen = state.showSubscriptionModal;
+                const hasDomModals = Array.from(document.querySelectorAll('.fixed.inset-0')).some((el: any) => {
+                    const cn = el.className || '';
+                    return !cn.includes('z-[99999]') && (cn.includes('z-[9999]') || cn.includes('z-[10000]'));
+                });
+
+                if (!isCheckInOpen && !isSubscriptionOpen && !hasDomModals) {
+                    clearInterval(startInterval);
+                    setIsActive(true);
+                }
+            }, 500);
+            
+            // Clean up the new interval if unmounted
+            interval = startInterval;
         };
 
         window.addEventListener('tutorial-start', handleStart);
@@ -227,7 +245,7 @@ export function GameWalkthrough() {
     }
 
     return (
-        <div className="fixed inset-0 z-[99999] pointer-events-auto">
+        <div className="fixed inset-0 z-[99999] pointer-events-auto bg-black/0">
             {/* Darkened overlay */}
             <motion.div
                 initial={{ opacity: 0 }}

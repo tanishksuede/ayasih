@@ -452,11 +452,24 @@ export function SettingsPage() {
                     <button
                         onClick={() => { 
                             audioSynth.playClick(); 
+                            navigate('/game');
+                            setTimeout(() => {
+                                window.dispatchEvent(new CustomEvent('tutorial-start'));
+                            }, 300);
+                        }}
+                        className="w-full bg-slate-800 hover:bg-cyan-900/50 text-cyan-400 hover:text-cyan-200 border border-slate-700 hover:border-cyan-800 font-bold py-3 rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wider text-xs flex items-center justify-center gap-2"
+                    >
+                        <Compass size={16} /> Replay Walkthrough Tutorial
+                    </button>
+
+                    <button
+                        onClick={() => { 
+                            audioSynth.playClick(); 
                             if (window.confirm('Are you sure you want to reset all your progress? This cannot be undone.')) {
                                 resetProgress(); 
                             }
                         }}
-                        className="w-full bg-slate-800 hover:bg-red-900/50 text-red-400 hover:text-red-200 border border-slate-700 hover:border-red-800 font-bold py-3 rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wider text-xs"
+                        className="w-full bg-slate-800 hover:bg-red-900/50 text-red-400 hover:text-red-200 border border-slate-700 hover:border-red-800 font-bold py-3 mt-4 rounded-xl shadow-lg transform active:scale-95 transition-all uppercase tracking-wider text-xs"
                     >
                         Restart Journey (Reset)
                     </button>
