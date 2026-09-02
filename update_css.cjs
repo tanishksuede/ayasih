@@ -1,4 +1,5 @@
-/* ----------------------------------------------------------
+const fs = require("fs");
+const css = `/* ----------------------------------------------------------
    VibeSpinnerButton.css 
    Premium dimensional instrument
    ---------------------------------------------------------- */
@@ -230,3 +231,7 @@
 }
 
 .vsb-sparkle { display: none; }
+`;
+fs.writeFileSync("src/components/MoodWheel/VibeSpinnerButton.css", css);
+console.log("Updated CSS");
+

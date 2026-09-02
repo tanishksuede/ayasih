@@ -10,8 +10,10 @@ import { authService } from '../services/authService';
 import { useUserStore } from '../store/userStore';
 import { supabase } from '../utils/supabase';
 import { audioManager as audioSynth } from '../utils/audioManager';
+import { useClerk } from '@clerk/clerk-react';
 
 export function SignupCompletePage() {
+    const clerk = useClerk();
     const navigate = useNavigate();
     const profile = useUserStore((state) => state.profile);
 
@@ -234,7 +236,7 @@ export function SignupCompletePage() {
                         <div className="mt-6 text-center">
                             <button
                                 onClick={async () => {
-                                    await authService.signOut();
+                                    await clerk.signOut();
                                     navigate('/signin');
                                 }}
                                 className="text-[#00f1fe]/60 text-xs font-bold tracking-widest uppercase hover:text-[#00f1fe] transition-colors"

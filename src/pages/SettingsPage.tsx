@@ -8,8 +8,10 @@ import clsx from 'clsx';
 import { supabase } from '../utils/supabase';
 import { clearAllUserData } from '../utils/session';
 import { subscribeToPush, unsubscribeFromPush, sendTestNotification, getNotificationSupportStatus, getExistingSubscription, runIsolatedPushDiagnostic } from '../utils/pushNotifications';
+import { useClerk } from '@clerk/clerk-react';
 
 export function SettingsPage() {
+    const clerk = useClerk();
     const navigate = useNavigate();
     const [newPreferredMap, setNewPreferredMap] = useState('standard');
 
@@ -153,7 +155,7 @@ export function SettingsPage() {
                 }
 
                 try {
-                    await supabase.auth.signOut();
+                    await clerk.signOut();
                 } catch {}
             }
 
@@ -465,8 +467,7 @@ export function SettingsPage() {
                         onClick={async () => {
                             audioSynth.playClick();
                             try {
-                                const { authService } = await import('../services/authService');
-                                await authService.signOut();
+                                await clerk.signOut();
                                 navigate('/signin');
                             } catch (err) {
                                 console.error('Error signing out:', err);
