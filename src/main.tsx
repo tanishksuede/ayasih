@@ -105,10 +105,11 @@ try {
 import { ClerkProvider } from '@clerk/clerk-react';
 import { ClerkSync } from './components/ClerkSync';
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || "pk_test_c2ltcGxlLXNsdWctMzI4My5jbGVyay5hY2NvdW50cy5kZXYk";
 
 if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key")
+  document.getElementById('root')!.innerHTML = '<div style="color:white;text-align:center;margin-top:20vh;">Missing Clerk Publishable Key in environment variables.</div>';
+  throw new Error("Missing Publishable Key");
 }
 
 createRoot(document.getElementById('root')!).render(
