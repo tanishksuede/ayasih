@@ -157,57 +157,115 @@ export function getPotentiallyAlignedDirections(traits: PersonalityTraits | Reco
 
     const directions = new Set<string>();
 
-    if (creativity > 65 && vision > 60) {
+    if (creativity > 60 && vision > 60) {
         directions.add('Product Architecture & Creative Technology');
         directions.add('Brand Strategy & Conceptual Direction');
+        directions.add('Immersive AR/VR Experience Design');
+        directions.add('Interactive Media & Game Direction');
     }
-    if (leadership > 65 && risk > 60) {
+    if (leadership > 60 && risk > 60) {
         directions.add('Venture Incubation & Early-Stage Leadership');
         directions.add('Operational Strategy in High-Pace Environments');
+        directions.add('Angel Investing & Venture Capital');
+        directions.add('Crisis Management & Tactical Turnaround');
+        directions.add('Growth Hacking & Market Disruption');
     }
-    if (empathy > 65 && leadership > 55) {
+    if (empathy > 60 && leadership > 55) {
         directions.add('People & Organizational Culture Leadership');
         directions.add('Community Ecosystem Strategy');
+        directions.add('Diversity, Equity & Inclusion (DEI) Directing');
+        directions.add('Non-Profit Foundation Leadership');
+        directions.add('Executive Coaching & Talent Architecture');
     }
-    if (vision > 65 && risk < 55) {
+    if (vision > 65 && risk < 60) {
         directions.add('Systems Research, Quantitative Policy & Strategic Foresight');
         directions.add('Intelligence Analysis & Complex Modeling');
+        directions.add('Macro-Economic Forecasting');
+        directions.add('Corporate Sustainability Strategy');
+        directions.add('Urban Planning & Smart City Architecture');
     }
     if (creativity > 65 && empathy > 60) {
         directions.add('Human-Centered Design & UX Architecture');
         directions.add('Social Impact Innovation & Philanthropy');
+        directions.add('Documentary Filmmaking & Narrative Journalism');
+        directions.add('Art Therapy & Creative Rehabilitation');
+        directions.add('Educational Technology & Curriculum Design');
     }
     if (risk > 70 && creativity > 65) {
         directions.add('Disruptive Tech Founder & Growth Hacking');
         directions.add('Creative Directing & Avant-Garde Media');
+        directions.add('Experimental Product Research (Moonshot Projects)');
+        directions.add('Independent Indie Studio Founder');
     }
     if (vision > 60 && empathy > 60) {
         directions.add('Behavioral Economics & Policy Design');
         directions.add('Organizational Psychology & Executive Coaching');
+        directions.add('Public Health Strategy & Global Ethics');
+        directions.add('Diplomatic Relations & Conflict Resolution');
     }
     if (leadership > 70 && vision > 65) {
         directions.add('Corporate Strategy & Turnaround Management');
         directions.add('Global Supply Chain & Logistics Leadership');
+        directions.add('Chief Operating Officer (COO) Roles');
+        directions.add('Large-Scale Infrastructure Directing');
     }
     if (risk < 45 && vision > 60) {
         directions.add('Data Science, Actuarial & Risk Mitigation');
         directions.add('Compliance, Governance & Cyber Security');
+        directions.add('Quantitative Finance & Algorithmic Trading');
+        directions.add('Quality Assurance & Aerospace Engineering');
     }
-    if (creativity > 75) {
+    if (creativity > 70) {
         directions.add('Original Content Creation & Narrative Design');
+        directions.add('Concept Art & Worldbuilding');
+        directions.add('Music Production & Sound Engineering');
+        directions.add('Culinary Arts & Gastronomic Innovation');
     }
-    if (empathy > 75) {
+    if (empathy > 70) {
         directions.add('Clinical Therapy & Crisis Negotiation');
+        directions.add('Hospice Care & Advanced Medical Empathy');
+        directions.add('Special Education & Developmental Support');
+        directions.add('Patient Advocacy & Healthcare Navigation');
     }
-    if (leadership > 75) {
+    if (leadership > 70) {
         directions.add('Public Sector Leadership & Diplomacy');
+        directions.add('Political Campaign Strategy');
+        directions.add('Military Tactical Leadership & Strategy');
+        directions.add('Board of Directors & Corporate Governance');
+    }
+    if (risk > 75) {
+        directions.add('Extreme Sports Professional & Stunt Direction');
+        directions.add('Deep Tech Pioneer (Space, AI, BioHacking)');
+        directions.add('Commodities & High-Frequency Day Trading');
+        directions.add('Frontline Journalism & Investigative Reporting');
+    }
+    if (vision > 75) {
+        directions.add('Theoretical Physics & Advanced Mathematics');
+        directions.add('Climate Tech & Geo-Engineering Research');
+        directions.add('Artificial Intelligence Ethics & Safety');
+        directions.add('Futurist & Trend Forecasting');
+    }
+    const discipline = (traits as any).discipline ?? 50;
+    if (discipline && discipline > 75) {
+        directions.add('Elite Athletics & Olympic Training');
+        directions.add('Surgical Medicine & Neurobiology');
+        directions.add('Classical Music Performance');
     }
 
     if (directions.size === 0) {
         directions.add('Interdisciplinary Creative Strategy');
         directions.add('Emerging Technologies & Product Management');
         directions.add('Independent Consulting & Freelance Mastery');
+        directions.add('Operations Management & Business Administration');
+        directions.add('Digital Marketing & E-Commerce Strategy');
     }
 
-    return Array.from(directions).slice(0, 5);
+    // Shuffle and pick top 8 dynamically aligned
+    const options = Array.from(directions);
+    for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+    }
+
+    return options.slice(0, 8);
 }

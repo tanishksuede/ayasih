@@ -1,4 +1,5 @@
 import type { PersonalityTraits } from '../types/gameTypes';
+import { generateLevels } from './levelGenerator';
 
 // ─── Life Traits ─────────────────────────────────────────────────────────────
 export interface LifeTraits {
@@ -139,32 +140,74 @@ export function calculateLifeTraits(
     };
 }
 
-// ─── Match Archetype ─────────────────────────────────────────────────────────
+// 🌀 Match Archetype 🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀🌀
 export function matchFutureArchetype(lifeTraits: LifeTraits): FutureMatch {
-    let bestName = 'Strategic Leader';
+    const levels = generateLevels(18); // Pass an arbitrary age to get all levels
+
+    const uniquePersonalities = new Map<string, any>();
+    levels.forEach((level: any) => {
+        if (!uniquePersonalities.has(level.personality)) {
+            uniquePersonalities.set(level.personality, level);
+        }
+    });
+
+    let bestMatch: any = null;
     let bestDistance = Infinity;
 
-    for (const [name, archetype] of Object.entries(FUTURE_ARCHETYPES)) {
-        const traitKeys = Object.keys(archetype.traits) as (keyof LifeTraits)[];
+    // Convert idolTraits to lifeTraits shape for comparison
+    const mapIdolToLife = (idolTraits: any): Partial<LifeTraits> => {
+        if (!idolTraits) return {};
+        return {
+            resilience: idolTraits.resilience ?? 50,
+            discipline: idolTraits.discipline ?? 50,
+            courage: idolTraits.risk ?? 50,
+            creativity: idolTraits.creativity ?? 50,
+            emotional_control: idolTraits.empathy ?? 50,
+            leadership: idolTraits.leadership ?? 50,
+            risk_intelligence: idolTraits.vision ?? 50,
+            consistency: idolTraits.discipline ?? 50,
+        };
+    };
+
+    uniquePersonalities.forEach((level) => {
+        const archetypeTraits = mapIdolToLife(level.idolTraits);
+        const traitKeys = Object.keys(archetypeTraits) as (keyof LifeTraits)[];
+        if (traitKeys.length === 0) return;
+        
         let sumSq = 0;
         for (const key of traitKeys) {
-            const target = archetype.traits[key] ?? 50;
+            const target = archetypeTraits[key] ?? 50;
             const actual = lifeTraits[key] ?? 50;
             sumSq += Math.pow(target - actual, 2);
         }
         const distance = Math.sqrt(sumSq / traitKeys.length);
         if (distance < bestDistance) {
             bestDistance = distance;
-            bestName = name;
+            bestMatch = level;
         }
-    }
+    });
 
-    // Score: 100 = perfect match, 0 = max distance
-    const maxPossibleDistance = 100;
-    const score = Math.max(0, Math.round(100 - (bestDistance / maxPossibleDistance) * 100));
+    const score = Math.max(0, Math.round(100 - (bestDistance / 100) * 100));
+
+    // Map themes/colors dynamically
+    const colors = ['#f59e0b', '#d575ff', '#00f2ff', '#00ff9d', '#ff51fa', '#99f7ff'];
+    const secColors = ['#fbbf24', '#a855f7', '#22d3ee', '#34d399', '#ec4899', '#67e8f9'];
+    const cIndex = (bestMatch?.personality.length || 0) % colors.length;
+
+    const generatedArchetype: FutureArchetype = bestMatch ? {
+        name: bestMatch.archetype || 'Visionary',
+        emoji: '⭐',
+        description: bestMatch.bio || 'You make bold moves, think independently and build things from nothing.',
+        realMatch: bestMatch.personality,
+        realMatchAvatar: bestMatch.avatarUrl || '/assets/avatar_default.jpg',
+        traits: mapIdolToLife(bestMatch.idolTraits),
+        percentile: `Top ${Math.max(1, Math.min(10, Math.round(bestDistance / 2.5)))}%`,
+        color: colors[cIndex],
+        colorSecondary: secColors[cIndex],
+    } : FUTURE_ARCHETYPES['Strategic Leader'];
 
     return {
-        archetype: FUTURE_ARCHETYPES[bestName],
+        archetype: generatedArchetype,
         score,
         lifeTraits,
     };

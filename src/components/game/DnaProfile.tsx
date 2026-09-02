@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { audioManager as audioSynth } from "../../utils/audioManager";
 import { ArrowLeft, Copy, Check, Star, Shield, Download, ClipboardList, Flame, Dna, Compass, TrendingUp, TrendingDown, Minus, Sparkles, Briefcase } from 'lucide-react';
-import { IDOL_MINDSETS, IDOL_PROFILES } from '../../data/idolMindsets';
+import { generateLevels } from '../../utils/levelGenerator';
 import { useUserStore } from '../../store/userStore';
 import { calculateLevelInfo } from '../../utils/levelSystem';
 import domtoimage from 'dom-to-image';
@@ -133,32 +133,41 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
 
     // DNA Profile generation
     const personalityDNA = useMemo(() => {
-        const diffs: { name: string; diff: number }[] = [];
-        for (const [name, p] of Object.entries(IDOL_PROFILES)) {
-            if (name === "Default") continue;
+        const levels = generateLevels(18);
+        const uniqueIdols = new Map<string, any>();
+        levels.forEach((l: any) => {
+            if (l.personality && !uniqueIdols.has(l.personality)) {
+                uniqueIdols.set(l.personality, l);
+            }
+        });
+
+        const diffs: { name: string; diff: number; level: any }[] = [];
+        for (const [name, level] of uniqueIdols.entries()) {
+            const p = level.idolTraits;
+            if (!p) continue;
             
             const totalDiff = 
-                Math.abs((userTraits.risk || 50) - p.risk) +
-                Math.abs((userTraits.creativity || 50) - p.creativity) +
-                Math.abs((userTraits.vision || 50) - p.analytical) +
-                Math.abs((userTraits.empathy || 50) - p.social) +
-                Math.abs((userTraits.leadership || 50) - p.ambitious);
+                Math.abs((userTraits.risk || 50) - (p.risk || 50)) +
+                Math.abs((userTraits.creativity || 50) - (p.creativity || 50)) +
+                Math.abs((userTraits.vision || 50) - (p.vision || 50)) +
+                Math.abs((userTraits.empathy || 50) - (p.empathy || 50)) +
+                Math.abs((userTraits.leadership || 50) - (p.leadership || 50));
                 
-            diffs.push({ name, diff: totalDiff });
+            diffs.push({ name, diff: totalDiff, level });
         }
         
         diffs.sort((a, b) => a.diff - b.diff);
-        const top2 = diffs.slice(0, 2).map(d => d.name);
+        const top2 = diffs.slice(0, 2);
         
-        const getTraitDesc = (name: string, excludedTrait?: string) => {
-            const p = IDOL_PROFILES[name];
-            if (!p) return { key: '', desc: '' };
+        const getTraitDesc = (item: any, excludedTrait?: string) => {
+            const name = item.name;
+            const p = item.level.idolTraits;
             let traits = [
-                { key: 'ambitious', value: p.ambitious, desc: `${name.split(' ')[0]}'s relentless drive` },
-                { key: 'creativity', value: p.creativity, desc: `${name.split(' ')[0]}'s creative vision` },
-                { key: 'analytical', value: p.analytical, desc: `${name.split(' ')[0]}'s analytical mind` },
-                { key: 'social', value: p.social, desc: `${name.split(' ')[0]}'s emotional depth` },
-                { key: 'risk', value: p.risk, desc: `${name.split(' ')[0]}'s bold fearlessness` }
+                { key: 'leadership', value: p.leadership || 0, desc: `${name.split(' ')[0]}'s relentless drive` },
+                { key: 'creativity', value: p.creativity || 0, desc: `${name.split(' ')[0]}'s creative vision` },
+                { key: 'vision', value: p.vision || 0, desc: `${name.split(' ')[0]}'s analytical mind` },
+                { key: 'empathy', value: p.empathy || 0, desc: `${name.split(' ')[0]}'s emotional depth` },
+                { key: 'risk', value: p.risk || 0, desc: `${name.split(' ')[0]}'s bold fearlessness` }
             ];
             
             if (excludedTrait) {
@@ -179,13 +188,13 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
 
         return {
             idol1: {
-                name: top2[0],
-                avatarUrl: IDOL_MINDSETS[top2[0]]?.avatarUrl || '',
+                name: top2[0].name,
+                avatarUrl: top2[0].level.avatarUrl || '',
                 desc: t1.desc
             },
             idol2: {
-                name: top2[1],
-                avatarUrl: IDOL_MINDSETS[top2[1]]?.avatarUrl || '',
+                name: top2[1].name,
+                avatarUrl: top2[1].level.avatarUrl || '',
                 desc: t2.desc
             }
         };
