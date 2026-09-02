@@ -426,7 +426,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                     <div className="absolute top-0 w-full pointer-events-auto z-50">
                         <ForYouCarousel onPlayLevel={onPlayLevel} allLevels={levels} />
                     </div>
-                    <div className="relative w-full max-w-md mx-auto mt-36 md:mt-40 pointer-events-none h-full map-content">
+                    <div className="relative w-full max-w-md mx-auto mt-[340px] md:mt-[380px] pointer-events-none h-full map-content">
                         {/* NODES */}
 
                         {/* Local metadata makes this result immediate and offline-safe. */}
@@ -516,6 +516,55 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                             </div>
                         )}
 
+                        {/* CONNECTION LINES */}
+                        <svg className="absolute top-0 left-0 w-full z-0 pointer-events-none" style={{ height: totalHeight }}>
+                            <defs>
+                                <linearGradient id="line-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                    <stop offset="0%" stopColor="#00E5FF" stopOpacity="0.8" />
+                                    <stop offset="100%" stopColor="#8B3DFF" stopOpacity="0.8" />
+                                </linearGradient>
+                            </defs>
+                            {ageLevels.map((_, i) => {
+                                if (i === ageLevels.length - 1) return null;
+                                const pos1 = getPosition(i);
+                                const pos2 = getPosition(i + 1);
+                                
+                                const x1 = `calc(50% ${!isMobile && pos1.x !== 0 ? (pos1.x > 0 ? `+ ${pos1.x}px` : `- ${Math.abs(pos1.x)}px`) : ''})`;
+                                const y1 = pos1.y;
+                                const x2 = `calc(50% ${!isMobile && pos2.x !== 0 ? (pos2.x > 0 ? `+ ${pos2.x}px` : `- ${Math.abs(pos2.x)}px`) : ''})`;
+                                const y2 = pos2.y;
+
+                                const isUnlocked2 = ageLevels[i + 1].status !== 'locked';
+
+                                return (
+                                    <g key={`line-${i}`}>
+                                        <line 
+                                            x1={x1} y1={y1} x2={x2} y2={y2} 
+                                            stroke="rgba(255,255,255,0.05)" 
+                                            strokeWidth="2" 
+                                        />
+                                        {isUnlocked2 && (
+                                            <line 
+                                                x1={x1} y1={y1} x2={x2} y2={y2} 
+                                                stroke="url(#line-gradient)" 
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                className="animate-[pulse_3s_ease-in-out_infinite]"
+                                                style={{
+                                                    strokeDasharray: '8 12',
+                                                    animation: 'flowLine 1.5s linear infinite'
+                                                }}
+                                            />
+                                        )}
+                                    </g>
+                                );
+                            })}
+                        </svg>
+                        <style>{`
+                            @keyframes flowLine {
+                                to { stroke-dashoffset: -20; }
+                            }
+                        `}</style>
                         {/* LEVEL NODES */}
                         {ageLevels.map((level, i) => {
                             const pos = getPosition(i);
@@ -526,11 +575,10 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                             const isCompleted = level.status === 'completed' || (levelScores[level.id] !== undefined && levelScores[level.id] > 0);
                             const isCurrent = isUnlocked && !isCompleted;
                             const earnedStars = levelScores[level.id] || level.stars || 0;
-
                             return (
                                 <div
                                     key={level.id}
-                                    className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center transition-all duration-500 z-10 pointer-events-auto personality-node-container"
+                                    className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center justify-center transition-all duration-500 z-10 pointer-events-auto"
                                     style={isMobile
                                         ? { top: pos.y, left: '50%', transform: 'translateX(-50%)', zIndex: 20 + i }
                                         : { top: pos.y, transform: `translate(calc(-50% + ${pos.x}px), -50%)`, zIndex: 20 + i }
@@ -538,16 +586,12 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                                 >
                                     <div
                                         className={clsx(
-                                            "candy-node-container group cursor-pointer hover:scale-110 transition-transform animate-float",
-                                            isCurrent && "candy-node-active animate-breath",
-                                            !isUnlocked && "candy-node-locked grayscale opacity-80",
-                                            isCompleted && "candy-node-completed",
-                                            highlightedNodeId === level.id && "ring-4 ring-[#00f2ff] ring-offset-4 ring-offset-transparent shadow-[0_0_30px_#00f2ff] rounded-full scale-110"
+                                            "group relative cursor-pointer transition-all duration-500",
+                                            isUnlocked ? "hover:-translate-y-2" : "grayscale opacity-60",
+                                            highlightedNodeId === level.id && "scale-110 z-50"
                                         )}
-                                        // Touch start for mobile responsiveness
-                                        onTouchStart={() => {
-                                            if (isUnlocked) audioSynth.playHover();
-                                        }}
+                                        style={{ transformStyle: 'preserve-3d' }}
+                                        onTouchStart={() => { if (isUnlocked) audioSynth.playHover(); }}
                                         onClick={() => {
                                             if (isUnlocked) {
                                                 audioSynth.playClick();
@@ -555,111 +599,69 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
                                             }
                                         }}
                                     >
-                                        <div className="lollipop-stick" />
-                                        {/* Responsive Halo */}
                                         <div className={clsx(
-                                            "absolute -bottom-2 left-1/2 -translate-x-1/2 rounded-full transition-colors node-base",
-                                            // Mobile: w-20 h-20, Desktop: w-28 h-28
-                                            "w-20 h-20 md:w-28 md:h-28",
-                                            isCandyMode 
-                                                ? (isCurrent ? "bg-pink-100/50" : "bg-white/10")
-                                                : (isCurrent ? "bg-amber-400/20" : "bg-[#4DD9FF]/10")
-                                        )} />
-
-                                        {/* Responsive Avatar Ring */}
-                                        <div className={clsx(
-                                            "relative rounded-full overflow-hidden flex items-center justify-center bg-white node-ring transition-all duration-300",
-                                            // Mobile: w-16 h-16, Desktop: w-24 h-24
-                                            "w-16 h-16 md:w-24 md:h-24",
-                                            isCandyMode
-                                                ? (isCurrent ? "border-4 border-pink-400 ring-4 ring-pink-200 shadow-[0_0_20px_rgba(236,72,153,0.6)]" : "border-4 border-slate-300 shadow-[0_8px_0_rgba(0,0,0,0.2)]")
-                                                : (isCurrent 
-                                                    ? "border-4 border-amber-400 ring-4 ring-amber-400/30 shadow-[0_0_25px_rgba(245,158,11,0.8)]"
-                                                    : "border-transparent ring-2 ring-[#4DD9FF]/80 shadow-[0_0_15px_rgba(77,217,255,0.6)]")
+                                            "relative rounded-full overflow-hidden flex items-center justify-center transition-all duration-500 transform-gpu bg-[#080B14]",
+                                            "w-16 h-16 md:w-20 md:h-20 mx-auto",
+                                            isCurrent 
+                                                ? "border-2 border-[#FFC400] shadow-[0_10px_20px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.2),0_0_15px_rgba(255,196,0,0.3)] scale-110" 
+                                                : "border border-white/[0.08] shadow-[0_8px_16px_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.1)] group-hover:border-white/[0.2] group-hover:shadow-[0_15px_30px_rgba(0,0,0,0.6)]"
                                         )}>
                                             <img 
                                                 src={level.portrait ? `/portraits/${level.portrait}` : (level.avatarUrl || resolvePersonalityAvatar(level.personality || ''))} 
                                                 alt={level.archetype} 
-                                                className="w-full h-full object-cover node-content" 
+                                                className={clsx(
+                                                    "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110",
+                                                    !isCurrent && "opacity-80 group-hover:opacity-100"
+                                                )} 
                                                 onError={(e) => { e.currentTarget.src = resolvePersonalityAvatar(level.personality || ''); }}
                                             />
                                             {!isUnlocked && (
-                                                <div className="absolute inset-0 z-20 flex items-center justify-center bg-slate-200/50 sm:backdrop-blur-[1px]">
-                                                    <Lock size={20} className="text-slate-500 drop-shadow-md opacity-80 md:w-6 md:h-6" />
+                                                <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#05070D]/60 backdrop-blur-[2px]">
+                                                    <Lock size={16} className="text-[#667085] drop-shadow-md md:w-5 md:h-5" />
                                                 </div>
                                             )}
-                                            <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/40 to-transparent pointer-events-none rounded-t-full" />
+                                            <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/[0.15] to-transparent pointer-events-none rounded-t-full mix-blend-overlay" />
                                         </div>
 
-                                        {/* Lock Tooltip */}
-                                        {!isUnlocked && level.day_number !== undefined && (
-                                            <div className="absolute -top-12 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50">
-                                                <div className="bg-slate-900 text-white text-xs font-bold px-3 py-1.5 rounded shadow-xl border border-slate-700 whitespace-nowrap">
-                                                    🔒 Unlocks on Day {level.day_number}
-                                                </div>
-                                            </div>
-                                        )}
-
-                                        {/* Labels */}
                                         <div className={clsx(
-                                            "absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap z-30 transition-all duration-300 transform flex flex-col items-center",
-                                            "md:-bottom-14", // Lower overlap on desktop
-                                            isUnlocked ? "scale-100 hover:scale-110" : "scale-90 opacity-70 grayscale"
+                                            "absolute -bottom-4 md:-bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none z-30 transition-all duration-300",
+                                            isUnlocked ? "opacity-90 group-hover:opacity-100 group-hover:translate-y-1" : "opacity-50"
                                         )}>
-                                            {/* Personality Badge */}
-                                            {level.personality && (
-                                                <div className={clsx(
-                                                    "relative -mb-2 px-3 py-0.5 rounded-full border shadow-sm flex items-center justify-center z-40 animate-float min-w-max",
-                                                    "md:-mb-3 md:px-4 md:py-1 md:border-2",
-                                                    isCandyMode
-                                                        ? (isUnlocked ? "bg-gradient-to-r from-yellow-300 to-yellow-500 border-white text-yellow-900" : "bg-slate-700 border-slate-600 text-slate-400")
-                                                        : (isUnlocked 
-                                                            ? (isCurrent ? "bg-amber-500 border-amber-300 text-amber-950 shadow-[0_0_10px_rgba(245,158,11,0.5)]" : "bg-[rgba(10,15,40,0.95)] border-[#4DD9FF]/70 text-[#E8E0FF] shadow-[0_0_8px_rgba(77,217,255,0.3)]")
-                                                            : "bg-slate-800 border-slate-700 text-slate-500")
-                                                )}>
-                                                    <span className="text-[10px] md:text-sm font-black uppercase tracking-blacker drop-shadow-sm personality-name-label">
-                                                        {level.personality}
-                                                    </span>
-                                                </div>
-                                            )}
-
-                                            {/* Story Title */}
-                                            <div className={clsx(
-                                                "px-4 py-1 pt-3 pb-1 md:px-6 md:py-2 md:pt-4 md:pb-2 rounded-xl shadow-xl flex items-center justify-center min-w-[100px] md:min-w-[140px] transition-all duration-300",
-                                                isCandyMode
-                                                    ? (isUnlocked ? "bg-gradient-to-r from-pink-500 to-rose-500 border-b-[3px] md:border-b-4 border-rose-800" : "border-b-[3px] md:border-b-4 bg-slate-800 border-slate-900")
-                                                    : (isUnlocked
-                                                        ? (isCurrent 
-                                                            ? "bg-gradient-to-r from-amber-500 to-amber-600 border-b-[3px] md:border-b-4 border-amber-800 shadow-[0_0_20px_rgba(245,158,11,0.4)]"
-                                                            : "bg-[rgba(10,15,40,0.95)] border border-[#4DD9FF]/60 shadow-[0_0_15px_rgba(77,217,255,0.15)]")
-                                                        : "bg-slate-800/80 border-b-[3px] md:border-b-4 border-slate-900")
-                                            )}>
+                                            <div className="flex flex-col items-center bg-[#080B14] border border-white/[0.06] rounded-xl px-4 py-2 shadow-[0_10px_20px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.05)] min-w-[140px] md:min-w-[160px] relative overflow-hidden">
+                                                {isCurrent && (
+                                                    <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#FFC400] to-transparent opacity-80" />
+                                                )}
                                                 <span className={clsx(
-                                                    "text-[10px] md:text-xs font-bold uppercase tracking-wider leading-none text-center story-title-label",
-                                                    isCandyMode
-                                                        ? (isUnlocked ? "text-white drop-shadow-md" : "text-slate-500")
-                                                        : (isUnlocked 
-                                                            ? (isCurrent ? "text-white drop-shadow-md" : "text-[#F0EEFF] drop-shadow-[0_0_4px_rgba(240,238,255,0.3)]")
-                                                            : "text-slate-500")
+                                                    "text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] whitespace-nowrap mb-0.5",
+                                                    isCurrent ? "text-[#FFC400]" : "text-[#F5F7FA]"
                                                 )}>
+                                                    {level.personality || level.archetype || 'GUEST'}
+                                                </span>
+                                                <span className="text-[9px] md:text-[10px] font-medium text-[#A5AFBF] whitespace-nowrap truncate max-w-full tracking-wide">
                                                     {level.title}
                                                 </span>
                                             </div>
                                         </div>
 
-                                        {true && (
-                                            <div className="absolute -top-4 md:-top-6 flex gap-1 justify-center w-full">
+                                        {!isUnlocked && level.day_number !== undefined && (
+                                            <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-50">
+                                                <div className="bg-[#0C1220] text-[#A5AFBF] text-[10px] font-bold px-3 py-1.5 rounded-lg shadow-xl border border-white/[0.04] whitespace-nowrap tracking-wide">
+                                                    🔒 Unlocks on Day {level.day_number}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        {isCompleted && (
+                                            <div className="absolute -top-4 md:-top-5 flex gap-1 justify-center w-full z-40">
                                                 {[1, 2, 3].map(s => {
                                                     const isEarned = s <= (earnedStars || 0);
                                                     return (
                                                         <Star 
                                                             key={s} 
-                                                            size={16} 
+                                                            size={14} 
                                                             className={clsx(
-                                                                "drop-shadow-sm md:w-5 md:h-5",
-                                                                isEarned 
-                                                                    ? "fill-yellow-400 text-yellow-600 animate-bounce" 
-                                                                    : "fill-slate-400/50 text-slate-500/50"
+                                                                "drop-shadow-lg md:w-[14px] md:h-[14px] transition-all",
+                                                                isEarned ? "fill-[#FFC400] text-[#FFC400] scale-110" : "fill-transparent text-[#667085]"
                                                             )} 
                                                             style={isEarned ? { animationDelay: `${s * 100}ms` } : {}} 
                                                         />
@@ -676,17 +678,24 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
             </div>
 
             {/* Floating Life Check-in FAB Button */}
-            <div className="fixed bottom-6 right-6 z-50 pointer-events-auto">
+            <div className="fixed bottom-6 right-6 z-[110] pointer-events-auto">
                 <button
                     onClick={() => {
                         audioSynth.playClick();
                         trackSituationEvent('checkin_opened');
                         setShowCheckInModal(true);
                     }}
-                    className="flex items-center gap-2 px-4 py-3 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 text-white font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(147,51,234,0.5)] border border-white/20 hover:scale-105 active:scale-95 transition-all"
+                    className="group relative flex items-center gap-3 px-5 py-3 rounded-2xl bg-[#080B14] border border-white/[0.06] shadow-[0_10px_30px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.05)] hover:border-white/[0.12] hover:shadow-[0_15px_40px_rgba(0,0,0,0.6),0_0_20px_rgba(0,229,255,0.15)] hover:-translate-y-1 active:translate-y-0.5 active:scale-95 transition-all duration-300"
+                    style={{ transformStyle: 'preserve-3d' }}
                 >
-                    <MessageSquarePlus size={16} />
-                    <span>What are you dealing with?</span>
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#111827] to-[#05070D] border border-white/[0.04] shadow-inner flex items-center justify-center">
+                        <MessageSquarePlus size={16} className="text-[#00E5FF] group-hover:scale-110 transition-transform duration-300" />
+                    </div>
+                    <div className="flex flex-col items-start pr-1 hidden md:flex">
+                        <span className="text-[10px] font-black uppercase tracking-[0.15em] text-[#A5AFBF] group-hover:text-[#F5F7FA] transition-colors">Situation Check-in</span>
+                        <span className="text-xs font-bold text-[#F5F7FA]">What's on your mind?</span>
+                    </div>
+                    <span className="md:hidden text-[11px] font-black uppercase tracking-[0.15em] text-[#F5F7FA] mr-2">Check-In</span>
                 </button>
             </div>
 

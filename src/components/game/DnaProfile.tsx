@@ -692,28 +692,20 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
                     {!showOptions ? (
                         <button 
                             onClick={() => { audioSynth.playClick(); setShowOptions(true); }}
-                            className="group relative w-full h-16 rounded-full overflow-hidden transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_30px_rgba(0,242,255,0.3)]"
+                            className="group relative w-full h-16 rounded-2xl overflow-hidden transition-all duration-300 bg-[#080B14] border border-[#00E5FF]/20 shadow-[0_10px_30px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.05)] hover:-translate-y-1 hover:border-[#00E5FF]/40 hover:shadow-[0_15px_40px_rgba(0,0,0,0.6),0_0_20px_rgba(0,229,255,0.15)] active:translate-y-0.5 active:scale-[0.98]"
+                            style={{ transformStyle: 'preserve-3d' }}
                         >
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#006a70] via-[#00f1fe] to-[#005f64] opacity-80" />
-                            <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.2)_50%,transparent_75%)] bg-[length:250%_250%] group-hover:animate-[shimmer_2s_infinite]" />
-                            
-                            <span className="relative z-10 w-full h-full flex items-center justify-center gap-3 text-white font-black text-lg md:text-xl uppercase tracking-[0.3em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                                <Copy className="w-6 h-6" />
+                            <span className="relative z-10 w-full h-full flex items-center justify-center gap-3 text-[#F5F7FA] font-black text-lg md:text-xl uppercase tracking-[0.3em] group-hover:text-[#00E5FF] transition-colors" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                                <Copy className="w-5 h-5" />
                                 SHARE YOUR DNA
                             </span>
-                            <style>{`
-                                @keyframes shimmer {
-                                    0% { background-position: -200% 0; }
-                                    100% { background-position: 200% 0; }
-                                }
-                            `}</style>
                         </button>
                     ) : (
                         <div className="flex flex-col sm:flex-row gap-4 w-full animate-fade-in-up">
                             {/* Copy Text Action */}
                             <button 
                                 onClick={() => { audioSynth.playClick(); handleShareDNA(); }}
-                                className="flex-1 flex items-center justify-center gap-3 h-14 rounded-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] hover:bg-[#191923] hover:border-[#00f2ff]/50 transition-all shadow-[0_0_15px_rgba(0,242,255,0)] hover:shadow-[0_0_15px_rgba(0,242,255,0.2)] text-[#f2effb]"
+                                className="flex-1 flex items-center justify-center gap-3 h-14 rounded-2xl bg-[#080B14] border border-white/[0.06] hover:border-[#00E5FF]/30 transition-all shadow-[0_8px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.5),0_0_15px_rgba(0,229,255,0.1)] text-[#A5AFBF] hover:text-[#00E5FF] hover:-translate-y-1 active:translate-y-0"
                             >
                                 {copiedDNA ? <Check className="w-5 h-5 text-[#4ade80]" /> : <ClipboardList className="w-5 h-5" />}
                                 <span className="font-space uppercase font-bold tracking-widest text-[12px] sm:text-sm">
@@ -725,7 +717,7 @@ export function DnaProfile({ onBack }: DnaProfileProps) {
                             <button 
                                 onClick={handleDownloadCard}
                                 disabled={isGenerating}
-                                className="flex-1 flex items-center justify-center gap-3 h-14 rounded-full bg-gradient-to-r from-[#d575ff]/20 to-[#99f7ff]/20 border border-[rgba(0,242,255,0.3)] hover:from-[#d575ff]/40 hover:to-[#99f7ff]/40 transition-all shadow-[0_0_15px_rgba(0,242,255,0.1)] hover:shadow-[0_0_20px_rgba(213,117,255,0.4)] text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex-1 flex items-center justify-center gap-3 h-14 rounded-2xl bg-[#080B14] border border-[#8B3DFF]/20 hover:border-[#8B3DFF]/40 transition-all shadow-[0_8px_16px_rgba(0,0,0,0.4)] hover:shadow-[0_12px_24px_rgba(0,0,0,0.5),0_0_15px_rgba(139,61,255,0.15)] text-[#F5F7FA] hover:text-white disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-1 active:translate-y-0"
                             >
                                 <Download className={`w-5 h-5 ${isGenerating ? 'animate-bounce' : ''}`} />
                                 <span className="font-space uppercase font-bold tracking-widest text-[12px] sm:text-sm">
