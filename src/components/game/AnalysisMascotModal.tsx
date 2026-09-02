@@ -53,18 +53,18 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
     const activeMascot = MASCOT_ASSETS.CHAIR_CELEBRATE;
 
     return (
-        <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#050817]/95 backdrop-blur-xl p-3 sm:p-4 md:p-6 overflow-y-auto min-h-[100dvh]">
+        <div className="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#050817]/95 backdrop-blur-xl p-4 overflow-y-auto">
             <motion.div 
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 className={clsx(
-                    "relative w-full max-w-4xl my-auto rounded-3xl md:rounded-[2.5rem] p-5 sm:p-6 md:p-10 shadow-2xl flex flex-col gap-4 sm:gap-6",
-                    "bg-gradient-to-b from-[#0D1530] to-[#070B1F] border border-[#506EFF]/30 text-white"
+                    "relative w-full max-w-3xl m-auto rounded-3xl md:rounded-[2rem] p-4 sm:p-6 md:p-8 shadow-2xl flex flex-col gap-4",
+                    "bg-gradient-to-b from-[#0D1530] to-[#070B1F] border border-[#506EFF]/30 text-white shrink-0"
                 )}
             >
                 {/* Glow Effects */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-[#00D9FF]/50 to-transparent blur-sm rounded-full" />
-                <div className="absolute -inset-1 bg-gradient-to-r from-[#8B5CF6]/10 via-[#00D9FF]/10 to-[#EC3B9A]/10 rounded-3xl md:rounded-[2.5rem] blur-xl -z-10" />
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#8B5CF6]/10 via-[#00D9FF]/10 to-[#EC3B9A]/10 rounded-3xl md:rounded-[2rem] blur-xl -z-10" />
 
                 {/* Progress Header */}
                 <div className="flex justify-between items-center px-2 sm:px-4 w-full relative z-20">
@@ -94,9 +94,9 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
                     </button>
                 </div>
 
-                <div className="flex flex-col items-center justify-center gap-2 sm:gap-4 flex-1 mt-2 sm:mt-4 relative z-10 w-full max-w-2xl mx-auto">
+                <div className="flex flex-col items-center justify-center gap-2 sm:gap-4 flex-1 mt-2 relative z-10 w-full max-w-2xl mx-auto">
                     {/* Dialog Box Area */}
-                    <div className="w-full relative min-h-[140px] sm:min-h-[150px] md:min-h-[160px] flex flex-col justify-end">
+                    <div className="w-full relative min-h-[100px] sm:min-h-[120px] flex flex-col justify-end">
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={step}
@@ -104,15 +104,15 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.3 }}
-                                className="relative bg-[#111A38]/90 backdrop-blur-md p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-[#00D9FF]/20 shadow-[0_10px_30px_rgba(0,0,0,0.5)] mb-4"
+                                className="relative bg-[#111A38]/90 backdrop-blur-md p-4 sm:p-5 border border-[#00D9FF]/20 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.5)] mb-2"
                             >
                                 {/* Speech Bubble Tail pointing to the mascot below */}
-                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[16px] border-transparent border-t-[#111A38]/90 filter drop-shadow-[0_4px_2px_rgba(0,0,0,0.1)]" />
+                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-t-[12px] border-transparent border-t-[#111A38]/90 filter drop-shadow-[0_4px_2px_rgba(0,0,0,0.1)]" />
                                 
                                 {/* Inner tail border overlay to match the bubble's border */}
-                                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[12px] border-r-[12px] border-t-[16px] border-transparent border-t-[#00D9FF]/20 -z-10 scale-110 translate-y-[1px]" />
+                                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-t-[12px] border-transparent border-t-[#00D9FF]/20 -z-10 scale-110 translate-y-[1px]" />
                                 
-                                <p className="text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed text-white/95 font-medium relative z-10 min-h-[4rem]">
+                                <p className="text-sm sm:text-base md:text-lg leading-relaxed text-white/95 font-medium relative z-10 min-h-[3rem]">
                                     {displayedText}
                                     {isTyping && <span className="inline-block w-1.5 h-4 sm:h-5 ml-1 bg-[#00D9FF] animate-pulse align-middle" />}
                                 </p>
@@ -121,9 +121,9 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
                     </div>
 
                     {/* Mascot Area */}
-                    <div className="w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 shrink-0 relative flex items-center justify-center mx-auto -mt-2">
+                    <div className="w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 shrink-0 relative flex items-center justify-center mx-auto -mt-2">
                         <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full" />
-                        <div className="w-full h-full relative z-10 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)] scale-[1.75] sm:scale-[1.5] origin-center">
+                        <div className="w-full h-full relative z-10 drop-shadow-[0_0_20px_rgba(139,92,246,0.3)] scale-[1.2] sm:scale-[1.1] origin-center">
                             <DotLottieReact
                                 src={encodeURI(activeMascot)}
                                 loop
@@ -136,12 +136,12 @@ export const AnalysisMascotModal: React.FC<AnalysisMascotModalProps> = ({ parts,
                 </div>
 
                 {/* Navigation Buttons */}
-                <div className="flex justify-between items-center mt-3 sm:mt-6 md:mt-8 pt-4 sm:pt-6 border-t border-white/10 w-full z-20">
+                <div className="flex justify-between items-center mt-2 sm:mt-4 pt-4 border-t border-white/10 w-full z-20">
                     <button 
                         onClick={handlePrev}
                         disabled={step === 0}
                         className={clsx(
-                            "flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2 sm:py-3 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all",
+                            "flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold uppercase tracking-wider transition-all",
                             step === 0 
                                 ? "opacity-0 pointer-events-none" 
                                 : "text-white/60 hover:text-white hover:bg-white/5"
