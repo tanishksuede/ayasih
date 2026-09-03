@@ -96,7 +96,7 @@ export function SearchBar({ personalities, onMatch, onClose }: SearchBarProps) {
     <div className="w-full relative z-50 flex flex-col items-start pointer-events-auto animate-fade-in">
       <div 
         className={clsx(
-          "w-full flex items-center px-3 py-2 transition-all duration-300 rounded-full border-2",
+          "w-full flex items-center px-2.5 sm:px-3 py-1.5 sm:py-2 transition-all duration-300 rounded-full border",
           isFocused 
             ? isCandyMode 
               ? "bg-white/80 border-pink-400 shadow-[0_0_15px_rgba(236,72,153,0.4)]" 
@@ -106,8 +106,8 @@ export function SearchBar({ personalities, onMatch, onClose }: SearchBarProps) {
               : "bg-transparent border-transparent hover:bg-white/5 hover:border-[#00f2ff]/30"
         )}
       >
-        <Search size={16} className={clsx(
-          "transition-colors",
+        <Search size={14} className={clsx(
+          "transition-colors shrink-0",
           isFocused 
             ? isCandyMode ? "text-pink-500" : "text-[#00f2ff]" 
             : isCandyMode ? "text-slate-600/50" : "text-white/50"
@@ -120,17 +120,17 @@ export function SearchBar({ personalities, onMatch, onClose }: SearchBarProps) {
           onBlur={() => setIsFocused(false)}
           placeholder="Search stories..."
           className={clsx(
-            "bg-transparent border-none outline-none w-full ml-2 text-sm font-bold tracking-wide transition-colors placeholder:font-medium",
+            "bg-transparent border-none outline-none w-full ml-1.5 sm:ml-2 text-xs sm:text-sm font-semibold tracking-wide transition-colors placeholder:font-medium min-w-0",
             isCandyMode ? "text-slate-800 placeholder:text-slate-500/50" : "text-white placeholder:text-white/30"
           )}
         />
         {onClose && (
           <button 
             onClick={onClose}
-            className="text-white/40 hover:text-white ml-2 transition-colors focus:outline-none"
+            className="text-white/40 hover:text-white ml-1.5 transition-colors focus:outline-none shrink-0"
             aria-label="Close search"
           >
-            <X size={16} />
+            <X size={14} />
           </button>
         )}
       </div>
