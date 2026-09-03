@@ -16,7 +16,6 @@ import { supabase } from '../../utils/supabase';
 import { logJourneyEvent } from '../../utils/feedbackUtils';
 import { STORY_DATABASE } from '../../data/scenarios';
 import { IDOL_PROFILES } from '../../data/idolMindsets';
-import { calculateLevelInfo } from '../../utils/levelSystem';
 import { calculateLifeTraits, matchFutureArchetype } from '../../utils/futureSelfMatch';
 import { SourcesModal } from './SourcesModal';
 import { STORY_SOURCES } from '../../data/storySources';
@@ -492,479 +491,405 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             audioRef.current.pause();
             audioRef.current.currentTime = 0;
         }
-        // DEBUG: Fires immediately on EVERY choice tap — confirms new code is running
         console.log('[AYA DEBUG] handleChoiceClick fired! choice.text =', choice.text, '| choice.next =', choice.next);
 
-        // Skip trait calculation for navigation-only choices
-        const isNavChoice = NAVIGATION_CHOICES.some(nav => choice.text.toLowerCase() === nav);
+        try {
+            // Skip trait calculation for navigation-only choices
+            const isNavChoice = NAVIGATION_CHOICES.some(nav => choice.text.toLowerCase() === nav);
 
-        const timeTakenMs = Date.now() - frameStartTime;
-        const timeTakenSeconds = Math.max(1, Math.round(timeTakenMs / 1000));
-        
-        // --- NEW: TELEMETRY LOGGING ---
-        if (!isNavChoice && scenario?.id) {
-            logJourneyEvent(useUserStore.getState().profile?.id || '', scenario.id, 'frame_completed', {
-                frame_id: currentFrameId,
-                choice_text: choice.text,
-                time_taken_ms: timeTakenMs
-            });
-        }
+            const timeTakenMs = Date.now() - frameStartTime;
+            const timeTakenSeconds = Math.max(1, Math.round(timeTakenMs / 1000));
+            
+            // Telemetry logging
+            if (!isNavChoice && scenario?.id) {
+                logJourneyEvent(useUserStore.getState().profile?.id || '', scenario.id, 'frame_completed', {
+                    frame_id: currentFrameId,
+                    choice_text: choice.text,
+                    time_taken_ms: timeTakenMs
+                });
+            }
 
-        const rawImpacts = isNavChoice
-            ? { risk_taker: 0, creative: 0, analytical: 0, social: 0, ambitious: 0 }
-            : calculateTraitImpacts(choice.text, choice.score);
-        const adjustedImpacts = { ...rawImpacts };
-        
-        // Speed Adjustment Source 3 (20% Weight impact logic translated to point modifiers)
-        if (!isNavChoice) {
-            for (const key in adjustedImpacts) {
-                if (adjustedImpacts[key as keyof typeof adjustedImpacts] > 0) {
-                     if (timeTakenSeconds <= 5) adjustedImpacts[key as keyof typeof adjustedImpacts] += 2; // High Confidence
-                     if (timeTakenSeconds >= 15) adjustedImpacts[key as keyof typeof adjustedImpacts] -= 2; // Uncertainty
+            const rawImpacts = isNavChoice
+                ? { risk_taker: 0, creative: 0, analytical: 0, social: 0, ambitious: 0 }
+                : calculateTraitImpacts(choice.text, choice.score);
+            const adjustedImpacts = { ...rawImpacts };
+            
+            if (!isNavChoice) {
+                for (const key in adjustedImpacts) {
+                    if (adjustedImpacts[key as keyof typeof adjustedImpacts] > 0) {
+                         if (timeTakenSeconds <= 5) adjustedImpacts[key as keyof typeof adjustedImpacts] += 2;
+                         if (timeTakenSeconds >= 15) adjustedImpacts[key as keyof typeof adjustedImpacts] -= 2;
+                    }
                 }
             }
-        }
-        
-        const choiceData: SessionChoiceData = {
-           question: displayedText,
-           chosen_option: choice.text,
-           consequence: choice.feedback || choice.feedbackTitle,
-           time_taken_seconds: timeTakenSeconds,
-           trait_impacts: adjustedImpacts
-        };
+            
+            const choiceData: SessionChoiceData = {
+               question: displayedText,
+               chosen_option: choice.text,
+               consequence: choice.feedback || choice.feedbackTitle,
+               time_taken_seconds: timeTakenSeconds,
+               trait_impacts: adjustedImpacts
+            };
 
-        // DEBUG: Full payload for each choice
-        console.log('[AYA DEBUG] choiceData built:', JSON.stringify(choiceData, null, 2));
+            if (choice.next !== 'intro' && choice.next !== 'COMPLETE') {
+                 addChoiceToSession(choiceData);
+            }
 
-        if (choice.next !== 'intro' && choice.next !== 'COMPLETE') {
-             addChoiceToSession(choiceData);
-        }
-
-        // If "Try Again" or "Complete", generic handling
-        if (choice.next === 'intro') {
-            // RETRY LOGIC: Allow going back to intro without wiping score (preserves penalty)
-            setCurrentFrameId(choice.next);
-            return;
-        }
-
-        if (choice.next === 'COMPLETE') {
-            // Use the ref to get the definitive up-to-date list (avoids React stale closure)
-            const finalSessionChoices = [...sessionChoicesRef.current, choiceData];
-
-            if (finalSessionChoices.length === 0) {
-                console.warn(`Data issue: Personality journey ${level.scenarioId} has 0 questions. Skipping completion screen.`);
-                onBack();
+            if (choice.next === 'intro') {
+                setCurrentFrameId(choice.next);
                 return;
             }
 
-            // Fetch Base Profile (Source 1 - 40%)
-            const userProfile = useUserStore.getState().profile;
-            const quizTraits = userProfile?.traits || { risk: 50, creativity: 50, vision: 50, empathy: 50, leadership: 50 };
-            
-            const idolName = level.personality || level.archetype || "Default";
+            if (choice.next === 'COMPLETE') {
+                const finalSessionChoices = [...sessionChoicesRef.current, choiceData];
+                const starCount = score >= 20 ? 3 : score >= 10 ? 2 : 1;
 
-            // --- BUG 5 FIX: Save and load cumulative choice history ---
-            const historyStr = localStorage.getItem('aya_choice_history');
-            let choiceHistory = historyStr ? JSON.parse(historyStr) : [];
-            const newChoicesToSave = finalSessionChoices.map(c => ({
-                personality: idolName,
-                question: c.question,
-                option: c.chosen_option,
-                impacts: c.trait_impacts
-            }));
-            choiceHistory = [...choiceHistory, ...newChoicesToSave];
-            localStorage.setItem('aya_choice_history', JSON.stringify(choiceHistory));
-            if (userProfile?.id && !userProfile.id.startsWith('offline-')) {
-                supabase.from('users').update({ choice_history: choiceHistory }).eq('id', userProfile.id).catch(() => {});
-            }
+                // ── INSTANT UI TRANSITION: Never block on network calls! ──
+                setFinalStarCount(starCount);
+                setAnalysisState('generating');
 
-            // Aggregate from FULL history
-            let fullAccumulator = { risk: 0, creativity: 0, analytical: 0, social: 0, ambitious: 0 };
-            choiceHistory.forEach((c: any) => {
-                fullAccumulator.risk += (c.impacts?.risk_taker || 0);
-                fullAccumulator.creativity += (c.impacts?.creative || 0);
-                fullAccumulator.analytical += (c.impacts?.analytical || 0);
-                fullAccumulator.social += (c.impacts?.social || 0);
-                fullAccumulator.ambitious += (c.impacts?.ambitious || 0);
-            });
+                const userProfile = useUserStore.getState().profile;
+                const quizTraits = userProfile?.traits || { risk: 50, creativity: 50, vision: 50, empathy: 50, leadership: 50 };
+                const idolName = level.personality || level.archetype || "Default";
 
-            const totalChoices = choiceHistory.length;
-            // Assume an average scenario has 3 questions. 
-            // So the cumulative "session equivalent" is (total accumulator / total choices) * 3
-            const multiplier = totalChoices > 0 ? 3 / totalChoices : 0;
-            
-            // --- NEW PHASE 2 MATH LOGIC ---
-            const safeClamp = (val: number) => Math.max(0, Math.min(100, Math.round(val)));
-            
-            // 1. Establish Current Scores & Fallbacks
-            const oScores = userProfile?.onboarding_scores || quizTraits;
-            const sCount = userProfile?.story_count || 0;
+                // Safe choice history update
+                let choiceHistory: any[] = [];
+                try {
+                    const historyStr = localStorage.getItem('aya_choice_history');
+                    choiceHistory = historyStr ? JSON.parse(historyStr) : [];
+                    if (!Array.isArray(choiceHistory)) choiceHistory = [];
+                } catch {
+                    choiceHistory = [];
+                }
 
-            // 2. Latest Story Score (normalized around 50 + full historical accumulation)
-            const latestScore = {
-                risk: safeClamp(50 + (fullAccumulator.risk * multiplier)),
-                creativity: safeClamp(50 + (fullAccumulator.creativity * multiplier)),
-                vision: safeClamp(50 + (fullAccumulator.analytical * multiplier)), // analytical = vision
-                empathy: safeClamp(50 + (fullAccumulator.social * multiplier)),    // social = empathy
-                leadership: safeClamp(50 + (fullAccumulator.ambitious * multiplier)) // ambitious = leadership
-            };
+                const newChoicesToSave = finalSessionChoices.map(c => ({
+                    personality: idolName,
+                    question: c.question,
+                    option: c.chosen_option,
+                    impacts: c.trait_impacts
+                }));
+                choiceHistory = [...choiceHistory, ...newChoicesToSave];
+                try {
+                    localStorage.setItem('aya_choice_history', JSON.stringify(choiceHistory));
+                } catch {}
 
-            // Use latestScore as the definitive gameplay scores since it already represents the full history
-            const newGameplayScores = { ...latestScore };
+                // Aggregate from history safely
+                const safeNum = (v: any, d = 50) => {
+                    const n = Number(v);
+                    return isNaN(n) ? d : Math.max(0, Math.min(100, Math.round(n)));
+                };
 
-            // 3. Decay with Floor (Stabilize after 10 questions)
-            const newStoryCount = sCount + 1;
-            // Once they reach 10 questions, lock the weight to 20% max (0.20), otherwise decay it
-            const currentSurveyWeight = totalChoices >= 10 ? 0.20 : Math.max(0.20, Math.pow(0.85, newStoryCount));
-            const gameplayWeight = 1 - currentSurveyWeight;
+                let fullAccumulator = { risk: 0, creativity: 0, analytical: 0, social: 0, ambitious: 0 };
+                choiceHistory.forEach((c: any) => {
+                    fullAccumulator.risk += (c.impacts?.risk_taker || 0);
+                    fullAccumulator.creativity += (c.impacts?.creative || 0);
+                    fullAccumulator.analytical += (c.impacts?.analytical || 0);
+                    fullAccumulator.social += (c.impacts?.social || 0);
+                    fullAccumulator.ambitious += (c.impacts?.ambitious || 0);
+                });
 
-            // 4. Synthesis
-            const recalibratedTraits = {
-                risk: safeClamp((oScores.risk * currentSurveyWeight) + (newGameplayScores.risk * gameplayWeight)),
-                creativity: safeClamp((oScores.creativity * currentSurveyWeight) + (newGameplayScores.creativity * gameplayWeight)),
-                vision: safeClamp((oScores.vision * currentSurveyWeight) + (newGameplayScores.vision * gameplayWeight)),
-                empathy: safeClamp((oScores.empathy * currentSurveyWeight) + (newGameplayScores.empathy * gameplayWeight)),
-                leadership: safeClamp((oScores.leadership * currentSurveyWeight) + (newGameplayScores.leadership * gameplayWeight))
-            };
+                const totalChoices = choiceHistory.length;
+                const multiplier = totalChoices > 0 ? 3 / totalChoices : 0;
 
-            // Calculate Match Result against IDOL_PROFILES
-            const idolTraits = IDOL_PROFILES[idolName] || IDOL_PROFILES["Default"];
-            
-            const totalDiff = 
-                Math.abs(recalibratedTraits.risk - idolTraits.risk) +
-                Math.abs(recalibratedTraits.creativity - idolTraits.creativity) +
-                Math.abs(recalibratedTraits.vision - idolTraits.analytical) +
-                Math.abs(recalibratedTraits.empathy - idolTraits.social) +
-                Math.abs(recalibratedTraits.leadership - idolTraits.ambitious);
+                const latestScore = {
+                    risk: safeNum(50 + (fullAccumulator.risk * multiplier)),
+                    creativity: safeNum(50 + (fullAccumulator.creativity * multiplier)),
+                    vision: safeNum(50 + (fullAccumulator.analytical * multiplier)),
+                    empathy: safeNum(50 + (fullAccumulator.social * multiplier)),
+                    leadership: safeNum(50 + (fullAccumulator.ambitious * multiplier))
+                };
+
+                const newGameplayScores = { ...latestScore };
+                const sCount = userProfile?.story_count || 0;
+                const newStoryCount = sCount + 1;
+                const currentSurveyWeight = totalChoices >= 10 ? 0.20 : Math.max(0.20, Math.pow(0.85, newStoryCount));
+                const gameplayWeight = 1 - currentSurveyWeight;
+
+                const oScores = {
+                    risk: safeNum(userProfile?.onboarding_scores?.risk ?? quizTraits.risk),
+                    creativity: safeNum(userProfile?.onboarding_scores?.creativity ?? quizTraits.creativity),
+                    vision: safeNum(userProfile?.onboarding_scores?.vision ?? quizTraits.vision),
+                    empathy: safeNum(userProfile?.onboarding_scores?.empathy ?? quizTraits.empathy),
+                    leadership: safeNum(userProfile?.onboarding_scores?.leadership ?? quizTraits.leadership)
+                };
+
+                const recalibratedTraits = {
+                    risk: safeNum((oScores.risk * currentSurveyWeight) + (newGameplayScores.risk * gameplayWeight)),
+                    creativity: safeNum((oScores.creativity * currentSurveyWeight) + (newGameplayScores.creativity * gameplayWeight)),
+                    vision: safeNum((oScores.vision * currentSurveyWeight) + (newGameplayScores.vision * gameplayWeight)),
+                    empathy: safeNum((oScores.empathy * currentSurveyWeight) + (newGameplayScores.empathy * gameplayWeight)),
+                    leadership: safeNum((oScores.leadership * currentSurveyWeight) + (newGameplayScores.leadership * gameplayWeight))
+                };
+
+                const idolTraits = IDOL_PROFILES[idolName] || IDOL_PROFILES["Default"] || { analytical: 50, ambitious: 50, risk: 50, creativity: 50, social: 50 };
                 
-            const matchPercent = Math.max(0, Math.round(100 - (totalDiff / 5)));
+                const totalDiff = 
+                    Math.abs(recalibratedTraits.risk - (idolTraits.risk ?? 50)) +
+                    Math.abs(recalibratedTraits.creativity - (idolTraits.creativity ?? 50)) +
+                    Math.abs(recalibratedTraits.vision - (idolTraits.analytical ?? 50)) +
+                    Math.abs(recalibratedTraits.empathy - (idolTraits.social ?? 50)) +
+                    Math.abs(recalibratedTraits.leadership - (idolTraits.ambitious ?? 50));
+                    
+                const matchPercent = Math.max(0, Math.min(100, Math.round(100 - (totalDiff / 5))));
 
-            // Identify dominant gap
-            const userTraitMap: any = { risk: recalibratedTraits.risk, creative: recalibratedTraits.creativity, analytical: recalibratedTraits.vision, social: recalibratedTraits.empathy, ambitious: recalibratedTraits.leadership };
-            const gapTrait = Object.keys(idolTraits).reduce((a, b) => {
-                const gapA = idolTraits[a] - userTraitMap[a];
-                const gapB = idolTraits[b] - userTraitMap[b];
-                return gapA > gapB ? a : b;
-            });
-
-            const matchResult = {
-                matchPercentage: matchPercent,
-                gapAnalysis: `Growth Area: ${gapTrait}`,
-                idolName: idolName
-            };
-            
-            const starCount = score >= 20 ? 3 : score >= 10 ? 2 : 1;
-
-            // Collect Lesson
-            const lessonData: Lesson = {
-                id: level.scenarioId,
-                title: lessonKeyword,
-                description: (frame?.text || '').replace(/^LESSON:\s*[A-Z]+\.\s*/, ''), // Strip "LESSON: KEYWORD. " prefix
-                source: level.archetype, // e.g. "The Icon"
-                age: level.age,
-                date: new Date().toISOString(),
-                matchResult: matchResult
-            };
-            collectLesson(lessonData);
-
-            // Supabase Tracking
-            // DEBUG: This fires even if user has no ID — confirms COMPLETE branch was reached
-            console.log('[AYA DEBUG] COMPLETE branch reached. userProfile.id =', userProfile?.id);
-
-            // Calculate XP progression mathematically
-            const isFirstTime = !levelScores[level.id];
-            let sessionTotalXp = score; // Base accumulated from choices
-            
-            sessionTotalXp += 50; // Base node finish
-            if (matchPercent > 80) sessionTotalXp += 20; // High alignment bonus
-            if (isFirstTime) sessionTotalXp += 30; // First time run
-
-            sessionTotalXp = Math.max(20, sessionTotalXp); // Safety Floor
-
-            const currentTotalXp = userProfile?.total_xp || 0;
-            const currentStories = userProfile?.stories_completed || 0;
-            const newTotalXp = currentTotalXp + sessionTotalXp;
-            const newLevelInfo = calculateLevelInfo(newTotalXp);
-
-            // ── Future Self calculation ────────────────────────────────────
-            const currentStreak = userProfile?.current_streak || 0;
-            const futureLT = calculateLifeTraits(
-                {
+                const userTraitMap: Record<string, number> = {
                     risk: recalibratedTraits.risk,
                     creativity: recalibratedTraits.creativity,
+                    creative: recalibratedTraits.creativity,
                     vision: recalibratedTraits.vision,
+                    analytical: recalibratedTraits.vision,
                     empathy: recalibratedTraits.empathy,
+                    social: recalibratedTraits.empathy,
                     leadership: recalibratedTraits.leadership,
-                    discipline: recalibratedTraits.vision, // proxy
-                    resilience: recalibratedTraits.risk,   // proxy
-                },
-                currentStreak
-            );
-            const futureMatchResult = matchFutureArchetype(futureLT);
+                    ambitious: recalibratedTraits.leadership
+                };
+                
+                let gapTrait = 'balance';
+                try {
+                    gapTrait = Object.keys(idolTraits).reduce((a, b) => {
+                        const gapA = (idolTraits[a] ?? 50) - (userTraitMap[a] ?? 50);
+                        const gapB = (idolTraits[b] ?? 50) - (userTraitMap[b] ?? 50);
+                        return gapA > gapB ? a : b;
+                    });
+                } catch {}
 
-            // Patch local Zustand profile with future self data and new psychometric scores
-            const setProfile = useUserStore.getState().setProfile;
-            const latestProfile = useUserStore.getState().profile;
-            if (latestProfile) {
-                setProfile({
-                    futureArchetype: futureMatchResult.archetype.name,
-                    futureArchetypeScore: futureMatchResult.score,
-                    lifeTraits: futureLT,
-                    gameplay_scores: newGameplayScores,
-                    story_count: newStoryCount,
-                    traits: {
-                        ...latestProfile.traits,
+                const matchResult = {
+                    matchPercentage: matchPercent,
+                    gapAnalysis: `Growth Area: ${gapTrait}`,
+                    idolName: idolName
+                };
+
+                // Collect Lesson
+                try {
+                    const lessonData: Lesson = {
+                        id: level.scenarioId,
+                        title: lessonKeyword,
+                        description: (frame?.text || '').replace(/^LESSON:\s*[A-Z]+\.\s*/, ''),
+                        source: level.archetype,
+                        age: level.age,
+                        date: new Date().toISOString(),
+                        matchResult: matchResult
+                    };
+                    collectLesson(lessonData);
+                } catch {}
+
+                // XP calculations
+                const isFirstTime = !levelScores[level.id];
+                let sessionTotalXp = score + 50;
+                if (matchPercent > 80) sessionTotalXp += 20;
+                if (isFirstTime) sessionTotalXp += 30;
+                sessionTotalXp = Math.max(20, sessionTotalXp);
+
+                // Future self calculation
+                const currentStreak = userProfile?.current_streak || 0;
+                const futureLT = calculateLifeTraits(
+                    {
                         risk: recalibratedTraits.risk,
                         creativity: recalibratedTraits.creativity,
                         vision: recalibratedTraits.vision,
                         empathy: recalibratedTraits.empathy,
-                        leadership: recalibratedTraits.leadership
-                    }
-                } as any);
-            }
+                        leadership: recalibratedTraits.leadership,
+                        discipline: recalibratedTraits.vision,
+                        resilience: recalibratedTraits.risk,
+                    },
+                    currentStreak
+                );
+                const futureMatchResult = matchFutureArchetype(futureLT);
 
-            if (userProfile?.id && !hasInsertedSession.current) {
-                hasInsertedSession.current = true;
-
-                // ── PRIMARY: Atomic RPC via dnaService (handles DNA, XP, game_sessions, idempotency) ──
-                try {
-                    const dnaResult = await saveStoryCompletionDna({
-                        levelId: String(level.id),
-                        selectedPersonality: String(level.personality || level.archetype || ''),
-                        matchScore: matchPercent,
-                        stars: starCount,
-                        sessionXp: sessionTotalXp,
+                // Update local Zustand store immediately
+                const setProfile = useUserStore.getState().setProfile;
+                const latestProfile = useUserStore.getState().profile;
+                if (latestProfile) {
+                    setProfile({
+                        futureArchetype: futureMatchResult.archetype.name,
+                        futureArchetypeScore: futureMatchResult.score,
+                        lifeTraits: futureLT,
+                        gameplay_scores: newGameplayScores,
+                        story_count: newStoryCount,
                         traits: {
+                            ...latestProfile.traits,
                             risk: recalibratedTraits.risk,
                             creativity: recalibratedTraits.creativity,
                             vision: recalibratedTraits.vision,
                             empathy: recalibratedTraits.empathy,
-                            leadership: recalibratedTraits.leadership,
-                        },
-                        futureArchetype: futureMatchResult.archetype.name,
-                        futureArchetypeScore: futureMatchResult.score,
-                        lifeTraits: futureLT as unknown as Record<string, number>,
-                        gameplayScores: newGameplayScores,
-                        choicesLog: undefined,
-                    });
+                            leadership: recalibratedTraits.leadership
+                        }
+                    } as any);
+                }
 
-                    console.log('[AYA] ✓ DNA + story completion persisted via dnaService:', dnaResult);
+                useUserStore.getState().completeLevel(String(level.id), starCount);
+                addSessionProgression(sessionTotalXp);
 
-                    const latestProfileAfterSave = useUserStore.getState().profile;
-                    if (latestProfileAfterSave) {
-                        useUserStore.getState().setProfile({
-                            traits: {
-                                ...latestProfileAfterSave.traits,
-                                risk: dnaResult.traits.risk,
-                                creativity: dnaResult.traits.creativity,
-                                vision: dnaResult.traits.vision,
-                                empathy: dnaResult.traits.empathy,
-                                leadership: dnaResult.traits.leadership,
-                            },
-                            total_xp: Math.max(dnaResult.totalXp, latestProfileAfterSave.total_xp || 0),
-                            level: Math.max(dnaResult.level, latestProfileAfterSave.level || 1),
-                            stories_completed: Math.max(dnaResult.storiesCompleted, latestProfileAfterSave.stories_completed || 0),
-                        } as any);
-                    }
-                    setSaveStatus('saved');
-                } catch (e) {
-                    console.error('[AYA] dnaService saveStoryCompletionDna failed, using fallback:', e);
-                    setSaveStatus('error');
-
-                    // FALLBACK: direct users table update in case RPC is not deployed yet
+                // Background Supabase Sync (Non-blocking!)
+                (async () => {
                     try {
-                        const currentLevelScores = useUserStore.getState().levelScores || {};
-                        const updatedLevelScores = {
-                            ...currentLevelScores,
-                            [level.id]: Math.max(currentLevelScores[level.id] || 0, starCount)
-                        };
-                        await supabase.from('users').update({
-                            total_xp: newTotalXp,
-                            level: newLevelInfo.level,
-                            stories_completed: currentStories + 1,
-                            story_count: newStoryCount,
-                            gameplay_scores: newGameplayScores,
-                            level_scores: updatedLevelScores,
-                        }).eq('id', userProfile.id);
+                        if (userProfile?.id && !userProfile.id.startsWith('offline-')) {
+                            supabase.from('users').update({ choice_history: choiceHistory }).eq('id', userProfile.id).catch(() => {});
+                        }
 
-                        await supabase.from('personality_profiles').upsert({
-                            user_id: userProfile.id,
-                            trait_risk_taker: recalibratedTraits.risk,
-                            trait_creative: recalibratedTraits.creativity,
-                            trait_analytical: recalibratedTraits.vision,
-                            trait_social: recalibratedTraits.empathy,
-                            trait_ambitious: recalibratedTraits.leadership,
-                            total_xp: newTotalXp,
-                            level: newLevelInfo.level,
-                            stories_completed: currentStories + 1,
-                            last_updated: new Date().toISOString(),
-                            future_archetype: futureMatchResult.archetype.name,
-                            future_archetype_score: futureMatchResult.score,
-                            life_resilience: futureLT.resilience,
-                            life_discipline: futureLT.discipline,
-                            life_courage: futureLT.courage,
-                            life_creativity: futureLT.creativity,
-                            life_emotional_control: futureLT.emotional_control,
-                            life_leadership: futureLT.leadership,
-                            life_risk_intelligence: futureLT.risk_intelligence,
-                            life_consistency: futureLT.consistency,
-                        }, { onConflict: 'user_id' });
-                        console.log('[AYA] ✓ Fallback direct table writes completed');
+                        if (userProfile?.id && !hasInsertedSession.current) {
+                            hasInsertedSession.current = true;
+                            await saveStoryCompletionDna({
+                                levelId: String(level.id),
+                                selectedPersonality: String(level.personality || level.archetype || ''),
+                                matchScore: matchPercent,
+                                stars: starCount,
+                                sessionXp: sessionTotalXp,
+                                traits: {
+                                    risk: recalibratedTraits.risk,
+                                    creativity: recalibratedTraits.creativity,
+                                    vision: recalibratedTraits.vision,
+                                    empathy: recalibratedTraits.empathy,
+                                    leadership: recalibratedTraits.leadership,
+                                },
+                                futureArchetype: futureMatchResult.archetype.name,
+                                futureArchetypeScore: futureMatchResult.score,
+                                lifeTraits: futureLT as unknown as Record<string, number>,
+                                gameplayScores: newGameplayScores,
+                                choicesLog: undefined,
+                            });
+                        }
+
+                        // Daily Challenge & Streak update
+                        try {
+                            const streakResult = completeDailyChallenge();
+                            if (streakResult && streakResult.newStreak > streakResult.oldStreak) {
+                                if (onDailyChallengeComplete) onDailyChallengeComplete(streakResult);
+                                if (userProfile?.id) {
+                                    await supabase.from('users').update({
+                                        current_streak: streakResult.newStreak,
+                                        longest_streak: Math.max(userProfile.longest_streak || 0, streakResult.newStreak),
+                                        last_active_date: new Date().toISOString().split('T')[0],
+                                        daily_challenge_completed: true
+                                    }).eq('id', userProfile.id);
+                                }
+                            }
+                        } catch {}
                         setSaveStatus('saved');
-                    } catch (fallbackErr) {
-                        console.error('[AYA] Fallback writes also failed:', fallbackErr);
+                    } catch (bgErr) {
+                        console.warn('[AYA] Background DNA sync handled:', bgErr);
+                        setSaveStatus('error');
                     }
-                }
+                })();
 
-                // ── Streak & Daily Challenge (always runs regardless of DNA save status) ──
-                try {
-                    const streakResult = completeDailyChallenge();
-                    if (streakResult && streakResult.newStreak > streakResult.oldStreak) {
-                        await supabase.from('users').update({
-                            current_streak: streakResult.newStreak,
-                            longest_streak: Math.max(userProfile.longest_streak || 0, streakResult.newStreak),
-                            last_active_date: new Date().toISOString().split('T')[0],
-                            daily_challenge_completed: true
-                        }).eq('id', userProfile.id);
-                        if (onDailyChallengeComplete) onDailyChallengeComplete(streakResult);
+                // Generate AI analysis or fallback
+                const DUMMY_OPTIONS = new Set([
+                    'Collect Reward', 'Complete', 'Complete Level', 'Finish Chapter', 'Finish',
+                    'Continue', 'Try Again', 'Confirm', 'Next', 'Claim Reward', 'Proceed', 'Done',
+                    'Next Chapter', 'Start Journey', 'Begin', 'Mission Accomplished'
+                ]);
+
+                const realChoices = sessionChoicesRef.current.filter(c => 
+                    c.chosen_option && !DUMMY_OPTIONS.has(c.chosen_option.trim())
+                );
+                const lastChoiceObj = realChoices.length > 0 
+                    ? realChoices[realChoices.length - 1] 
+                    : (sessionChoicesRef.current[0] || choiceData);
+
+                const checkinData = useUserStore.getState().checkinData;
+                const tags = checkinData ? [...(checkinData.situation_tags || []), ...(checkinData.emotional_tags || [])] : [];
+                const tagText = tags.length > 0 ? tags.map(t => t.replace(/_/g, ' ')).join(' and ') : 'your current challenges';
+                const currentLessonFrame = safeScenario.frames.find((f: any) => f.id?.startsWith('LEARNING') || f.id === 'lesson' || f.id?.includes('outcome'));
+                const introFrame = safeScenario.frames.find((f: any) => f.id === 'intro');
+
+                const choiceStr = lastChoiceObj?.chosen_option ? `"${lastChoiceObj.chosen_option}"` : 'to take action';
+                const consequenceStr = lastChoiceObj?.consequence && lastChoiceObj.consequence !== 'Completed the phase.' ? ` ${lastChoiceObj.consequence}` : '';
+                
+                const p1Pool = [
+                    `When facing ${tagText}, ${cleanCharacter} proved that breakthrough moments come from decisive action. During ${safeScenario.title || 'this story'}, they leaned into discipline and took ownership of what they could control.`,
+                    `Navigating ${tagText} requires the exact courage ${cleanCharacter} demonstrated. When their back was against the wall in ${safeScenario.title || 'this journey'}, they chose long-term conviction over temporary comfort.`
+                ];
+                const p2Pool = [
+                    `When you chose ${choiceStr}, it revealed your instinct to step up rather than retreat.${consequenceStr} That aligns directly with the mindset ${cleanCharacter} used to push through obstacles.`,
+                    `Opting for ${choiceStr} reflects a proactive approach.${consequenceStr} Like ${cleanCharacter}, you chose to shape the outcome rather than passively watch it unfold.`
+                ];
+                const p3Pool = [
+                    `To handle ${tagText} right now, break your problem into the one decision you can make today. Focus purely on execution, block out the noise, and trust your momentum.`,
+                    `Apply ${cleanCharacter}'s principle to your life today: don't wait for ideal conditions. Make your move with conviction, learn from the feedback, and keep pushing forward.`
+                ];
+
+                const fallbackParts = [
+                    p1Pool[Math.floor(Math.random() * p1Pool.length)],
+                    p2Pool[Math.floor(Math.random() * p2Pool.length)],
+                    p3Pool[Math.floor(Math.random() * p3Pool.length)]
+                ];
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 1500);
+
+                fetch('/api/generate-analysis', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    signal: controller.signal,
+                    body: JSON.stringify({
+                        tags,
+                        storyTitle: safeScenario.title,
+                        storyChallenge: introFrame?.text || '',
+                        storyLesson: currentLessonFrame?.text || '',
+                        character: cleanCharacter,
+                        userChoice: lastChoiceObj?.chosen_option || '',
+                        userChoiceConsequence: lastChoiceObj?.consequence || 'Completed the phase.',
+                        userAge: userProfile?.age || 'unknown',
+                        userTraits: userProfile?.traits || {}
+                    })
+                }).then(res => {
+                    clearTimeout(timeoutId);
+                    if (!res.ok) throw new Error('API failed');
+                    return res.json();
+                }).then(data => {
+                    if (data && data.parts && Array.isArray(data.parts) && data.parts.length === 3) {
+                        setAnalysisParts(data.parts);
+                        setAnalysisState('done');
+                    } else {
+                        throw new Error('Invalid format');
                     }
-                } catch (e) { console.error('[AYA] streak update threw:', e); }
-
-            } else if (!userProfile?.id) {
-                console.warn('[AYA] No userProfile.id — cannot save to Supabase. Profile:', userProfile);
-            } else if (hasInsertedSession.current) {
-                console.log('[AYA] Skipping duplicate game_sessions insert — already saved this session');
-            }
-
-            // Call completeLevel locally immediately so it syncs to backend right away before timeout!
-            useUserStore.getState().completeLevel(String(level.id), starCount);
-
-            // Push final XP + stories_completed to local Zustand store (triggers syncStoreToBackend as backup)
-            addSessionProgression(sessionTotalXp);
-
-            // Float the XP events visually before demounting the view!
-            triggerFloatText(`+50 XP`, 'positive');
-            
-            if (matchPercent > 80) {
-                setTimeout(() => triggerFloatText(`+20 XP (Outstanding)`, 'positive'), 800);
-            }
-            if (isFirstTime) {
-                setTimeout(() => triggerFloatText(`+30 XP (First Run)`, 'positive'), 1600);
-            }
-
-            console.log('[AYA DEBUG] All done, calling handleLevelComplete with stars:', starCount, 'and session XP:', sessionTotalXp);
-            
-            setFinalStarCount(starCount);
-            setAnalysisState('generating');
-            const DUMMY_OPTIONS = new Set([
-                'Collect Reward', 'Complete', 'Complete Level', 'Finish Chapter', 'Finish',
-                'Continue', 'Try Again', 'Confirm', 'Next', 'Claim Reward', 'Proceed', 'Done',
-                'Next Chapter', 'Start Journey', 'Begin', 'Mission Accomplished'
-            ]);
-
-            const realChoices = sessionChoicesRef.current.filter(c => 
-                c.chosen_option && !DUMMY_OPTIONS.has(c.chosen_option.trim())
-            );
-            const lastChoiceObj = realChoices.length > 0 
-                ? realChoices[realChoices.length - 1] 
-                : (sessionChoicesRef.current[0] || choiceData);
-
-            const checkinData = useUserStore.getState().checkinData;
-            const tags = checkinData ? [...(checkinData.situation_tags || []), ...(checkinData.emotional_tags || [])] : [];
-            const tagText = tags.length > 0 ? tags.map(t => t.replace(/_/g, ' ')).join(' and ') : 'your current challenges';
-            const lessonFrame = safeScenario.frames.find((f: any) => f.id?.startsWith('LEARNING') || f.id === 'lesson' || f.id?.includes('outcome'));
-            const introFrame = safeScenario.frames.find((f: any) => f.id === 'intro');
-
-            const choiceStr = lastChoiceObj?.chosen_option ? `"${lastChoiceObj.chosen_option}"` : 'to take action';
-            const consequenceStr = lastChoiceObj?.consequence && lastChoiceObj.consequence !== 'Completed the phase.' ? ` ${lastChoiceObj.consequence}` : '';
-            
-            const p1Pool = [
-                `When facing ${tagText}, ${cleanCharacter} proved that breakthrough moments come from decisive action. During ${safeScenario.title || 'this story'}, they leaned into discipline and took ownership of what they could control.`,
-                `Navigating ${tagText} requires the exact courage ${cleanCharacter} demonstrated. When their back was against the wall in ${safeScenario.title || 'this journey'}, they chose long-term conviction over temporary comfort.`
-            ];
-            const p2Pool = [
-                `When you chose ${choiceStr}, it revealed your instinct to step up rather than retreat.${consequenceStr} That aligns directly with the mindset ${cleanCharacter} used to push through obstacles.`,
-                `Opting for ${choiceStr} reflects a proactive approach.${consequenceStr} Like ${cleanCharacter}, you chose to shape the outcome rather than passively watch it unfold.`
-            ];
-            const p3Pool = [
-                `To handle ${tagText} right now, break your problem into the one decision you can make today. Focus purely on execution, block out the noise, and trust your momentum.`,
-                `Apply ${cleanCharacter}'s principle to your life today: don't wait for ideal conditions. Make your move with conviction, learn from the feedback, and keep pushing forward.`
-            ];
-
-            const fallbackParts = [
-                p1Pool[Math.floor(Math.random() * p1Pool.length)],
-                p2Pool[Math.floor(Math.random() * p2Pool.length)],
-                p3Pool[Math.floor(Math.random() * p3Pool.length)]
-            ];
-
-            // Use AbortController so AI insight never blocks or hangs
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 1800);
-
-            fetch('/api/generate-analysis', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                signal: controller.signal,
-                body: JSON.stringify({
-                    tags,
-                    storyTitle: safeScenario.title,
-                    storyChallenge: introFrame?.text || '',
-                    storyLesson: lessonFrame?.text || '',
-                    character: cleanCharacter,
-                    userChoice: lastChoiceObj?.chosen_option || '',
-                    userChoiceConsequence: lastChoiceObj?.consequence || 'Completed the phase.',
-                    userAge: userProfile?.age || 'unknown',
-                    userTraits: userProfile?.traits || {}
-                })
-            }).then(res => {
-                clearTimeout(timeoutId);
-                if (!res.ok) throw new Error('API failed');
-                return res.json();
-            }).then(data => {
-                if (data && data.parts && Array.isArray(data.parts) && data.parts.length === 3) {
-                    setAnalysisParts(data.parts);
+                }).catch(() => {
+                    clearTimeout(timeoutId);
+                    setAnalysisParts(fallbackParts);
                     setAnalysisState('done');
-                } else {
-                    throw new Error('Invalid format');
-                }
-            }).catch(() => {
-                clearTimeout(timeoutId);
-                setAnalysisParts(fallbackParts);
-                setAnalysisState('done');
-            });
-            return;
-        }
-
-        // Check if there is feedback to show
-        if (choice.feedback) {
-            const addedScore = choice.score || 0;
-            setScore(prev => Math.max(0, prev + addedScore));
-            updateXpLocally(addedScore); // Sync with global header in real-time
-            setFeedbackChoice(choice);
-
-            // Trigger Floating Text
-            if (addedScore > 0) {
-                triggerFloatText(`+${addedScore} XP`, 'positive');
-            } else if (addedScore < 0) {
-                triggerFloatText(`${addedScore} XP`, 'negative');
+                });
+                return;
             }
-        } else {
-            const addedScore = choice.score || 0;
-            // No feedback (e.g. navigation only), just go
-            setScore(prev => Math.max(0, prev + addedScore));
-            updateXpLocally(addedScore); // Sync with global header in real-time
-            setCurrentFrameId(choice.next);
+
+            // Check if there is feedback to show
+            if (choice.feedback) {
+                const addedScore = choice.score || 0;
+                setScore(prev => Math.max(0, prev + addedScore));
+                updateXpLocally(addedScore);
+                setFeedbackChoice(choice);
+
+                if (addedScore > 0) {
+                    triggerFloatText(`+${addedScore} XP`, 'positive');
+                } else if (addedScore < 0) {
+                    triggerFloatText(`${addedScore} XP`, 'negative');
+                }
+            } else {
+                const addedScore = choice.score || 0;
+                setScore(prev => Math.max(0, prev + addedScore));
+                updateXpLocally(addedScore);
+                setCurrentFrameId(choice.next);
+            }
+        } catch (error) {
+            console.error('[AYA] Unexpected error in handleChoiceClick:', error);
+            if (choice.next === 'COMPLETE') {
+                const fallbackStarCount = score >= 20 ? 3 : score >= 10 ? 2 : 1;
+                setFinalStarCount(fallbackStarCount);
+                setAnalysisState('done');
+            }
         }
     };
 
     const handleFeedbackContinue = () => {
         if (feedbackChoice) {
-            // Stop narration before moving to next frame
             if (audioRef.current) {
                 audioRef.current.pause();
                 audioRef.current.currentTime = 0;
             }
-            setCurrentFrameId(feedbackChoice.next);
+            if (feedbackChoice.next === 'COMPLETE') {
+                handleChoiceClick({ text: 'Complete Level', next: 'COMPLETE', score: 0, feedback: '', feedbackTitle: '' });
+            } else {
+                setCurrentFrameId(feedbackChoice.next);
+            }
             setFeedbackChoice(null);
         }
     };
