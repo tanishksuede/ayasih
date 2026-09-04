@@ -103,6 +103,11 @@ export default defineConfig({
   server: {
     host: true, // Exposes the server to the network
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
   build: {
     chunkSizeWarningLimit: 1200,
   },
