@@ -188,15 +188,18 @@ export function ReportRouteHandler() {
     if (!level) {
         level = generateLevels(18).find((l) => String(l.id) === String(id));
     }
-    if (!level || !profile) return <Navigate to="/game" replace />;
+    if (!level) return <Navigate to="/game" replace />;
+
+    const defaultTraits = { risk: 50, creativity: 50, vision: 50, empathy: 50, leadership: 50, discipline: 50, resilience: 50 };
+    const userTraits = profile?.traits || defaultTraits;
 
     return (
         <MatchReport
             storyId={String(level.id)}
-            userTraits={profile.traits}
-            userProfile={profile.psychologicalProfile}
+            userTraits={userTraits}
+            userProfile={profile?.psychologicalProfile}
             idolTraits={level.idolTraits || { discipline: 50, resilience: 50, risk: 50, leadership: 50, creativity: 50, empathy: 50, vision: 50 }}
-            idolName={level.personality || level.archetype}
+            idolName={level.personality || level.archetype || "Mentor"}
             onClose={() => navigate('/game?dnaUpdated=true')}
         />
     );

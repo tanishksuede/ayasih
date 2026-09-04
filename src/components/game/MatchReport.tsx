@@ -48,18 +48,26 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
     const cleanIdolName = (idolName || "Default").trim();
     const mainAvatarUrl = resolvePersonalityAvatar(cleanIdolName);
 
+    const safeUserTraits = useMemo(() => ({
+        risk: userTraits?.risk ?? 50,
+        creativity: userTraits?.creativity ?? 50,
+        vision: userTraits?.vision ?? 50,
+        empathy: userTraits?.empathy ?? 50,
+        leadership: userTraits?.leadership ?? 50
+    }), [userTraits]);
+
     // Compute "You Surprised Yourself" & "Current Chapter"
     const surpriseInsight = useMemo(() => {
-        return generateSurprisedInsight(profile?.onboarding_scores, userTraits);
-    }, [profile?.onboarding_scores, userTraits]);
+        return generateSurprisedInsight(profile?.onboarding_scores, safeUserTraits);
+    }, [profile?.onboarding_scores, safeUserTraits]);
 
     // Dynamic Trait Calculation
     const TRAIT_MAP = [
-        { score: userTraits.risk || 50, strength: 'Bold Decision Maker', blindSpot: 'Plays It Too Safe', icon: Flame, color: 'from-[#FF9F1C] to-[#FFC928]', key: 'risk', label: 'Risk Taker', hex: '#FF9F1C' },
-        { score: userTraits.creativity || 50, strength: 'Creative Visionary', blindSpot: 'Stuck In Routine', icon: Sparkles, color: 'from-[#8B5CF6] to-[#EC3B9A]', key: 'creativity', label: 'Creative', hex: '#8B5CF6' },
-        { score: userTraits.vision || 50, strength: 'Strategic Thinker', blindSpot: 'Impulsive Tendencies', icon: Target, color: 'from-[#2677FF] to-[#00D9FF]', key: 'vision', label: 'Analytical', hex: '#00D9FF' },
-        { score: userTraits.empathy || 50, strength: 'Natural Connector', blindSpot: 'Lone Wolf Syndrome', icon: Heart, color: 'from-[#EC3B9A] to-[#FF9F1C]', key: 'empathy', label: 'Social', hex: '#EC3B9A' },
-        { score: userTraits.leadership || 50, strength: 'Relentless Achiever', blindSpot: 'Consistency Gap', icon: Zap, color: 'from-[#22E67A] to-[#00D9FF]', key: 'leadership', label: 'Ambitious', hex: '#22E67A' }
+        { score: safeUserTraits.risk, strength: 'Bold Decision Maker', blindSpot: 'Plays It Too Safe', icon: Flame, color: 'from-[#FF9F1C] to-[#FFC928]', key: 'risk', label: 'Risk Taker', hex: '#FF9F1C' },
+        { score: safeUserTraits.creativity, strength: 'Creative Visionary', blindSpot: 'Stuck In Routine', icon: Sparkles, color: 'from-[#8B5CF6] to-[#EC3B9A]', key: 'creativity', label: 'Creative', hex: '#8B5CF6' },
+        { score: safeUserTraits.vision, strength: 'Strategic Thinker', blindSpot: 'Impulsive Tendencies', icon: Target, color: 'from-[#2677FF] to-[#00D9FF]', key: 'vision', label: 'Analytical', hex: '#00D9FF' },
+        { score: safeUserTraits.empathy, strength: 'Natural Connector', blindSpot: 'Lone Wolf Syndrome', icon: Heart, color: 'from-[#EC3B9A] to-[#FF9F1C]', key: 'empathy', label: 'Social', hex: '#EC3B9A' },
+        { score: safeUserTraits.leadership, strength: 'Relentless Achiever', blindSpot: 'Consistency Gap', icon: Zap, color: 'from-[#22E67A] to-[#00D9FF]', key: 'leadership', label: 'Ambitious', hex: '#22E67A' }
     ];
     
     const sortedTraits = [...TRAIT_MAP].sort((a, b) => b.score - a.score);
@@ -71,16 +79,16 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
         const strictIdolTraits = IDOL_PROFILES[cleanIdolName] || IDOL_PROFILES["Default"];
         
         const totalDiff = 
-            Math.abs((userTraits.risk || 50) - strictIdolTraits.risk) +
-            Math.abs((userTraits.creativity || 50) - strictIdolTraits.creativity) +
-            Math.abs((userTraits.vision || 50) - strictIdolTraits.analytical) +
-            Math.abs((userTraits.empathy || 50) - strictIdolTraits.social) +
-            Math.abs((userTraits.leadership || 50) - strictIdolTraits.ambitious);
+            Math.abs(safeUserTraits.risk - strictIdolTraits.risk) +
+            Math.abs(safeUserTraits.creativity - strictIdolTraits.creativity) +
+            Math.abs(safeUserTraits.vision - strictIdolTraits.analytical) +
+            Math.abs(safeUserTraits.empathy - strictIdolTraits.social) +
+            Math.abs(safeUserTraits.leadership - strictIdolTraits.ambitious);
 
         const avgDiff = totalDiff / 5;
         let score = Math.round(100 - avgDiff);
         return Math.max(0, Math.min(100, score));
-    }, [userTraits, cleanIdolName]);
+    }, [safeUserTraits, cleanIdolName]);
 
     const personalityDNA = useMemo(() => {
         const diffs: { name: string; diff: number }[] = [];
@@ -88,11 +96,11 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
             if (name === cleanIdolName || name === "Default") continue;
             
             const totalDiff = 
-                Math.abs((userTraits.risk || 50) - p.risk) +
-                Math.abs((userTraits.creativity || 50) - p.creativity) +
-                Math.abs((userTraits.vision || 50) - p.analytical) +
-                Math.abs((userTraits.empathy || 50) - p.social) +
-                Math.abs((userTraits.leadership || 50) - p.ambitious);
+                Math.abs(safeUserTraits.risk - p.risk) +
+                Math.abs(safeUserTraits.creativity - p.creativity) +
+                Math.abs(safeUserTraits.vision - p.analytical) +
+                Math.abs(safeUserTraits.empathy - p.social) +
+                Math.abs(safeUserTraits.leadership - p.ambitious);
                 
             diffs.push({ name, diff: totalDiff });
         }
@@ -117,7 +125,7 @@ export function MatchReport({ storyId, userTraits, idolName, onClose }: MatchRep
             idol1: { name: top2[0], avatarUrl: resolvePersonalityAvatar(top2[0]), desc: getTraitDesc(top2[0]) },
             idol2: { name: top2[1], avatarUrl: resolvePersonalityAvatar(top2[1]), desc: getTraitDesc(top2[1]) }
         };
-    }, [userTraits, cleanIdolName]);
+    }, [safeUserTraits, cleanIdolName]);
 
     useEffect(() => {
         if ((audioSynth as any).playWin) (audioSynth as any).playWin();
