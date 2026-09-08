@@ -10,18 +10,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method === 'OPTIONS') return res.status(200).end();
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-    const supabase = createClient(
-        process.env.VITE_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY!
-    );
+    const sbUrl = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || 'https://boxuixgyxzbxdrvlevuu.supabase.co';
+    const sbKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJveHVpeGd5eHpieGRydmxldnV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMTI2NDIsImV4cCI6MjA5Nzg4ODY0Mn0.ZyAIsgCALqauv1qr4BWu-LeYk8M5yNASgnV0rfioEPY';
+
+    const supabase = createClient(sbUrl, sbKey);
 
     try {
         // Verify JWT — user can only check their own access
         const token = req.headers.authorization?.replace('Bearer ', '');
-        const supabaseForAuth = createClient(
-            process.env.VITE_SUPABASE_URL!,
-            process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY!
-        );
+        const supabaseForAuth = createClient(sbUrl, sbKey);
 
         let verifiedUserId: string | undefined;
         if (token) {

@@ -20,8 +20,8 @@
 
 ## 2. Active Supabase Backend Credentials
 
-- **Project URL**: `https://hstddacoqsmztmbvvhhr.supabase.co`
-- **Anon Public Key**: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhzdGRkYWNvcXNtenRtYnZ2aGhyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5MjgxODYsImV4cCI6MjEwMzUwNDE4Nn0.EXwnivlEoOkZViWS6UnaWTbSNPdjBB068AOsHU7SVpI`
+- **Project URL**: `https://boxuixgyxzbxdrvlevuu.supabase.co`
+- **Anon Public Key**: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJveHVpeGd5eHpieGRydmxldnV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMTI2NDIsImV4cCI6MjA5Nzg4ODY0Mn0.ZyAIsgCALqauv1qr4BWu-LeYk8M5yNASgnV0rfioEPY`
 - **Database Schema**: Full unified database schema is stored in [`full_schema.sql`](file:///c:/ayadevlink/full_schema.sql).
 - **Key Tables**:
   - `public.users`: User accounts, XP, streak, levels, `auth_user_id`, `is_admin`, `onboarding_complete`.
