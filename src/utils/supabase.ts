@@ -1,10 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 
-const DEFAULT_SUPABASE_URL = 'https://boxuixgyxzbxdrvlevuu.supabase.co';
-const DEFAULT_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJveHVpeGd5eHpieGRydmxldnV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMTI2NDIsImV4cCI6MjA5Nzg4ODY0Mn0.ZyAIsgCALqauv1qr4BWu-LeYk8M5yNASgnV0rfioEPY';
+export const SUPABASE_URL = 'https://boxuixgyxzbxdrvlevuu.supabase.co';
+export const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJveHVpeGd5eHpieGRydmxldnV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIzMTI2NDIsImV4cCI6MjA5Nzg4ODY0Mn0.ZyAIsgCALqauv1qr4BWu-LeYk8M5yNASgnV0rfioEPY';
 
-let supabaseUrl = (import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL).replace(/['"]/g, '').trim();
-const supabaseAnonKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY).replace(/['"]/g, '').trim();
+let rawUrl = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_URL) || SUPABASE_URL;
+if (typeof rawUrl !== 'string' || !rawUrl.trim()) rawUrl = SUPABASE_URL;
+let supabaseUrl = rawUrl.replace(/['"]/g, '').trim();
+
+let rawKey = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_ANON_KEY) || SUPABASE_ANON_KEY;
+if (typeof rawKey !== 'string' || !rawKey.trim()) rawKey = SUPABASE_ANON_KEY;
+const supabaseAnonKey = rawKey.replace(/['"]/g, '').trim();
 
 if (supabaseUrl && !supabaseUrl.startsWith('http')) {
     supabaseUrl = 'https://' + supabaseUrl;
