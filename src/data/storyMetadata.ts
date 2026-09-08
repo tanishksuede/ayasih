@@ -540,95 +540,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
-    "storyId": "lvl_age_20_billie_2",
-    "situationTags": [
-      "big_decision"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Billie Eilish at age 20 navigating the person who left you on seen: At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.",
-    "triggerPhrases": [
-      "billie eilish",
-      "the person who left you on seen",
-      "billie eilish age 20",
-      "big_decision"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Billie Eilish at age 20 faced a pivotal choice in The Person Who Left You On Seen — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_19_justin",
-    "situationTags": [
-      "starting_something",
-      "feeling_stuck"
-    ],
-    "problemTags": [
-      "isolation"
-    ],
-    "emotionalTags": [
-      "lonely"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Justin Bieber at age 19 navigating the hotel room at 2am: At 19, you sit alone in a hotel room deciding whether to text an ex or face the emptiness underneath.",
-    "triggerPhrases": [
-      "justin bieber",
-      "the hotel room at 2am",
-      "justin bieber age 19",
-      "starting_something"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Justin Bieber at age 19 faced a pivotal choice in The Hotel Room at 2AM — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
     "storyId": "lvl_age_17_srk",
     "situationTags": [
       "exam_pressure",
@@ -898,98 +809,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     ],
     "bestForMode": "challenge",
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Indra Nooyi at age 17 faced a pivotal choice in The Rulebreaker — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_18",
-    "situationTags": [
-      "big_decision"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "pivot",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Taylor Swift at age 18 navigating the beginning (country): At 18, Taylor faced a choice: Security or Authenticity.",
-    "triggerPhrases": [
-      "taylor swift",
-      "the beginning (country)",
-      "taylor swift age 18",
-      "big_decision"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Taylor Swift at age 18 faced a pivotal choice in The Beginning (Country) — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_18_zendaya",
-    "situationTags": [
-      "career_uncertainty",
-      "identity_question"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence",
-      "understand_myself"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Zendaya at age 18 navigating the identity strike: At 18, Zendaya risked her Disney career for creative control.",
-    "triggerPhrases": [
-      "zendaya",
-      "the identity strike",
-      "zendaya age 18",
-      "career_uncertainty"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Zendaya at age 18 faced a pivotal choice in The Identity Strike — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
   },
@@ -1537,97 +1356,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
-    "storyId": "lvl_age_20_prajakta",
-    "situationTags": [
-      "career_uncertainty"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "vision",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Prajakta Koli at age 20 navigating the 2 am panic: At 20, Prajakta quit her 10-year dream job for a risky YouTube career.",
-    "triggerPhrases": [
-      "prajakta koli",
-      "the 2 am panic",
-      "prajakta koli age 20",
-      "career_uncertainty"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Prajakta Koli at age 20 faced a pivotal choice in The 2 AM Panic — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_20_selena",
-    "situationTags": [
-      "career_uncertainty",
-      "identity_question"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Selena Gomez at age 20 navigating the invisible war: At 20, Selena battled Lupus behind the perfect pop-star facade.",
-    "triggerPhrases": [
-      "selena gomez",
-      "the invisible war",
-      "selena gomez age 20",
-      "career_uncertainty"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Selena Gomez at age 20 faced a pivotal choice in The Invisible War — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
     "storyId": "lvl_age_20_kobe",
     "situationTags": [
       "career_uncertainty"
@@ -1715,51 +1443,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     ],
     "bestForMode": "support",
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Nitin Vijay (NV Sir) at age 20 faced a pivotal choice in The Educator\\ — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_20_music",
-    "situationTags": [
-      "career_uncertainty"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Taylor Swift at age 20 navigating the soloist: At 20, Taylor faced critics who said she had ghostwriters.",
-    "triggerPhrases": [
-      "taylor swift",
-      "the soloist",
-      "taylor swift age 20",
-      "career_uncertainty"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Taylor Swift at age 20 faced a pivotal choice in The Soloist — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
   },
@@ -2032,279 +1715,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     ],
     "bestForMode": "support",
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Bill Gates at age 20 faced a pivotal choice in The Architect — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_21_sheeran_1",
-    "situationTags": [
-      "big_decision"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Ed Sheeran at age 21 navigating the photo she might see: At 21, you must choose how to handle the painful intersection of a recent breakup and sudden public attention.",
-    "triggerPhrases": [
-      "ed sheeran",
-      "the photo she might see",
-      "ed sheeran age 21",
-      "big_decision"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Ed Sheeran at age 21 faced a pivotal choice in The Photo She Might See — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_21_sheeran_2",
-    "situationTags": [
-      "identity_question"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence",
-      "understand_myself"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "pivot",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Ed Sheeran at age 21 navigating the people that still feel like home: At 21, you must decide what success is allowed to cost you in your personal life.",
-    "triggerPhrases": [
-      "ed sheeran",
-      "the people that still feel like home",
-      "ed sheeran age 21",
-      "identity_question"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Ed Sheeran at age 21 faced a pivotal choice in The People That Still Feel Like Home — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_21_selena_1",
-    "situationTags": [
-      "big_decision"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence",
-      "understand_myself"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Selena Gomez at age 21 navigating when everyone has an opinion: At 21, you must choose how to handle the painful intersection of a recent relationship and sudden public attention.",
-    "triggerPhrases": [
-      "selena gomez",
-      "when everyone has an opinion",
-      "selena gomez age 21",
-      "big_decision"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Selena Gomez at age 21 faced a pivotal choice in When Everyone Has an Opinion — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_21_selena_2",
-    "situationTags": [
-      "career_uncertainty",
-      "identity_question"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Selena Gomez at age 21 navigating your own name: At 21, you must decide how much of the person people know is actually the person you want to become.",
-    "triggerPhrases": [
-      "selena gomez",
-      "your own name",
-      "selena gomez age 21",
-      "career_uncertainty"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Selena Gomez at age 21 faced a pivotal choice in Your Own Name — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_21_tanmay_1",
-    "situationTags": [
-      "career_uncertainty"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "overcome",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Tanmay Bhat at age 21 navigating should i really do this?: At 21, Tanmay Bhat enters the Mumbai stand-up comedy circuit, deciding how seriously to take his talent before having proof it will work.",
-    "triggerPhrases": [
-      "tanmay bhat",
-      "should i really do this?",
-      "tanmay bhat age 21",
-      "career_uncertainty"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Tanmay Bhat at age 21 faced a pivotal choice in Should I Really Do This? — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_21_tanmay_2",
-    "situationTags": [
-      "starting_something"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Tanmay Bhat at age 21 navigating the five minutes: At 21, Tanmay Bhat gets his first major breakthrough opportunity at the Weirdass Ham-ateur Night competition in Mumbai.",
-    "triggerPhrases": [
-      "tanmay bhat",
-      "the five minutes",
-      "tanmay bhat age 21",
-      "starting_something"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Tanmay Bhat at age 21 faced a pivotal choice in The Five Minutes — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
   },
@@ -2584,98 +1994,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
-    "storyId": "lvl_age_22_ashneer",
-    "situationTags": [
-      "career_uncertainty"
-    ],
-    "problemTags": [
-      "lack_of_direction"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "leadership",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Ashneer Grover at age 22 navigating the next degree: At 22, Ashneer Grover stands between IIT Delhi and IIM Ahmedabad, deciding how to shape his career direction.",
-    "triggerPhrases": [
-      "ashneer grover",
-      "the next degree",
-      "ashneer grover age 22",
-      "career_uncertainty"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Ashneer Grover at age 22 faced a pivotal choice in The Next Degree — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_22_bhuvan",
-    "situationTags": [
-      "career_uncertainty",
-      "identity_question",
-      "starting_something",
-      "big_decision"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "leadership",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Bhuvan Bam at age 22 navigating when the phone started working: At 22, Bhuvan Bam must choose between his original craft of music and the sudden explosive growth of BB Ki Vines.",
-    "triggerPhrases": [
-      "bhuvan bam",
-      "when the phone started working",
-      "bhuvan bam age 22",
-      "career_uncertainty"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Bhuvan Bam at age 22 faced a pivotal choice in When the Phone Started Working — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
     "storyId": "lvl_age_22_ronaldo",
     "situationTags": [
       "career_uncertainty",
@@ -2721,97 +2039,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
-    "storyId": "lvl_age_22_ranveer",
-    "situationTags": [
-      "exam_pressure"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "leadership",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Ranveer Singh at age 22 navigating the role you can\\: At 22, Ranveer Singh returns to Mumbai after studying in the US, figuring out how to build a runway toward acting.",
-    "triggerPhrases": [
-      "ranveer singh",
-      "the role you can\\",
-      "ranveer singh age 22",
-      "exam_pressure"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Ranveer Singh at age 22 faced a pivotal choice in The Role You Can\\ — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_22_alia",
-    "situationTags": [
-      "career_uncertainty",
-      "identity_question"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Alia Bhatt at age 22 navigating more than a star: At 22, Alia Bhatt faces rising expectations after early success, deciding how to stretch her range beyond early acclaim.",
-    "triggerPhrases": [
-      "alia bhatt",
-      "more than a star",
-      "alia bhatt age 22",
-      "career_uncertainty"
-    ],
-    "bestForMode": "continue",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Alia Bhatt at age 22 faced a pivotal choice in More Than a Star — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
     "storyId": "lvl_age_22_bhagat",
     "situationTags": [
       "identity_question"
@@ -2853,98 +2080,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     ],
     "bestForMode": "continue",
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Bhagat Singh at age 22 faced a pivotal choice in The Price of a Voice — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_22_tanmay_1",
-    "situationTags": [
-      "starting_something",
-      "big_decision"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "overcome",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Tanmay Bhat at age 22 navigating just 200 people: At 22, Tanmay Bhat and Gursimran Khamba start the All India Bakchod podcast, aiming for 200 people in a room before knowing how big it would become.",
-    "triggerPhrases": [
-      "tanmay bhat",
-      "just 200 people",
-      "tanmay bhat age 22",
-      "starting_something"
-    ],
-    "bestForMode": "continue",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Tanmay Bhat at age 22 faced a pivotal choice in Just 200 People — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_22_tanmay_2",
-    "situationTags": [
-      "career_uncertainty",
-      "identity_question"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 4,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Tanmay Bhat at age 22 navigating what if we go bigger?: At 22, the small podcast experiment begins exceeding original expectations as audiences grow.",
-    "triggerPhrases": [
-      "tanmay bhat",
-      "what if we go bigger?",
-      "tanmay bhat age 22",
-      "career_uncertainty"
-    ],
-    "bestForMode": "continue",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Tanmay Bhat at age 22 faced a pivotal choice in What If We Go Bigger? — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
   },
@@ -3135,97 +2270,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": "aya_plus"
   },
   {
-    "storyId": "lvl_age_19_billie",
-    "situationTags": [
-      "feeling_stuck"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "creativity",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Billie Eilish at age 19 navigating fame is eating me alive: At 19, Billie won 5 Grammys and was falling apart inside.",
-    "triggerPhrases": [
-      "billie eilish",
-      "fame is eating me alive",
-      "billie eilish age 19",
-      "feeling_stuck"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Billie Eilish at age 19 faced a pivotal choice in Fame Is Eating Me Alive — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_19_mrbeast",
-    "situationTags": [
-      "exam_pressure",
-      "confidence_low"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "vision",
-    "resolutionArchetype": "pivot",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about MrBeast at age 19 navigating drop out or keep uploading: At 19, Jimmy had 30K subscribers and a ridiculous idea. College apps were due tomorrow.",
-    "triggerPhrases": [
-      "mrbeast",
-      "drop out or keep uploading",
-      "mrbeast age 19",
-      "exam_pressure"
-    ],
-    "bestForMode": "support",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. MrBeast at age 19 faced a pivotal choice in Drop Out or Keep Uploading — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
     "storyId": "lvl_age_19_ritesh",
     "situationTags": [
       "career_uncertainty"
@@ -3313,51 +2357,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     ],
     "bestForMode": "support",
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Muhammad Ali at age 19 faced a pivotal choice in Throw The Medal Away — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_20_dhruv",
-    "situationTags": [
-      "identity_question"
-    ],
-    "problemTags": [
-      "uncertainty",
-      "proving_oneself"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "build_confidence"
-    ],
-    "lifeStageTags": [
-      "early_20s"
-    ],
-    "ageMin": 16,
-    "ageMax": 25,
-    "dominantTrait": "leadership",
-    "resolutionArchetype": "persist",
-    "lessonTags": [
-      "courage",
-      "resilience",
-      "identity"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Dhruv Rathee at age 20 navigating germany or india: At 20, an engineering scholar in Germany felt India needed his voice more than his degree.",
-    "triggerPhrases": [
-      "dhruv rathee",
-      "germany or india",
-      "dhruv rathee age 20",
-      "identity_question"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Dhruv Rathee at age 20 faced a pivotal choice in Germany or India — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
   },
@@ -3750,116 +2749,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     "premiumTier": null
   },
   {
-    "storyId": "lvl_age_16_taylor",
-    "situationTags": [
-      "big_decision",
-      "career_uncertainty",
-      "starting_something_new",
-      "feeling_stuck",
-      "finding_purpose"
-    ],
-    "problemTags": [
-      "undervalued_by_institution",
-      "security_vs_creative_control",
-      "risking_family_investment"
-    ],
-    "emotionalTags": [
-      "frustrated",
-      "hopeful",
-      "determined",
-      "conflicted"
-    ],
-    "intentTags": [
-      "challenge_myself",
-      "courage_to_commit"
-    ],
-    "lifeStageTags": [
-      "late_teens"
-    ],
-    "ageMin": 15,
-    "ageMax": 18,
-    "dominantTrait": "risk",
-    "resolutionArchetype": "courage",
-    "lessonTags": [
-      "risk",
-      "courage",
-      "authenticity",
-      "vision"
-    ],
-    "difficulty": 3,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Taylor Swift at age 16 turning down a major label development deal that would keep her shelved until 18, choosing instead the immense risk of releasing authentic songs with an unproven indie startup.",
-    "triggerPhrases": [
-      "taylor swift",
-      "the development deal",
-      "big decision",
-      "record label",
-      "big machine records",
-      "nashville songwriting"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Taylor Swift at age 16 faced a pivotal choice in The Development Deal — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_16_billie",
-    "situationTags": [
-      "identity_question",
-      "career_uncertainty",
-      "starting_something",
-      "big_decision",
-      "creative_block"
-    ],
-    "problemTags": [
-      "industry_pressure_to_conform",
-      "protecting_creative_intimacy",
-      "balancing_hit_vs_authenticity"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "conflicted",
-      "restless",
-      "determined"
-    ],
-    "intentTags": [
-      "courage_to_commit",
-      "find_direction"
-    ],
-    "lifeStageTags": [
-      "late_teens"
-    ],
-    "ageMin": 15,
-    "ageMax": 18,
-    "dominantTrait": "risk",
-    "resolutionArchetype": "courage",
-    "lessonTags": [
-      "risk",
-      "courage",
-      "authenticity",
-      "creativity"
-    ],
-    "difficulty": 3,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "global",
-    "semanticDescription": "A story about Billie Eilish at age 16 rejecting massive LA recording studios and hit-making producers, choosing the risk of recording in her brother's tiny childhood bedroom to protect her authentic sound.",
-    "triggerPhrases": [
-      "billie eilish",
-      "the bedroom studio",
-      "figuring out who i am",
-      "bedroom recording",
-      "finneas",
-      "debut album"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Billie Eilish at age 16 faced a pivotal choice in The Bedroom Studio — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
     "storyId": "lvl_age_16_bhagat",
     "situationTags": [
       "family_pressure",
@@ -3910,571 +2799,6 @@ export const STORY_METADATA: StoryMetadata[] = [
     ],
     "bestForMode": "challenge",
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Bhagat Singh at age 16 faced a pivotal choice in The Letter on the Desk — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_16_aujla",
-    "situationTags": [
-      "starting_with_little",
-      "financial_stress",
-      "loneliness",
-      "big_decision",
-      "starting_something"
-    ],
-    "problemTags": [
-      "orphan_no_safety_net",
-      "family_support_vs_immigrant_risk",
-      "funding_music_with_manual_labor"
-    ],
-    "emotionalTags": [
-      "lonely",
-      "determined",
-      "hopeful"
-    ],
-    "intentTags": [
-      "courage_to_commit",
-      "find_direction"
-    ],
-    "lifeStageTags": [
-      "late_teens"
-    ],
-    "ageMin": 15,
-    "ageMax": 18,
-    "dominantTrait": "resilience",
-    "resolutionArchetype": "persistence",
-    "lessonTags": [
-      "resilience",
-      "persistence",
-      "discipline",
-      "creativity"
-    ],
-    "difficulty": 4,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Karan Aujla at age 16 surviving as an orphan and choosing the brutal immigrant longshoreman grind in Canada to independently fund his breakthrough music career.",
-    "triggerPhrases": [
-      "karan aujla",
-      "the cargo grind",
-      "starting from the bottom",
-      "surrey canada",
-      "punjabi music",
-      "dock worker"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 16 faced a pivotal choice in The Cargo Grind — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_17_aujla",
-    "situationTags": [
-      "failure_setback",
-      "career_uncertainty",
-      "starting_something",
-      "feeling_stuck",
-      "identity_question",
-      "starting_with_little"
-    ],
-    "problemTags": [
-      "debut_project_flops",
-      "facing_public_indifference",
-      "ghostwriting_vs_lead_singing"
-    ],
-    "emotionalTags": [
-      "frustrated",
-      "confused",
-      "determined",
-      "motivated"
-    ],
-    "intentTags": [
-      "challenge_myself",
-      "courage_to_commit",
-      "find_direction"
-    ],
-    "lifeStageTags": [
-      "late_teens"
-    ],
-    "ageMin": 16,
-    "ageMax": 19,
-    "dominantTrait": "resilience",
-    "resolutionArchetype": "persistence",
-    "lessonTags": [
-      "resilience",
-      "persistence",
-      "humility",
-      "discipline"
-    ],
-    "difficulty": 3,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Karan Aujla at age 17 experiencing the humiliating flop of his debut single 'Cell Phone' and choosing to aggressively improve his vocals instead of retreating to safe ghostwriting.",
-    "triggerPhrases": [
-      "karan aujla",
-      "the failed debut",
-      "cell phone song",
-      "recent failure",
-      "flop project",
-      "ghostwriting"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 17 faced a pivotal choice in The Failed Debut — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_18_aujla",
-    "situationTags": [
-      "career_uncertainty",
-      "financial_stress",
-      "discipline",
-      "loneliness",
-      "failure_setback",
-      "feeling_stuck"
-    ],
-    "problemTags": [
-      "labor_vs_creative_schedule",
-      "recovering_from_flop",
-      "extreme_burnout_physical_exhaustion"
-    ],
-    "emotionalTags": [
-      "burnout",
-      "conflicted",
-      "determined",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "courage_to_commit"
-    ],
-    "lifeStageTags": [
-      "late_teens"
-    ],
-    "ageMin": 17,
-    "ageMax": 20,
-    "dominantTrait": "discipline",
-    "resolutionArchetype": "persistence",
-    "lessonTags": [
-      "discipline",
-      "persistence",
-      "resilience",
-      "creativity"
-    ],
-    "difficulty": 4,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Karan Aujla at age 18 enduring extreme burnout and physical exhaustion, working dock shifts by day and recording in the basement studio with Deep Jandu by night to make his breakthrough comeback.",
-    "triggerPhrases": [
-      "karan aujla",
-      "the double shift",
-      "deep jandu",
-      "career uncertainty",
-      "dock worker burnout",
-      "basement studio grind"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 18 faced a pivotal choice in The Double Shift — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_19_aujla",
-    "situationTags": [
-      "career_transition",
-      "career_uncertainty",
-      "feeling_stuck",
-      "starting_something",
-      "financial_stress",
-      "big_decision"
-    ],
-    "problemTags": [
-      "boxed_into_support_role",
-      "immediate_cash_vs_artistic_branding",
-      "writer_to_performer_transition"
-    ],
-    "emotionalTags": [
-      "conflicted",
-      "frustrated",
-      "determined",
-      "motivated"
-    ],
-    "intentTags": [
-      "find_direction",
-      "challenge_myself"
-    ],
-    "lifeStageTags": [
-      "late_teens"
-    ],
-    "ageMin": 17,
-    "ageMax": 21,
-    "dominantTrait": "vision",
-    "resolutionArchetype": "action_step",
-    "lessonTags": [
-      "vision",
-      "patience",
-      "strategy",
-      "compromise",
-      "creativity"
-    ],
-    "difficulty": 3,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Karan Aujla at age 19 choosing between selling a guaranteed hit song for quick cash or strategically negotiating a featured vocal verse to launch his solo singing career.",
-    "triggerPhrases": [
-      "karan aujla",
-      "the ghostwriter's dilemma",
-      "career transition",
-      "ghostwriting",
-      "featured verse",
-      "punjabi music lyricist"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 19 faced a pivotal choice in The Ghostwriter's Dilemma — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_21_aujla",
-    "situationTags": [
-      "big_decision",
-      "career_transition",
-      "starting_something",
-      "identity_question",
-      "career_uncertainty"
-    ],
-    "problemTags": [
-      "risking_underground_credibility",
-      "niche_vs_mainstream_appeal",
-      "blending_clashing_genres"
-    ],
-    "emotionalTags": [
-      "conflicted",
-      "motivated",
-      "hopeful"
-    ],
-    "intentTags": [
-      "challenge_myself",
-      "courage_to_commit"
-    ],
-    "lifeStageTags": [
-      "early_twenties"
-    ],
-    "ageMin": 19,
-    "ageMax": 23,
-    "dominantTrait": "risk",
-    "resolutionArchetype": "courage",
-    "lessonTags": [
-      "risk",
-      "courage",
-      "vision",
-      "creativity",
-      "authenticity"
-    ],
-    "difficulty": 2,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Karan Aujla at age 21 risking his underground street credibility to blend gritty hip-hop with traditional Punjabi folk vocals on 'Don't Worry', achieving a massive global breakthrough.",
-    "triggerPhrases": [
-      "karan aujla",
-      "the crossover gamble",
-      "dont worry song",
-      "gurlez akhtar",
-      "genre fusion",
-      "mainstream breakthrough"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 21 faced a pivotal choice in The Crossover Gamble — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_22_aujla",
-    "situationTags": [
-      "career_transition",
-      "financial_stress",
-      "big_decision",
-      "career_uncertainty",
-      "comparing_myself",
-      "discipline"
-    ],
-    "problemTags": [
-      "proving_first_hit_not_fluke",
-      "staying_afloat_without_label",
-      "boxed_as_songwriter_only"
-    ],
-    "emotionalTags": [
-      "determined",
-      "restless",
-      "hopeful",
-      "anxious"
-    ],
-    "intentTags": [
-      "courage_to_commit",
-      "find_direction"
-    ],
-    "lifeStageTags": [
-      "early_twenties"
-    ],
-    "ageMin": 20,
-    "ageMax": 24,
-    "dominantTrait": "risk",
-    "resolutionArchetype": "persistence",
-    "lessonTags": [
-      "risk",
-      "persistence",
-      "discipline",
-      "authenticity",
-      "courage"
-    ],
-    "difficulty": 3,
-    "relatability": 4,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Karan Aujla at age 22 navigating the post-breakout quiet stretch in Surrey, BC, declining safe ghostwriting deals to stake his own name on 'Chitta Kurta'.",
-    "triggerPhrases": [
-      "karan aujla",
-      "the name nobody knew yet",
-      "chitta kurta",
-      "post-breakout grind",
-      "one-hit wonder",
-      "surrey bc studio"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Karan Aujla at age 22 faced a pivotal choice in The Name Nobody Knew Yet — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_18_moosewala",
-    "situationTags": [
-      "family_pressure",
-      "career_uncertainty",
-      "academic_pressure",
-      "identity_question",
-      "starting_something",
-      "purpose",
-      "discipline"
-    ],
-    "problemTags": [
-      "family_expectations_safe_career",
-      "engineering_workload_vs_secret_music",
-      "village_to_city_culture_shock"
-    ],
-    "emotionalTags": [
-      "conflicted",
-      "restless",
-      "determined"
-    ],
-    "intentTags": [
-      "find_direction",
-      "courage_to_commit"
-    ],
-    "lifeStageTags": [
-      "late_teens"
-    ],
-    "ageMin": 17,
-    "ageMax": 20,
-    "dominantTrait": "discipline",
-    "resolutionArchetype": "persistence",
-    "lessonTags": [
-      "discipline",
-      "persistence",
-      "duty",
-      "authenticity",
-      "creativity"
-    ],
-    "difficulty": 3,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Siddhu Moosewala at age 18 moving from Moosa village to study Electrical Engineering in Ludhiana, balancing his parents' degree expectations while secretly writing a legendary vault of lyrics.",
-    "triggerPhrases": [
-      "siddhu moosewala",
-      "sidhu moose wala",
-      "the engineering vault",
-      "electrical engineering",
-      "moosa village",
-      "ludhiana college"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Siddhu Moosewala at age 18 faced a pivotal choice in The Engineering Vault — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_23_moosewala",
-    "situationTags": [
-      "starting_with_little",
-      "career_uncertainty",
-      "financial_stress",
-      "loneliness",
-      "starting_something",
-      "big_decision",
-      "identity_question"
-    ],
-    "problemTags": [
-      "immigrant_student_survival",
-      "manual_labor_to_pay_bills",
-      "tuition_vs_music_gamble"
-    ],
-    "emotionalTags": [
-      "lonely",
-      "burnout",
-      "determined",
-      "hopeful"
-    ],
-    "intentTags": [
-      "courage_to_commit",
-      "find_direction"
-    ],
-    "lifeStageTags": [
-      "early_twenties"
-    ],
-    "ageMin": 21,
-    "ageMax": 25,
-    "dominantTrait": "risk",
-    "resolutionArchetype": "action_step",
-    "lessonTags": [
-      "risk",
-      "courage",
-      "persistence",
-      "independence",
-      "creativity"
-    ],
-    "difficulty": 4,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Siddhu Moosewala at age 23 in Brampton, Canada working grueling manual labor and gambling his tuition savings to fund his solo debut track 'G-Wagon'.",
-    "triggerPhrases": [
-      "siddhu moosewala",
-      "sidhu moose wala",
-      "the brampton hustle",
-      "g wagon",
-      "brampton canada",
-      "international student"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Siddhu Moosewala at age 23 faced a pivotal choice in The Brampton Hustle — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_22_moosewala",
-    "situationTags": [
-      "career_transition",
-      "career_uncertainty",
-      "starting_something",
-      "family_pressure",
-      "big_decision",
-      "identity_question"
-    ],
-    "problemTags": [
-      "abandoning_engineering_degree",
-      "local_comfort_vs_international_struggle",
-      "taking_massive_student_debt"
-    ],
-    "emotionalTags": [
-      "conflicted",
-      "determined",
-      "anxious",
-      "hopeful"
-    ],
-    "intentTags": [
-      "find_direction",
-      "courage_to_commit"
-    ],
-    "lifeStageTags": [
-      "early_twenties"
-    ],
-    "ageMin": 20,
-    "ageMax": 24,
-    "dominantTrait": "risk",
-    "resolutionArchetype": "action_step",
-    "lessonTags": [
-      "risk",
-      "courage",
-      "independence",
-      "vision",
-      "authenticity"
-    ],
-    "difficulty": 3,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Siddhu Moosewala at age 22 graduating with an Electrical Engineering degree and choosing to take on heavy student loans to move to Canada on a one-way ticket to chase music.",
-    "triggerPhrases": [
-      "siddhu moosewala",
-      "sidhu moose wala",
-      "the one-way ticket",
-      "engineering graduate",
-      "move to canada",
-      "humber college"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Siddhu Moosewala at age 22 faced a pivotal choice in The One-Way Ticket — where {trait} guided their path.",
-    "isPremium": false,
-    "premiumTier": null
-  },
-  {
-    "storyId": "lvl_age_16_bhuvan",
-    "situationTags": [
-      "parents_vs_own_path",
-      "career_uncertainty",
-      "starting_with_little",
-      "discipline"
-    ],
-    "problemTags": [
-      "average_academic_scores",
-      "parental_pressure_education",
-      "financial_insecurity_arts"
-    ],
-    "emotionalTags": [
-      "anxious",
-      "frustrated",
-      "determined"
-    ],
-    "intentTags": [
-      "find_courage_non_traditional_path",
-      "find_direction",
-      "courage_to_commit"
-    ],
-    "lifeStageTags": [
-      "late_teens"
-    ],
-    "ageMin": 15,
-    "ageMax": 20,
-    "dominantTrait": "discipline",
-    "resolutionArchetype": "action_step",
-    "lessonTags": [
-      "discipline",
-      "courage",
-      "persistence",
-      "compromise",
-      "passion"
-    ],
-    "difficulty": 3,
-    "relatability": 5,
-    "era": "modern",
-    "culturalContext": "indian",
-    "semanticDescription": "A story about Bhuvan Bam at age 16 navigating the night shift stage: At 16, scoring 74% in Class 12, balancing parental pressure for commerce with late-night restaurant music gigs.",
-    "triggerPhrases": [
-      "bhuvan bam",
-      "the night shift stage",
-      "bhuvan bam age 16",
-      "parents_vs_own_path",
-      "class 12",
-      "board exams",
-      "guitar",
-      "delhi restaurant"
-    ],
-    "bestForMode": "challenge",
-    "whyThisStoryTemplate": "You are dealing with {user_problem}. Bhuvan Bam at age 16 faced a pivotal choice in The Night Shift Stage — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
   },
@@ -4592,6 +2916,114 @@ export const STORY_METADATA: StoryMetadata[] = [
     ],
     "bestForMode": "challenge",
     "whyThisStoryTemplate": "You are dealing with {user_problem}. Virat Kohli at age 21 faced a pivotal choice in The Ego Check — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
+    "storyId": "lvl_age_17_tagore",
+    "situationTags": [
+      "academic_pressure",
+      "family_pressure",
+      "career_uncertainty",
+      "identity_question"
+    ],
+    "problemTags": [
+      "fear_of_failure",
+      "imposter_syndrome",
+      "feeling_lost"
+    ],
+    "emotionalTags": [
+      "doubtful",
+      "conflicted",
+      "reflective"
+    ],
+    "intentTags": [
+      "explore",
+      "validate",
+      "reflect"
+    ],
+    "lifeStageTags": [
+      "teenager",
+      "student"
+    ],
+    "ageMin": 16,
+    "ageMax": 20,
+    "dominantTrait": "creativity",
+    "resolutionArchetype": "transformation",
+    "lessonTags": [
+      "authenticity",
+      "creativity",
+      "courage",
+      "purpose"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "historical",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about 17-year-old Rabindranath Tagore choosing between British legal studies in London and returning to Bengal without a degree to pioneer literature and music.",
+    "triggerPhrases": [
+      "rabindranath tagore",
+      "poet",
+      "family pressure",
+      "leaving college",
+      "true calling",
+      "gitanjali"
+    ],
+    "bestForMode": "challenge",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Rabindranath Tagore at age 17 faced a pivotal choice in The Poet's Dilemma — where {trait} guided their path.",
+    "isPremium": false,
+    "premiumTier": null
+  },
+  {
+    "storyId": "lvl_age_22_tagore",
+    "situationTags": [
+      "feeling_stuck",
+      "identity_question",
+      "purpose",
+      "creativity"
+    ],
+    "problemTags": [
+      "procrastination",
+      "overthinking",
+      "loneliness"
+    ],
+    "emotionalTags": [
+      "melancholic",
+      "hopeful",
+      "inspired"
+    ],
+    "intentTags": [
+      "breakthrough",
+      "reflect",
+      "find_purpose"
+    ],
+    "lifeStageTags": [
+      "early_20s"
+    ],
+    "ageMin": 20,
+    "ageMax": 25,
+    "dominantTrait": "vision",
+    "resolutionArchetype": "breakthrough",
+    "lessonTags": [
+      "empathy",
+      "universal_brotherhood",
+      "transcendence",
+      "expression"
+    ],
+    "difficulty": 3,
+    "relatability": 5,
+    "era": "historical",
+    "culturalContext": "indian",
+    "semanticDescription": "A story about 22-year-old Rabindranath Tagore experiencing a spiritual sunrise epiphany in Kolkata that broke his melancholy and unlocked his immortal voice.",
+    "triggerPhrases": [
+      "rabindranath tagore",
+      "the awakening of the waterfall",
+      "nirjharer swapnabhanga",
+      "breaking through sorrow",
+      "universal empathy"
+    ],
+    "bestForMode": "support",
+    "whyThisStoryTemplate": "You are dealing with {user_problem}. Rabindranath Tagore at age 22 faced a pivotal choice in Awakening of the Waterfall — where {trait} guided their path.",
     "isPremium": false,
     "premiumTier": null
   }

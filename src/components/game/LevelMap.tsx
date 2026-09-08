@@ -65,7 +65,7 @@ export function LevelMap({ onPlayLevel, onOpenDnaProfile }: LevelMapProps) {
     let ageLevels: any[] = [];
     
     // Merge master code definitions from generateLevels with store levels and levelScores.
-    // This guarantees that all stories (including newly added ones like Age 16 Bhuvan Bam)
+    // This guarantees that all stories (including newly added ones like Age 17 Rabindranath Tagore)
     // are ALWAYS available immediately, even if the store has not synced or has a stale cached list.
     const masterLevels = generateLevels(activeAge);
     const storeLevelsMap = new Map((levels || []).map(l => [l.id, l]));

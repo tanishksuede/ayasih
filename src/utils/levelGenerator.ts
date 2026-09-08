@@ -9,7 +9,7 @@ export function generateLevels(_age: number): Level[] {
     // Master List of ALL Levels
     const levels: Omit<Level, 'status' | 'isLocked' | 'stars'>[] = [
         // Age 13: Anne Frank (Part 1)
-        {
+{
             id: 'lvl_13_anne_1', title: 'The Notebook', description: 'At 13, Anne receives a diary for her birthday. What will she use it for?',
             requiredStars: 0, year: 1942, age: 13, theme: 'History', archetype: 'The Writer', personality: 'Anne Frank', age_mirror_text: 'celebrating your 13th birthday with family and friends',
             bio: 'A 13-year-old girl in Amsterdam experiencing the ordinary joys of a birthday amidst growing restrictions.',
@@ -20,7 +20,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 80, resilience: 90, risk: 70, leadership: 60, creativity: 100, empathy: 95, vision: 85 }
         },
         // Age 13: Anne Frank (Part 2)
-        {
+{
             id: 'lvl_13_anne_2', title: 'When Ordinary Life Disappears', description: 'Weeks later, Anne\'s family must go into hiding. How will she cope?',
             requiredStars: 0, year: 1942, age: 13, theme: 'History', archetype: 'The Writer', personality: 'Anne Frank', age_mirror_text: 'packing your belongings to walk to a secret hiding place',
             bio: 'A 13-year-old girl forced into hiding in the Secret Annex, taking her diary with her.',
@@ -31,7 +31,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 80, resilience: 100, risk: 70, leadership: 60, creativity: 100, empathy: 95, vision: 85 }
         },
         // Age 15: Elon Musk (One Continuous Story: The Thing You Love)
-        {
+{
             id: 'lvl_15_elon_musk', title: 'The Thing You Love', description: 'At 15, Elon Musk navigates being a bookish, introverted teenager with a passion for computers and coding, deciding how to protect his interests.',
             requiredStars: 0, year: 1986, age: 15, theme: 'Technology', age_mirror_text: 'feeling different from others while spending hours reading, coding, and building', archetype: 'The Visionary', personality: 'Elon Musk',
             bio: 'A 15-year-old in South Africa spending his time with books, computers, and self-taught programming.',
@@ -42,7 +42,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 90, risk: 95, leadership: 90, creativity: 100, empathy: 70, vision: 100 }
         },
         // Age 15: Ratan Tata (One Continuous Story: The Quiet Voice)
-        {
+{
             id: 'lvl_15_ratan_tata', title: 'The Quiet Voice', description: 'At 15, Ratan Tata experiences shyness and fear of public speaking while attending school in Bombay, discovering how quiet self-expression can build confidence.',
             requiredStars: 0, year: 1953, age: 15, theme: 'Business', age_mirror_text: 'sitting quietly in a Bombay classroom deciding how to make your voice heard', archetype: 'The Visionary', personality: 'Ratan Tata',
             bio: 'A 15-year-old student in Bombay learning to trust his quiet voice despite shyness and public speaking anxiety.',
@@ -53,7 +53,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 95, risk: 85, leadership: 95, creativity: 85, empathy: 95, vision: 100 }
         },
         // Age 15: Virat Kohli (One Continuous Story: More Than Your Own Score)
-        {
+{
             id: 'lvl_15_virat_kohli', title: 'More Than Your Own Score', description: 'At 15, Virat Kohli is appointed captain of Delhi Under-15, learning the balance between individual performance and team leadership.',
             requiredStars: 0, year: 2003, age: 15, theme: 'Sports', age_mirror_text: 'captaining Delhi U-15 while deciding how to balance scoring runs and leading teammates', archetype: 'The Competitive Prodigy', personality: 'Virat Kohli',
             bio: 'A 15-year-old batsman appointed captain of the Delhi Under-15 team, learning how to carry team responsibility.',
@@ -64,7 +64,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 95, risk: 90, leadership: 95, creativity: 80, empathy: 75, vision: 95 }
         },
         // Age 15: Michael Jackson (Part 1)
-        {
+{
             id: 'lvl_15_michael_1', title: 'When Your Voice Changes', description: 'At 15, Michael Jackson experiences physical and vocal changes during adolescence while continuing his music career.',
             requiredStars: 0, year: 1973, age: 15, theme: 'Music', age_mirror_text: 'noticing your voice and abilities changing as you grow up', archetype: 'The Perfectionist', personality: 'Michael Jackson',
             bio: 'A 15-year-old artist going through adolescence as his singing voice changes and matures.',
@@ -75,7 +75,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 90, risk: 85, leadership: 85, creativity: 100, empathy: 80, vision: 100 }
         },
         // Age 15: Michael Jackson (Part 2)
-        {
+{
             id: 'lvl_15_michael_2', title: 'When People Expect the Old You', description: 'At 15, Michael Jackson decides how to navigate audience expectations as he grows out of his childhood identity.',
             requiredStars: 0, year: 1973, age: 15, theme: 'Music', age_mirror_text: 'deciding how to grow up when people remember an older version of you', archetype: 'The Perfectionist', personality: 'Michael Jackson',
             bio: 'A 15-year-old performer growing into a new stage of life while audience expectations remain tied to the past.',
@@ -86,7 +86,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 90, risk: 85, leadership: 85, creativity: 100, empathy: 80, vision: 100 }
         },
         // Age 15: Rani Lakshmibai (One Continuous Story: The Girl and the Crown)
-        {
+{
             id: 'lvl_15_rani_lakshmibai', title: 'The Girl and the Crown', description: 'At 15, Manikarnika becomes Lakshmibai, Rani of Jhansi, navigating the identity transition between her past and her new royal responsibilities.',
             requiredStars: 0, year: 1843, age: 15, theme: 'History', age_mirror_text: 'entering a new life in Jhansi as Lakshmibai while holding on to Manu', archetype: 'The Sovereign', personality: 'Rani Lakshmibai',
             bio: 'A 15-year-old in Jhansi transitioning from her independent childhood as Manu into her new royal role as Lakshmibai.',
@@ -97,7 +97,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 100, risk: 95, leadership: 100, creativity: 85, empathy: 90, vision: 100 }
         },
         // Age 15: Bhagat Singh (Part 1)
-        {
+{
             id: 'lvl_15_bhagat_1', title: 'Don\'t Just Be Angry', description: 'At 15, Bhagat Singh witnesses political tension in Lahore and learns how to channel anger into constructive learning and action.',
             requiredStars: 0, year: 1922, age: 15, theme: 'History', age_mirror_text: 'feeling angry about unfairness in Lahore and deciding how to respond', archetype: 'The Revolutionary', personality: 'Bhagat Singh',
             bio: 'A 15-year-old in Lahore developing political awareness and intellectual curiosity during a time of national tension.',
@@ -108,7 +108,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 100, risk: 100, leadership: 95, creativity: 85, empathy: 90, vision: 100 }
         },
         // Age 15: Bhagat Singh (Part 2)
-        {
+{
             id: 'lvl_15_bhagat_2', title: 'What If I\'m Wrong?', description: 'At 15, Bhagat Singh learns intellectual humility and the importance of independent thinking when hearing opposing views.',
             requiredStars: 0, year: 1922, age: 15, theme: 'History', age_mirror_text: 'comparing different opinions and reading to form independent beliefs', archetype: 'The Revolutionary', personality: 'Bhagat Singh',
             bio: 'A 15-year-old student exploring history and literature to build a reasoned perspective.',
@@ -119,7 +119,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 100, risk: 100, leadership: 95, creativity: 85, empathy: 90, vision: 100 }
         },
         // Age 15: Cristiano Ronaldo (One Continuous Story: Far From Home)
-        {
+{
             id: 'lvl_15_ronaldo', title: 'Far From Home', description: 'At 15, Cristiano Ronaldo experiences loneliness and homesickness in Lisbon after moving from Madeira, deciding whether to stay and persevere or return home.',
             requiredStars: 0, year: 2000, age: 15, theme: 'Sports', age_mirror_text: 'feeling far from home in Lisbon while deciding whether to stay and pursue your dream', archetype: 'The Competitor', personality: 'Cristiano Ronaldo',
             bio: 'A 15-year-old youth player in Lisbon dealing with homesickness and adjusting to a new environment.',
@@ -130,7 +130,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 100, risk: 95, leadership: 95, creativity: 90, empathy: 75, vision: 100 }
         },
         // Age 16: Shahrukh Khan
-        {
+{
             id: 'lvl_16_srk_1',
             title: 'The Sword of Honour',
             description: 'At 15, your father suddenly passes away. With your family in emotional and financial turmoil, you must choose how to channel your profound grief.',
@@ -149,28 +149,8 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_16_srk',
             idolTraits: { discipline: 95, resilience: 98, risk: 90, leadership: 90, creativity: 95, empathy: 85, vision: 95 }
         },
-        // Age 16: Bhuvan Bam
-        {
-            id: 'lvl_16_bhuvan',
-            title: 'The Night Shift Stage',
-            description: 'At 16, balancing parental pressure for a corporate degree with exhausting late-night guitar gigs at a Delhi restaurant.',
-            requiredStars: 0,
-            year: 2010,
-            age: 16,
-            theme: 'Arts',
-            age_mirror_text: 'playing guitar at a Delhi restaurant from 8 PM to midnight after scoring 74% in Class 12, balancing family expectations with passion',
-            archetype: 'The Creator',
-            personality: 'Bhuvan Bam',
-            bio: 'A 16-year-old high school graduate choosing between a conventional commerce degree and grueling late-night restaurant gigs to fund his musical craft.',
-            fame: 'Creator of BB Ki Vines, Actor, Musician & Producer.',
-            achievements: ['Creator of BB Ki Vines (26M+ subscribers)', 'Filmfare Award Winner for Plus Minus', 'Star & Producer of Taaza Khabar'],
-            lesson: 'Your board exam marks don\'t dictate your future. Pursuing a passion often requires unglamorous, exhausting work first.',
-            avatarUrl: '/assets/avatar_bhuvan bam.jpg',
-            scenarioId: 'lvl_age_16_bhuvan',
-            idolTraits: { discipline: 95, resilience: 92, risk: 88, leadership: 85, creativity: 98, empathy: 90, vision: 92 }
-        },
         // Age 16: Virat Kohli
-        {
+{
             id: 'lvl_16_virat_kohli',
             title: 'The Morning at Kotla',
             description: 'At 16, hours after your father suddenly passes away at 2:30 AM, your state team is staring at a collapse. You face an agonizing choice between grief and duty.',
@@ -190,7 +170,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 98, resilience: 100, risk: 85, leadership: 95, creativity: 80, empathy: 75, vision: 90 }
         },
         // Age 16: Michael Jordan
-        {
+{
             id: 'lvl_16_jordan_1',
             title: 'The Roster',
             description: 'At 16, after being cut from the varsity basketball team and assigned to junior varsity, you must decide how to handle the public rejection.',
@@ -209,48 +189,8 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_16_jordan',
             idolTraits: { discipline: 100, resilience: 98, risk: 90, leadership: 95, creativity: 90, empathy: 70, vision: 95 }
         },
-        // Age 16: Taylor Swift
-        {
-            id: 'lvl_16_taylor_1',
-            title: 'The Development Deal',
-            description: 'At 16, facing a major record deal that shelves your songs until age 18, you must choose between corporate security and a brand-new, unproven indie startup.',
-            requiredStars: 0,
-            year: 2005,
-            age: 16,
-            theme: 'Music',
-            age_mirror_text: 'weighing a safe corporate contract that shelves your original songs against the terrifying risk of launching with an unproven startup',
-            archetype: 'The Artist',
-            personality: 'Taylor Swift',
-            bio: 'A 16-year-old songwriter choosing between corporate label security and the risky freedom of releasing her own authentic music.',
-            fame: '14-time Grammy Award winner and global music icon.',
-            achievements: ['14 Grammy Awards including 4 Album of the Year wins', 'Built Big Machine Records from zero into a music powerhouse', 'First billionaire artist driven primarily by songwriting and touring'],
-            lesson: 'Institutional validation isn\'t worth sacrificing your authentic voice; the biggest risk is waiting for someone else\'s permission.',
-            avatarUrl: '/assets/avatar_taylor_swift.png',
-            scenarioId: 'lvl_age_16_taylor',
-            idolTraits: { discipline: 95, resilience: 95, risk: 100, leadership: 90, creativity: 100, empathy: 90, vision: 100 }
-        },
-        // Age 16: Billie Eilish
-        {
-            id: 'lvl_16_billie_1',
-            title: 'The Bedroom Studio',
-            description: 'At 16, under massive pressure to work with famous producers in big LA studios, you must choose between pop conformity and recording in a tiny childhood bedroom.',
-            requiredStars: 0,
-            year: 2018,
-            age: 16,
-            theme: 'Music',
-            age_mirror_text: 'facing industry pressure to make polished radio pop in expensive studios instead of staying in your brother\'s intimate bedroom studio',
-            archetype: 'The Authentic',
-            personality: 'Billie Eilish',
-            bio: 'A 16-year-old artist choosing between the sterile polish of major LA recording studios and the raw, intimate sound of her brother\'s bedroom.',
-            fame: '9-time Grammy Award winner, 2-time Oscar winner, and voice of a generation.',
-            achievements: ['Debut album made in a bedroom swept major Grammy categories', 'Youngest artist to write and record an official James Bond theme', '2-time Academy Award winner for Best Original Song'],
-            lesson: 'Authentic weirdness will always connect deeper than sterile perfection; you don\'t need experts to validate your vision.',
-            avatarUrl: '/assets/portrait-billie-20.png',
-            scenarioId: 'lvl_age_16_billie',
-            idolTraits: { discipline: 90, resilience: 95, risk: 100, leadership: 85, creativity: 100, empathy: 95, vision: 100 }
-        },
         // Age 16: Bhagat Singh
-        {
+{
             id: 'lvl_16_bhagat_1',
             title: 'The Letter on the Desk',
             description: 'At 16, under immense family pressure to marry and settle down, you must decide whether to accept domestic safety or leave a letter on the desk and flee to Kanpur for the freedom movement.',
@@ -269,90 +209,8 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_16_bhagat',
             idolTraits: { discipline: 98, resilience: 100, risk: 100, leadership: 95, creativity: 85, empathy: 90, vision: 100 }
         },
-        // Age 16: Karan Aujla
-        {
-            id: 'lvl_16_aujla_1',
-            title: 'The Cargo Grind',
-            description: 'At 16, orphaned and broke despite writing a hit song, you must choose between staying with relatives in Punjab or taking massive loans to work grueling dock jobs in Canada to fund your music.',
-            requiredStars: 0,
-            year: 2014,
-            age: 16,
-            theme: 'Music',
-            age_mirror_text: 'working freezing morning shifts unloading cargo containers as an immigrant student while writing lyrics in your head to fund studio time',
-            archetype: 'The Resilient',
-            personality: 'Karan Aujla',
-            bio: 'A 16-year-old orphan choosing between the relative comfort of relatives in Punjab and grueling immigrant manual labor in Canada to fund his music independence.',
-            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
-            achievements: ['Wrote hit songs in high school before emigrating', 'Funded breakthrough albums through longshoreman manual labor', 'Global chart-topping Punjabi artist and Juno Award winner'],
-            lesson: 'Having talent isn\'t enough; you must be willing to fund your own dream through unglamorous work.',
-            avatarUrl: '/assets/avatar_KaranAujla.jpg',
-            scenarioId: 'lvl_age_16_aujla',
-            idolTraits: { discipline: 95, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
-        // Age 20: Billie Eilish (Story 2)
-        {
-            id: 'lvl_20_billie_2', title: 'The Person Who Left You On Seen', description: 'At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.',
-            requiredStars: 0, year: 2022, age: 20, theme: 'Music', age_mirror_text: 'waiting for a text back while your songs play everywhere', archetype: 'The Vulnerable', personality: 'Billie Eilish',
-            bio: 'A 20-year-old global superstar learning the painful difference between emotional dependence and actual love.',
-            fame: 'Grammy record-holder. Gen Z\'s most honest voice.',
-            achievements: ['5 Grammys at age 18', 'Youngest artist to record a Bond theme', 'TIME100 Most Influential'],
-            lesson: 'THE COST OF ATTACHMENT — sometimes the most loving thing you can do for yourself is remove access.',
-            avatarUrl: '/assets/portrait-billie-20.png', scenarioId: 'lvl_age_20_billie_2',
-            idolTraits: { discipline: 80, resilience: 90, risk: 85, leadership: 70, creativity: 100, empathy: 95, vision: 85 }
-        },
-        // Age 19: Justin Bieber
-        {
-            id: 'lvl_19_justin', title: 'The Hotel Room at 2AM', description: 'At 19, you sit alone in a hotel room deciding whether to text an ex or face the emptiness underneath.',
-            requiredStars: 0, year: 2013, age: 19, theme: 'Music', age_mirror_text: 'sitting in a silent hotel room after playing for a screaming arena', archetype: 'The Resilient', personality: 'Justin Bieber',
-            bio: 'A 19-year-old pop phenomenon struggling to find his identity outside of fame and a highly publicized relationship.',
-            fame: 'Global pop sensation.',
-            achievements: ['Multiple Grammy Awards', 'One of the best-selling music artists', 'Record-breaking stadium tours'],
-            lesson: 'THE EMPTINESS UNDERNEATH — finding yourself starts when the noise stops.',
-            avatarUrl: '/assets/portrait-justin-19.png', scenarioId: 'lvl_age_19_justin',
-            idolTraits: { discipline: 70, resilience: 90, risk: 85, leadership: 85, creativity: 95, empathy: 90, vision: 70 }
-        },
-        // Age 19: Karan Aujla
-        {
-            id: 'lvl_19_aujla_1',
-            title: 'The Ghostwriter\'s Dilemma',
-            description: 'At 19, established stars offer big cash for your best lyrics. You must choose between selling out for safe money, risking an unfunded solo release, or leveraging a featured vocal verse.',
-            requiredStars: 0,
-            year: 2016,
-            age: 19,
-            theme: 'Music',
-            age_mirror_text: 'holding your best written song while an established star offers immediate cash, deciding whether to remain a ghostwriter or negotiate your vocal debut',
-            archetype: 'The Strategist',
-            personality: 'Karan Aujla',
-            bio: 'A 19-year-old sought-after ghostwriter in Canada choosing how to strategically transition from behind-the-scenes lyricist to front-facing superstar.',
-            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
-            achievements: ['Pioneered the strategic collaboration model to launch solo career', 'Turned ghostwriting leverage into global vocal stardom', 'Billions of streams and sold-out worldwide arena tours'],
-            lesson: 'Sometimes you have to leverage what you are known for to get what you actually want; strategic compromise builds lasting foundations.',
-            avatarUrl: '/assets/avatar_KaranAujla.jpg',
-            scenarioId: 'lvl_age_19_aujla',
-            idolTraits: { discipline: 95, resilience: 95, risk: 90, leadership: 90, creativity: 100, empathy: 85, vision: 100 }
-        },
-        // Age 17: Karan Aujla
-        {
-            id: 'lvl_17_aujla_1',
-            title: 'The Failed Debut',
-            description: 'At 17, after your self-funded debut single flops and gets completely ignored, you must choose between retreating to the safe profit of ghostwriting or absorbing the embarrassment to improve your vocals.',
-            requiredStars: 0,
-            year: 2014,
-            age: 17,
-            theme: 'Music',
-            age_mirror_text: 'staring at the disappointing streaming numbers of your first self-funded project and deciding whether to quit performing or double down on vocal practice',
-            archetype: 'The Resilient',
-            personality: 'Karan Aujla',
-            bio: 'A 17-year-old immigrant lyricist in Canada facing public indifference after his debut track as a lead singer flops.',
-            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
-            achievements: ['Turned early flop into relentless motivation', 'Won Juno Award for Fan Choice (2024)', 'Billions of global streams across iconic chart-topping albums'],
-            lesson: 'Your first attempt at your true dream will likely fail; that failure is a filter, not a final verdict.',
-            avatarUrl: '/assets/avatar_KaranAujla.jpg',
-            scenarioId: 'lvl_age_17_aujla',
-            idolTraits: { discipline: 95, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
         // Age 17: Shah Rukh Khan
-        {
+{
             id: 'lvl_17_srk', title: 'The Stage or The Books', description: 'At 17, SRK faces an impossible choice — grieve, study, or chase the stage.',
             requiredStars: 0, year: 1982, age: 17, theme: 'Arts', age_mirror_text: 'performing in school plays in Delhi, dreaming of being seen', archetype: 'The Entertainer', personality: 'Shah Rukh Khan',
             bio: 'A grieving 17-year-old with a rare theatrical gift, torn between financial duty and a burning passion for the stage.',
@@ -363,7 +221,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 85, resilience: 100, risk: 90, leadership: 90, creativity: 98, empathy: 95, vision: 85 }
         },
         // Age 17: P.V. Sindhu
-        {
+{
             id: 'lvl_17_sindhu', title: 'The Olympic Prelude', description: 'At 17, Sindhu faced the seemingly invincible Olympic gold medalist.',
             requiredStars: 0, year: 2012, age: 17, theme: 'Sports', archetype: 'The Challenger', personality: 'P.V. Sindhu',
             bio: 'A 17-year-old badminton prodigy facing a brutal match against the reigning Olympic champion, Li Xuerui.',
@@ -374,7 +232,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 95, risk: 75, leadership: 70, creativity: 80, empathy: 85, vision: 90 }
         },
         // Age 17: A.R. Rahman
-        {
+{
             id: 'lvl_17_rahman', title: 'The Silent Melody', description: 'At 17, a grieving son drops out of school to support his family through music.',
             requiredStars: 0, year: 1984, age: 17, theme: 'Arts', archetype: 'The Maestro', personality: 'A.R. Rahman',
             bio: 'Forced to become the breadwinner after his father\'s death, playing keyboards endlessly in studios.',
@@ -385,7 +243,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 90, risk: 85, leadership: 80, creativity: 100, empathy: 95, vision: 98 }
         },
         // Age 17: Malala Yousafzai
-        {
+{
             id: 'lvl_17_malala', title: 'The Price of Peace', description: 'At 17, Malala won the Nobel Prize. But was the global spotlight worth the trauma?',
             requiredStars: 0, year: 2014, age: 17, theme: 'Activism', archetype: 'The Peacemaker', personality: 'Malala Yousafzai',
             bio: 'Surviving an assassination attempt to become the global face of girls\' education while trying to finish high school.',
@@ -396,7 +254,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 90, resilience: 100, risk: 95, leadership: 95, creativity: 80, empathy: 100, vision: 95 }
         },
         // Age 17: Steve Jobs
-        {
+{
             id: 'lvl_17_jobs', title: 'The Dropout\'s Intuition', description: 'At 17, Jobs dropped out of Harvard to audit calligraphy classes.',
             requiredStars: 0, year: 1972, age: 17, theme: 'Tech', archetype: 'The Visionary', personality: 'Steve Jobs',
             bio: 'A college freshman wasting his working-class parents\' savings on an education that feels meaningless.',
@@ -407,7 +265,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 75, resilience: 90, risk: 100, leadership: 90, creativity: 100, empathy: 60, vision: 100 }
         },
         // Age 17: Indra Nooyi
-        {
+{
             id: 'lvl_17_nooyi', title: 'The Rulebreaker', description: 'At 17, a young Indian woman played in an all-girls rock band and broke every conventional rule.',
             requiredStars: 0, year: 1972, age: 17, theme: 'Business', archetype: 'The Executive', personality: 'Indra Nooyi',
             bio: 'A college student in conservative Madras joining a rock band and playing cricket against societal norms.',
@@ -417,69 +275,28 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_nooyi.jpg', scenarioId: 'lvl_age_17_nooyi',
             idolTraits: { discipline: 95, resilience: 90, risk: 90, leadership: 100, creativity: 85, empathy: 85, vision: 95 }
         },
-        // Age 18: Karan Aujla
-        {
-            id: 'lvl_18_aujla_1',
-            title: 'The Double Shift',
-            description: 'At 18, living alone in Canada after a flopped debut, you must choose between safe ghostwriting, quitting music for dock jobs, or enduring brutal all-night studio sessions with producer Deep Jandu.',
+        // Age 17: Rabindranath Tagore
+{
+            id: 'lvl_17_tagore',
+            title: "The Poet's Dilemma",
+            description: "At 17, sent to England to study law for social status, you must choose whether to endure British legal treatises or follow your authentic voice into Bengali poetry and music.",
             requiredStars: 0,
-            year: 2015,
-            age: 18,
-            theme: 'Music',
-            age_mirror_text: 'stumbling into a basement studio exhausted after an 8-hour dock shift, deciding whether to sleep or push through another all-night recording session',
-            archetype: 'The Resilient',
-            personality: 'Karan Aujla',
-            bio: 'An 18-year-old immigrant laborer in Canada balancing the physical exhaustion of cargo dock shifts with late-night recording studio sessions.',
-            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
-            achievements: ['Pushed through extreme physical exhaustion to record breakout tracks', 'Formed powerhouse Canadian collaborative team', 'Multi-platinum recording artist and global headliner'],
-            lesson: 'Building a dream from the bottom often requires enduring extreme, unglamorous physical and mental exhaustion.',
-            avatarUrl: '/assets/avatar_KaranAujla.jpg',
-            scenarioId: 'lvl_age_18_aujla',
-            idolTraits: { discipline: 100, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
-        // Age 18: Siddhu Moosewala
-        {
-            id: 'lvl_18_moosewala_1',
-            title: 'The Engineering Vault',
-            description: 'At 18, leaving Moosa village for GNDEC Ludhiana to study electrical engineering, you must choose between abandoning music for a safe corporate job, dropping out recklessly, or finishing your degree while secretly building a lyrical vault.',
-            requiredStars: 0,
-            year: 2011,
-            age: 18,
-            theme: 'Music',
-            age_mirror_text: 'sitting in a Ludhiana engineering dorm room late at night, balancing electrical circuit diagrams with handwritten Punjabi lyrics inspired by Tupac',
-            archetype: 'The Resilient',
-            personality: 'Siddhu Moosewala',
-            bio: 'An 18-year-old engineering student from Moosa village carrying his family\'s dreams of a safe degree while secretly building a vast lyrical vault inspired by Tupac Shakur.',
-            fame: 'Iconic Punjabi singer, lyricist, and global cultural legend.',
-            achievements: ['Completed Electrical Engineering degree while mastering lyricism', 'Built a vault of hundreds of iconic original songs in college', 'Global Billboard chart-topper and voice of Punjabi youth'],
-            lesson: 'Fulfilling a practical responsibility does not mean you have to surrender your true passion; the discipline of a tough degree forges the work ethic to dominate your craft.',
-            avatarUrl: '/assets/avatar_SiddhuMoosewala.jpg',
-            scenarioId: 'lvl_age_18_moosewala',
-            idolTraits: { discipline: 100, resilience: 100, risk: 90, leadership: 95, creativity: 100, empathy: 85, vision: 95 }
-        },
-        {
-            id: 'lvl_18', title: 'The Beginning (Country)', description: 'At 18, Taylor faced a choice: Security or Authenticity.',
-            requiredStars: 0, year: 2008, age: 18, theme: 'Music', archetype: 'The Artist', personality: 'Taylor Swift',
-            bio: 'A country singer on the verge of crossover fame. She faces pressure to stay in her lane.',
-            fame: 'The biggest pop star in the world.',
-            achievements: ['14 Grammy Awards', 'Only artist to win Album of the Year 4 times', 'Billionaire from music alone'],
-            lesson: 'COURAGE to pivot when everyone tells you to stay safe.',
-            avatarUrl: '/assets/avatar_taylor_swift.png', scenarioId: 'lvl_age_18',
-            idolTraits: { discipline: 80, resilience: 85, risk: 70, leadership: 60, creativity: 90, empathy: 95, vision: 80 }
-        },
-        // Age 18: Zendaya
-        {
-            id: 'lvl_18_zendaya', title: 'The Identity Strike', description: 'At 18, Zendaya risked her Disney career for creative control.',
-            requiredStars: 0, year: 2014, age: 18, theme: 'Arts', archetype: 'The Producer', personality: 'Zendaya',
-            bio: 'A Disney star who refused to be just another hollow stereotype.',
-            fame: 'Emmy-winning actress and global fashion icon.',
-            achievements: ['Youngest two-time Emmy winner', 'Time 100 Most Influential', 'Producer at 18'],
-            lesson: 'POWER ISN\'T GIVEN, IT\'S TAKEN.',
-            avatarUrl: '/assets/avatar_zendaya.jpg?v=2', scenarioId: 'lvl_age_18_zendaya',
-            idolTraits: { discipline: 90, resilience: 95, risk: 100, leadership: 90, creativity: 95, empathy: 85, vision: 95 }
+            year: 1878,
+            age: 17,
+            theme: 'Literature',
+            age_mirror_text: "standing in Victorian London wondering whether to chase conventional prestige or return home to forge an immortal cultural voice",
+            archetype: 'The Polymath',
+            personality: 'Rabindranath Tagore',
+            bio: "A 17-year-old visionary in London realizing that conventional qualifications cannot fulfill a soul destined to awaken a nation's literature.",
+            fame: "First non-European Nobel Laureate in Literature (1913), composer of national anthems, founder of Santiniketan.",
+            achievements: ["Nobel Prize in Literature for Gitanjali", "Composed national anthems for India and Bangladesh", "Founded Visva-Bharati University in harmony with nature"],
+            lesson: "CONVENTIONAL PRESTIGE VS CALLING — The highest education is that which makes our life in harmony with all existence, not mere accumulation of degrees.",
+            avatarUrl: '/assets/portrait-rabindranath-tagore.png',
+            scenarioId: 'lvl_age_17_tagore',
+            idolTraits: { discipline: 92, resilience: 95, risk: 90, leadership: 92, creativity: 100, empathy: 100, vision: 100 }
         },
         // Age 18: Viswanathan Anand
-        {
+{
             id: 'lvl_18_anand', title: 'The Lightning Kid', description: 'At 18, Anand became India\'s first Grandmaster.',
             requiredStars: 0, year: 1988, age: 18, theme: 'Sports', archetype: 'The Grandmaster', personality: 'Viswanathan Anand',
             bio: 'A chess prodigy who played with such speed and intuition that opponents were left bewildered.',
@@ -490,7 +307,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 90, risk: 75, leadership: 70, creativity: 95, empathy: 60, vision: 100 }
         },
         // Age 18: Virat Kohli
-        {
+{
             id: 'lvl_18_kohli', title: 'The Hardest Day', description: 'At 18, Virat faced the ultimate test of duty and grief.',
             requiredStars: 0, year: 2006, age: 18, theme: 'Sports', archetype: 'The King', personality: 'Virat Kohli',
             bio: 'A rising cricketing star who loses his father in the middle of a crucial match.',
@@ -501,7 +318,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 100, risk: 85, leadership: 90, creativity: 75, empathy: 70, vision: 85 }
         },
         // Age 18: Virat Kohli (Conversational)
-        {
+{
             id: 'lvl_18_kohli_conv', title: 'Virat Conversational', description: 'Experience Virat\'s journey at 18 through conversational choice slides.',
             requiredStars: 0, year: 2006, age: 18, theme: 'Sports', archetype: 'The King', personality: 'Virat Kohli',
             bio: 'A rising cricketing star who loses his father in the middle of a crucial match.',
@@ -512,7 +329,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 100, risk: 85, leadership: 90, creativity: 75, empathy: 70, vision: 85 }
         },
         // Age 18: Dr. A.P.J. Abdul Kalam
-        {
+{
             id: 'lvl_18_kalam', title: 'The Big Leap', description: 'At 18, Kalam left his humble town for a prestigious college.',
             requiredStars: 0, year: 1949, age: 18, theme: 'Education', archetype: 'The Visionary', personality: 'Dr. A.P.J. Abdul Kalam',
             bio: 'A brilliant student from a modest background facing the intimidating world of city-bred prodigies.',
@@ -523,7 +340,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 98, resilience: 95, risk: 70, leadership: 90, creativity: 95, empathy: 100, vision: 100 }
         },
         // Age 18: Ratan Tata
-        {
+{
             id: 'lvl_18_tata', title: 'The Defiant Blueprint', description: 'At 18, Ratan chose architecture over his father\'s engineering dreams.',
             requiredStars: 0, year: 1955, age: 18, theme: 'Business', archetype: 'The Patriarch', personality: 'Ratan Tata',
             bio: 'A young heir who defies family pressure to study what he truly loves.',
@@ -533,7 +350,7 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_ratan_tata.jpg', scenarioId: 'lvl_age_18_tata',
             idolTraits: { discipline: 90, resilience: 90, risk: 85, leadership: 100, creativity: 85, empathy: 95, vision: 98 }
         },
-        {
+{
             id: 'lvl_19', title: 'The Visionary', description: 'At 19, Mark had to choose between Harvard and his side project.',
             requiredStars: 3, year: 2004, age: 19, theme: 'Tech', archetype: 'The Founder', personality: 'Mark Zuckerberg',
             bio: 'A Harvard sophomore with a little website called "The Facebook".',
@@ -544,7 +361,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 90, resilience: 80, risk: 95, leadership: 85, creativity: 75, empathy: 40, vision: 99 }
         },
         // Age 19: Neeraj Chopra
-        {
+{
             id: 'lvl_19_neeraj', title: 'The Lonely Flight', description: 'At 19, Neeraj chose isolation over fame.',
             requiredStars: 0, year: 2016, age: 19, theme: 'Sports', archetype: 'The Monk', personality: 'Neeraj Chopra',
             bio: 'A 19-year-old Javelin World Junior Record holder who chose a lonely path to Olympic Gold.',
@@ -555,7 +372,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 95, risk: 85, leadership: 80, creativity: 75, empathy: 70, vision: 95 }
         },
         // Age 19: Shubman Gill
-        {
+{
             id: 'lvl_19_shubman', title: 'The Prince', description: 'At 19, Shubman was named Player of the Tournament in the U-19 World Cup.',
             requiredStars: 0, year: 2018, age: 19, theme: 'Sports', archetype: 'The Prince', personality: 'Shubman Gill',
             bio: 'A cricket prodigy who carried the weight of a nation\'s expectations with quiet grace.',
@@ -566,7 +383,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 90, resilience: 85, risk: 90, leadership: 80, creativity: 85, empathy: 75, vision: 90 }
         },
         // Age 19: Sachin Tendulkar
-        {
+{
             id: 'lvl_19_sachin', title: 'The Trial of Fire', description: 'At 19, you must face the most lethal fast bowlers on Earth.',
             requiredStars: 0, year: 1992, age: 19, theme: 'Sports', archetype: 'The Prodigy', personality: 'Sachin Tendulkar',
             bio: 'A teenage prodigy entrusted with the hopes of a billion people on the fiercest cricket pitch in the world.',
@@ -577,7 +394,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 98, risk: 80, leadership: 85, creativity: 95, empathy: 85, vision: 90 }
         },
         // Age 19: Sundar Pichai
-        {
+{
             id: 'lvl_19_sundar', title: 'The Divided Mind', description: 'At 19, the pressure of IIT threatens to crush your curiosity.',
             requiredStars: 0, year: 1991, age: 19, theme: 'Tech', archetype: 'The Explorer', personality: 'Sundar Pichai',
             bio: 'An introverted student at IIT Kharagpur, fascinated by computers but drowning in metallurgical coursework.',
@@ -588,7 +405,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 90, risk: 70, leadership: 95, creativity: 85, empathy: 90, vision: 95 }
         },
         // Age 19: Shah Rukh Khan
-        {
+{
             id: 'lvl_19_srk', title: 'A Stage For Grief', description: 'At 19, you lose your father and immerse yourself in the chaotic world of theatre.',
             requiredStars: 0, year: 1984, age: 19, theme: 'Arts', age_mirror_text: 'studying economics while sneaking into theatre rehearsals every evening', archetype: 'The Entertainer', personality: 'Shah Rukh Khan',
             bio: 'A grieving economics student who finds solace and explosive energy under the lights of Delhi theatre.',
@@ -599,7 +416,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 85, resilience: 100, risk: 90, leadership: 90, creativity: 98, empathy: 95, vision: 85 }
         },
         // Age 19: Shah Rukh Khan (Story 2)
-        {
+{
             id: 'lvl_19_srk_2', title: 'Leave Delhi or Stay', description: 'At 19, SRK must choose between family duty and the pull of Mumbai.',
             requiredStars: 0, year: 1984, age: 19, theme: 'Arts', age_mirror_text: 'studying economics while sneaking into theatre rehearsals every evening', archetype: 'The Entertainer', personality: 'Shah Rukh Khan',
             bio: 'A rising theatre star whose family needs him in Delhi while Mumbai beckons with opportunity.',
@@ -610,7 +427,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 85, resilience: 100, risk: 90, leadership: 90, creativity: 98, empathy: 95, vision: 85 }
         },
         // Age 20: Narendra Modi
-        {
+{
             id: 'lvl_20_modi', title: 'The Canteen and the Calling', description: 'At 20, working in a canteen, a young man feels a deep pull toward a life of ascetic national service.',
             requiredStars: 0, year: 1970, age: 20, theme: 'Leadership', age_mirror_text: 'serving tea in a canteen while dreaming of dedicating your entire life to a larger cause', archetype: 'The Ascetic', personality: 'Narendra Modi',
             bio: 'A 20-year-old running a tea stall in Ahmedabad, torn between a regular livelihood and joining the RSS as a full-time Pracharak.',
@@ -620,30 +437,8 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_Narendra Modi.jpg', scenarioId: 'lvl_age_20_modi',
             idolTraits: { discipline: 100, resilience: 95, risk: 85, leadership: 100, creativity: 70, empathy: 80, vision: 100 }
         },
-        // Age 20: Prajakta Koli
-        {
-            id: 'lvl_20_prajakta', title: 'The 2 AM Panic', description: 'At 20, Prajakta quit her 10-year dream job for a risky YouTube career.',
-            requiredStars: 0, year: 2014, age: 20, theme: 'Media', archetype: 'The Authentic', personality: 'Prajakta Koli',
-            bio: 'A disillusioned Radio Jockey intern who took a leap of faith to become MostlySane.',
-            fame: 'India\'s top female comedy creator. Actor.',
-            achievements: ['7M+ YouTube Subscribers', 'Forbes 30 Under 30', 'Climate Change Ambassador'],
-            lesson: 'DON\'T CLING TO A MISTAKE JUST BECAUSE YOU SPENT A LONG TIME MAKING IT.',
-            avatarUrl: '/assets/avatar_prajakta.jpg?v=2', scenarioId: 'lvl_age_20_prajakta',
-            idolTraits: { discipline: 85, resilience: 90, risk: 95, leadership: 85, creativity: 95, empathy: 100, vision: 90 }
-        },
-        // Age 20: Selena Gomez
-        {
-            id: 'lvl_20_selena', title: 'The Invisible War', description: 'At 20, Selena battled Lupus behind the perfect pop-star facade.',
-            requiredStars: 0, year: 2012, age: 20, theme: 'Music', archetype: 'The Vulnerable', personality: 'Selena Gomez',
-            bio: 'A global superstar who chose to reveal her illness rather than maintain a perfect image.',
-            fame: 'Global pop sensation and mental health advocate.',
-            achievements: ['Most followed woman on Instagram', 'Founder of Rare Beauty', 'Mental health philanthropist'],
-            lesson: 'VULNERABILITY IS THE ULTIMATE STRENGTH.',
-            avatarUrl: '/assets/avatar_selena.jpg?v=2', scenarioId: 'lvl_age_20_selena',
-            idolTraits: { discipline: 85, resilience: 100, risk: 90, leadership: 95, creativity: 90, empathy: 100, vision: 85 }
-        },
         // Age 20: Kobe
-        {
+{
             id: 'lvl_20_kobe',
             title: 'The Mamba',
             description: 'At 20, Kobe chose the gym over the party.',
@@ -656,7 +451,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 100, resilience: 100, risk: 75, leadership: 88, creativity: 70, empathy: 60, vision: 85 }
         },
         // Age 20: NV Sir
-        {
+{
             id: 'lvl_20_nv_sir',
             title: 'The Educator\'s Dilemma',
             description: 'At 20, NV Sir chose teaching over immediate financial relief.',
@@ -668,21 +463,8 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_nv_sir.jpg', scenarioId: 'lvl_age_20_nv_sir',
             idolTraits: { discipline: 90, resilience: 95, risk: 85, leadership: 90, creativity: 80, empathy: 95, vision: 100 }
         },
-        // Age 20: Taylor (Soloist)
-        {
-            id: 'lvl_20_taylor',
-            title: 'The Soloist',
-            description: 'At 20, Taylor faced critics who said she had ghostwriters.',
-            requiredStars: 6, year: 2010, age: 20, theme: 'Music', archetype: 'The Soloist', personality: 'Taylor Swift',
-            bio: 'Already a star, but critics say shes a fake. She needs to prove her voice is hers.',
-            fame: 'The biggest pop star in the world.',
-            achievements: ['Wrote "Speak Now" album entirely alone', 'Highest-grossing tour in history', 'Time Person of the Year'],
-            lesson: 'OWNERSHIP of your work and your narrative.',
-            avatarUrl: '/assets/avatar_taylor_swift.png', scenarioId: 'lvl_age_20_music',
-            idolTraits: { discipline: 88, resilience: 90, risk: 75, leadership: 80, creativity: 98, empathy: 95, vision: 85 }
-        },
         // Age 20: Frida
-        {
+{
             id: 'lvl_20_frida',
             title: 'The Icon',
             description: 'At 20, Frida painted from her bed in pain.',
@@ -695,7 +477,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 70, resilience: 100, risk: 80, leadership: 70, creativity: 99, empathy: 95, vision: 80 }
         },
         // Age 20: Arnold
-        {
+{
             id: 'lvl_20_arnold',
             title: 'The AWOL Gamble',
             description: 'At 20, Arnold escaped the army to chase a dream.',
@@ -708,7 +490,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 90, risk: 90, leadership: 90, creativity: 60, empathy: 60, vision: 100 }
         },
         // Age 20: Hawking
-        {
+{
             id: 'lvl_20_hawking',
             title: 'The Death Sentence',
             description: 'At 20, Stephen was given 2 years to live.',
@@ -721,7 +503,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 100, risk: 60, leadership: 85, creativity: 95, empathy: 75, vision: 100 }
         },
         // Age 20: Mary Shelley
-        {
+{
             id: 'lvl_20_shelley',
             title: 'The Monster\'s Birth',
             description: 'At 20, Mary wrote the first sci-fi novel during a storm.',
@@ -734,7 +516,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 85, resilience: 90, risk: 85, leadership: 70, creativity: 100, empathy: 95, vision: 90 }
         },
         // Age 20: Steven Spielberg
-        {
+{
             id: 'lvl_20_spielberg',
             title: 'The Director',
             description: 'At 20, Steven sneaked into Universal Studios and pretended he worked there.',
@@ -747,7 +529,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 90, resilience: 95, risk: 90, leadership: 95, creativity: 100, empathy: 85, vision: 100 }
         },
         // Age 20: Bill Gates (Default)
-        {
+{
             id: 'lvl_20_gate',
             title: 'The Architect',
             description: 'At 20, Bill saw the future and had to bluff his way into it.',
@@ -760,7 +542,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 92, resilience: 85, risk: 90, leadership: 95, creativity: 85, empathy: 70, vision: 98 }
         },
         // Age 20: Narendra Modi
-        {
+{
             id: 'lvl_20_modi',
             title: 'The Canteen and the Calling',
             description: 'At 20, serving tea at a bus depot canteen while torn between monastic life, family business, and grassroots national service.',
@@ -779,28 +561,8 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_20_modi',
             idolTraits: { discipline: 98, resilience: 95, risk: 90, leadership: 98, creativity: 80, empathy: 85, vision: 95 }
         },
-        // Age 21: Karan Aujla
-        {
-            id: 'lvl_21_aujla_1',
-            title: 'The Crossover Gamble',
-            description: 'At 21, with loyal underground hip-hop credibility, you must choose between staying in your safe niche or risking your street cred by fusing rap with traditional folk vocals on \'Don\'t Worry\'.',
-            requiredStars: 0,
-            year: 2018,
-            age: 21,
-            theme: 'Music',
-            age_mirror_text: 'standing in a high-end recording studio in 2018, deciding whether to protect your underground hip-hop street cred or gamble on a commercial folk fusion',
-            archetype: 'The Innovator',
-            personality: 'Karan Aujla',
-            bio: 'A 21-year-old rising Punjabi hip-hop artist deciding whether to risk his underground street credibility to attempt a bold mainstream folk crossover.',
-            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
-            achievements: ['Pioneered modern hip-hop and Punjabi folk genre fusion', 'Broke international streaming records with "Don\'t Worry"', 'Became first Punjabi artist to win Juno Fan Choice Award'],
-            lesson: 'True artistic growth often requires risking the approval of your earliest supporters; blending your unique edge with unexpected traditions creates culture-shifting breakthroughs.',
-            avatarUrl: '/assets/avatar_KaranAujla.jpg',
-            scenarioId: 'lvl_age_21_aujla',
-            idolTraits: { discipline: 95, resilience: 95, risk: 100, leadership: 90, creativity: 100, empathy: 85, vision: 100 }
-        },
         // Age 21: Virat Kohli
-        {
+{
             id: 'lvl_21_virat_kohli',
             title: 'The Ego Check',
             description: 'At 21, dropped from the national team and labeled an arrogant flash-in-the-pan, you are sent to play in empty Australian grounds. How do you respond?',
@@ -819,70 +581,7 @@ export function generateLevels(_age: number): Level[] {
             scenarioId: 'lvl_age_21_virat_kohli',
             idolTraits: { discipline: 100, resilience: 95, risk: 85, leadership: 95, creativity: 80, empathy: 75, vision: 95 }
         },
-        
-        {
-            id: 'lvl_21_sheeran_1', title: 'The Photo She Might See', description: 'At 21, you must choose how to handle the painful intersection of a recent breakup and sudden public attention.',
-            requiredStars: 0, year: 2012, age: 21, theme: 'Music', archetype: 'The Artist', personality: 'Ed Sheeran',
-            bio: 'A 21-year-old musician dealing with a breakup while his career takes off.',
-            fame: 'Grammy-winning Singer-Songwriter',
-            achievements: ['One of the best-selling music artists of all time'],
-            lesson: 'Sometimes it is learning how to carry personal pain while the rest of your life keeps moving.',
-            avatarUrl: '/assets/portrait-ed-sheeran.png', scenarioId: 'lvl_age_21_sheeran_1',
-            idolTraits: { discipline: 85, resilience: 90, risk: 80, leadership: 70, creativity: 100, empathy: 95, vision: 85 }
-        },
-        {
-            id: 'lvl_21_sheeran_2', title: 'The People That Still Feel Like Home', description: 'At 21, you must decide what success is allowed to cost you in your personal life.',
-            requiredStars: 0, year: 2012, age: 21, theme: 'Music', archetype: 'The Artist', personality: 'Ed Sheeran',
-            bio: 'A 21-year-old musician dealing with a breakup while his career takes off.',
-            fame: 'Grammy-winning Singer-Songwriter',
-            achievements: ['One of the best-selling music artists of all time'],
-            lesson: 'Success changes your schedule before it changes your identity.',
-            avatarUrl: '/assets/portrait-ed-sheeran.png', scenarioId: 'lvl_age_21_sheeran_2',
-            idolTraits: { discipline: 85, resilience: 90, risk: 80, leadership: 70, creativity: 100, empathy: 95, vision: 85 }
-        },
-
-        
-        {
-            id: 'lvl_21_selena_1', title: 'When Everyone Has an Opinion', description: 'At 21, you must choose how to handle the painful intersection of a recent relationship and sudden public attention.',
-            requiredStars: 0, year: 2013, age: 21, theme: 'Music', archetype: 'The Vulnerable', personality: 'Selena Gomez',
-            bio: 'A 21-year-old musician trying to understand what she wants from a relationship while everyone else tries to decide for her.',
-            fame: 'Global pop star transitioning to a mature era',
-            achievements: ['First Billboard 200 number-one album with Stars Dance'],
-            lesson: 'A relationship becomes harder to understand when everyone outside it has an opinion.',
-            avatarUrl: '/assets/avatar_selena.jpg?v=2', scenarioId: 'lvl_age_21_selena_1',
-            idolTraits: { discipline: 85, resilience: 90, risk: 80, leadership: 70, creativity: 100, empathy: 95, vision: 85 }
-        },
-        {
-            id: 'lvl_21_selena_2', title: 'Your Own Name', description: 'At 21, you must decide how much of the person people know is actually the person you want to become.',
-            requiredStars: 0, year: 2013, age: 21, theme: 'Music', archetype: 'The Vulnerable', personality: 'Selena Gomez',
-            bio: 'A 21-year-old establishing her independent creative identity while the world watches her grow up.',
-            fame: 'Global pop star transitioning to a mature era',
-            achievements: ['First Billboard 200 number-one album with Stars Dance'],
-            lesson: 'You do not need to remain the same person simply because other people became comfortable with who you used to be.',
-            avatarUrl: '/assets/avatar_selena.jpg?v=2', scenarioId: 'lvl_age_21_selena_2',
-            idolTraits: { discipline: 85, resilience: 90, risk: 80, leadership: 70, creativity: 100, empathy: 95, vision: 85 }
-        },
-        {
-            id: 'lvl_21_tanmay_1', title: 'Should I Really Do This?', description: 'At 21, Tanmay Bhat enters the Mumbai stand-up comedy circuit, deciding how seriously to take his talent before having proof it will work.',
-            requiredStars: 0, year: 2008, age: 21, theme: 'Arts', age_mirror_text: 'performing open mics in Mumbai while deciding whether comedy can become a career', archetype: 'The Creator', personality: 'Tanmay Bhat',
-            bio: 'A 21-year-old performing at Mumbai open-mic events, figuring out if stand-up comedy is worth taking seriously.',
-            fame: 'Co-founder of All India Bakchod. Comedian and Digital Creator.',
-            achievements: ['Won Weirdass Ham-ateur Night (2009)', 'Over 100 stand-up shows by 2011', 'Co-founded AIB'],
-            lesson: 'A CREATIVE CAREER BEGINS BEFORE THE EVIDENCE — you are choosing whether to keep showing up long enough to find out what you might become.',
-            avatarUrl: '/assets/portrait-tanmay-bhat.png', scenarioId: 'lvl_age_21_tanmay_1',
-            idolTraits: { discipline: 80, resilience: 90, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
-        {
-            id: 'lvl_21_tanmay_2', title: 'The Five Minutes', description: 'At 21, Tanmay Bhat gets his first major breakthrough opportunity at the Weirdass Ham-ateur Night competition in Mumbai.',
-            requiredStars: 0, year: 2009, age: 21, theme: 'Arts', age_mirror_text: 'standing backstage at Ham-ateur Night in Mumbai with five minutes to show his style', archetype: 'The Creator', personality: 'Tanmay Bhat',
-            bio: 'A 21-year-old comedian competing at Weirdass Ham-ateur Night, deciding how to approach a high-stakes 5-minute set.',
-            fame: 'Co-founder of All India Bakchod. Comedian and Digital Creator.',
-            achievements: ['Won Weirdass Ham-ateur Night (2009)', 'Joined Weirdass Comedy writing team', 'Opened for Vir Das'],
-            lesson: 'THE FIRST BREAKTHROUGH IS EVIDENCE — a single opportunity can turn a possibility into evidence.',
-            avatarUrl: '/assets/portrait-tanmay-bhat.png', scenarioId: 'lvl_age_21_tanmay_2',
-            idolTraits: { discipline: 80, resilience: 90, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
-        {
+{
             id: 'lvl_21_michael_1', title: 'Not Just the Jackson 5', description: 'At 21, Michael Jackson enters the Off the Wall era in Los Angeles, deciding how to shape his adult solo musical identity with Quincy Jones.',
             requiredStars: 0, year: 1979, age: 21, theme: 'Music', age_mirror_text: 'recording Off the Wall in Los Angeles, establishing an adult solo sound', archetype: 'The Perfectionist', personality: 'Michael Jackson',
             bio: 'A 21-year-old artist in Los Angeles transitioning from child stardom to adult solo musical independence.',
@@ -892,7 +591,7 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-michael-jackson.png', scenarioId: 'lvl_age_21_michael_1',
             idolTraits: { discipline: 95, resilience: 90, risk: 85, leadership: 85, creativity: 100, empathy: 80, vision: 100 }
         },
-        {
+{
             id: 'lvl_21_michael_2', title: 'Good Enough or Your Best?', description: 'At 21, as the music takes shape, Michael Jackson faces the tension between continuous refinement and releasing his work.',
             requiredStars: 0, year: 1979, age: 21, theme: 'Music', age_mirror_text: 'in the Los Angeles recording studio, refining vocal takes and rhythm arrangements', archetype: 'The Perfectionist', personality: 'Michael Jackson',
             bio: 'A 21-year-old solo artist learning when perfectionism serves the music and when the work must be released into the world.',
@@ -902,9 +601,8 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-michael-jackson.png', scenarioId: 'lvl_age_21_michael_2',
             idolTraits: { discipline: 95, resilience: 90, risk: 85, leadership: 85, creativity: 100, empathy: 80, vision: 100 }
         },
-
         // Age 21: Shah Rukh Khan
-        {
+{
             id: 'lvl_21_srk', title: 'The Role That Could Destroy You', description: 'At 21, SRK faces a villain role that could define or end his career.',
             requiredStars: 0, year: 1986, age: 21, theme: 'Arts', age_mirror_text: 'doing small TV roles, completely broke, sharing a tiny Delhi flat', archetype: 'The Entertainer', personality: 'Shah Rukh Khan',
             bio: 'A young performer offered a psychologically complex villain role that everyone warns against.',
@@ -915,7 +613,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 85, resilience: 100, risk: 95, leadership: 90, creativity: 98, empathy: 95, vision: 85 }
         },
         // Age 21
-        {
+{
             id: 'lvl_21', title: 'The Rebel', description: 'At 21, Steve started a company in a garage with no money.',
             requiredStars: 9, year: 1976, age: 21, theme: 'Tech', archetype: 'The Rebel', personality: 'Steve Jobs',
             bio: 'Hippy, fruitarian, and dropout. He sees personal computers as a bicycle for the mind.',
@@ -925,47 +623,7 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_steve_jobs.png', scenarioId: 'lvl_age_21',
             idolTraits: { discipline: 85, resilience: 90, risk: 95, leadership: 90, creativity: 100, empathy: 50, vision: 100 }
         },
-        // Age 22: Karan Aujla
-        {
-            id: 'lvl_22_aujla_1',
-            title: 'The Name Nobody Knew Yet',
-            description: 'At 22, past the first spike of \'Don\'t Worry\', you face the quiet stretch: do you take safe ghostwriting checks for stars, or keep staking your own name on uncertain solo tracks like \'Chitta Kurta\'?',
-            requiredStars: 0,
-            year: 2019,
-            age: 22,
-            theme: 'Music',
-            age_mirror_text: 'sitting in a modest home studio in Surrey in late 2019, deciding whether to take safe songwriting cash or keep releasing music under your own name',
-            archetype: 'The Resilient',
-            personality: 'Karan Aujla',
-            bio: 'A 22-year-old artist in Surrey, BC working through the post-breakout grind to prove his first hit wasn\'t a fluke.',
-            fame: 'Global Punjabi music superstar, record-breaking lyricist and singer.',
-            achievements: ['Proved breakout success was not a one-hit fluke with "Chitta Kurta"', 'Maintained creative independence without safe ghostwriting compromises', 'Set the stage for record-shattering 2021 debut album BTFU'],
-            lesson: 'One hit doesn\'t buy security — the real test is what you do in the quiet stretch after it; being good enough to write for others doesn\'t mean you\'re finished being an artist yourself.',
-            avatarUrl: '/assets/avatar_KaranAujla.jpg',
-            scenarioId: 'lvl_age_22_aujla',
-            idolTraits: { discipline: 95, resilience: 100, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
-        // Age 22: Siddhu Moosewala
-        {
-            id: 'lvl_22_moosewala_1',
-            title: 'The One-Way Ticket',
-            description: 'At 22, freshly graduated with an electrical engineering degree in Punjab, you must decide whether to take a safe corporate job or take on massive student loans to move to Canada and chase your music.',
-            requiredStars: 0,
-            year: 2016,
-            age: 22,
-            theme: 'Music',
-            age_mirror_text: 'staring at your freshly printed engineering degree in Punjab while holding a one-way visa to Canada, deciding whether to take the safe corporate job or leap into the unknown',
-            archetype: 'The Audacious',
-            personality: 'Siddhu Moosewala',
-            bio: 'A 22-year-old engineering graduate in Punjab choosing between local corporate security and taking on international student debt to forge his musical identity in Canada.',
-            fame: 'Iconic Punjabi singer, lyricist, and global cultural legend.',
-            achievements: ['Graduated in Electrical Engineering before taking the leap to Canada', 'Embraced massive immigrant struggle to build an original sound', 'Global phenomenon who revolutionized modern Punjabi music'],
-            lesson: 'Sometimes you have to finish the path others laid out for you before you can forge your own; true growth requires leaving behind home safety to struggle in an unknown environment.',
-            avatarUrl: '/assets/avatar_SiddhuMoosewala.jpg',
-            scenarioId: 'lvl_age_22_moosewala',
-            idolTraits: { discipline: 95, resilience: 100, risk: 100, leadership: 95, creativity: 100, empathy: 85, vision: 100 }
-        },
-        {
+{
             id: 'lvl_22', title: 'The Dreamer', description: 'At 22, Walt lost everything and drew a mouse on a train.',
             requiredStars: 12, year: 1923, age: 22, theme: 'Art', archetype: 'The Dreamer', personality: 'Walt Disney',
             bio: 'Bankrupt cartoonist. He has a one-way ticket to Hollywood and $40 in his pocket.',
@@ -975,7 +633,7 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_walt_disney.png', scenarioId: 'lvl_age_22',
             idolTraits: { discipline: 85, resilience: 95, risk: 90, leadership: 85, creativity: 100, empathy: 85, vision: 100 }
         },
-        {
+{
             id: 'lvl_22_michael', title: 'The Life You Built', description: 'At 22, Michael must balance the Triumph Tour with his brothers and his rising solo aspirations.',
             requiredStars: 0, year: 1981, age: 22, theme: 'Music', age_mirror_text: 'rehearsing in Van Nuys while carrying the weight of two careers', archetype: 'The Perfectionist', personality: 'Michael Jackson',
             bio: 'A 22-year-old superstar preparing the Triumph Tour while preparing to redefine the global music landscape.',
@@ -985,27 +643,7 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-michael-jackson.png', scenarioId: 'lvl_age_22_michael',
             idolTraits: { discipline: 95, resilience: 90, risk: 85, leadership: 85, creativity: 100, empathy: 80, vision: 100 }
         },
-        {
-            id: 'lvl_22_ashneer', title: 'The Next Degree', description: 'At 22, Ashneer Grover stands between IIT Delhi and IIM Ahmedabad, deciding how to shape his career direction.',
-            requiredStars: 0, year: 2004, age: 22, theme: 'Business', age_mirror_text: 'entering IIM Ahmedabad after IIT Delhi, facing career uncertainty', archetype: 'The Analyst', personality: 'Ashneer Grover',
-            bio: 'A 22-year-old IIT Delhi graduate entering IIM Ahmedabad, learning to bridge engineering and finance.',
-            fame: 'Co-founder of BharatPe. Former Shark Tank India judge.',
-            achievements: ['IIT Delhi & INSA Lyon Exchange', 'IIM Ahmedabad MBA in Finance', 'Built BharatPe into a fintech giant'],
-            lesson: 'DON\'T OVERPROTECT YOUR PAST — combine technical skill and finance for a broader toolkit.',
-            avatarUrl: '/assets/portrait-ashneer-grover.png', scenarioId: 'lvl_age_22_ashneer',
-            idolTraits: { discipline: 90, resilience: 85, risk: 95, leadership: 90, creativity: 85, empathy: 60, vision: 95 }
-        },
-        {
-            id: 'lvl_22_bhuvan', title: 'When the Phone Started Working', description: 'At 22, Bhuvan Bam must choose between his original craft of music and the sudden explosive growth of BB Ki Vines.',
-            requiredStars: 0, year: 2016, age: 22, theme: 'Arts', age_mirror_text: 'performing live music in Delhi while his comedy channel crosses one million subscribers', archetype: 'The Creator', personality: 'Bhuvan Bam',
-            bio: 'A 22-year-old history graduate and musician whose home-shot YouTube comedy videos have suddenly gone viral in millions.',
-            fame: 'Pioneering Indian digital creator. Creator of BB Ki Vines.',
-            achievements: ['First Indian individual creator to cross 10 million subscribers', 'TEDx Speaker at age 22', 'Most Popular Channel award at WebTVAsia 2016'],
-            lesson: 'PROTECT WHAT MADE YOU DIFFERENT — build systems to support your growth without losing your unique voice.',
-            avatarUrl: '/assets/portrait-bhuvan-bam.png', scenarioId: 'lvl_age_22_bhuvan',
-            idolTraits: { discipline: 85, resilience: 90, risk: 95, leadership: 85, creativity: 100, empathy: 90, vision: 95 }
-        },
-        {
+{
             id: 'lvl_22_ronaldo', title: 'The Price of Becoming Complete', description: 'At 22, Cristiano Ronaldo faces intense pressure to transform from a flamboyant young winger into a complete, decisive superstar.',
             requiredStars: 0, year: 2007, age: 22, theme: 'Sports', age_mirror_text: 'celebrating a Premier League title at Manchester United while facing European pressure', archetype: 'The Competitor', personality: 'Cristiano Ronaldo',
             bio: 'A 22-year-old Portuguese winger who has won his first Premier League title, learning to turn individual flair into clinical output.',
@@ -1015,27 +653,7 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-cristiano-ronaldo.png', scenarioId: 'lvl_age_22_ronaldo',
             idolTraits: { discipline: 100, resilience: 95, risk: 95, leadership: 90, creativity: 95, empathy: 70, vision: 95 }
         },
-        {
-            id: 'lvl_22_ranveer', title: 'The Role You Can\'t See Yet', description: 'At 22, Ranveer Singh returns to Mumbai after studying in the US, figuring out how to build a runway toward acting.',
-            requiredStars: 0, year: 2007, age: 22, theme: 'Arts', age_mirror_text: 'working in advertising and assistant directing in Mumbai while holding onto an acting dream', archetype: 'The Performer', personality: 'Ranveer Singh',
-            bio: 'A 22-year-old returnee from Indiana University, working in advertising and assistant directing while looking for a way into acting.',
-            fame: 'A-list Hindi Cinema Superstar. Filmfare Award Winner.',
-            achievements: ['Breakthrough debut in Band Baaja Baaraat', '5 Filmfare Awards', 'One of highest-grossing Indian actors'],
-            lesson: 'PROXIMITY IS NOT THE DESTINATION — stepping stones are useful, but eventually you must pursue the target directly.',
-            avatarUrl: '/assets/portrait-ranveer-singh.png', scenarioId: 'lvl_age_22_ranveer',
-            idolTraits: { discipline: 85, resilience: 95, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
-        {
-            id: 'lvl_22_alia', title: 'More Than a Star', description: 'At 22, Alia Bhatt faces rising expectations after early success, deciding how to stretch her range beyond early acclaim.',
-            requiredStars: 0, year: 2015, age: 22, theme: 'Arts', age_mirror_text: 'balancing commercial expectations with a desire for deeper artistic growth in Mumbai', archetype: 'The Prodigy', personality: 'Alia Bhatt',
-            bio: 'A 22-year-old actor with four successful films behind her, looking to expand her artistic range beyond early expectations.',
-            fame: 'Critically acclaimed Hindi Cinema Superstar. National Film Award Winner.',
-            achievements: ['National Film Award for Best Actress', '6 Filmfare Awards', 'Time 100 Most Influential People'],
-            lesson: 'DON\'T LET EARLY SUCCESS DEFINE THE CEILING — use leverage to make yourself harder to categorize.',
-            avatarUrl: '/assets/portrait-alia-bhatt.png', scenarioId: 'lvl_age_22_alia',
-            idolTraits: { discipline: 90, resilience: 90, risk: 85, leadership: 80, creativity: 100, empathy: 90, vision: 95 }
-        },
-        {
+{
             id: 'lvl_22_bhagat', title: 'The Price of a Voice', description: 'At 22, Bhagat Singh fights for political prisoner rights from inside Lahore Central Jail and turns the court into a platform.',
             requiredStars: 0, year: 1929, age: 22, theme: 'History', age_mirror_text: 'enduring prison and courtroom trials in Lahore, defining conviction through sacrifice', archetype: 'The Revolutionary', personality: 'Bhagat Singh',
             bio: 'A 22-year-old freedom fighter imprisoned in Lahore, leading historical hunger strikes and challenging colonial courts.',
@@ -1045,48 +663,28 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/portrait-bhagat-singh.png', scenarioId: 'lvl_age_22_bhagat',
             idolTraits: { discipline: 100, resilience: 100, risk: 100, leadership: 95, creativity: 85, empathy: 90, vision: 100 }
         },
-        {
-            id: 'lvl_22_tanmay_1', title: 'Just 200 People', description: 'At 22, Tanmay Bhat and Gursimran Khamba start the All India Bakchod podcast, aiming for 200 people in a room before knowing how big it would become.',
-            requiredStars: 0, year: 2012, age: 22, theme: 'Arts', age_mirror_text: 'starting a podcast in Mumbai with no guarantee of who will show up', archetype: 'The Creator', personality: 'Tanmay Bhat',
-            bio: 'A 22-year-old comedy writer and performer in Mumbai, experimenting with a new podcast format before knowing if anyone will care.',
-            fame: 'Co-founder of All India Bakchod. Comedian and Digital Creator.',
-            achievements: ['Co-founded AIB', 'Pioneered Indian podcasting & digital sketch comedy', 'Leading YouTube creator and producer'],
-            lesson: 'SMALL BEGINNINGS ARE STILL DECISIONS — you do not always know whether an idea is good before you invest in it.',
-            avatarUrl: '/assets/portrait-tanmay-bhat.png', scenarioId: 'lvl_age_22_tanmay_1',
-            idolTraits: { discipline: 80, resilience: 90, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
-        {
-            id: 'lvl_22_tanmay_2', title: 'What If We Go Bigger?', description: 'At 22, the small podcast experiment begins exceeding original expectations as audiences grow.',
-            requiredStars: 0, year: 2012, age: 22, theme: 'Arts', age_mirror_text: 'watching an experimental podcast grow into a larger comedy platform in Mumbai', archetype: 'The Creator', personality: 'Tanmay Bhat',
-            bio: 'A 22-year-old comedian in Mumbai whose small project is growing faster than expected.',
-            fame: 'Co-founder of All India Bakchod. Comedian and Digital Creator.',
-            achievements: ['Co-founded AIB', 'Pioneered Indian podcasting & digital sketch comedy', 'Leading YouTube creator and producer'],
-            lesson: 'WHEN REALITY EXCEEDS EXPECTATIONS — you do not need to know that something will become huge before taking it seriously.',
-            avatarUrl: '/assets/portrait-tanmay-bhat.png', scenarioId: 'lvl_age_22_tanmay_2',
-            idolTraits: { discipline: 80, resilience: 90, risk: 95, leadership: 85, creativity: 100, empathy: 85, vision: 95 }
-        },
-        // Age 23: Siddhu Moosewala
-        {
-            id: 'lvl_23_moosewala_1',
-            title: 'The Brampton Hustle',
-            description: 'At 23, an international student doing manual labor in Brampton, you must decide whether to save your money for tuition safety or gamble it on recording your solo debut track, \'G-Wagon\'.',
+        // Age 22: Rabindranath Tagore
+{
+            id: 'lvl_22_tagore',
+            title: "Awakening of the Waterfall",
+            description: "At 22, living in Kolkata, you experience a profound creative epiphany: will you keep your poetry confined to melancholy verse, or pour yourself into uplifting all human spirit?",
             requiredStars: 0,
-            year: 2016,
-            age: 23,
-            theme: 'Music',
-            age_mirror_text: 'standing in a cold Brampton basement apartment in 2016, deciding whether to put your hard-earned labor savings into tuition or gamble it on your first music video',
-            archetype: 'The Audacious',
-            personality: 'Siddhu Moosewala',
-            bio: 'A 23-year-old international student in Brampton, Canada balancing manual labor survival with a high-stakes gamble to fund his solo singing debut.',
-            fame: 'Iconic Punjabi singer, lyricist, and global cultural legend.',
-            achievements: ['Self-funded debut solo track "G-Wagon" as an immigrant student', 'Pioneered modern gangster-folk Punjabi rap globally', 'First Indian artist to perform at Wireless Festival and chart on Global Billboard 200'],
-            lesson: 'True independence often requires risking the very safety nets you worked hard to build; betting on yourself is terrifying, but it is the only way to own your future.',
-            avatarUrl: '/assets/avatar_SiddhuMoosewala.jpg',
-            scenarioId: 'lvl_age_23_moosewala',
-            idolTraits: { discipline: 95, resilience: 100, risk: 100, leadership: 95, creativity: 100, empathy: 85, vision: 100 }
+            year: 1883,
+            age: 22,
+            theme: 'Literature',
+            age_mirror_text: "watching the sunrise in Sadar Street as a surge of universal empathy and creative force unlocks your greatest writing",
+            archetype: 'The Polymath',
+            personality: 'Rabindranath Tagore',
+            bio: "A 22-year-old poet breaking through early melancholy to write 'The Awakening of the Waterfall' (Nirjharer Swapnabhanga), discovering his universal humanism.",
+            fame: "First non-European Nobel Laureate in Literature, universal humanist, philosopher.",
+            achievements: ["Wrote immortal classics reshaping world literature", "Renounced British Knighthood in solidarity with Indian freedom", "Pioneered open-air holistic education at Santiniketan"],
+            lesson: "BREAKING FREE FROM NARROW ISOLATION — When your creative energy breaks through self-doubt, it flows like a liberated waterfall to nourish the entire world.",
+            avatarUrl: '/assets/portrait-rabindranath-tagore.png',
+            scenarioId: 'lvl_age_22_tagore',
+            idolTraits: { discipline: 94, resilience: 96, risk: 92, leadership: 94, creativity: 100, empathy: 100, vision: 100 }
         },
         // Age 23: Shah Rukh Khan
-        {
+{
             id: 'lvl_23_srk', title: 'Gauri or Career', description: 'At 23, SRK must choose between love and the career opportunity of a lifetime.',
             requiredStars: 0, year: 1988, age: 23, theme: 'Arts', age_mirror_text: 'newly married, juggling love and an uncertain acting career in Mumbai', archetype: 'The Entertainer', personality: 'Shah Rukh Khan',
             bio: 'A young actor in love, facing family resistance, while Mumbai\'s Bollywood doors are finally opening.',
@@ -1096,7 +694,7 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_srk.jpg', scenarioId: 'lvl_age_23_srk',
             idolTraits: { discipline: 85, resilience: 100, risk: 90, leadership: 90, creativity: 98, empathy: 100, vision: 85 }
         },
-        {
+{
             id: 'lvl_23', title: 'The Voice', description: 'At 23, Oprah was fired for being too emotional. It was a gift.',
             requiredStars: 15, year: 1977, age: 23, theme: 'Media', archetype: 'The Voice', personality: 'Oprah Winfrey',
             bio: 'An evening news anchor who creates too much connection with the stories.',
@@ -1107,7 +705,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 88, resilience: 92, risk: 80, leadership: 90, creativity: 85, empathy: 100, vision: 90 }
         },
         // Age 24: Tina Dabi (Story 1)
-        {
+{
             id: 'lvl_24_tina_1', title: 'The College Sacrifice', description: 'At 21, Tina had to choose between social life and The Hindu.',
             requiredStars: 18, year: 2014, age: 24, theme: 'Civil Services', archetype: 'The Strategist', personality: 'Tina Dabi',
             bio: 'A college student with a singular goal: The hardest exam in the world.',
@@ -1118,7 +716,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 98, resilience: 95, risk: 60, leadership: 85, creativity: 65, empathy: 80, vision: 90 }
         },
         // Age 25: Shah Rukh Khan
-        {
+{
             id: 'lvl_25_srk', title: 'Mumbai Is Eating Me Alive', description: 'At 25, SRK is running out of money in Mumbai. One bet could change everything.',
             requiredStars: 0, year: 1990, age: 25, theme: 'Arts', age_mirror_text: 'struggling in Mumbai with a handful of films, not yet a star', archetype: 'The Entertainer', personality: 'Shah Rukh Khan',
             bio: 'A struggling actor in Mumbai with dwindling funds and one last high-stakes decision to make.',
@@ -1128,30 +726,8 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_srk.jpg', scenarioId: 'lvl_age_25_srk',
             idolTraits: { discipline: 85, resilience: 100, risk: 98, leadership: 90, creativity: 98, empathy: 95, vision: 90 }
         },
-        // Age 19: Billie Eilish
-        {
-            id: 'lvl_19_billie', title: 'Fame Is Eating Me Alive', description: 'At 19, Billie won 5 Grammys and was falling apart inside.',
-            requiredStars: 0, year: 2020, age: 19, theme: 'Music', age_mirror_text: 'recording her debut album in her childhood bedroom, battling depression', archetype: 'The Vulnerable', personality: 'Billie Eilish',
-            bio: 'The most streamed artist on the planet, battling body dysmorphia and depression behind closed doors.',
-            fame: 'Grammy record-holder. Gen Z\'s most honest voice.',
-            achievements: ['5 Grammys at age 18', 'Youngest artist to record a Bond theme', 'TIME100 Most Influential'],
-            lesson: 'VULNERABILITY IS STRENGTH — stopping to heal is the most courageous act.',
-            avatarUrl: '/assets/avatar_billie.jpg', scenarioId: 'lvl_age_19_billie',
-            idolTraits: { discipline: 80, resilience: 90, risk: 85, leadership: 70, creativity: 100, empathy: 95, vision: 85 }
-        },
-        // Age 19: MrBeast
-        {
-            id: 'lvl_19_mrbeast', title: 'Drop Out or Keep Uploading', description: 'At 19, Jimmy had 30K subscribers and a ridiculous idea. College apps were due tomorrow.',
-            requiredStars: 0, year: 2017, age: 19, theme: 'Media', age_mirror_text: 'uploading YouTube videos daily to an audience of almost nobody', archetype: 'The Disruptor', personality: 'MrBeast',
-            bio: 'Five years of uploading with almost no success. One absurd idea that nobody thought would work.',
-            fame: '200M+ YouTube subscribers. Gave away $100M+.',
-            achievements: ['Largest YouTube channel by subscribers', 'Created MrBeast Burger', 'Planted 20 million trees'],
-            lesson: 'ABSURD IDEAS CHANGE THE WORLD — delusional confidence is a superpower.',
-            avatarUrl: '/assets/avatar_mrbeast.jpg', scenarioId: 'lvl_age_19_mrbeast',
-            idolTraits: { discipline: 90, resilience: 85, risk: 100, leadership: 85, creativity: 95, empathy: 80, vision: 95 }
-        },
         // Age 19: Ritesh Agarwal
-        {
+{
             id: 'lvl_19_ritesh', title: 'The Dropout Founder', description: 'At 19, Ritesh had ₹2,000, a dropout status, and a world-changing idea.',
             requiredStars: 0, year: 2012, age: 19, theme: 'Business', age_mirror_text: 'dropping out of college to build OYO from a single rented room', archetype: 'The Audacious', personality: 'Ritesh Agarwal',
             bio: 'A college dropout from Odisha who personally lived the problem he was about to solve.',
@@ -1162,7 +738,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 85, resilience: 90, risk: 100, leadership: 85, creativity: 80, empathy: 75, vision: 95 }
         },
         // Age 19: Muhammad Ali
-        {
+{
             id: 'lvl_19_ali', title: 'Throw The Medal Away', description: 'At 19, Ali won Olympic gold — then was refused service at a restaurant because of his race.',
             requiredStars: 0, year: 1960, age: 19, theme: 'Activism', age_mirror_text: 'training 6 hours a day after winning Olympic gold, turning professional', archetype: 'The Defiant', personality: 'Muhammad Ali',
             bio: 'Olympic champion. Refused entry to a restaurant in his own hometown. A decision awaited.',
@@ -1172,19 +748,8 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_ali.jpg', scenarioId: 'lvl_age_19_ali',
             idolTraits: { discipline: 90, resilience: 100, risk: 95, leadership: 95, creativity: 80, empathy: 85, vision: 90 }
         },
-        // Age 20: Dhruv Rathee
-        {
-            id: 'lvl_20_dhruv', title: 'Germany or India', description: 'At 20, an engineering scholar in Germany felt India needed his voice more than his degree.',
-            requiredStars: 6, year: 2014, age: 20, theme: 'Media', age_mirror_text: 'studying engineering in Germany while making political videos on the side', archetype: 'The Educator', personality: 'Dhruv Rathee',
-            bio: 'A scholarship student in Germany watching misinformation spread in India, with 500 YouTube subscribers.',
-            fame: 'India\'s most influential YouTube journalist. 20M+ subscribers.',
-            achievements: ['20M+ YouTube subscribers', 'Covered 2024 Indian elections extensively', 'CNN-News18 Digital Influencer Award'],
-            lesson: 'BUILD THE BRIDGE WHILE CROSSING IT — patience in the building phase is architecture.',
-            avatarUrl: '/assets/avatar_dhruv.jpg', scenarioId: 'lvl_age_20_dhruv',
-            idolTraits: { discipline: 90, resilience: 85, risk: 80, leadership: 75, creativity: 90, empathy: 95, vision: 95 }
-        },
         // Age 19: Falguni Nayar (shown at 19 as college beginning)
-        {
+{
             id: 'lvl_19_falguni', title: 'Science or Business', description: 'At 19 at IIM Ahmedabad, Falguni had a fire inside her — but the world said wait.',
             requiredStars: 0, year: 1982, age: 19, theme: 'Business', age_mirror_text: 'studying commerce in Mumbai, quietly watching how businesses were built', archetype: 'The Patient Founder', personality: 'Falguni Nayar',
             bio: 'One of few women at IIM in 1982, told to play it safe. Her real company was 30 years away.',
@@ -1195,7 +760,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 90, risk: 80, leadership: 95, creativity: 75, empathy: 85, vision: 100 }
         },
         // Age 19: Nikola Tesla
-        {
+{
             id: 'lvl_19_tesla', title: 'Trust Your Visions', description: 'At 19, Tesla\'s professors called his mental visualizations a breakdown. They were his superpower.',
             requiredStars: 0, year: 1875, age: 19, theme: 'Science', age_mirror_text: 'studying physics in Austria, obsessed with alternating current theory', archetype: 'The Visionary', personality: 'Nikola Tesla',
             bio: 'A 19-year-old engineering student in Austria whose mind could build and test machines before touching a single component.',
@@ -1206,7 +771,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 85, risk: 90, leadership: 60, creativity: 100, empathy: 60, vision: 100 }
         },
         // Age 22: Rani Lakshmibai
-        {
+{
             id: 'lvl_22_rani_lakshmibai', title: 'The Silent Palace', description: 'At 22, the Queen of Jhansi faces the death of her infant son and an empire waiting to take her kingdom.',
             requiredStars: 0, year: 1851, age: 22, theme: 'Leadership', age_mirror_text: 'bearing an entire kingdom\'s future while processing the most devastating personal loss of your life', archetype: 'The Sovereign', personality: 'Rani Lakshmibai',
             bio: 'A 22-year-old Queen forced to suppress her grief as a young mother and project absolute strength while a foreign empire watched for any sign of weakness.',
@@ -1217,7 +782,7 @@ export function generateLevels(_age: number): Level[] {
             idolTraits: { discipline: 95, resilience: 100, risk: 90, leadership: 98, creativity: 75, empathy: 85, vision: 90 }
         },
         // Age 11: Virat Kohli
-        {
+{
             id: 'lvl_11_virat_kohli', title: 'The Extra Hour', description: 'At 11, young Virat Kohli trains at West Delhi Cricket Academy, facing decisions between raw instinct and disciplined technical correction.',
             requiredStars: 0, year: 2000, age: 11, theme: 'Sports', age_mirror_text: 'pushing through extra practice rounds at the academy while others pack up', archetype: 'The Competitive Prodigy', personality: 'Virat Kohli',
             bio: 'An 11-year-old training at the West Delhi Cricket Academy under coach Raj Kumar Sharma, driven by intense competitive desire and relentless practice.',
@@ -1227,7 +792,7 @@ export function generateLevels(_age: number): Level[] {
             avatarUrl: '/assets/avatar_virat_kohli.jpg', scenarioId: 'lvl_age_11_virat_kohli',
             idolTraits: { discipline: 95, resilience: 95, risk: 85, leadership: 90, creativity: 80, empathy: 75, vision: 90 }
         },
-        {
+{
             id: 'lvl_25', title: 'The Storyteller', description: 'At 25, J.K. Rowling got the idea for Harry Potter on a delayed train.',
             requiredStars: 21, year: 1990, age: 25, theme: 'Writing', archetype: 'The Storyteller', personality: 'J.K. Rowling',
             bio: 'A secretary day-dreaming about wizards on a 4-hour delayed train to London.',
@@ -1236,7 +801,7 @@ export function generateLevels(_age: number): Level[] {
             lesson: 'CREATIVITY strikes in the quiet moments of life.',
             avatarUrl: '/assets/avatar_jk_rowling.png', scenarioId: 'lvl_age_25',
             idolTraits: { discipline: 85, resilience: 98, risk: 85, leadership: 75, creativity: 100, empathy: 90, vision: 95 }
-        }
+        },
     ];
 
     // Instead of isolating the user to only one age group,

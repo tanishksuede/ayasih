@@ -1,5 +1,4 @@
 import { useNavigate, useParams, Navigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useUserStore } from '../store/userStore';
 import { LevelMap } from '../components/game/LevelMap';
 import { PersonalityIntro } from '../components/game/PersonalityIntro';
@@ -21,23 +20,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 export function MapRouteHandler() {
     const navigate = useNavigate();
     const location = useLocation();
-    const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
     
     // Check if we just returned from MatchReport or redirected from auth
     const searchParams = new URLSearchParams(location.search);
     const [showDnaUpdated, setShowDnaUpdated] = useState(searchParams.get('dnaUpdated') === 'true');
     const [showAlreadySignedIn, setShowAlreadySignedIn] = useState(searchParams.get('alreadySignedIn') === 'true');
-    
-    useEffect(() => {
-        const hasSeenPopup = sessionStorage.getItem('hasSeenSubscriptionPopup');
-        if (!hasSeenPopup) {
-            const timer = setTimeout(() => {
-                setShowSubscriptionModal(true);
-                sessionStorage.setItem('hasSeenSubscriptionPopup', 'true');
-            }, 1500);
-            return () => clearTimeout(timer);
-        }
-    }, [setShowSubscriptionModal]);
 
     const closeDnaDialog = () => {
         setShowDnaUpdated(false);

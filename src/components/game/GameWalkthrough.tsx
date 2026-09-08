@@ -73,7 +73,6 @@ export function GameWalkthrough() {
                 
                 const isCheckInOpen = !sessionStorage.getItem('hasCheckedInSession');
                 const isTopicSurveyOpen = profile?.stories_completed === 3 && !localStorage.getItem('aya_topic_survey_done');
-                const isSubscriptionOpen = state.showSubscriptionModal;
 
                 // Also check if any generic modals (z-[9999] or higher) are visible in the DOM
                 const hasDomModals = Array.from(document.querySelectorAll('.fixed.inset-0')).some((el: any) => {
@@ -81,7 +80,7 @@ export function GameWalkthrough() {
                     return !cn.includes('z-[99999]') && (cn.includes('z-[9999]') || cn.includes('z-[10000]'));
                 });
 
-                if (!isCheckInOpen && !isTopicSurveyOpen && !isSubscriptionOpen && !hasDomModals) {
+                if (!isCheckInOpen && !isTopicSurveyOpen && !hasDomModals) {
                     clearInterval(interval);
                     // Add a small buffer after the last modal disappears
                     setTimeout(() => setIsActive(true), 1500);
@@ -99,15 +98,13 @@ export function GameWalkthrough() {
             
             // Still wait for any newly opened overlays (like CheckIn on fresh navigate) to close
             const startInterval = setInterval(() => {
-                const state = useUserStore.getState();
                 const isCheckInOpen = !sessionStorage.getItem('hasCheckedInSession');
-                const isSubscriptionOpen = state.showSubscriptionModal;
                 const hasDomModals = Array.from(document.querySelectorAll('.fixed.inset-0')).some((el: any) => {
                     const cn = el.className || '';
                     return !cn.includes('z-[99999]') && (cn.includes('z-[9999]') || cn.includes('z-[10000]'));
                 });
 
-                if (!isCheckInOpen && !isSubscriptionOpen && !hasDomModals) {
+                if (!isCheckInOpen && !hasDomModals) {
                     clearInterval(startInterval);
                     setIsActive(true);
                 }

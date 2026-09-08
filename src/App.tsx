@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppLayout } from './layouts/AppLayout';
 
-import { HomePage } from './pages/Home';
 import { GameRoot } from './pages/GameRoot';
 import { SignupPage } from './pages/SignupPage';
 import { SigninPage } from './pages/SigninPage';
@@ -18,7 +17,6 @@ import { ThemeSwitcherPage } from './pages/ThemeSwitcherPage';
 import { NotificationOnboardingPage } from './pages/NotificationOnboardingPage';
 import { SocialPage } from './pages/SocialPage';
 import { FeedbackDashboard } from './components/admin/FeedbackDashboard';
-import { PaymentVerify } from './pages/PaymentVerify';
 import ReactGA from 'react-ga4';
 import { AnalyticsTracker } from './components/AnalyticsTracker';
 import { GoogleTranslateSync } from './components/GoogleTranslateSync';
@@ -63,11 +61,10 @@ function App() {
       <Analytics />
       <Routes>
         <Route element={<AppLayout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Navigate to="/game" replace />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup/complete" element={<SignupCompletePage />} />
-          <Route path="/payment/verify" element={<PaymentVerify />} />
           <Route path="/dashboard" element={<Navigate to="/game" replace />} />
           <Route path="/game" element={<GameRoot />}>
             <Route index element={<MapRouteHandler />} />

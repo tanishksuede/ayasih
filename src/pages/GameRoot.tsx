@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation, Navigate } from 'react-router-dom';
 import { SupabaseChecker } from '../components/SupabaseChecker';
 import { StreakCelebration } from '../components/game/StreakCelebration';
-import { SubscriptionModal } from '../components/payment/SubscriptionModal';
 import { supabase } from '../utils/supabase';
 import { getSession, clearSession, markQuizDone, isQuizDone } from '../utils/session';
 import { withTimeout } from '../utils/withTimeout';
@@ -18,8 +17,6 @@ export function GameRoot() {
     const setMapTheme = useUserStore((state) => state.setMapTheme);
     const pendingStreakData = useUserStore((state) => state.pendingStreakData);
     const setPendingStreakData = useUserStore((state) => state.setPendingStreakData);
-    const showSubscriptionModal = useUserStore((state) => state.showSubscriptionModal);
-    const setShowSubscriptionModal = useUserStore((state) => state.setShowSubscriptionModal);
     const location = useLocation();
     const safetySyncStarted = useRef(false);
 
@@ -487,10 +484,6 @@ export function GameRoot() {
                 : 'h-[100dvh] overflow-hidden'
         }`}>
             <SupabaseChecker />
-            <SubscriptionModal 
-                isOpen={showSubscriptionModal} 
-                onClose={() => setShowSubscriptionModal(false)} 
-            />
             <Outlet />
             <NotificationPrompt 
                 isOpen={showDailyNotifPrompt}

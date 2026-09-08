@@ -1,5 +1,5 @@
 export const STORY_DATABASE: Record<string, any> = {
-    'lvl_age_13_anne_1': {
+'lvl_age_13_anne_1': {
         background: '/assets/anne-amsterdam-street.png',
         characterRight: '/assets/portrait-anne-frank.png',
         emotion: 'joy',
@@ -68,7 +68,8 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
-    'lvl_age_13_anne_2': {
+
+'lvl_age_13_anne_2': {
         background: '/assets/anne-annex-room.png',
         characterRight: '/assets/portrait-anne-frank.png',
         emotion: 'fear',
@@ -137,8 +138,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
+
     // AGE 19: Sachin Tendulkar
-    'lvl_age_19_sachin': {
+'lvl_age_19_sachin': {
         title: "The Trial of Fire",
         source: "Source: Australia tour 1991-92, Perth Test",
         frames: [
@@ -268,7 +270,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 19: Sundar Pichai
-    'lvl_age_19_sundar': {
+'lvl_age_19_sundar': {
         title: "The Divided Mind",
         source: "Source: Days at IIT Kharagpur",
         frames: [
@@ -397,7 +399,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 19: Shah Rukh Khan
-    'lvl_age_19_srk': {
+'lvl_age_19_srk': {
         title: "A Stage For Grief",
         source: "Source: Theatre Action Group (TAG) Delhi, early years",
         frames: [
@@ -530,8 +532,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
+
     // AGE 18: Virat Kohli
-    'lvl_age_18_kohli': {
+'lvl_age_18_kohli': {
         title: "The King's Promise",
         source: "Source: Delhi vs Karnataka, Ranji Trophy 2006",
         frames: [
@@ -676,7 +679,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 18: Dr. A.P.J. Abdul Kalam
-    'lvl_age_18_kalam': {
+'lvl_age_18_kalam': {
         title: "The Big Leap",
         source: "Source: 'Wings of Fire', Autobiography",
         frames: [
@@ -821,7 +824,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 18: Ratan Tata
-    'lvl_age_18_tata': {
+'lvl_age_18_tata': {
         title: "The Defiant Blueprint",
         source: "Source: Ratan Tata's early life interviews",
         frames: [
@@ -950,121 +953,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
-    // AGE 18: Taylor Swift (The Artist)
-    'lvl_age_18': {
-        title: "The Nashville Choice",
-        source: "Source: 'Taylor Swift: The Life of a Songwriter' & Rolling Stone Interviews.",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'determination',
-                bg: '/assets/bg_taylor_cafe.png',
-                text: "It's 2008. You are 15 (but let's say 18 for game flow). You're sitting in the Bluebird Cafe in Nashville. Scott Borchetta from a new indie label 'Big Machine' is watching you.",
-                choices: [
-                    {
-                        text: "Play a cover of a popular hit.",
-                        next: 'safe_route',
-                        score: -10,
-                        feedbackTitle: "Just Another Singer",
-                        feedback: "Scott is looking for a unique voice, not a karaoke machine. Playing it safe gets you nowhere in art."
-                    },
-                    {
-                        text: "Play your original song 'Tim McGraw'.",
-                        next: 'risk_route',
-                        score: 10,
-                        feedbackTitle: "Bold Move",
-                        feedback: "Yes! You bet on your own songwriting. Scott is captivated by your storytelling."
-                    }
-                ]
-            },
-            {
-                id: 'safe_route',
-                bg: '/assets/bg_taylor_studio.png',
-                text: "You sound great, but you sound like everyone else. Scott leaves early. You finish high school and wonder 'what if'.",
-                choices: [
-                    { text: "Try Again", next: 'intro', score: -5, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'risk_route',
-                emotion: 'hope',
-                bg: '/assets/bg_taylor_studio.png',
-                text: "Scott offers you a deal, but it's a tiny label with no money. RCA Records also wants you, but they want you to sing other people's songs.",
-                choices: [
-                    {
-                        text: "Take the RCA deal. They have money!",
-                        next: 'rca_fail',
-                        score: -10,
-                        feedbackTitle: "Golden Handcuffs",
-                        feedback: "You sign with RCA. They shelf you for 2 years because they 'don't know what to do with you'. Authenticity matters more than budget."
-                    },
-                    {
-                        text: "Sign with Scott/Big Machine.",
-                        next: 'tour_grind',
-                        score: 10,
-                        feedbackTitle: "Creative Control",
-                        feedback: "Smart. You chose the partner who let you write your own music, even if they had less cash."
-                    }
-                ]
-            },
-            {
-                id: 'rca_fail',
-                emotion: 'hope',
-                bg: '/assets/bg_taylor_studio.png',
-                text: "You sign with RCA. They shelf you for 2 years because they 'don't know what to do with you'. Authenticity matters more than budget.",
-                choices: [
-                    { text: "Try Again", next: 'risk_route', score: -5, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'tour_grind',
-                emotion: 'hope',
-                bg: '/assets/bg_taylor_bus.png',
-                text: "The album is out. It's doing okay, but you need more fans. Radio stations are the gatekeepers.",
-                choices: [
-                    {
-                        text: "Send mass emails to DJs.",
-                        next: 'email_fail',
-                        score: -5,
-                        feedbackTitle: "Impersonal",
-                        feedback: "It's efficient, but easily ignored. In the ending of the day, people buy from people."
-                    },
-                    {
-                        text: "Go on a 6-month radio tour. Bake cookies for DJs.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "The Hustle",
-                        feedback: "Legendary. Taylor visited every single radio station, remembered their kids' names, and baked them cookies. They played her song because they loved HER."
-                    }
-                ]
-            },
-            {
-                id: 'success',
-                emotion: 'hope',
-                bg: '/assets/avatar_taylor_swift.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "Tim McGraw hits the Billboard Hot 100. You are on your way to becoming the biggest star in the world.",
-                choices: [
-                    { text: "Next Chapter", next: 'LEARNING', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'LEARNING',
-                emotion: 'hope',
-                bg: '/assets/avatar_taylor_swift.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "LESSON: AUTHENTICITY. Taylor Swift didn't have the best voice or the most money. She had her own stories and a relentless work ethic. Bet on your unique voice.",
-                choices: [
-                    { text: "Collect Reward", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
 
     // AGE 19: Mark Zuckerberg (The Visionary)
-    'lvl_age_19': {
+'lvl_age_19': {
         title: "The Dropout Dilemma",
         source: "Source: 'The Facebook Effect' by David Kirkpatrick.",
         frames: [
@@ -1154,93 +1045,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-
-
-    // AGE 20 (Music): Taylor Swift (The Solo Experiment)
-    'lvl_age_20_music': {
-        title: "The Solo Experiment",
-        source: "Source: 'Speak Now' Album Liner Notes & Rolling Stone.",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'loneliness',
-                bg: '/assets/bg_taylor_awards.png',
-                bgPosition: 'object-right',
-                text: "It's 2010. You are 20. Critics are saying you don't write your own songs and that you rely on Nashville pros.",
-                choices: [
-                    {
-                        text: "Play it safe. Hire top co-writers.",
-                        next: 'safe_bet',
-                        score: -10,
-                        feedbackTitle: "Safety Net",
-                        feedback: "You make a great album, but the whispers never stop. 'She's just a puppet.'"
-                    },
-                    {
-                        text: "Write the entire album 100% alone.",
-                        next: 'solo_write',
-                        score: 10,
-                        feedbackTitle: "Bold Move",
-                        feedback: "You lock yourself in your room. No co-writers. Just you and the guitar."
-                    }
-                ]
-            },
-            {
-                id: 'safe_bet',
-                bg: '/assets/bg_taylor_room.png',
-                text: "The album travels well, but you feel like you haven't proved yourself.",
-                choices: [
-                    { text: "Try Again", next: 'intro', score: -5, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'solo_write',
-                emotion: 'triumph',
-                bg: '/assets/bg_taylor_room.png',
-                text: "It's lonely and hard. You have no one to bounce ideas off of. But the songs are brutally honest.",
-                choices: [
-                    {
-                        text: "Ask a producer to tweak the lyrics.",
-                        next: 'compromise',
-                        score: -5,
-                        feedbackTitle: "Doubt",
-                        feedback: "It would help, but it ruins the point of the experiment."
-                    },
-                    {
-                        text: "Trust your own pen. Submit it as is.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "Self-Belief",
-                        feedback: "'Speak Now' becomes a classic. Hand-written by Taylor Swift. The critics are silenced."
-                    }
-                ]
-            },
-            {
-                id: 'success',
-                emotion: 'triumph',
-                bg: '/assets/avatar_taylor_swift.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "You win 2 Grammys for the album. You proved that your voice is yours alone.",
-                choices: [
-                    { text: "Next Chapter", next: 'LEARNING', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'LEARNING',
-                emotion: 'triumph',
-                bg: '/assets/avatar_taylor_swift.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "LESSON: AUTONOMY. Sometimes the only way to kill impostor syndrome is to do the hard thing completely on your own.",
-                choices: [
-                    { text: "Collect Reward", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
     // AGE 20 (Sports): Kobe Bryant (The Mamba)
-    'lvl_age_20_sports': {
+'lvl_age_20_sports': {
         title: "The 4 AM Club",
         source: "Source: 'The Mamba Mentality' by Kobe Bryant.",
         frames: [
@@ -1320,7 +1126,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 20 (Education): NV Sir (The Mentor)
-    'lvl_age_20_nv_sir': {
+'lvl_age_20_nv_sir': {
         title: "The Educator's Dilemma",
         source: "Source: NV Sir's Life Journey.",
         frames: [
@@ -1473,7 +1279,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 20 (Art): Frida Kahlo (The Icon)
-    'lvl_age_20_art': {
+'lvl_age_20_art': {
         title: "The Broken Column",
         source: "Source: 'Frida: A Biography of Frida Kahlo'.",
         frames: [
@@ -1557,7 +1363,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 20: Bill Gates (The Architect) - Default/Tech
-    'lvl_age_20': {
+'lvl_age_20': {
         title: "The Software Gamble",
         source: "Source: 'Hard Drive: Bill Gates and the Making of the Microsoft Empire'.",
         frames: [
@@ -1653,7 +1459,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 21: Steve Jobs (The Rebel)
-    'lvl_age_21': {
+'lvl_age_21': {
         title: "The Garage Startup",
         source: "Source: 'Steve Jobs' by Walter Isaacson.",
         frames: [
@@ -1749,7 +1555,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 22: Walt Disney (The Dreamer)
-    'lvl_age_22': {
+'lvl_age_22': {
         title: "The Bankruptcy",
         source: "Source: 'Walt Disney: The Triumph of the American Imagination'.",
         frames: [
@@ -1823,7 +1629,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 23: Oprah (The Voice)
-    'lvl_age_23': {
+'lvl_age_23': {
         title: "The Demotion",
         source: "Source: 'Oprah: A Biography' by Kitty Kelley.",
         frames: [
@@ -1898,7 +1704,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 24: Elon Musk (The Iron Man)
-    'lvl_age_24': {
+'lvl_age_24': {
         title: "The Couch Surfer",
         source: "Source: 'Elon Musk' by Walter Isaacson.",
         frames: [
@@ -1970,7 +1776,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 25: J.K. Rowling (The Storyteller)
-    'lvl_age_25': {
+'lvl_age_25': {
         title: "The Delayed Train",
         source: "Source: J.K. Rowling's Harvard Commencement Speech.",
         frames: [
@@ -2044,9 +1850,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-
     // --- ARNOLD SCHWARZENEGGER (Age 20 - The Gamble) ---
-    'scenario_arnold_awol': {
+'scenario_arnold_awol': {
         title: "The AWOL Gamble",
         source: "Source: Arnold's Autobiography.",
         frames: [
@@ -2121,7 +1926,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // --- STEPHEN HAWKING (Age 20 - The Defiance) ---
-    'scenario_hawking_diagnosis': {
+'scenario_hawking_diagnosis': {
         title: "The Death Sentence",
         source: "Source: My Brief History.",
         frames: [
@@ -2196,7 +2001,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // --- TINA DABI (Age 24 - The Strategist) ---
-    'scenario_upsc_tina_college': {
+'scenario_upsc_tina_college': {
         title: "The College Sacrifice",
         source: "Source: Tina Dabi's Interviews (2015 Topper).",
         frames: [
@@ -2271,11 +2076,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-
-
-
     // AGE 20 (Literature): Mary Shelley (The Creator)
-    'lvl_age_20_literature': {
+'lvl_age_20_literature': {
         title: "The Monster's Birth",
         source: "Source: 'Mary Shelley: Her Life, Her Fiction, Her Monsters'.",
         frames: [
@@ -2358,7 +2160,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 20 (Cinema): Steven Spielberg (The Director)
-    'lvl_age_20_cinema': {
+'lvl_age_20_cinema': {
         title: "The Universal Gate",
         source: "Source: 'Steven Spielberg: A Biography'.",
         frames: [
@@ -2439,8 +2241,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
+
     // AGE 17: P.V. Sindhu
-    'lvl_age_17_sindhu': {
+'lvl_age_17_sindhu': {
         title: "The Olympic Prelude",
         source: "Source: Various Interviews, 2012 Journey",
         frames: [
@@ -2531,8 +2334,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
+
     // AGE 17: A.R. Rahman
-    'lvl_age_17_rahman': {
+'lvl_age_17_rahman': {
         title: "The Silent Melody",
         source: "Source: Biography of A.R. Rahman",
         frames: [
@@ -2622,8 +2426,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
+
     // AGE 17: Malala Yousafzai
-    'lvl_age_17_malala': {
+'lvl_age_17_malala': {
         title: "The Price of Peace",
         source: "Source: 'I Am Malala'",
         frames: [
@@ -2713,8 +2518,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
+
     // AGE 17: Steve Jobs
-    'lvl_age_17_jobs': {
+'lvl_age_17_jobs': {
         title: "The Dropout's Intuition",
         source: "Source: Steve Jobs' Stanford Commencement Address",
         frames: [
@@ -2804,8 +2610,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
+
     // AGE 17: Indra Nooyi
-    'lvl_age_17_nooyi': {
+'lvl_age_17_nooyi': {
         title: "The Rulebreaker",
         source: "Source: 'My Life in Full' by Indra Nooyi",
         frames: [
@@ -2897,7 +2704,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 17: Shah Rukh Khan — "The Stage or The Books"
-    'lvl_age_17_srk': {
+'lvl_age_17_srk': {
         title: "The Stage or The Books",
         source: "Source: Theatre Action Group (TAG) Delhi, 1982",
         frames: [
@@ -2978,7 +2785,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 19 (story 2): Shah Rukh Khan — "Leave Delhi or Stay"
-    'lvl_age_19_srk_2': {
+'lvl_age_19_srk_2': {
         title: "Leave Delhi or Stay",
         source: "Source: Shah Rukh Khan's Delhi years, 1984",
         frames: [
@@ -3059,7 +2866,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 21: Shah Rukh Khan — "The Role That Could Destroy You"
-    'lvl_age_21_srk': {
+'lvl_age_21_srk': {
         title: "The Role That Could Destroy You",
         source: "Source: Shah Rukh Khan's Delhi theatre years, 1986",
         frames: [
@@ -3140,7 +2947,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 23: Shah Rukh Khan — "Gauri or Career"
-    'lvl_age_23_srk': {
+'lvl_age_23_srk': {
         title: "Gauri or Career",
         source: "Source: Shah Rukh Khan's personal life, Delhi 1988",
         frames: [
@@ -3221,7 +3028,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 25: Shah Rukh Khan — "Mumbai Is Eating Me Alive"
-    'lvl_age_25_srk': {
+'lvl_age_25_srk': {
         title: "Mumbai Is Eating Me Alive",
         source: "Source: Shah Rukh Khan's early Mumbai years, 1990",
         frames: [
@@ -3299,195 +3106,10 @@ export const STORY_DATABASE: Record<string, any> = {
                 ]
             }
         ]
-    }
-
-,
-    // AGE 19: Billie Eilish
-    'lvl_age_19_billie': {
-        title: "Fame Is Eating Me Alive",
-        source: "Source: Billie Eilish interviews, 2020-2021",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'triumph',
-                bg: '/assets/bg_billie_la.jpg',
-                text: "Year: 2020. Los Angeles. You are 19. You just won 5 Grammy Awards in one night — the most by any artist your age in history. But you haven't slept properly in 6 months. You have body dysmorphia, depression and anxiety. Your management wants you to start your next album immediately. Your therapist says you need 6 months completely off.",
-                choices: [
-                    {
-                        text: "A) Start the next album immediately — momentum in music is everything.",
-                        next: 'momentum',
-                        score: -5,
-                        feedbackTitle: "Playing Empty",
-                        feedback: "You chose momentum. Billie felt that pressure too. But she discovered that music made from an empty place sounds empty. What are you creating from right now — fullness or exhaustion?"
-                    },
-                    {
-                        text: "B) Take 6 months completely off — mental health is the foundation of everything.",
-                        next: 'rest',
-                        score: 10,
-                        feedbackTitle: "You Chose Yourself",
-                        feedback: "Billie made this choice and it terrified her. The world kept moving without her for 6 months and she survived. So would you."
-                    },
-                    {
-                        text: "C) Write music privately while publicly stepping back from appearances.",
-                        next: 'middle',
-                        score: 5,
-                        feedbackTitle: "The Middle Path",
-                        feedback: "Billie eventually did this too — she processed privately before sharing publicly. The question is whether you can truly rest while still creating."
-                    }
-                ]
-            },
-            {
-                id: 'momentum',
-                bg: '/assets/bg_billie_la.jpg',
-                text: "The sessions start well, but the music feels hollow. Your collaborator Finneas notices you're not really present. The songs lack the raw honesty your fans love.",
-                choices: [
-                    {
-                        text: "Pause. Be honest — you need to heal before you can create.",
-                        next: 'rest',
-                        score: 10,
-                        feedbackTitle: "The Brave Pause",
-                        feedback: "Stopping to heal takes more courage than pushing through."
-                    }
-                ]
-            },
-            {
-                id: 'rest',
-                emotion: 'calm',
-                bg: '/assets/bg_billie_la.jpg',
-                text: "Six months pass. You speak publicly about your mental health struggles. The world doesn't abandon you — millions write that your honesty saved them. Now you return to the studio, full.",
-                choices: [
-                    {
-                        text: "Channel everything you felt into the new album.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "Vulnerability Is Strength",
-                        feedback: "Stopping to heal wasn't weakness. It was the most courageous thing you could do."
-                    }
-                ]
-            },
-            {
-                id: 'middle',
-                emotion: 'calm',
-                bg: '/assets/bg_billie_la.jpg',
-                text: "Writing privately helps. You process through lyrics what you can't say in interviews. Slowly the songs become honest again.",
-                choices: [
-                    {
-                        text: "Share the music when you're truly ready.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "Private Process, Public Impact",
-                        feedback: "The authenticity you protected privately shines through publicly."
-                    }
-                ]
-            },
-            {
-                id: 'success',
-                emotion: 'calm',
-                bg: '/assets/avatar_billie.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "Happier Than Ever becomes your most critically acclaimed album. You proved that stopping, healing, and being honest about struggle isn't weakness — it's the most courageous thing a 19-year-old can do in front of the entire world. LESSON: VULNERABILITY IS STRENGTH.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Happier Than Ever", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 19: MrBeast
-    'lvl_age_19_mrbeast': {
-        title: "Drop Out or Keep Uploading",
-        source: "Source: MrBeast (Jimmy Donaldson) interviews, 2017",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'determination',
-                bg: '/assets/bg_mrbeast_nc.jpg',
-                text: "Year: 2017. North Carolina. You are 19. You've been making YouTube videos for 5 years with almost no success — 30,000 subscribers. Your mom is begging you to go to college. You just had an idea for a video counting to 100,000. It will take days. It's ridiculous. College applications are due tomorrow.",
-                choices: [
-                    {
-                        text: "A) Apply to college — have a backup plan, YouTube is too uncertain.",
-                        next: 'college',
-                        score: -5,
-                        feedbackTitle: "The Safe Plan",
-                        feedback: "You chose safety. Jimmy's mom wanted that for him too. But he asked himself — if YouTube fails, can I handle knowing I never truly tried? Can you?"
-                    },
-                    {
-                        text: "B) Make the counting video — bet everything on your instinct.",
-                        next: 'count',
-                        score: 10,
-                        feedbackTitle: "Delusional Confidence",
-                        feedback: "You think like MrBeast. The ability to believe in something absurd long enough for the world to catch up is genuinely rare."
-                    },
-                    {
-                        text: "C) Apply to college but keep making videos — do both until one wins.",
-                        next: 'both',
-                        score: 0,
-                        feedbackTitle: "Half Commitment",
-                        feedback: "Many successful YouTubers did this. But MrBeast discovered that half-commitment produces half-results. Sometimes the backup plan is what's holding you back."
-                    }
-                ]
-            },
-            {
-                id: 'college',
-                emotion: 'tension',
-                bg: '/assets/bg_mrbeast_nc.jpg',
-                text: "You enroll. Classes are fine. But every night you're watching YouTube analytics instead of studying. The idea for the counting video won't leave your head.",
-                choices: [
-                    {
-                        text: "Drop out. Make the video you can't stop thinking about.",
-                        next: 'count',
-                        score: 10,
-                        feedbackTitle: "The Itch You Can't Ignore",
-                        feedback: "When an idea won't leave you alone, that's data."
-                    }
-                ]
-            },
-            {
-                id: 'both',
-                bg: '/assets/bg_mrbeast_nc.jpg',
-                text: "You split your time. The videos are decent but not obsessive. You realize you're not giving either path everything.",
-                choices: [
-                    {
-                        text: "Go all-in on YouTube. Make the absurd counting video.",
-                        next: 'count',
-                        score: 10,
-                        feedbackTitle: "Full Send",
-                        feedback: "Commitment is a prerequisite for breakthrough."
-                    }
-                ]
-            },
-            {
-                id: 'count',
-                emotion: 'tension',
-                bg: '/assets/bg_mrbeast_nc.jpg',
-                text: "You film for 40+ hours straight, counting to 100,000 on camera. Your team thinks you've lost your mind. You upload it anyway.",
-                choices: [
-                    {
-                        text: "Hit publish and go to sleep.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "The Absurd Idea",
-                        feedback: "Every world-changing idea looks stupid before it works."
-                    }
-                ]
-            },
-            {
-                id: 'success',
-                emotion: 'tension',
-                bg: '/assets/avatar_mrbeast.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "The video goes viral. He never went to college. He now has 200+ million subscribers and has given away over $100 million. LESSON: ABSURD IDEAS CHANGE THE WORLD. Nobody thought it would work. That's exactly why it did.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Counting to Greatness", feedback: "" }
-                ]
-            }
-        ]
     },
 
     // AGE 19: Ritesh Agarwal
-    'lvl_age_19_ritesh': {
+'lvl_age_19_ritesh': {
         title: "The Dropout Founder",
         source: "Source: Ritesh Agarwal, OYO Rooms origin story, 2012",
         frames: [
@@ -3579,7 +3201,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 19: Muhammad Ali
-    'lvl_age_19_ali': {
+'lvl_age_19_ali': {
         title: "Throw The Medal Away",
         source: "Source: Muhammad Ali, Rome Olympics 1960",
         frames: [
@@ -3670,204 +3292,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 20: Dhruv Rathee
-    'lvl_age_20_dhruv': {
-        title: "Germany or India",
-        source: "Source: Dhruv Rathee interviews and YouTube journey, 2014",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'loneliness',
-                bg: '/assets/bg_dhruv_germany.png',
-                text: "Year: 2014. Germany. You are 20, studying mechanical engineering on a scholarship. You started making YouTube videos about Indian politics — nobody is watching. You have 500 subscribers. A German company offers you a prestigious internship. But you feel a burning rage about misinformation spreading in India. Someone needs to speak up.",
-                choices: [
-                    {
-                        text: "A) Focus on engineering — finish your degree, build security, then use your platform.",
-                        next: 'engineering',
-                        score: 5,
-                        feedbackTitle: "Build the Foundation",
-                        feedback: "Dhruv did this too. He graduated first. The discipline of engineering sharpened his research skills."
-                    },
-                    {
-                        text: "B) Go all in on YouTube — India needs honest voices more than one more engineer.",
-                        next: 'youtube',
-                        score: -5,
-                        feedbackTitle: "Too Soon",
-                        feedback: "Passion without patience collapses. Dhruv kept studying AND kept making videos. Both disciplines fed each other."
-                    },
-                    {
-                        text: "C) Do both — keep studying but upload consistently, let the audience decide.",
-                        next: 'both',
-                        score: 10,
-                        feedbackTitle: "Build the Bridge While Crossing It",
-                        feedback: "This is exactly what Dhruv did. By the time he had to choose, the choice was obvious."
-                    }
-                ]
-            },
-            {
-                id: 'youtube',
-                emotion: 'determination',
-                bg: '/assets/bg_dhruv_germany.png',
-                text: "You quit your studies. Without credentials, your videos struggle to be taken seriously. You realize authority and research depth matter for this kind of content.",
-                choices: [
-                    {
-                        text: "Go back. Finish the degree while continuing to upload.",
-                        next: 'both',
-                        score: 10,
-                        feedbackTitle: "Patience Is Architecture",
-                        feedback: "Patience in the building phase is not weakness."
-                    }
-                ]
-            },
-            {
-                id: 'engineering',
-                bg: '/assets/bg_dhruv_germany.png',
-                text: "You graduate. Your degree gives you credibility. Now you have the research skills AND the credentials. The YouTube channel is still small but growing steadily.",
-                choices: [
-                    {
-                        text: "Go full-time on YouTube — the time is right.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "The Obvious Choice",
-                        feedback: "By the time you had to choose, the choice was obvious."
-                    }
-                ]
-            },
-            {
-                id: 'both',
-                emotion: 'determination',
-                bg: '/assets/bg_dhruv_germany.png',
-                text: "You study by day and research-write by night. The videos are slow but consistent. Your engineering brain makes your research unusually rigorous.",
-                choices: [
-                    {
-                        text: "Graduate, then go all-in.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "The Long Game",
-                        feedback: "20 million subscribers are waiting on the other side of patience."
-                    }
-                ]
-            },
-            {
-                id: 'success',
-                emotion: 'determination',
-                bg: '/assets/avatar_dhruv.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "Today Dhruv Rathee has 20+ million subscribers and is one of India's most influential voices on democracy and environment. LESSON: BUILD THE BRIDGE WHILE CROSSING IT. Patience in the building phase is not weakness — it's architecture.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "20 Million Strong", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 16: Bhuvan Bam
-    'lvl_age_16_bhuvan': {
-        title: "The Night Shift Stage",
-        source: "Source: StartupTalky (2021), Wikipedia / Shaheed Bhagat Singh College, Quartz India (2022)",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'seeking',
-                bg: '/assets/bg_Bhuvan bam.png',
-                portrait: '/assets/avatar_bhuvan bam.jpg',
-                text: "You just scored 74% in your Class 12 board exams. Your parents want you to pursue a respectable commerce degree for a safe corporate future, but your real passion is music. A local Mughlai restaurant offers you a gig playing guitar from 8 PM to midnight every night, but balancing that with rigorous academics feels impossible.\n\nHow do you handle the pressure from your parents and your passion for music?",
-                choices: [
-                    {
-                        text: "A) Focus on the commerce degree and keep music as a weekend hobby.",
-                        next: 'commerce_path',
-                        score: 5,
-                        feedbackTitle: "The Safe Route",
-                        feedback: "It satisfies family expectations, but keeping music to weekends starves your real creative drive."
-                    },
-                    {
-                        text: "B) Drop out of college to pursue music full-time and risk your parents' anger.",
-                        next: 'dropout_path',
-                        score: 5,
-                        feedbackTitle: "High Stakes Rebellion",
-                        feedback: "Full rebellion creates financial panic and family friction that can suffocate your art."
-                    },
-                    {
-                        text: "C) Enroll in a lighter arts degree to free up your nights for the restaurant gig.",
-                        next: 'arts_degree_path',
-                        score: 10,
-                        feedbackTitle: "The Strategic Compromise",
-                        feedback: "A lighter academic load keeps family peace while buying you nightly stage time to hone your craft."
-                    }
-                ]
-            },
-            {
-                id: 'commerce_path',
-                emotion: 'frustration',
-                bg: '/assets/bg_Bhuvan bam.png',
-                portrait: '/assets/avatar_bhuvan bam.jpg',
-                text: "It's the safe path, but you lose the daily practice and live audience that would have shaped your stage presence. You realize that playing it safe is quietly killing your creative spark.",
-                choices: [
-                    {
-                        text: "Pivot: Choose a manageable degree and take the night gig.",
-                        next: 'arts_degree_path',
-                        score: 10,
-                        feedbackTitle: "Action Step",
-                        feedback: "Recognizing that comfort comes at the expense of your craft."
-                    }
-                ]
-            },
-            {
-                id: 'dropout_path',
-                emotion: 'tension',
-                bg: '/assets/bg_Bhuvan bam.png',
-                portrait: '/assets/avatar_bhuvan bam.jpg',
-                text: "The financial instability and family tension drain your creative energy, turning your passion into a stressful burden. You need a foundation that gives you time without destroying family trust.",
-                choices: [
-                    {
-                        text: "Find a middle ground: get the degree while playing nightly gigs.",
-                        next: 'arts_degree_path',
-                        score: 10,
-                        feedbackTitle: "Action Step",
-                        feedback: "Strategic compromise buys you the freedom to build your skills."
-                    }
-                ]
-            },
-            {
-                id: 'arts_degree_path',
-                emotion: 'determination',
-                bg: '/assets/bg_Bhuvan bam.png',
-                portrait: '/assets/avatar_bhuvan bam.jpg',
-                text: "You endure exhausting late nights singing from 8 PM to midnight to diners who are just there to eat. The work is unglamorous and tiring, but in that noisy Delhi restaurant, you slowly master the art of holding a crowd's attention and commanding any room.",
-                choices: [
-                    {
-                        text: "Reflect on the Grind and the Growth",
-                        next: 'lesson',
-                        score: 10,
-                        feedbackTitle: "Stage Presence Forged",
-                        feedback: "Putting in the unglamorous hours when no one is watching."
-                    }
-                ]
-            },
-            {
-                id: 'lesson',
-                emotion: 'determination',
-                bg: '/assets/avatar_bhuvan bam.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_bhuvan bam.jpg',
-                text: "After scoring 74% in Class 12, Bhuvan Bam chose a BA in History at Shaheed Bhagat Singh College and played live acoustic gigs 8 PM to midnight every single night at a Mughlai restaurant in Delhi, forging the work ethic and performance mastery that later created BB Ki Vines.\n\nLESSONS:\n1. Your board exam marks don't dictate your future.\n2. Pursuing a passion often requires unglamorous, exhausting work first.\n3. Sometimes you have to make a compromise to buy time for your real goals.",
-                choices: [
-                    {
-                        text: "Complete Level",
-                        next: 'COMPLETE',
-                        score: 10,
-                        feedbackTitle: "Mission Accomplished",
-                        feedback: ""
-                    }
-                ]
-            }
-        ]
-    },
-
     // AGE 16: Shahrukh Khan
-    'lvl_age_16_srk': {
+'lvl_age_16_srk': {
         title: "The Sword of Honour",
         source: "Source: Biography / Hindustan Times",
         frames: [
@@ -3952,7 +3378,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 16: Michael Jordan
-    'lvl_age_16_jordan': {
+'lvl_age_16_jordan': {
         title: "The Roster",
         source: "Source: Basketball Network & Education Week (1997)",
         frames: [
@@ -4036,146 +3462,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 16: Taylor Swift
-    'lvl_age_16_taylor': {
-        title: "The Development Deal",
-        source: "Source: CBS Sunday Morning & American Songwriter (2025)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'hopeful',
-                bg: '/assets/bg_taylor_awards.png',
-                text: "Your family moved across the country to Nashville to support your dream of becoming a songwriter. At 14, you land a development deal with an established major record label.",
-                choices: [
-                    { text: "Read the label's terms", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'frustrated',
-                bg: '/assets/bg_taylor_awards.png',
-                text: "The label refuses to let you cut your own songs, wanting to keep you shelved until you turn 18. Meanwhile, an executive starting a brand-new label with no staff and no building offers to release your music immediately.",
-                choices: [
-                    { text: "Weigh the two paths", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'conflicted',
-                bg: '/assets/bg_taylor_awards.png',
-                text: "Which path do you take for your music career?",
-                choices: [
-                    {
-                        text: "Stay with the major label and wait until you are 18, securing guaranteed corporate backing for your debut.",
-                        next: 'corporate',
-                        score: 3,
-                        feedbackTitle: "Institutional Safety",
-                        feedback: "You debut safely with songs chosen for you, but you never develop the authentic, personal songwriting that defines greatness."
-                    },
-                    {
-                        text: "Walk away from the major label and sign with the unproven start-up, betting everything on your own songwriting.",
-                        next: 'startup',
-                        score: 10,
-                        feedbackTitle: "Betting on Authenticity",
-                        feedback: "You take the massive risk, unleashing the raw storytelling power that will connect with millions of fans worldwide."
-                    }
-                ]
-            },
-            {
-                id: 'corporate',
-                emotion: 'resigned',
-                bg: '/assets/bg_taylor_awards.png',
-                text: "You play by industry rules and achieve moderate radio success, but your authentic voice remains muted by committee decisions.",
-                choices: [
-                    { text: "Rethink your decision", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'startup',
-                emotion: 'determined',
-                bg: '/assets/avatar_taylor_swift.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_taylor_swift.png',
-                text: "You bet everything on your own words. Your honest, diary-like songwriting connects with millions, turning that tiny startup (Big Machine Records) into an empire and launching Taylor Swift to global superstardom.\n\nLESSONS:\n1. Institutional validation isn't worth sacrificing your authentic voice.\n2. Sometimes the biggest risk is waiting for someone else's permission to be yourself.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 16: Billie Eilish
-    'lvl_age_16_billie': {
-        title: "The Bedroom Studio",
-        source: "Source: Rolling Stone & Sound on Sound (2019)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'restless',
-                bg: '/assets/bg-billie-studio-3am-2022.png',
-                text: "You are 16 and your debut EP just blew up online. As expectations skyrocket for your first full album, the music industry pushes you toward the standard pop-star playbook.",
-                choices: [
-                    { text: "Hear the label's pitch", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'anxious',
-                bg: '/assets/bg-billie-studio-3am-2022.png',
-                text: "Executives offer massive LA studios and A-list hit-making producers. But you and your brother Finneas create your best, darkest sounds huddled around a single mic in his cramped childhood bedroom.",
-                choices: [
-                    { text: "Decide where to record", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'conflicted',
-                bg: '/assets/bg-billie-studio-3am-2022.png',
-                text: "How do you produce your debut album with the whole world watching?",
-                choices: [
-                    {
-                        text: "Work with famous producers in a major studio to guarantee a polished, radio-friendly pop hit.",
-                        next: 'industry',
-                        score: 3,
-                        feedbackTitle: "Sterile Polish",
-                        feedback: "You get radio play, but your songs lose their dark, intimate soul and blend into the commercial pop machine."
-                    },
-                    {
-                        text: "Reject the industry experts and record entirely in a small bedroom to protect your unique sound.",
-                        next: 'bedroom',
-                        score: 10,
-                        feedbackTitle: "Authentic Weirdness",
-                        feedback: "You bet entirely on raw intimacy, producing a revolutionary sound that changes pop music forever."
-                    }
-                ]
-            },
-            {
-                id: 'industry',
-                emotion: 'resigned',
-                bg: '/assets/bg-billie-studio-3am-2022.png',
-                text: "Too many opinions in the room dilute your vision until the music sounds like everyone else.",
-                choices: [
-                    { text: "Rethink your creative space", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'bedroom',
-                emotion: 'determined',
-                bg: '/assets/portrait-billie-20.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-billie-20.png',
-                text: "Sitting on a messy bed, you and Finneas record 'When We All Fall Asleep, Where Do We Go?' The DIY record sweeps the Grammys and turns Billie Eilish into a global cultural phenomenon.\n\nLESSONS:\n1. Authentic weirdness will always connect deeper than sterile perfection.\n2. You don't need massive infrastructure or 'experts' to validate your creative vision.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
     // AGE 16: Bhagat Singh
-    'lvl_age_16_bhagat': {
+'lvl_age_16_bhagat': {
         title: "The Letter on the Desk",
         source: "Source: 'Without Fear: The Life and Trial of Bhagat Singh' by Kuldip Nayar (2007)",
         frames: [
@@ -4243,756 +3531,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 16: Karan Aujla
-    'lvl_age_16_aujla': {
-        title: "The Cargo Grind",
-        source: "Source: Film Companion, PTC Punjabi & Apple Music (2023)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'lonely',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "By age 11, you lost both your parents in Punjab and were raised by your uncle and sisters. Writing lyrics became your escape—you even penned a song that a famous singer turned into a hit.",
-                choices: [
-                    { text: "Face the financial reality", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'conflicted',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "Despite the hit, you are completely broke with no safety net. You have a chance to move to Canada on a student visa, but it requires massive loans and surviving entirely on your own.",
-                choices: [
-                    { text: "Choose your path forward", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'determined',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "How do you build your future and fund your music career without a safety net?",
-                choices: [
-                    {
-                        text: "Stay in Punjab, rely on your relatives for support, and try to hustle in the local scene.",
-                        next: 'local',
-                        score: 3,
-                        feedbackTitle: "Relative Comfort",
-                        feedback: "You stay safe with family, but without deep financial backing, you struggle to break through the crowded local industry."
-                    },
-                    {
-                        text: "Move to Canada, work exhausting dock jobs in the freezing cold, and fund your own studio time.",
-                        next: 'cargo',
-                        score: 10,
-                        feedbackTitle: "Uncompromising Independence",
-                        feedback: "You embrace the brutal immigrant hustle, pouring every hard-earned dollar from the docks into recording your authentic voice."
-                    }
-                ]
-            },
-            {
-                id: 'local',
-                emotion: 'resigned',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You depend on others to survive, but waiting for financial favors holds your creative career hostage.",
-                choices: [
-                    { text: "Rethink your independence", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'cargo',
-                emotion: 'determined',
-                bg: '/assets/avatar_KaranAujla.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_KaranAujla.jpg',
-                text: "You work grueling pre-dawn shifts unloading cargo containers as a longshoreman in Surrey, BC. The exhaustion and isolation sharpen your pen, funding the studio time that turns Karan Aujla into a global superstar.\n\nLESSONS:\n1. Having talent isn't enough; you must be willing to fund your own dream through unglamorous work.\n2. Extreme isolation and hardship can become the most powerful material for your art.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 17: Karan Aujla
-    'lvl_age_17_aujla': {
-        title: "The Failed Debut",
-        source: "Source: Wikipedia, PTC Punjabi & Film Companion (2023)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'frustrated',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You are 17, living in Canada, and already known in industry circles for writing hit lyrics for other artists. You finally save enough money from dock-working shifts to record your debut single as a lead singer: 'Cell Phone'.",
-                choices: [
-                    { text: "Check the track's release", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'confused',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "When the song drops, it completely flops. There is zero mainstream traction, no radio buzz, and total public indifference. The dream you poured your savings into feels like an embarrassing failure.",
-                choices: [
-                    { text: "Decide your next move", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'conflicted',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "Your highly anticipated debut as a singer is a flop. What is your next move?",
-                choices: [
-                    {
-                        text: "Accept that your voice isn't meant for the spotlight and stick exclusively to writing hits for established singers.",
-                        next: 'ghostwrite',
-                        score: 3,
-                        feedbackTitle: "The Safe Safety Net",
-                        feedback: "You earn good money writing for others, but you always watch them perform your words, forever wondering what if."
-                    },
-                    {
-                        text: "Blame the producers and marketing, deciding the industry is rigged against independent newcomers.",
-                        next: 'blame',
-                        score: 0,
-                        feedbackTitle: "Bitterness & Stagnation",
-                        feedback: "Defensive excuses protect your ego, but prevent you from identifying the weaknesses in your own craft."
-                    },
-                    {
-                        text: "Swallow your pride, accept the failure as a baseline, and go back to the studio to aggressively improve your vocals.",
-                        next: 'improve',
-                        score: 10,
-                        feedbackTitle: "Mastering the Craft",
-                        feedback: "You treat public indifference as a training ground, obsessively grinding until your voice is undeniable."
-                    }
-                ]
-            },
-            {
-                id: 'ghostwrite',
-                emotion: 'resigned',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You retreat to your comfort zone. The money is steady, but your original dream of being the voice on stage fades away.",
-                choices: [
-                    { text: "Rethink your potential", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'blame',
-                emotion: 'frustrated',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "Blaming external factors leaves you feeling bitter and stuck, slowly killing your creative motivation.",
-                choices: [
-                    { text: "Take ownership of your craft", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'improve',
-                emotion: 'determined',
-                bg: '/assets/avatar_KaranAujla.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_KaranAujla.jpg',
-                text: "You spend the next few years relentlessly refining your vocal delivery and style. That early failure becomes the grit that catapults Karan Aujla to billions of streams and global stardom.\n\nLESSONS:\n1. Your first attempt at your true dream will likely fail; that failure is a filter, not a final verdict.\n2. It is always tempting to retreat to what you are already good at, but growth requires enduring being bad at something new.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 18: Karan Aujla
-    'lvl_age_18_aujla': {
-        title: "The Double Shift",
-        source: "Source: GQ India, Apple Music & Times of India (2023)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'exhausted',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You are 18, living alone in Canada, and still recovering from the public flop of your debut track. You wake up before dawn to work as a longshoreman on the docks while trying to finish school.",
-                choices: [
-                    { text: "Head to the studio", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'conflicted',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "A rising Canadian producer, Deep Jandu, recognizes your raw gift and invites you into his basement studio. But the sessions only start after midnight and run until sunrise, leaving zero time for sleep.",
-                choices: [
-                    { text: "Face the grueling schedule", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'determined',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "How do you balance your exhausting survival job with this new studio opportunity?",
-                choices: [
-                    {
-                        text: "Stick to writing lyrics for others to make safe, quick cash without losing sleep.",
-                        next: 'ghostwrite',
-                        score: 3,
-                        feedbackTitle: "Behind the Scenes",
-                        feedback: "You earn easy cash without physical strain, but you remain an anonymous writer, watching others perform your words."
-                    },
-                    {
-                        text: "Focus entirely on your dock job and school, accepting the music dream is too risky.",
-                        next: 'quit',
-                        score: 0,
-                        feedbackTitle: "Abandoning the Dream",
-                        feedback: "You secure a stable living, but you live with the quiet heartbreak of quitting just when doors began opening."
-                    },
-                    {
-                        text: "Work the docks by day and stay in the studio all night, pushing through extreme exhaustion.",
-                        next: 'double_shift',
-                        score: 10,
-                        feedbackTitle: "The Relentless Grind",
-                        feedback: "You push your body to the limit, turning sleepless nights into the definitive musical chemistry that launches your career."
-                    }
-                ]
-            },
-            {
-                id: 'ghostwrite',
-                emotion: 'resigned',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You protect your sleep and pay your bills, but your own artistic voice is permanently locked in the background.",
-                choices: [
-                    { text: "Rethink your ambition", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'quit',
-                emotion: 'sad',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You choose safe survival, but the regret of what could have been haunts you every time you hear music.",
-                choices: [
-                    { text: "Give your passion another chance", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'double_shift',
-                emotion: 'determined',
-                bg: '/assets/avatar_KaranAujla.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_KaranAujla.jpg',
-                text: "Running on pure adrenaline and coffee between dock shifts and all-night recording, you and Deep Jandu forge a brand-new sound. That brutal double shift transforms Karan Aujla from an exhausted immigrant laborer into an unstoppable global star.\n\nLESSONS:\n1. Building a dream from the bottom often requires enduring extreme, unglamorous physical and mental exhaustion.\n2. The people who truly believe in your potential will demand your time and effort, even when you have nothing left to give.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 19: Karan Aujla
-    'lvl_age_19_aujla': {
-        title: "The Ghostwriter's Dilemma",
-        source: "Source: GQ India, Film Companion & PTC Punjabi (2023)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'determined',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You are 19 and known as one of the sharpest lyricists in the Canadian Punjabi music scene. Famous stars pay top dollar for your pen, giving you financial stability, but your ultimate dream is to be the voice on stage.",
-                choices: [
-                    { text: "Look at your latest track", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'conflicted',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You just wrote a guaranteed chart-topper. A massive, established artist wants to buy the track immediately for a huge upfront payout, expecting full exclusive rights.",
-                choices: [
-                    { text: "Make the strategic choice", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'motivated',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "What do you do with this guaranteed hit song?",
-                choices: [
-                    {
-                        text: "Sell it completely for safe cash, accepting your profitable role as a behind-the-scenes writer.",
-                        next: 'sell',
-                        score: 2,
-                        feedbackTitle: "Golden Handcuffs",
-                        feedback: "You make great money writing for others, but you permanently stay in the shadows while other stars get all the fame."
-                    },
-                    {
-                        text: "Refuse to sell it and release it solo, risking a total flop without marketing backing.",
-                        next: 'solo_risk',
-                        score: 4,
-                        feedbackTitle: "High-Risk Gamble",
-                        feedback: "Without major distribution or industry relationships, the track gets lost in the noise, burning your financial runway."
-                    },
-                    {
-                        text: "Give the song to the star, but negotiate a featured vocal verse for yourself.",
-                        next: 'feature_verse',
-                        score: 10,
-                        feedbackTitle: "The Strategic Feature",
-                        feedback: "You use your pen as leverage, piggybacking on an established superstar's audience to introduce your own voice to millions."
-                    }
-                ]
-            },
-            {
-                id: 'sell',
-                emotion: 'resigned',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You cash the check, but watching someone else perform your words on stadium stages leaves you deeply unfulfilled.",
-                choices: [
-                    { text: "Rethink your leverage", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'solo_risk',
-                emotion: 'frustrated',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "Pride makes you refuse compromise, but without marketing machinery, great music alone isn't enough to break out.",
-                choices: [
-                    { text: "Consider a smarter path", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'feature_verse',
-                emotion: 'determined',
-                bg: '/assets/avatar_KaranAujla.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_KaranAujla.jpg',
-                text: "Your featured verse steals the entire show. Millions of listeners ask 'Who is this new guy?', launching Karan Aujla from a ghostwriter into an iconic global headliner.\n\nLESSONS:\n1. Sometimes you have to leverage what you are known for to get what you actually want.\n2. A strategic compromise often builds a stronger foundation than an all-or-nothing gamble.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 21: Karan Aujla
-    'lvl_age_21_aujla': {
-        title: "The Crossover Gamble",
-        source: "Source: Times of India, Spotify & YouTube Analytics (2018)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'confident',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You are 21 and have built a fiercely loyal underground following for your raw, hard-hitting Punjabi hip-hop. You've proven your lyrical edge, but mainstream global superstardom still eludes you.",
-                choices: [
-                    { text: "Listen to the demo of 'Don't Worry'", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'conflicted',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You compose 'Don't Worry' and consider a risky collaboration: blending your aggressive modern rap verses with the high-pitched traditional folk vocals of legendary singer Gurlez Akhtar. It is a massive stylistic gamble that could alienate your underground purist fans.",
-                choices: [
-                    { text: "Make the critical release decision", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'motivated',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "How do you approach this critical release to grow your career?",
-                choices: [
-                    {
-                        text: "Stick strictly to your raw, aggressive solo hip-hop to protect your hard-earned street credibility.",
-                        next: 'niche_safe',
-                        score: 4,
-                        feedbackTitle: "The Purist Trap",
-                        feedback: "You maintain respect in underground rap circles, but your reach plateaus and you miss the opportunity to shape mainstream music culture."
-                    },
-                    {
-                        text: "Take the risk and blend your rap with traditional folk vocals, gambling on a massive crossover.",
-                        next: 'crossover_gamble',
-                        score: 10,
-                        feedbackTitle: "Culture-Shifting Fusion",
-                        feedback: "You gamble on your creative vision, fusing roots with modern flow to create an explosive global anthem."
-                    }
-                ]
-            },
-            {
-                id: 'niche_safe',
-                emotion: 'resigned',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "Playing it safe keeps your existing fans happy, but fear of criticism prevents you from ever crossing over into the mainstream.",
-                choices: [
-                    { text: "Rethink your musical boundaries", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'crossover_gamble',
-                emotion: 'triumphant',
-                bg: '/assets/avatar_KaranAujla.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_KaranAujla.jpg',
-                text: "'Don't Worry' becomes a colossal worldwide phenomenon, amassing hundreds of millions of streams and cementing Karan Aujla as a global superstar who redefined the Punjabi soundscape.\n\nLESSONS:\n1. True artistic growth often requires risking the approval of your earliest supporters.\n2. Blending your unique edge with unexpected traditions can create culture-shifting breakthroughs.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 22: Karan Aujla
-    'lvl_age_22_aujla': {
-        title: "The Name Nobody Knew Yet",
-        source: "Source: Spotify Discography, GQ India & Film Companion (2019–2023)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'restless',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "At 22, living in Surrey, BC, the initial high of your breakout single 'Don't Worry' has faded into the quiet grind. You are still writing hits for other artists to pay rent, while critics wonder if you were just a one-hit wonder.",
-                choices: [
-                    { text: "Face the industry offers", next: 'dilemma_1', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma_1',
-                emotion: 'conflicted',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "A prominent label offers a massive, lucrative exclusive deal to keep ghostwriting songs for their flagship stars instead of releasing under your own name. What do you do?",
-                choices: [
-                    {
-                        text: "Take the songwriting deal — secure guaranteed financial stability while remaining behind the scenes.",
-                        next: 'take_deal',
-                        score: 3,
-                        feedbackTitle: "The Comfortable Trap",
-                        feedback: "You earn steady money, but you surrender your own spotlight and lock your artistry in a supporting role."
-                    },
-                    {
-                        text: "Decline the deal — keep releasing music as yourself, even though income remains unpredictable.",
-                        next: 'decline_deal',
-                        score: 10,
-                        feedbackTitle: "Betting on Your Own Name",
-                        feedback: "You reject comfortable servitude to back your own voice, stepping into the high-stakes quiet stretch."
-                    }
-                ]
-            },
-            {
-                id: 'take_deal',
-                emotion: 'resigned',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "The checks clear on time, but watching other performers receive the stadium applause for your lyrics leaves a deep ache.",
-                choices: [
-                    { text: "Rethink your independence", next: 'dilemma_1', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'decline_deal',
-                emotion: 'anxious',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "You bet on yourself, but your subsequent few solo singles fail to match the viral streaming numbers of your first hit. Doubt creeps in as you prepare your next song, 'Chitta Kurta'.",
-                choices: [
-                    { text: "Decide your creative direction", next: 'dilemma_2', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma_2',
-                emotion: 'determined',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "Do you dilute your sound to chase a commercial radio formula, or double down on your own gritty, authentic style?",
-                choices: [
-                    {
-                        text: "Chase the formula — copy current pop trends for a safer bet on repeating past numbers.",
-                        next: 'chase_formula',
-                        score: 2,
-                        feedbackTitle: "Chasing Trends",
-                        feedback: "Chasing trends erodes the unique authenticity that made listeners care about you in the first place."
-                    },
-                    {
-                        text: "Keep writing your way — release 'Chitta Kurta' with raw, authentic Punjabi storytelling.",
-                        next: 'stay_true',
-                        score: 10,
-                        feedbackTitle: "Pure Authenticity",
-                        feedback: "You stay uncompromising, allowing your distinct lyrical identity to cement your status as an enduring original."
-                    }
-                ]
-            },
-            {
-                id: 'chase_formula',
-                emotion: 'frustrated',
-                bg: '/assets/bg_KaranAujla.jpg',
-                text: "Generic pop trends make you blend into the background, stripping away what made your pen special.",
-                choices: [
-                    { text: "Return to your authentic voice", next: 'dilemma_2', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'stay_true',
-                emotion: 'determined',
-                bg: '/assets/avatar_KaranAujla.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_KaranAujla.jpg',
-                text: "'Chitta Kurta' explodes across the charts in late 2019, proving your breakout was no fluke. By enduring the quiet stretch and betting on your own name, Karan Aujla cements his place as an undeniable global headliner.\n\nLESSONS:\n1. One hit doesn't buy security — the real test is what you do in the quiet stretch after it.\n2. Being good enough to write for others doesn't mean you're finished being an artist yourself.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 18: Siddhu Moosewala
-    'lvl_age_18_moosewala': {
-        title: "The Engineering Vault",
-        source: "Source: The Tribune, Times of India & PTC Punjabi (2011–2016)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'restless',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "At 18, you leave your small farming village of Moosa for the city of Ludhiana to study electrical engineering at GNDEC. Your parents have pinned their life savings and family dignity on you earning a respectable degree.",
-                choices: [
-                    { text: "Enter the college dorm", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'conflicted',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "While your desk is piled high with heavy engineering textbooks, your headphones are blaring Tupac Shakur tapes. Late at night, you fill notebook after notebook with raw, poetic Punjabi rhymes that reflect the pride and grit of your village roots.",
-                choices: [
-                    { text: "Face the clash of duties", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'determined',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "How do you handle the clash between your family's expectations and your obsession with music?",
-                choices: [
-                    {
-                        text: "Abandon music to focus entirely on engineering and secure a safe corporate job.",
-                        next: 'conform',
-                        score: 3,
-                        feedbackTitle: "Safe Conformity",
-                        feedback: "You earn a stable living, but your authentic genius is suffocated by a routine corporate existence."
-                    },
-                    {
-                        text: "Drop out of college immediately to chase music, risking your family's savings.",
-                        next: 'dropout',
-                        score: 0,
-                        feedbackTitle: "Reckless Rebellion",
-                        feedback: "Breaking your parents' trust creates massive emotional turmoil, leaving you without the discipline needed to build an enduring catalog."
-                    },
-                    {
-                        text: "Finish the degree for your parents, but use every spare minute to write and master lyrics.",
-                        next: 'dual_discipline',
-                        score: 10,
-                        feedbackTitle: "Dual Discipline",
-                        feedback: "You honor your family by completing your degree while quietly building a legendary catalog of songs."
-                    }
-                ]
-            },
-            {
-                id: 'conform',
-                emotion: 'resigned',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "You pass your exams comfortably, but every time you hear a beat, you are haunted by the songs you never allowed yourself to write.",
-                choices: [
-                    { text: "Reclaim your creative voice", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dropout',
-                emotion: 'frustrated',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "Without structure or emotional grounding, impulsiveness turns your passion into chaos and distress for your loved ones.",
-                choices: [
-                    { text: "Build a disciplined foundation", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dual_discipline',
-                emotion: 'determined',
-                bg: '/assets/avatar_SiddhuMoosewala.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_SiddhuMoosewala.jpg',
-                text: "You graduate in Electrical Engineering, handing your proud parents their degree, while your secret notebooks hold hundreds of finished masterworks. That relentless discipline launches Sidhu Moose Wala into a global phenomenon and voice of a generation.\n\nLESSONS:\n1. Fulfilling a practical responsibility does not mean you have to surrender your true passion.\n2. The discipline required to finish a tough degree can forge the work ethic needed to dominate the music industry.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 23: Siddhu Moosewala
-    'lvl_age_23_moosewala': {
-        title: "The Brampton Hustle",
-        source: "Source: GQ India, The Tribune & Times of India (2016–2017)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'lonely',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "At 23, you arrive in Brampton, Canada on a study visa. In the biting cold, you work exhausting manual labor shifts just to pay rent and keep up with college tuition payments.",
-                choices: [
-                    { text: "Look at your savings", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'conflicted',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "Back home in Punjab, your pen has already scored hits like 'License' for famous singers. But in Canada, you are unknown, and your dream of becoming a lead vocalist demands thousands of dollars for studio time and music videos.",
-                choices: [
-                    { text: "Make the high-stakes financial choice", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'determined',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "You finally save a small pool of hard-earned cash from manual labor. What do you do with it?",
-                choices: [
-                    {
-                        text: "Save the money for tuition to secure your student visa and legal status.",
-                        next: 'safe_tuition',
-                        score: 3,
-                        feedbackTitle: "Legal Safety",
-                        feedback: "You protect your immigration status and graduate safely, but your solo vocal dreams are indefinitely delayed."
-                    },
-                    {
-                        text: "Sell your new lyrics to an established artist for guaranteed, safe rent money.",
-                        next: 'ghostwrite',
-                        score: 2,
-                        feedbackTitle: "The Ghostwriter's Comfort",
-                        feedback: "You pay your immediate living expenses, but watch other singers build fame on the foundation of your raw genius."
-                    },
-                    {
-                        text: "Gamble your survival money on recording and shooting a video for your own track.",
-                        next: 'solo_gamble',
-                        score: 10,
-                        feedbackTitle: "All In On Yourself",
-                        feedback: "You bet your entire livelihood on your own voice, funding the debut track that alters the course of Punjabi music history."
-                    }
-                ]
-            },
-            {
-                id: 'safe_tuition',
-                emotion: 'resigned',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "You play it safe and stay comfortable, but the burning hunger to be heard on your own terms slowly fades away.",
-                choices: [
-                    { text: "Re-evaluate your risk tolerance", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'ghostwrite',
-                emotion: 'frustrated',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "The quick cash keeps a roof over your head, but listening to other voices sing your deepest truths leaves you deeply unfulfilled.",
-                choices: [
-                    { text: "Bet on your own voice", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'solo_gamble',
-                emotion: 'determined',
-                bg: '/assets/avatar_SiddhuMoosewala.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_SiddhuMoosewala.jpg',
-                text: "You empty your pockets to record and drop 'G-Wagon'. The track explodes across the Punjabi diaspora, launching Sidhu Moose Wala from an impoverished international student into an iconic global superstar.\n\nLESSONS:\n1. True independence often requires risking the very safety nets you worked incredibly hard to build.\n2. Betting on yourself is terrifying when you have nothing to fall back on, but it is the only way to truly own your future.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 22: Siddhu Moosewala
-    'lvl_age_22_moosewala': {
-        title: "The One-Way Ticket",
-        source: "Source: The Tribune & Times of India (2015–2016)",
-        frames: [
-            {
-                id: 'start',
-                emotion: 'conflicted',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "At 22, you hold your freshly printed Electrical Engineering degree from GNDEC Ludhiana. Your parents are overjoyed, expecting you to take a secure, prestigious corporate engineering post in Punjab.",
-                choices: [
-                    { text: "Look at your options", next: 'reality', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reality',
-                emotion: 'restless',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "Behind closed doors, your notebooks are overflowing with explosive, original lyrics. You have secured admission to Humber College in Canada, but going means taking on massive student loans, working grueling manual labor, and abandoning your degree's immediate safety.",
-                choices: [
-                    { text: "Make the pivotal life decision", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'dilemma',
-                emotion: 'determined',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "What do you do with your newly earned degree and secret musical ambition?",
-                choices: [
-                    {
-                        text: "Take the safe engineering job in Punjab to respect your parents' investment.",
-                        next: 'corporate_safety',
-                        score: 3,
-                        feedbackTitle: "Corporate Safety",
-                        feedback: "You fulfill traditional societal expectations, but your creative fire slowly suffocates under the weight of routine."
-                    },
-                    {
-                        text: "Stay in Punjab and try to pitch your lyrics to local artists while living at home.",
-                        next: 'local_pitch',
-                        score: 4,
-                        feedbackTitle: "Local Stagnation",
-                        feedback: "You earn minor credits selling lyrics locally, but remain trapped in a saturated scene without developing your own global voice."
-                    },
-                    {
-                        text: "Move to Canada on a student visa, embracing the international hustle to build your sound.",
-                        next: 'canada_leap',
-                        score: 10,
-                        feedbackTitle: "The Audacious Leap",
-                        feedback: "You take on debt and manual labor in a foreign country, forging the gritty immigrant perspective that makes your music immortal."
-                    }
-                ]
-            },
-            {
-                id: 'corporate_safety',
-                emotion: 'resigned',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "You take the desk job and collect steady paychecks, but watching other artists dominate the airwaves leaves you forever asking 'what if'.",
-                choices: [
-                    { text: "Rethink your potential", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'local_pitch',
-                emotion: 'frustrated',
-                bg: '/assets/bg_SiddhuMoosewala.jpg',
-                text: "Staying on safe home turf keeps your living costs low, but you never develop the raw independence needed to lead an entire genre.",
-                choices: [
-                    { text: "Take the bolder path", next: 'dilemma', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'canada_leap',
-                emotion: 'determined',
-                bg: '/assets/avatar_SiddhuMoosewala.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_SiddhuMoosewala.jpg',
-                text: "You board the flight to Canada with a one-way ticket and heavy loans. The harsh struggle in Brampton becomes the crucible that transforms Sidhu Moose Wala into a generational global icon.\n\nLESSONS:\n1. Sometimes you have to finish the path others laid out for you before you can forge your own.\n2. True growth often requires leaving behind the safety of your home turf to struggle in an unknown environment.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 10, feedbackTitle: "Mission Accomplished", feedback: "" }
-                ]
-            }
-        ]
-    },
-
     // AGE 20: Narendra Modi
-    'lvl_age_20_modi': {
+'lvl_age_20_modi': {
         title: "The Canteen and the Calling",
         source: "Source: BJP Biography, The Economic Times & Andy Marino (2014)",
         frames: [
@@ -5096,7 +3636,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 20 (shown as 19 in-game): Falguni Nayar
-    'lvl_age_19_falguni': {
+'lvl_age_19_falguni': {
         title: "Science or Business",
         source: "Source: Falguni Nayar, IIM Ahmedabad and Nykaa origin story, 1982",
         frames: [
@@ -5188,7 +3728,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 19: Nikola Tesla
-    'lvl_age_19_tesla': {
+'lvl_age_19_tesla': {
         title: "Trust Your Visions",
         source: "Source: Nikola Tesla autobiography, Graz Institute of Technology, 1875",
         frames: [
@@ -5278,8 +3818,9 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
+
     // AGE 19: Shubman Gill
-    'lvl_age_19_shubman': {
+'lvl_age_19_shubman': {
         title: "The New Prince",
         source: "Source: 2018-2019 New Zealand Tour",
         frames: [
@@ -5424,88 +3965,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 20: Prajakta Koli
-    'lvl_age_20_prajakta': {
-        title: "The 2 AM Panic",
-        source: "Source: Finding My Purpose",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'fear',
-                bg: '/assets/bg_prajakta_silence.jpg',
-                text: "2014. Mumbai.\nYou are 20. For ten years, your only dream was to be a Radio Jockey (RJ). You finally got the internship at a major station. This is it. But it's a nightmare. You're exhausted, the creative freedom is zero, and you realize the \"dream\" was a lie. You meet a talent scout who sees your funny personality and says, \"Quit. Start a YouTube channel.\"\nIt's 2014. In India, \"YouTuber\" isn't a career—it's what people do when they're unemployed. Your parents expect you to have a 'real' job.\nWhat do you do?",
-                choices: [
-                    {
-                        text: "Finish the internship — You worked 10 years for this. Don't throw it away for a \"hobby\" website.",
-                        next: 'fail',
-                        score: -5,
-                        feedbackTitle: "The Sunk Cost",
-                        feedback: "You stick it out but are miserable. Your creative spark dies."
-                    },
-                    {
-                        text: "The Leap of Faith — Quit the station tomorrow. No backup plan. Just a camera and your room.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "Taking the Leap",
-                        feedback: "You take a massive risk, trading a 'prestigious' title for a 'silly' YouTube channel."
-                    },
-                    {
-                        text: "Do both — Work the 12-hour RJ shift and try to make videos at 2 AM when you're exhausted.",
-                        next: 'fail',
-                        score: -5,
-                        feedbackTitle: "Burnout",
-                        feedback: "You burn out completely. Neither your radio show nor your videos succeed."
-                    }
-                ]
-            },
-            {
-                id: 'success',
-                emotion: 'hope',
-                bg: '/assets/avatar_prajakta.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "What actually happened: After a \"mental breakdown\" at the radio station, Prajakta quit. She felt she was failing her lifelong dream, but she realized the medium (Radio) was wrong, even if the goal (connecting with people) was right.",
-                choices: [
-                    {
-                        text: "See Lesson",
-                        next: 'LEARNING_PRAJAKTA',
-                        score: 10,
-                        feedbackTitle: "Mission Accomplished",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'fail',
-                emotion: 'hope',
-                bg: '/assets/avatar_prajakta.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "You chose the comfort of the known over the magic of the unknown.",
-                choices: [
-                    {
-                        text: "Try Again",
-                        next: 'intro',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'LEARNING_PRAJAKTA',
-                emotion: 'hope',
-                bg: '/assets/bg_prajakta_silence.jpg',
-                text: "LESSON: DON'T CLING TO A MISTAKE JUST BECAUSE YOU SPENT A LONG TIME MAKING IT.\nShe traded a \"prestigious\" title for a \"silly\" YouTube channel. Today, she has 7M+ subscribers and has spoken at the UN.",
-                choices: [
-                    { text: "Finish Chapter", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
     // AGE 18: Viswanathan Anand
-    'lvl_age_18_anand': {
+'lvl_age_18_anand': {
         title: "The Lightning Kid",
         source: "Source: World Junior Chess Championship 1987",
         frames: [
@@ -5649,88 +4110,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 18: Zendaya
-    'lvl_age_18_zendaya': {
-        title: "The Identity Strike",
-        source: "Source: Confidence & Fear",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'anger',
-                bg: '/assets/bg_zendaya_boardroom.jpg',
-                text: "2014. Hollywood.\nYou are 18. You are a Disney star with a massive following, but you feel like a puppet. You are cast in a new show, K.C. Undercover. The script is \"classic Disney\"—you’re a girl who is clumsy, can’t dance, and is obsessed with boys.\nThe producers tell you, \"This is what works. Don't break the formula.\" But you know this isn't who you are, and it isn't what girls need to see. You want the character to be a martial artist, a tech-wiz, and socially awkward—a real person.\nThey tell you to just \"be grateful\" for the lead role.\nWhat do you do?",
-                choices: [
-                    {
-                        text: "Accept the role — Secure your fame and money first. You can change things when you’re 25.",
-                        next: 'fail',
-                        score: -5,
-                        feedbackTitle: "The Hollow Crown",
-                        feedback: "You get the fame, but you remain a puppet. Your creative voice is never heard."
-                    },
-                    {
-                        text: "Walk away — If they don't give you \"Producer\" status and creative control, you quit Disney entirely.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "Taking the Reins",
-                        feedback: "The executives are shocked. It's a massive risk for an 18-year-old, but you stand your ground."
-                    },
-                    {
-                        text: "Negotiate a middle ground — Change some lines but keep the \"safe\" Disney formula to avoid a fight.",
-                        next: 'fail',
-                        score: -5,
-                        feedbackTitle: "The Compromise",
-                        feedback: "You change a few lines, but the core stereotype remains. You still feel like a puppet."
-                    }
-                ]
-            },
-            {
-                id: 'success',
-                emotion: 'determination',
-                bg: '/assets/avatar_zendaya.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "What actually happened: Zendaya refused to do the show unless she was made a Producer at age 18. She demanded the character be empowered and the title changed. She risked being \"blacklisted\" by the biggest studio in the world to ensure she wasn't just another teen idol.",
-                choices: [
-                    {
-                        text: "See Lesson",
-                        next: 'LEARNING_ZENDAYA',
-                        score: 10,
-                        feedbackTitle: "Mission Accomplished",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'fail',
-                emotion: 'determination',
-                bg: '/assets/avatar_zendaya.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "You stayed in the background when it was time to step up.",
-                choices: [
-                    {
-                        text: "Try Again",
-                        next: 'intro',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'LEARNING_ZENDAYA',
-                emotion: 'determination',
-                bg: '/assets/bg_zendaya_boardroom.jpg',
-                text: "LESSON: POWER ISN'T GIVEN, IT'S TAKEN.\nShe knew her value. By demanding a seat at the table early, she transitioned from \"Disney Kid\" to the most respected actress of her generation.",
-                choices: [
-                    { text: "Finish Chapter", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
     // AGE 19: Neeraj Chopra
-    'lvl_age_19_neeraj': {
+'lvl_age_19_neeraj': {
         title: "The Lonely Flight",
         source: "Source: Motivation & Drive",
         frames: [
@@ -5810,412 +4191,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 20: Selena Gomez
-    'lvl_age_20_selena': {
-        title: "The Invisible War",
-        source: "Source: Heartbreak & Relationships",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'fear',
-                bg: '/assets/bg_selena_spotlight.jpg',
-                text: "2012-2013. Global Tour.\nYou are 20. To the world, you have everything: a hit album, a famous boyfriend, and a perfect life.\nBut behind the scenes, your body is failing. You’ve been diagnosed with Lupus, an autoimmune disease. You are in pain, your hair is thinning, and you need chemotherapy.\nThe tabloids are brutal. They say you’re \"going to rehab\" for drugs or \"acting crazy\" because of a breakup. If you tell the truth, you look \"weak\" and might lose your tour contracts. If you stay silent, the world thinks you’re a mess.\nWhat do you do?",
-                choices: [
-                    {
-                        text: "Stay Silent — Protect your \"perfect\" image. Let people think what they want; your health is private.",
-                        next: 'fail',
-                        score: -5,
-                        feedbackTitle: "The Breaking Point",
-                        feedback: "You try to maintain the facade, but your body gives out. The rumors only get worse."
-                    },
-                    {
-                        text: "The Radical Truth — Cancel the tour. Go public. Tell the world you have a chronic illness, even if it breaks the \"pop star\" illusion.",
-                        next: 'success',
-                        score: 10,
-                        feedbackTitle: "Vulnerability as Strength",
-                        feedback: "You step away from the spotlight. The truth is shocking, but it sets you free from the toxic rumors."
-                    },
-                    {
-                        text: "Push Through — Take the meds, hide the pain, and finish the tour. You can't let your fans or your label down.",
-                        next: 'fail',
-                        score: -5,
-                        feedbackTitle: "Physical Collapse",
-                        feedback: "You push your body too far and end up hospitalized, forcing a cancellation anyway."
-                    }
-                ]
-            },
-            {
-                id: 'success',
-                emotion: 'calm',
-                bg: '/assets/avatar_selena.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "What actually happened: Selena disappeared from the spotlight to undergo chemotherapy. When she returned, she didn't hide it. She became a face for Lupus awareness and mental health, even showing her surgery scars.",
-                choices: [
-                    {
-                        text: "See Lesson",
-                        next: 'LEARNING_SELENA',
-                        score: 10,
-                        feedbackTitle: "Mission Accomplished",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'fail',
-                emotion: 'calm',
-                bg: '/assets/avatar_selena.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "You let the pressure of the spotlight destroy your well-being.",
-                choices: [
-                    {
-                        text: "Try Again",
-                        next: 'intro',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'LEARNING_SELENA',
-                emotion: 'calm',
-                bg: '/assets/bg_selena_spotlight.jpg',
-                text: "LESSON: VULNERABILITY IS THE ULTIMATE STRENGTH.\nShe realized that her \"perfect\" image was a cage. By being honest about her pain, she built a deeper connection with millions of people that a \"perfect\" pop star never could.",
-                choices: [
-                    { text: "Finish Chapter", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 20: Billie Eilish — "The Person Who Left You On Seen"
-    'lvl_age_20_billie_2': {
-        title: "The Person Who Left You On Seen",
-        source: "Source: Billie Eilish's relationships and music",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'love',
-                bg: '/assets/bg-billie-bedroom-night-2022.png',
-                portrait: '/assets/portrait-billie-20.png',
-                text: "It's 2022. You are 20. Your songs are everywhere. Millions think you are living a dream life. But every night ends the same way. Waiting for one person to reply. Tonight, they leave your message on seen again. Thirty minutes later, you see them laughing with someone else on Instagram Live. Your stomach drops.",
-                choices: [
-                    {
-                        text: "Double text: 'Are you avoiding me?'",
-                        next: 'scene_2A',
-                        score: 10,
-                        feedbackTitle: "Fear vs Love",
-                        feedback: "You reached out from fear not love. Billie learned that chasing someone who chooses distance is a form of self-abandonment."
-                    },
-                    {
-                        text: "Post a story pretending you're having fun too",
-                        next: 'scene_2A',
-                        score: 10,
-                        feedbackTitle: "Masking",
-                        feedback: "You try to mask the pain, but the silence still hurts."
-                    },
-                    {
-                        text: "Throw the phone away and start writing music",
-                        next: 'scene_2B',
-                        score: 15,
-                        feedbackTitle: "Creation",
-                        feedback: "You chose creation over desperation. This is exactly what Billie did. Pain that becomes art stops being just pain."
-                    },
-                    {
-                        text: "Block them everywhere to protect yourself before they can hurt you again",
-                        next: 'scene_2A',
-                        score: 15,
-                        feedbackTitle: "Protection",
-                        feedback: "You chose protection. Billie understood this eventually — sometimes the most loving thing you can do for yourself is remove access."
-                    },
-                    {
-                        text: "Stay silent and wait to see if they come back",
-                        next: 'scene_2A',
-                        score: 10,
-                        feedbackTitle: "Hope",
-                        feedback: "You chose hope over action. The hardest truth — silence from someone who wants to reach you lasts minutes. Silence from someone who doesn't lasts forever."
-                    }
-                ]
-            },
-            {
-                id: 'scene_2A',
-                emotion: 'grief',
-                bg: '/assets/bg-billie-bedroom-night-2022.png',
-                portrait: '/assets/portrait-billie-20.png',
-                text: "Three dots appear instantly. 'You overthink everything. I can't breathe around you anymore.' You reread the message again and again. Part of you wants to apologize. Part of you wants to scream. You know if you keep chasing them, you may lose your self-respect completely. But losing them feels worse.",
-                choices: [
-                    {
-                        text: "Send a huge emotional paragraph explaining yourself",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Emotional Flood",
-                        feedback: ""
-                    },
-                    {
-                        text: "Reply: 'Then leave.'",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Defensive Anger",
-                        feedback: ""
-                    },
-                    {
-                        text: "Ask honestly: 'Did you ever actually love me?'",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Desperate Vulnerability",
-                        feedback: ""
-                    },
-                    {
-                        text: "Delete the chat without replying",
-                        next: 'LEARNING_LESSON',
-                        score: 15,
-                        feedbackTitle: "Silence",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'scene_2B',
-                emotion: 'grief',
-                bg: '/assets/bg-billie-studio-3am-2022.png',
-                portrait: '/assets/portrait-billie-20.png',
-                text: "At 3:12 AM, your room is dark except for your laptop screen. The pain slowly turns into lyrics. Every sentence feels personal. Dangerous. Your producer listens quietly and says: 'This could become your biggest song.' You suddenly freeze. If you release it, the world will know exactly who hurt you.",
-                choices: [
-                    {
-                        text: "Release it exactly as written",
-                        next: 'LEARNING_LESSON',
-                        score: 15,
-                        feedbackTitle: "Raw Honesty",
-                        feedback: ""
-                    },
-                    {
-                        text: "Change the lyrics to protect them",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Protection",
-                        feedback: ""
-                    },
-                    {
-                        text: "Never release it — too vulnerable",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Self-Protection",
-                        feedback: ""
-                    },
-                    {
-                        text: "Perform it live without telling anyone who it's about",
-                        next: 'LEARNING_LESSON',
-                        score: 15,
-                        feedbackTitle: "Subtle Art",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'LEARNING_LESSON',
-                emotion: 'grief',
-                bg: '/assets/bg-billie-bedroom-night-2022.png',
-                text: "LESSON: THE COST OF ATTACHMENT. Billie later spoke openly about unhealthy attachment and losing herself emotionally in relationships. Sometimes heartbreak is not losing someone else. Sometimes it's realizing how much of yourself you sacrificed to keep them. The most painful truth: you can love someone deeply and still be completely wrong for each other.",
-                choices: [
-                    { text: "Ponder", next: 'reflection_1', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reflection_1',
-                emotion: 'grief',
-                bg: '/assets/bg-billie-bedroom-night-2022.png',
-                text: "Reflection: Is emotional dependence a form of love or a loss of identity?",
-                choices: [
-                    { text: "Next", next: 'reflection_2', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reflection_2',
-                emotion: 'grief',
-                bg: '/assets/bg-billie-bedroom-night-2022.png',
-                text: "Reflection: If someone triggers your anxiety constantly, why is leaving them so difficult?",
-                choices: [
-                    { text: "Next", next: 'reflection_3', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reflection_3',
-                emotion: 'grief',
-                bg: '/assets/bg-billie-bedroom-night-2022.png',
-                text: "Reflection: Would you rather be loved deeply by one person or admired by millions?",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 19: Justin Bieber — "The Hotel Room at 2AM"
-    'lvl_age_19_justin': {
-        title: "The Hotel Room at 2AM",
-        source: "Source: Justin Bieber's early career struggles",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'loneliness',
-                bg: '/assets/bg-justin-hotel-room-2013.png',
-                portrait: '/assets/portrait-justin-19.png',
-                text: "It's 2013. You are 19. You are one of the most famous people on Earth. Crowds scream your name. Headlines follow your every move. But your relationship is collapsing in public. Every fight becomes trending news. Tonight, after another argument, you sit alone in a hotel room staring at your phone. One text could restart everything. Or destroy you again.",
-                choices: [
-                    {
-                        text: "Text: 'I miss you.'",
-                        next: 'scene_2A',
-                        score: 10,
-                        feedbackTitle: "Comfort",
-                        feedback: "You reached for comfort. Justin did too. But he later realized missing someone and loving them are completely different feelings that feel identical at 2AM."
-                    },
-                    {
-                        text: "Drive through the city alone at 2AM",
-                        next: 'scene_2A',
-                        score: 10,
-                        feedbackTitle: "Escape",
-                        feedback: "You try to escape, but the thoughts follow you."
-                    },
-                    {
-                        text: "Go to the studio and bury yourself in music",
-                        next: 'scene_2B',
-                        score: 15,
-                        feedbackTitle: "Creation",
-                        feedback: "You chose creation. Justin's best work came from his worst nights. Pain processed through art becomes something the world can use."
-                    },
-                    {
-                        text: "Turn your phone off completely and disappear",
-                        next: 'scene_2B',
-                        score: 15,
-                        feedbackTitle: "Distance",
-                        feedback: "You chose distance. Justin eventually learned that silence from the world was the only way to hear himself think. Sometimes disappearing is not running away — it is finding yourself."
-                    },
-                    {
-                        text: "Call them even though you know it will become another fight",
-                        next: 'scene_2A',
-                        score: 10,
-                        feedbackTitle: "Chaos",
-                        feedback: "You reach for familiar chaos over unfamiliar peace."
-                    }
-                ]
-            },
-            {
-                id: 'scene_2A',
-                emotion: 'anger',
-                bg: '/assets/bg-justin-hotel-room-2013.png',
-                portrait: '/assets/portrait-justin-19.png',
-                text: "They reply instantly. For a second, it feels warm. Familiar. Then the argument starts again. Old jealousy. Old accusations. Old pain neither of you fixed. You suddenly realize something terrifying: You don't know whether you miss THEM... or just the feeling of not being alone.",
-                choices: [
-                    {
-                        text: "Keep fighting for the relationship no matter how toxic it becomes",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Clinging",
-                        feedback: ""
-                    },
-                    {
-                        text: "End things even if it emotionally destroys you",
-                        next: 'LEARNING_LESSON',
-                        score: 15,
-                        feedbackTitle: "Painful Truth",
-                        feedback: ""
-                    },
-                    {
-                        text: "Ask for a break instead of a breakup",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Delaying",
-                        feedback: ""
-                    },
-                    {
-                        text: "Stay together because the highs still feel magical",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Addiction",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'scene_2B',
-                emotion: 'anger',
-                bg: '/assets/bg-justin-studio-night-2013.png',
-                portrait: '/assets/portrait-justin-19.png',
-                text: "The studio is silent except for the beat playing through the speakers. You record for hours without stopping. The producer finally says: 'You sound angry.' You stare at the mic. Because the truth is... you ARE angry. At them. At yourself. At the pressure of pretending to be okay while falling apart internally.",
-                choices: [
-                    {
-                        text: "Turn the pain into your best song yet",
-                        next: 'LEARNING_LESSON',
-                        score: 15,
-                        feedbackTitle: "Channeling",
-                        feedback: ""
-                    },
-                    {
-                        text: "Leave halfway because the emotions are too overwhelming",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Overwhelmed",
-                        feedback: ""
-                    },
-                    {
-                        text: "Call your mom because you feel emotionally lost",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Seeking Support",
-                        feedback: ""
-                    },
-                    {
-                        text: "Keep working until exhaustion numbs the pain",
-                        next: 'LEARNING_LESSON',
-                        score: 10,
-                        feedbackTitle: "Numbing",
-                        feedback: ""
-                    }
-                ]
-            },
-            {
-                id: 'LEARNING_LESSON',
-                emotion: 'anger',
-                bg: '/assets/bg-justin-hotel-room-2013.png',
-                text: "LESSON: THE EMPTINESS UNDERNEATH. Justin later said the hardest part of being 19 wasn't the fame — it was realizing he had never learned how to be alone. He had gone from his parents' house to tour buses to hotel rooms. He had never once sat with himself long enough to know who he actually was. The relationship didn't break him. The emptiness underneath did.",
-                choices: [
-                    { text: "Ponder", next: 'reflection_1', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reflection_1',
-                emotion: 'anger',
-                bg: '/assets/bg-justin-hotel-room-2013.png',
-                text: "Reflection: Can two emotionally broken people heal together, or only damage each other more?",
-                choices: [
-                    { text: "Next", next: 'reflection_2', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reflection_2',
-                emotion: 'anger',
-                bg: '/assets/bg-justin-hotel-room-2013.png',
-                text: "Reflection: Is missing someone the same as loving them?",
-                choices: [
-                    { text: "Next", next: 'reflection_3', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'reflection_3',
-                emotion: 'anger',
-                bg: '/assets/bg-justin-hotel-room-2013.png',
-                text: "Reflection: Does fame make loneliness worse or just more visible?",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
     // AGE 18: Virat Kohli (Conversational Story)
-    'lvl_age_18_virat': {
+'lvl_age_18_virat': {
         title: "The Hardest Day",
         source: "Source: Virat Kohli, Delhi Ranji Trophy, 2006",
         frames: [
@@ -6257,7 +4234,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 20: Kobe Bryant
-    'lvl_age_20_kobe': {
+'lvl_age_20_kobe': {
         title: "The Lockout Echo",
         source: "Source: 1998-1999 Lockout Season",
         frames: [
@@ -6434,7 +4411,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 22: Michael Jackson
-    'lvl_age_22_michael': {
+'lvl_age_22_michael': {
         title: "The Life You Built",
         source: "Source: Van Nuys, California, 1981",
         frames: [
@@ -6535,212 +4512,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 22: Ashneer Grover
-    'lvl_age_22_ashneer': {
-        title: "The Next Degree",
-        source: "Source: Ahmedabad, India, 2004",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'mystery',
-                bg: '/assets/bg-ashneer-grover-ahmedabad-2004.png',
-                portrait: '/assets/portrait-ashneer-grover.png',
-                text: "It is 2004, and Ashneer Grover has just completed his B.Tech in Civil Engineering at IIT Delhi. He has already taken an unusual path once: during IIT, he was one of only six students selected from his batch for an exchange at INSA Lyon in France, supported by a French Embassy scholarship. Now another door is open — IIM Ahmedabad, where he has entered an MBA program in Finance. Engineering has given him a technical foundation, but finance is an entirely different world, and he has no guarantee of where it will lead. He has to commit to the next two years before knowing what kind of career he is actually building.",
-                choices: [
-                    {
-                        text: "A) Commit fully to the MBA in Finance and treat the next two years as a chance to build an entirely different professional skill set.",
-                        next: 'part1_reveal',
-                        score: 15,
-                        feedbackTitle: "Don't Overprotect Your Past",
-                        feedback: "You are willing to become a beginner again even after succeeding in one field. That creates discomfort now, but gives you a second professional language."
-                    },
-                    {
-                        text: "B) Stay closest to engineering and look for a path where his IIT training remains the center of his career.",
-                        next: 'part1_reveal',
-                        score: 10,
-                        feedbackTitle: "Don't Overprotect Your Past",
-                        feedback: "You value depth and continuity over reinvention. It can make you exceptionally strong in one domain, but may close doors before you discover them."
-                    },
-                    {
-                        text: "C) Use the MBA mainly as a gateway into business, keeping his options open rather than deciding what he ultimately wants to become.",
-                        next: 'part1_reveal',
-                        score: 10,
-                        feedbackTitle: "Don't Overprotect Your Past",
-                        feedback: "You want optionality more than certainty. You keep several futures alive, but must eventually accept that options only matter when you commit to one."
-                    },
-                    {
-                        text: "D) Step back from the expected academic path and spend time figuring out what kind of work he actually wants before committing further.",
-                        next: 'part1_reveal',
-                        score: 5,
-                        feedbackTitle: "Don't Overprotect Your Past",
-                        feedback: "You refuse to let prestige make the decision for you. The freedom is valuable, but stepping away also means giving up momentum that others would consider difficult to regain."
-                    }
-                ]
-            },
-            {
-                id: 'part1_reveal',
-                emotion: 'mystery',
-                bg: '/assets/bg-ashneer-grover-ahmedabad-2004.png',
-                portrait: '/assets/portrait-ashneer-grover.png',
-                text: "What they actually did:\nGrover went ahead with the MBA in Finance at IIM Ahmedabad, beginning the 2004–2006 chapter that would eventually lead to his first major corporate role after graduation.\n\nLESSON: Don't Overprotect Your Past\nAn engineering degree can become an identity if you let it. Grover's move into finance did not erase what IIT had taught him; it added another way of understanding how businesses work. Sometimes the useful decision is not choosing between your old skill and a new direction, but deliberately becoming someone who can use both.",
-                choices: [
-                    { text: "Next Part", next: 'part2_setup', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'part2_setup',
-                emotion: 'determination',
-                bg: '/assets/bg-ashneer-grover-ahmedabad-2004.png',
-                portrait: '/assets/portrait-ashneer-grover.png',
-                text: "At IIM Ahmedabad, Grover is now moving from the structured world of engineering into finance, management, and business. His IIT background gives him analytical training, while the MBA forces him to think about companies, capital, and commercial decisions in a different way. The destination is still unclear, but the combination itself is becoming his advantage. The question is no longer whether he can succeed academically — it is what he intends to do with that combination when the degree ends.",
-                choices: [
-                    {
-                        text: "A) Aim for the strongest finance role available after the MBA, even if it means entering a highly structured corporate career.",
-                        next: 'part2_reveal',
-                        score: 10,
-                        feedbackTitle: "Build the Combination",
-                        feedback: "You prioritize security, reputation, and a clear professional ladder. That can compound quickly, but it may pull you toward optimizing a career rather than designing one."
-                    },
-                    {
-                        text: "B) Look for a role where finance and business-building overlap, even if the path is less predictable.",
-                        next: 'part2_reveal',
-                        score: 15,
-                        feedbackTitle: "Build the Combination",
-                        feedback: "You are attracted to the intersection between analysis and creation. The path may be less obvious, but the combination can become more valuable than either skill alone."
-                    },
-                    {
-                        text: "C) Choose the opportunity that offers the steepest learning curve, regardless of whether the job title looks impressive.",
-                        next: 'part2_reveal',
-                        score: 10,
-                        feedbackTitle: "Build the Combination",
-                        feedback: "You measure opportunities by what they teach rather than what they signal. That can produce unconventional experience, but requires patience when others are optimizing for status."
-                    },
-                    {
-                        text: "D) Keep pursuing credentials and high-signal institutions until the direction becomes clearer.",
-                        next: 'part2_reveal',
-                        score: 5,
-                        feedbackTitle: "Build the Combination",
-                        feedback: "You believe more credentials will eventually reveal the right answer. Sometimes they do; sometimes they simply postpone the harder work of choosing."
-                    }
-                ]
-            },
-            {
-                id: 'part2_reveal',
-                emotion: 'mystery',
-                bg: '/assets/bg-ashneer-grover-ahmedabad-2004.png',
-                portrait: '/assets/portrait-ashneer-grover.png',
-                text: "What they actually did:\nGrover completed the MBA in Finance in 2006 and entered investment banking through campus recruitment, joining Kotak Investment Banking as a Vice President.\n\nLESSON: Build the Combination\nThe important advantage was not IIT by itself or IIM by itself. It was the combination of technical training and financial thinking that later gave Grover a broader toolkit for business decisions. A career can become powerful when seemingly unrelated skills begin reinforcing each other.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 22: Bhuvan Bam
-    'lvl_age_22_bhuvan': {
-        title: "When the Phone Started Working",
-        source: "Source: BB Ki Vines & TEDxIIITD, 2016",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'wonder',
-                bg: '/assets/bg-bhuvan-bam-delhi-2016.png',
-                portrait: '/assets/portrait-bhuvan-bam.png',
-                text: "It is 2016, and Bhuvan Bam is 22, living in Delhi after graduating from Shaheed Bhagat Singh College with a degree in History. Music is not a side hobby for him; before BB Ki Vines became huge, singing and composing had been an important part of his life and income, including live performances. But his YouTube experiment has changed quickly. BB Ki Vines, launched in June 2015, has grown to more than a million subscribers within months, while his short Hindi comedy videos have found an audience far larger than he expected. He is still shooting and editing largely by himself, from a small room, using the same basic setup that got him there — but suddenly the internet is treating this as a real career.",
-                choices: [
-                    {
-                        text: "A) Keep YouTube as the main creative priority and continue making the videos yourself, even if that means turning down some opportunities that could accelerate the career.",
-                        next: 'part1_reveal',
-                        score: 15,
-                        feedbackTitle: "Momentum Is Not A Plan",
-                        feedback: "You protect the creative process that produced the audience, even if it means turning down faster growth. You are betting that authenticity is more valuable than scale."
-                    },
-                    {
-                        text: "B) Put more energy into live music and performances, using the new online audience to strengthen the career you already know how to sustain.",
-                        next: 'part1_reveal',
-                        score: 10,
-                        feedbackTitle: "Momentum Is Not A Plan",
-                        feedback: "You trust the skill that existed before the internet noticed you. You are not rejecting the new audience; you are refusing to let it erase the craft that came first."
-                    },
-                    {
-                        text: "C) Start treating the channel as a professional entertainment career: accept outside opportunities, collaborations and larger productions even if the work becomes less personal.",
-                        next: 'part1_reveal',
-                        score: 10,
-                        feedbackTitle: "Momentum Is Not A Plan",
-                        feedback: "You believe an opportunity becomes real only when you build something bigger around it. You accept that professionalizing the work may also change the work."
-                    },
-                    {
-                        text: "D) Keep both paths running for now, accepting that splitting your attention may slow the growth of either one while you figure out which audience is actually durable.",
-                        next: 'part1_reveal',
-                        score: 5,
-                        feedbackTitle: "Momentum Is Not A Plan",
-                        feedback: "You refuse to make a permanent decision from a temporary surge. You preserve optionality, but the cost is divided attention at exactly the moment momentum is hardest to replace."
-                    }
-                ]
-            },
-            {
-                id: 'part1_reveal',
-                emotion: 'tension',
-                bg: '/assets/bg-bhuvan-bam-delhi-2016.png',
-                portrait: '/assets/portrait-bhuvan-bam.png',
-                text: "What Bhuvan actually did:\nBam continued building BB Ki Vines while retaining music as an important part of his identity. He kept the low-tech, one-person creative process that had become part of his identity, while his audience and professional opportunities expanded rapidly. By the end of 2016, he had crossed one million subscribers and had been recognized at the WebTVAsia Awards.\n\nLESSON: Momentum Is Not A Plan\nSudden attention creates a strange problem: everyone around you starts behaving as though the future is already decided. But an audience is evidence that something is working, not proof that you know what to build next. The difficult part is deciding how much of the thing that made people notice you should change once people start watching.",
-                choices: [
-                    { text: "Next Part", next: 'part2_setup', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'part2_setup',
-                emotion: 'hope',
-                bg: '/assets/bg-bhuvan-bam-delhi-2016.png',
-                portrait: '/assets/portrait-bhuvan-bam.png',
-                text: "The experiment is no longer invisible. Bam is appearing outside his own channel, including in TVF's Bachelors, while invitations to speak and collaborate are beginning to arrive. In June 2016, he spoke at TEDxIIITD about originality and pursuing his dreams, and later that year his rapidly growing channel received major recognition at the WebTVAsia Awards in Seoul. The opportunities are beginning to move him from a creator working alone into a person other people want to build projects around. Now the harder question is not whether people are watching. It is how much of the new machine he should allow into his creative life.",
-                choices: [
-                    {
-                        text: "A) Take the strongest outside opportunities one at a time, but keep BB Ki Vines as the place where you retain complete creative control.",
-                        next: 'part2_reveal',
-                        score: 15,
-                        feedbackTitle: "Protect What Made You Different",
-                        feedback: "You separate experimentation from ownership. You are willing to explore outside opportunities as long as one place remains completely yours."
-                    },
-                    {
-                        text: "B) Say yes to bigger collaborations and professional projects while the attention is available, even if the schedule leaves less room for the small videos that built the audience.",
-                        next: 'part2_reveal',
-                        score: 10,
-                        feedbackTitle: "Protect What Made You Different",
-                        feedback: "You understand that attention has a shelf life. You would rather risk creative exhaustion than discover later that you let a rare window of opportunity close."
-                    },
-                    {
-                        text: "C) Protect the channel above everything else and postpone larger opportunities until you know exactly what you want the Bhuvan Bam identity to become.",
-                        next: 'part2_reveal',
-                        score: 10,
-                        feedbackTitle: "Protect What Made You Different",
-                        feedback: "You value identity over expansion. The risk is that protecting the original formula too carefully can become its own kind of limitation."
-                    },
-                    {
-                        text: "D) Build a small professional structure around yourself now, even though delegating work means accepting that the channel will no longer be entirely yours in the way it was at the beginning.",
-                        next: 'part2_reveal',
-                        score: 5,
-                        feedbackTitle: "Protect What Made You Different",
-                        feedback: "You recognize that scale eventually requires systems. You are willing to give up some control now in exchange for having the capacity to build something larger later."
-                    }
-                ]
-            },
-            {
-                id: 'part2_reveal',
-                emotion: 'tension',
-                bg: '/assets/bg-bhuvan-bam-delhi-2016.png',
-                portrait: '/assets/portrait-bhuvan-bam.png',
-                text: "What Bhuvan actually did:\nBam continued expanding beyond the original BB Ki Vines format. In 2016 he collaborated with The Viral Fever on Bachelors and continued pursuing other opportunities while maintaining the distinctive BB Ki Vines style. By the end of the year, he described the period as a roller-coaster and said that having an audience in the millions felt like an artist's dream, while also emphasizing that it was only the beginning.\n\nLESSON: Protect What Made You Different\nGrowth creates a new kind of pressure: once something works, other people naturally want to optimize it. The danger is not necessarily accepting help or taking bigger opportunities. It is losing the unusual process that made people care before anyone knew how valuable it was.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
     // AGE 22: Cristiano Ronaldo
-    'lvl_age_22_ronaldo': {
+'lvl_age_22_ronaldo': {
         title: "The Price of Becoming Complete",
         source: "Source: Manchester United Season Review, 2007",
         frames: [
@@ -6841,184 +4614,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 22: Ranveer Singh
-    'lvl_age_22_ranveer': {
-        title: "The Role You Can't See Yet",
-        source: "Source: Mumbai, Maharashtra, 2007-2008",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'mystery',
-                bg: '/assets/bg-ranveer-singh-mumbai-2007.png',
-                portrait: '/assets/portrait-ranveer-singh.png',
-                text: "You are 22, back in Mumbai after studying in the United States.\n\nYou know you want a creative life, and acting has become more than just an old childhood fantasy. You have taken acting classes and explored theatre, but the reality of breaking into Hindi cinema is very different from performing in college.\n\nThere is no guaranteed film waiting for you. You need to establish yourself professionally while figuring out whether acting can actually become your career.\n\nAdvertising offers a legitimate creative path, while acting remains uncertain and difficult to enter.\n\nThe question is not whether you have a dream. The question is what you are willing to do while the dream has no proof yet.",
-                choices: [
-                    {
-                        text: "A) Take the advertising route seriously. Build professional experience and financial stability while continuing to develop creatively on the side.",
-                        next: 'part1_reveal',
-                        score: 10,
-                        feedbackTitle: "A Dream Needs a Runway",
-                        feedback: "You prioritize stability and skill-building. You are willing to let your ambition develop gradually rather than demanding immediate proof."
-                    },
-                    {
-                        text: "B) Push aggressively toward acting immediately. Spend your time approaching people in the film industry, building a portfolio and looking for auditions, even without knowing when an opportunity will arrive.",
-                        next: 'part1_reveal',
-                        score: 15,
-                        feedbackTitle: "A Dream Needs a Runway",
-                        feedback: "You prioritize direct pursuit over security. You accept uncertainty because getting closer to the goal matters more than having a predictable professional path."
-                    },
-                    {
-                        text: "C) Look for a hybrid path. Take creative industry work that can provide exposure to filmmaking while continuing to pursue acting.",
-                        next: 'part1_reveal',
-                        score: 10,
-                        feedbackTitle: "A Dream Needs a Runway",
-                        feedback: "You value optionality. You want proximity to the creative world without betting everything on an outcome you cannot yet control."
-                    }
-                ]
-            },
-            {
-                id: 'part1_reveal',
-                emotion: 'mystery',
-                bg: '/assets/bg-ranveer-singh-mumbai-2007.png',
-                portrait: '/assets/portrait-ranveer-singh.png',
-                text: "What Ranveer actually did:\nRanveer returned to Mumbai in 2007 and worked in advertising as a copywriter, including work associated with agencies such as O&M and J. Walter Thompson. He continued moving toward the film industry rather than abandoning acting altogether.\n\nLESSON: A Dream Needs a Runway\nAt 22, the important decision was not simply “dream or no dream.” A practical career could provide experience and stability while the larger ambition remained uncertain. Ranveer's early path shows that pursuing a creative ambition does not always begin with the glamorous version of that career.",
-                choices: [
-                    { text: "Next Part", next: 'part2_setup', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'part2_setup',
-                emotion: 'determination',
-                bg: '/assets/bg-ranveer-singh-mumbai-2007.png',
-                portrait: '/assets/portrait-ranveer-singh.png',
-                text: "Your advertising experience has given you a foothold in the creative industry, but being close to filmmaking is beginning to matter more.\n\nAn assistant-director opportunity provides another way into the film world. It is not the same as being an actor, but it offers something advertising cannot: proximity to actual film production and the people who make movies.\n\nYet choosing this path means accepting that you are still not getting what you ultimately want.\n\nYou could remain in a more established professional environment, use filmmaking experience as a stepping stone, or commit yourself more directly to acting despite the uncertainty.",
-                choices: [
-                    {
-                        text: "A) Stay in advertising and continue developing your career there while pursuing acting when opportunities appear.",
-                        next: 'part2_reveal',
-                        score: 10,
-                        feedbackTitle: "Proximity Is Not the Destination",
-                        feedback: "You protect your existing professional foundation. You prefer controlled risk and believe the dream can be pursued without abandoning stability."
-                    },
-                    {
-                        text: "B) Move into assistant-director work. Learn filmmaking from inside the industry, build relationships and accept that acting may have to wait.",
-                        next: 'part2_reveal',
-                        score: 10,
-                        feedbackTitle: "Proximity Is Not the Destination",
-                        feedback: "You value proximity and learning. You are willing to temporarily accept a different role because being inside the filmmaking environment may teach you things that cannot be learned from outside."
-                    },
-                    {
-                        text: "C) Treat assistant-director work only as a temporary bridge and leave as soon as possible to pursue acting directly.",
-                        next: 'part2_reveal',
-                        score: 15,
-                        feedbackTitle: "Proximity Is Not the Destination",
-                        feedback: "You prioritize the destination over the stepping stone. You are willing to sacrifice certainty because you believe divided attention may keep you from seriously pursuing acting."
-                    }
-                ]
-            },
-            {
-                id: 'part2_reveal',
-                emotion: 'tension',
-                bg: '/assets/bg-ranveer-singh-mumbai-2007.png',
-                portrait: '/assets/portrait-ranveer-singh.png',
-                text: "What Ranveer actually did:\nRanveer did work as an assistant director after his advertising experience, but ultimately left that route to pursue acting seriously. He then began approaching directors with his portfolio and attending auditions. His breakthrough would still take several years; Yash Raj Films eventually selected him for Band Baaja Baaraat in 2010.\n\nLESSON: Proximity Is Not the Destination\nGetting closer to the industry is not automatically the same as getting closer to the career you actually want. A stepping-stone role can teach you, connect you and open doors—but eventually you have to decide whether the stepping stone is becoming a destination.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
-    // AGE 22: Alia Bhatt
-    'lvl_age_22_alia': {
-        title: "More Than a Star",
-        source: "Source: Mumbai, Maharashtra, 2015",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'determination',
-                bg: '/assets/bg-alia-bhatt-mumbai-2015.png',
-                portrait: '/assets/portrait-alia-bhatt.png',
-                text: "You are 22 and already four films into your career.\n\nPeople are beginning to describe you as one of Bollywood's promising young actors. But internally, you don't see yourself as having “made it.” You know four films are not a lifetime of work.\n\nYour next film, Shaandaar, is a large commercial project. It could strengthen your position and broaden your audience—but it also means more expectations.\n\nThe question is no longer simply whether you can get work. What kind of actor do you want your next choices to make you?",
-                choices: [
-                    {
-                        text: "A) Choose another safe, commercially appealing role and strengthen your position with the audience.",
-                        next: 'part1_reveal',
-                        score: 10,
-                        feedbackTitle: "Success Creates a New Problem",
-                        feedback: "You value momentum and audience connection over experimentation."
-                    },
-                    {
-                        text: "B) Prioritize challenging characters, even if they carry greater professional risk.",
-                        next: 'part1_reveal',
-                        score: 15,
-                        feedbackTitle: "Success Creates a New Problem",
-                        feedback: "You prioritize artistic growth even when the safer career path may be easier."
-                    },
-                    {
-                        text: "C) Balance both: take commercially accessible projects while deliberately searching for more demanding roles.",
-                        next: 'part1_reveal',
-                        score: 10,
-                        feedbackTitle: "Success Creates a New Problem",
-                        feedback: "You believe ambition does not require choosing between commercial success and creative development immediately."
-                    }
-                ]
-            },
-            {
-                id: 'part1_reveal',
-                emotion: 'determination',
-                bg: '/assets/bg-alia-bhatt-mumbai-2015.png',
-                portrait: '/assets/portrait-alia-bhatt.png',
-                text: "What Alia actually did:\nAlia continued with Shaandaar, while increasingly seeking roles that allowed her to demonstrate different sides of her acting. She described the film as commercially important while also emphasizing the value of building her career and brand.\n\nLESSON: Success Creates a New Problem\nGetting opportunities is only the first challenge. Once opportunities arrive consistently, the harder question becomes what you want those opportunities to build.",
-                choices: [
-                    { text: "Next Part", next: 'part2_setup', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            },
-            {
-                id: 'part2_setup',
-                emotion: 'wonder',
-                bg: '/assets/bg-alia-bhatt-mumbai-2015.png',
-                portrait: '/assets/portrait-alia-bhatt.png',
-                text: "You have established yourself unusually quickly.\n\nBut being known for a certain kind of performance can become its own limitation. If audiences already have an image of you, changing that image requires deliberately stepping outside it.\n\nYou could continue giving audiences versions of what they already like—or use your growing credibility to experiment.\n\nThe safer path protects what you have built. The riskier path could change how people see you.",
-                choices: [
-                    {
-                        text: "A) Continue strengthening the persona audiences already respond to.",
-                        next: 'part2_reveal',
-                        score: 10,
-                        feedbackTitle: "Don't Let Early Success Define the Ceiling",
-                        feedback: "You prioritize consistency and protecting the audience relationship you've already built."
-                    },
-                    {
-                        text: "B) Actively pursue dramatically different characters, even if audiences are surprised by the change.",
-                        next: 'part2_reveal',
-                        score: 15,
-                        feedbackTitle: "Don't Let Early Success Define the Ceiling",
-                        feedback: "You prioritize exploration and are willing to make your audience reconsider what they expect from you."
-                    },
-                    {
-                        text: "C) Wait until you have more experience before making a major shift in your image.",
-                        next: 'part2_reveal',
-                        score: 5,
-                        feedbackTitle: "Don't Let Early Success Define the Ceiling",
-                        feedback: "You value patience and believe experimentation becomes more powerful after establishing a stronger foundation."
-                    }
-                ]
-            },
-            {
-                id: 'part2_reveal',
-                emotion: 'wonder',
-                bg: '/assets/bg-alia-bhatt-mumbai-2015.png',
-                portrait: '/assets/portrait-alia-bhatt.png',
-                text: "What Alia actually did:\nAlia increasingly moved toward varied and demanding performances. The following year, she took roles in Udta Punjab and Dear Zindagi, demonstrating a significant expansion beyond her earlier image.\n\nLESSON: Don't Let Early Success Define the Ceiling\nEarly success gives you leverage, but it can also create expectations. Growth sometimes means deliberately using that success to make yourself harder to categorize.",
-                choices: [
-                    { text: "Complete Level", next: 'COMPLETE', score: 0, feedbackTitle: "", feedback: "" }
-                ]
-            }
-        ]
-    },
-
     // AGE 22: Bhagat Singh
-    'lvl_age_22_bhagat': {
+'lvl_age_22_bhagat': {
         title: "The Price of a Voice",
         source: "Source: Lahore, British India, 1929-1930",
         frames: [
@@ -7106,7 +4703,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 22: Rani Lakshmibai
-    'lvl_age_22_rani_lakshmibai': {
+'lvl_age_22_rani_lakshmibai': {
         title: "The Silent Palace",
         source: "Source: Jhansi, India, 1851",
         frames: [
@@ -7194,7 +4791,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 11: Virat Kohli
-    'lvl_age_11_virat_kohli': {
+'lvl_age_11_virat_kohli': {
         title: "The Extra Hour",
         source: "Source: West Delhi Cricket Academy, Paschim Vihar, New Delhi (1999–2000)",
         frames: [
@@ -7281,495 +4878,8 @@ export const STORY_DATABASE: Record<string, any> = {
         ]
     },
 
-    // AGE 21: Ed Sheeran - Part 1
-    'lvl_age_21_sheeran_1': {
-        title: "The Photo She Might See",
-        source: "Source: Interview on 16 February 2012",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'grief',
-                bg: '/assets/bg-ed-sheeran-london-2012.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-ed-sheeran.png',
-                text: "You are 21. Your career is moving faster than you expected. People recognize you now. Photographers are following you. Fans are watching.\n\nBut underneath all of that, something much more personal has recently ended. You have just come through a difficult breakup after a four-year relationship. You have barely spoken to your former girlfriend since it ended.\n\nThen a photograph appears of you with another girl. To everyone else, it may be just another celebrity photograph. To you, it carries a different weight. You know the person who matters may see it. You cannot control what the photograph means to someone else.\n\nAnd you have a difficult choice: Do you explain yourself? Do you stay silent? Or do you simply accept that the relationship is over and continue forward?",
-                choices: [
-                    {
-                        text: "REACH OUT: Try to explain the situation rather than allowing a photograph to tell the entire story.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Connection",
-                        feedback: "You find unresolved relationships difficult to leave without explanation. You value emotional clarity, even when reopening a conversation may hurt."
-                    },
-                    {
-                        text: "SAY NOTHING: Accept that the relationship has ended and avoid creating another emotional confrontation.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Acceptance",
-                        feedback: "You believe some endings become harder when you keep trying to control how the other person understands them."
-                    },
-                    {
-                        text: "KEEP MOVING: Focus on work, friends and the life that is beginning to change around you. Do not chase closure.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Forward Motion",
-                        feedback: "You cope with emotional pain by continuing to build the next chapter rather than remaining inside the previous one."
-                    }
-                ]
-            },
-            {
-                id: 'reveal',
-                emotion: 'grief',
-                bg: '/assets/bg-ed-sheeran-london-2012.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-ed-sheeran.png',
-                text: "HISTORICAL REALITY:\nIn an interview published on 16 February 2012, immediately before Sheeran's 21st birthday, he discussed a difficult breakup after four years. He said he had not really spoken to his former girlfriend since the breakup and was concerned about her seeing paparazzi photographs of him with another girl.\n\nThe historical record does NOT establish that he chose any of the three hypothetical approaches above. Therefore, there is no \"correct\" answer. The important historical fact is that Sheeran was entering age 21 while dealing with the aftermath of a significant relationship ending at the same time that his public profile was rapidly increasing.\n\nLESSON:\nSometimes personal loss does not wait for a convenient moment. A career can be accelerating while another part of your life is falling apart. The difficult part is not always choosing between success and failure. Sometimes it is learning how to carry personal pain while the rest of your life keeps moving.",
-                choices: [
-                    {
-                        text: "Complete Level",
-                        next: 'COMPLETE',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            }
-        ]
-    },
-    // AGE 21: Ed Sheeran - Part 2
-    'lvl_age_21_sheeran_2': {
-        title: "The People That Still Feel Like Home",
-        source: "Source: August 2012 Interview",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'calm',
-                bg: '/assets/bg-ed-sheeran-london-2012.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-ed-sheeran.png',
-                text: "You are 21. Your calendar is filling up. There are performances. Travel. Writing. People asking for your time. More opportunities than before.\n\nBut there is another question underneath all of it. What happens to the people who knew you before all of this?\n\nYour friends still want to see you. Your family still wants you around. And your career keeps giving you reasons to leave again.\n\nYou have to decide what \"success\" is allowed to cost you. You cannot give everyone unlimited time. But you also cannot assume the people closest to you will always be there whenever you return.\n\nWhat do you prioritize?",
-                choices: [
-                    {
-                        text: "GIVE THE CAREER EVERYTHING: Accept that this period of your life is temporary and give your work almost all of your attention.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Ambition",
-                        feedback: "You are willing to accept personal sacrifice when you believe an opportunity may not come twice."
-                    },
-                    {
-                        text: "PROTECT TIME FOR YOUR PEOPLE: Keep meaningful time for friends and family even if it means turning down or limiting some opportunities.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Connection",
-                        feedback: "You believe success has less value if you become disconnected from the people who matter to you."
-                    },
-                    {
-                        text: "BUILD A BALANCE: Keep pursuing the opportunities, but deliberately protect relationships and personal time instead of treating them as whatever remains after work.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Balance",
-                        feedback: "You try to build success without allowing it to consume the rest of your life."
-                    }
-                ]
-            },
-            {
-                id: 'reveal',
-                emotion: 'calm',
-                bg: '/assets/bg-ed-sheeran-london-2012.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-ed-sheeran.png',
-                text: "HISTORICAL REALITY:\nIn an August 2012 interview, Sheeran spoke about the sacrifices involved in the life he was living. He described friends and family as central to what mattered to him and connected happiness with maintaining a good balance between those relationships and his work.\n\nThe historical record does NOT establish that he literally faced these exact three choices on a specific day. Instead, they represent a real tension in his life at that time.\n\nLESSON:\nSuccess changes your schedule before it changes your identity. The people who knew you before success can become even more important once everyone else starts wanting something from you.\n\nAmbition asks: \"What can I achieve?\"\nBalance asks: \"Who do I want beside me when I get there?\"",
-                choices: [
-                    {
-                        text: "Complete Level",
-                        next: 'COMPLETE',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            }
-        ]
-    },
-
-    // AGE 21: Selena Gomez - Part 1
-    'lvl_age_21_selena_1': {
-        title: "When Everyone Has an Opinion",
-        source: "Source: Historical Context, 2013-2014",
-        frames: [
-            {
-                id: 'intro',
-                bg: '/assets/bg-selena-gomez-los-angeles-2013.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_selena.jpg?v=2',
-                emotion: 'love',
-                text: "Year: 2013. You are 21. You are old enough to know that your personal life belongs to you. But the world does not always treat it that way. Your relationship has become part of public conversation. Every appearance can become a headline. Every photograph can be interpreted. Every time you are seen together, people decide what it means.",
-                choices: [
-                    {
-                        text: "A) PROTECT THE RELATIONSHIP: Keep personal matters as private as possible. Do not allow public opinion to determine what happens between two people.",
-                        next: 'protect',
-                        score: 0,
-                        feedbackTitle: "Privacy",
-                        feedback: "You believe important relationships should be protected from outside judgment."
-                    },
-                    {
-                        text: "B) STEP BACK: Create emotional distance and give yourself room to figure out what you actually want.",
-                        next: 'step_back',
-                        score: 0,
-                        feedbackTitle: "Self-Preservation",
-                        feedback: "You prioritize understanding yourself before trying to satisfy someone else's expectations."
-                    },
-                    {
-                        text: "C) KEEP TRYING: Accept that relationships can be complicated and continue trying to make the situation work despite the public attention.",
-                        next: 'keep_trying',
-                        score: 0,
-                        feedbackTitle: "Commitment",
-                        feedback: "You are willing to tolerate uncertainty when a relationship still matters to you."
-                    }
-                ]
-            },
-            {
-                id: 'protect',
-                bg: '/assets/bg-selena-gomez-los-angeles-2013.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_selena.jpg?v=2',
-                emotion: 'love',
-                text: "HISTORICAL REALITY:\nDuring 2013, Selena Gomez and Justin Bieber's relationship remained a major subject of public attention. Their relationship had already gone through periods of separation and reconciliation, and media coverage continued to follow their interactions.\n\nThe historical record does NOT establish that Selena faced the exact three choices above.\n\nAt 21, Selena was navigating a period in which her personal relationship was being discussed publicly while she was simultaneously trying to establish her own adult identity. The important historical context is not whether she made one perfect relationship decision. It is that her private life had become difficult to separate from her public identity.\n\nLESSON:\nA relationship becomes harder to understand when everyone outside it has an opinion. Sometimes growing up means learning the difference between: \"What do I actually want?\" and \"What does everyone expect me to want?\"",
-                choices: []
-            },
-            {
-                id: 'step_back',
-                bg: '/assets/bg-selena-gomez-los-angeles-2013.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_selena.jpg?v=2',
-                emotion: 'love',
-                text: "HISTORICAL REALITY:\nDuring 2013, Selena Gomez and Justin Bieber's relationship remained a major subject of public attention. Their relationship had already gone through periods of separation and reconciliation, and media coverage continued to follow their interactions.\n\nThe historical record does NOT establish that Selena faced the exact three choices above.\n\nAt 21, Selena was navigating a period in which her personal relationship was being discussed publicly while she was simultaneously trying to establish her own adult identity. The important historical context is not whether she made one perfect relationship decision. It is that her private life had become difficult to separate from her public identity.\n\nLESSON:\nA relationship becomes harder to understand when everyone outside it has an opinion. Sometimes growing up means learning the difference between: \"What do I actually want?\" and \"What does everyone expect me to want?\"",
-                choices: []
-            },
-            {
-                id: 'keep_trying',
-                bg: '/assets/bg-selena-gomez-los-angeles-2013.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_selena.jpg?v=2',
-                emotion: 'love',
-                text: "HISTORICAL REALITY:\nDuring 2013, Selena Gomez and Justin Bieber's relationship remained a major subject of public attention. Their relationship had already gone through periods of separation and reconciliation, and media coverage continued to follow their interactions.\n\nThe historical record does NOT establish that Selena faced the exact three choices above.\n\nAt 21, Selena was navigating a period in which her personal relationship was being discussed publicly while she was simultaneously trying to establish her own adult identity. The important historical context is not whether she made one perfect relationship decision. It is that her private life had become difficult to separate from her public identity.\n\nLESSON:\nA relationship becomes harder to understand when everyone outside it has an opinion. Sometimes growing up means learning the difference between: \"What do I actually want?\" and \"What does everyone expect me to want?\"",
-                choices: []
-            }
-        ]
-    },
-
-    // AGE 21: Selena Gomez - Part 2
-    'lvl_age_21_selena_2': {
-        title: "Your Own Name",
-        source: "Source: Historical Context, 2013-2014",
-        frames: [
-            {
-                id: 'intro',
-                bg: '/assets/bg-selena-gomez-los-angeles-2013.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_selena.jpg?v=2',
-                emotion: 'determination',
-                text: "People have known you for years. They have watched you grow up. They have opinions about what you should wear. What you should sing. Who you should date. What kind of person you should become. But you are changing. You are releasing your own music. You are moving into a more mature phase of your career. You have an opportunity to define yourself rather than simply continue the identity people already know. The question is: \"How much of the person people know is actually the person I want to become?\"",
-                choices: [
-                    {
-                        text: "A) PLAY IT SAFE: Stay close to the image people already know. Make gradual changes rather than risking a strong reaction.",
-                        next: 'play_safe',
-                        score: 0,
-                        feedbackTitle: "Security",
-                        feedback: "You prefer controlled evolution over dramatic change."
-                    },
-                    {
-                        text: "B) DEFINE YOURSELF: Use your music and creative choices to establish a more independent adult identity. Accept that some people may not immediately understand the change.",
-                        next: 'define_yourself',
-                        score: 0,
-                        feedbackTitle: "Identity",
-                        feedback: "You value becoming the person you choose to be over preserving everyone's existing expectations."
-                    },
-                    {
-                        text: "C) CHANGE EVERYTHING: Take the opportunity to completely separate yourself from the version of you that people already know. Use this period as a complete reinvention.",
-                        next: 'change_everything',
-                        score: 0,
-                        feedbackTitle: "Reinvention",
-                        feedback: "You are willing to accept uncertainty and criticism if it gives you greater control over your identity."
-                    }
-                ]
-            },
-            {
-                id: 'play_safe',
-                bg: '/assets/bg-selena-gomez-los-angeles-2013.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_selena.jpg?v=2',
-                emotion: 'determination',
-                text: "HISTORICAL REALITY:\nIn 2013, Selena Gomez released Stars Dance. The album debuted at number one on the Billboard 200, becoming her first number-one album. She subsequently embarked on the Stars Dance Tour, her first solo world tour.\n\nThis period represented an important step toward establishing Selena as an independent recording artist rather than only the young performer audiences had known from her earlier career.\n\nThe historical record does NOT establish that she faced the exact three choices above.\n\nLESSON:\nGrowing up publicly is different from growing up privately. You may change before everyone else is ready to accept the change. The people who knew an earlier version of you may not immediately understand the person you are becoming. You do not need to remain the same person simply because other people became comfortable with who you used to be.",
-                choices: []
-            },
-            {
-                id: 'define_yourself',
-                bg: '/assets/bg-selena-gomez-los-angeles-2013.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_selena.jpg?v=2',
-                emotion: 'determination',
-                text: "HISTORICAL REALITY:\nIn 2013, Selena Gomez released Stars Dance. The album debuted at number one on the Billboard 200, becoming her first number-one album. She subsequently embarked on the Stars Dance Tour, her first solo world tour.\n\nThis period represented an important step toward establishing Selena as an independent recording artist rather than only the young performer audiences had known from her earlier career.\n\nThe historical record does NOT establish that she faced the exact three choices above.\n\nLESSON:\nGrowing up publicly is different from growing up privately. You may change before everyone else is ready to accept the change. The people who knew an earlier version of you may not immediately understand the person you are becoming. You do not need to remain the same person simply because other people became comfortable with who you used to be.",
-                choices: []
-            },
-            {
-                id: 'change_everything',
-                bg: '/assets/bg-selena-gomez-los-angeles-2013.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/avatar_selena.jpg?v=2',
-                emotion: 'determination',
-                text: "HISTORICAL REALITY:\nIn 2013, Selena Gomez released Stars Dance. The album debuted at number one on the Billboard 200, becoming her first number-one album. She subsequently embarked on the Stars Dance Tour, her first solo world tour.\n\nThis period represented an important step toward establishing Selena as an independent recording artist rather than only the young performer audiences had known from her earlier career.\n\nThe historical record does NOT establish that she faced the exact three choices above.\n\nLESSON:\nGrowing up publicly is different from growing up privately. You may change before everyone else is ready to accept the change. The people who knew an earlier version of you may not immediately understand the person you are becoming. You do not need to remain the same person simply because other people became comfortable with who you used to be.",
-                choices: []
-            }
-        ]
-    },
-
-    // AGE 22: Tanmay Bhat - Part 1
-    'lvl_age_22_tanmay_1': {
-        title: "Just 200 People",
-        source: "Source: Historical Context, 2012–2013",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'hope',
-                bg: '/assets/portrait-tanmay-bhat.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-tanmay-bhat.png',
-                text: "You are 22. You are already working in comedy and writing. But you do not have a giant audience. There is no guarantee that people will show up.\n\nYou and Gursimran Khamba have started a comedy and pop-culture podcast. The idea is simple: talk about things you find funny and make something that feels like your own.\n\nYou could keep treating comedy as a series of individual performances and writing jobs. Or you could invest your time in this new project. The target is not enormous. You just want people to show up. Maybe 200. But even 200 people means something.\n\nHow seriously do you take an idea before it has proven itself?",
-                choices: [
-                    {
-                        text: "KEEP IT SMALL: Treat the podcast as a side project. Continue prioritizing existing writing and comedy opportunities while experimenting with the podcast when time allows.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Security",
-                        feedback: "You prefer to protect the opportunities that already exist before committing heavily to something uncertain."
-                    },
-                    {
-                        text: "BET ON THE IDEA: Put serious time into the podcast. Accept that the project may fail, but give it enough attention to discover whether it can become something larger.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Risk",
-                        feedback: "You are willing to invest in an uncertain possibility before there is evidence that it will work."
-                    },
-                    {
-                        text: "BUILD IT WITH THE GROUP: Treat the project primarily as a collaborative experiment. Focus on finding the chemistry between different comedians rather than worrying about immediate scale.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Collaboration",
-                        feedback: "You believe the right people and creative chemistry can matter more than having a perfect plan."
-                    }
-                ]
-            },
-            {
-                id: 'reveal',
-                emotion: 'hope',
-                bg: '/assets/portrait-tanmay-bhat.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-tanmay-bhat.png',
-                text: "HISTORICAL REALITY:\nTanmay Bhat and Gursimran Khamba started the All India Bakchod podcast in March 2012. Rohan Joshi and Ashish Shakya subsequently became part of the group.\n\nThe early ambition was relatively modest. Tanmay later described wanting around 200 people in a room for a show. As the audience grew, the group's ambitions expanded.\n\nThe historical record does NOT establish that Tanmay faced these exact three choices. Therefore, do not tell the player that one option was \"correct.\" The historically important fact is that he DID choose to invest in the new collaborative comedy project.\n\nLESSON:\nYou do not always know whether an idea is good before you invest in it. Sometimes the first evidence is not success — it is simply that a few people care enough to come back. Small beginnings are still decisions.",
-                choices: [
-                    {
-                        text: "Complete Level",
-                        next: 'COMPLETE',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            }
-        ]
-    },
-
-    // AGE 22: Tanmay Bhat - Part 2
-    'lvl_age_22_tanmay_2': {
-        title: "What If We Go Bigger?",
-        source: "Source: Historical Context, 2012–2013",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'wonder',
-                bg: '/assets/portrait-tanmay-bhat.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-tanmay-bhat.png',
-                text: "The experiment is no longer feeling completely invisible. The audience is growing. The group is developing chemistry. The idea that started small is becoming harder to ignore.\n\nYou have a choice: Do you keep the project exactly as it is? Do you start thinking bigger? Or do you expand carefully without losing what made the original idea enjoyable?\n\nThere is still no guarantee. You are only beginning to see the possibility.",
-                choices: [
-                    {
-                        text: "KEEP THE ORIGINAL FORMULA: Do not chase growth. Keep making the kind of comedy that feels natural and enjoyable.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Authenticity",
-                        feedback: "You prefer protecting the original creative identity rather than changing it for growth."
-                    },
-                    {
-                        text: "THINK BIGGER: Start treating the project as something that could become a much larger comedy platform. Take the possibility seriously before there is certainty.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Vision",
-                        feedback: "You naturally look beyond the current size of an opportunity."
-                    },
-                    {
-                        text: "EXPERIMENT: Try new formats while keeping the original spirit. Use the audience response to discover what works instead of committing to one direction immediately.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Adaptability",
-                        feedback: "You prefer learning through experimentation rather than making one irreversible commitment."
-                    }
-                ]
-            },
-            {
-                id: 'reveal',
-                emotion: 'wonder',
-                bg: '/assets/portrait-tanmay-bhat.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-tanmay-bhat.png',
-                text: "HISTORICAL REALITY:\nThe group did expand. All India Bakchod developed beyond the original podcast format. In 2013, the four founders began making YouTube sketches.\n\nTanmay later recalled that their original expectations were modest, but the audience growth significantly exceeded what they initially imagined. Forbes India reported that after initially aiming for roughly 200 people in a room, the audience grew to 500 and beyond, eventually leading the group to recognize that they were building something much larger.\n\nThe experiment became bigger than its original expectations.\n\nLESSON:\nYou do not need to know that something will become huge before taking it seriously. Sometimes the most useful signal is simply that reality is exceeding your original expectations. When that happens, the next decision is not whether you were right — it is whether you are willing to change your plans because the world responded differently than you expected.",
-                choices: [
-                    {
-                        text: "Complete Level",
-                        next: 'COMPLETE',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            }
-        ]
-    },
-
-    // AGE 21: Tanmay Bhat - Part 1
-    'lvl_age_21_tanmay_1': {
-        title: "Should I Really Do This?",
-        source: "Source: Historical Context, 2008–2009",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'mystery',
-                bg: '/assets/portrait-tanmay-bhat.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-tanmay-bhat.png',
-                text: "You are 21. Mumbai has a growing stand-up comedy scene. You have started performing at open mics. Sometimes the room laughs. Sometimes the material works. Sometimes it doesn't.\n\nYou are still figuring out what kind of comedian you are. You also have other skills and opportunities—writing, television work, creative work.\n\nBut stand-up is different. When you walk onto a stage, there is nowhere to hide. You have a few minutes. The microphone is in your hand. The audience decides immediately whether what you wrote is funny.\n\nYou have to decide how seriously you are willing to take this.",
-                choices: [
-                    {
-                        text: "KEEP IT AS A SIDE THING: Continue performing occasionally, but do not allow comedy to become the center of your plans yet.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Security",
-                        feedback: "You prefer to explore your talent without immediately putting your future on the line."
-                    },
-                    {
-                        text: "TAKE THE STAGE SERIOUSLY: Commit to performing regularly. Accept that you will have bad sets, awkward rooms and rejection along the way.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Courage",
-                        feedback: "You are willing to repeatedly expose yourself to failure in order to improve."
-                    },
-                    {
-                        text: "FOCUS ON WRITING: Use your comedy instincts primarily through writing for television and other creative projects rather than making stand-up the main path.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Craft",
-                        feedback: "You prefer developing your creative identity through preparation and writing rather than relying entirely on live performance."
-                    }
-                ]
-            },
-            {
-                id: 'reveal',
-                emotion: 'mystery',
-                bg: '/assets/portrait-tanmay-bhat.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-tanmay-bhat.png',
-                text: "HISTORICAL REALITY:\nTanmay Bhat did enter the Mumbai stand-up circuit around 2008 and performed regularly at open-mic events. He continued developing as a performer while also working in writing and comedy-related creative work.\n\nThe historical record does NOT establish that he faced these exact three choices. The important historical reality is that he continued performing rather than treating comedy as a one-time experiment. By 2009, this path led to a significant breakthrough.\n\nLESSON:\nA creative career often begins before you have enough evidence to call it a career. At the beginning, you are not choosing between success and failure. You are choosing whether to keep showing up long enough to find out what you might become.",
-                choices: [
-                    {
-                        text: "Complete Level",
-                        next: 'COMPLETE',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            }
-        ]
-    },
-
-    // AGE 21: Tanmay Bhat - Part 2
-    'lvl_age_21_tanmay_2': {
-        title: "The Five Minutes",
-        source: "Source: Historical Context, 2008–2009",
-        frames: [
-            {
-                id: 'intro',
-                emotion: 'triumph',
-                bg: '/assets/portrait-tanmay-bhat.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-tanmay-bhat.png',
-                text: "You have been performing. You have been testing material. You have learned that getting laughs consistently is much harder than getting lucky once.\n\nNow you have another opportunity: Weirdass Ham-ateur Night. It is a competition. You are not guaranteed to win. Other comedians are there. You have only a short amount of stage time to show what you can do.\n\nYou have to decide what kind of performer you want to be when those few minutes begin. Do you play it safe? Do you go for the biggest possible reaction? Or do you trust the material and style you have been developing?",
-                choices: [
-                    {
-                        text: "PLAY IT SAFE: Use material you already know works. Minimize the risk of trying something experimental.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Reliability",
-                        feedback: "You prefer maximizing the probability of a solid outcome rather than chasing a bigger but uncertain one."
-                    },
-                    {
-                        text: "GO FOR THE BIG REACTION: Take a bigger creative risk. Use your strongest and most distinctive material even if the audience response could be unpredictable.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Boldness",
-                        feedback: "You are comfortable accepting greater risk when the potential reward is meaningful."
-                    },
-                    {
-                        text: "TRUST YOUR VOICE: Do not try to perform like anyone else. Focus on delivering the material in the style that feels most naturally yours.",
-                        next: 'reveal',
-                        score: 10,
-                        feedbackTitle: "Authenticity",
-                        feedback: "You value developing a recognizable identity rather than optimizing only for immediate approval."
-                    }
-                ]
-            },
-            {
-                id: 'reveal',
-                emotion: 'triumph',
-                bg: '/assets/portrait-tanmay-bhat.png',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                portrait: '/assets/portrait-tanmay-bhat.png',
-                text: "HISTORICAL REALITY:\nIn 2009, Tanmay Bhat won Vir Das's Weirdass Ham-ateur Night in Mumbai. The competition was described as a national comic hunt. Following the win, Bhat joined the Weirdass Comedy writing team and opened for Vir Das's Walking on Broken Das.\n\nThis was a meaningful early professional breakthrough.\n\nLESSON:\nSometimes the first breakthrough does not prove that you have figured everything out. It proves something smaller: There is enough here to keep going. A single opportunity can turn a possibility into evidence. But it is still only evidence. The next decision remains yours.",
-                choices: [
-                    {
-                        text: "Complete Level",
-                        next: 'COMPLETE',
-                        score: 0,
-                        feedbackTitle: "",
-                        feedback: ""
-                    }
-                ]
-            }
-        ]
-    },
-
     // AGE 21: Michael Jackson - Part 1
-    'lvl_age_21_michael_1': {
+'lvl_age_21_michael_1': {
         title: "Not Just the Jackson 5",
         source: "Source: Off the Wall Era, 1979–1980",
         frames: [
@@ -7827,7 +4937,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 21: Michael Jackson - Part 2
-    'lvl_age_21_michael_2': {
+'lvl_age_21_michael_2': {
         title: "Good Enough or Your Best?",
         source: "Source: Off the Wall Era, 1979–1980",
         frames: [
@@ -7885,7 +4995,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Michael Jackson - Part 1
-    'lvl_age_15_michael_1': {
+'lvl_age_15_michael_1': {
         title: "When Your Voice Changes",
         source: "Source: Historical Context, 1973–1974",
         frames: [
@@ -7943,7 +5053,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Michael Jackson - Part 2
-    'lvl_age_15_michael_2': {
+'lvl_age_15_michael_2': {
         title: "When People Expect the Old You",
         source: "Source: Historical Context, 1973–1974",
         frames: [
@@ -8001,7 +5111,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Bhagat Singh - Part 1
-    'lvl_age_15_bhagat_1': {
+'lvl_age_15_bhagat_1': {
         title: "Don't Just Be Angry",
         source: "Source: Historical Context, 1922–1923",
         frames: [
@@ -8059,7 +5169,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Bhagat Singh - Part 2
-    'lvl_age_15_bhagat_2': {
+'lvl_age_15_bhagat_2': {
         title: "What If I'm Wrong?",
         source: "Source: Historical Context, 1922–1923",
         frames: [
@@ -8117,7 +5227,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Rani Lakshmibai (One Continuous Story: The Girl and the Crown)
-    'lvl_age_15_rani_lakshmibai': {
+'lvl_age_15_rani_lakshmibai': {
         title: "The Girl and the Crown",
         source: "Source: Historical Context, c. 1842–1844",
         frames: [
@@ -8227,7 +5337,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Virat Kohli (One Continuous Story: More Than Your Own Score)
-    'lvl_age_15_virat_kohli': {
+'lvl_age_15_virat_kohli': {
         title: "More Than Your Own Score",
         source: "Source: Delhi Under-15 Cricket, 2003–2004",
         frames: [
@@ -8337,7 +5447,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Ratan Tata (One Continuous Story: The Quiet Voice)
-    'lvl_age_15_ratan_tata': {
+'lvl_age_15_ratan_tata': {
         title: "The Quiet Voice",
         source: "Source: Historical Context, c. 1953",
         frames: [
@@ -8447,7 +5557,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Elon Musk (One Continuous Story: The Thing You Love)
-    'lvl_age_15_elon_musk': {
+'lvl_age_15_elon_musk': {
         title: "The Thing You Love",
         source: "Source: Historical Context, c. 1986",
         frames: [
@@ -8557,7 +5667,7 @@ export const STORY_DATABASE: Record<string, any> = {
     },
 
     // AGE 15: Cristiano Ronaldo (One Continuous Story: Far From Home)
-    'lvl_age_15_ronaldo': {
+'lvl_age_15_ronaldo': {
         title: "Far From Home",
         source: "Source: Historical Context, c. 2000",
         frames: [
@@ -8665,7 +5775,8 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
-    'lvl_age_16_virat_kohli': {
+
+'lvl_age_16_virat_kohli': {
         title: 'The Morning at Kotla',
         source: 'Source: Graham Bensinger Interview & Times of India (2025), Driven by Vijay Lokapally',
         frames: [
@@ -8760,7 +5871,8 @@ export const STORY_DATABASE: Record<string, any> = {
             }
         ]
     },
-    'lvl_age_21_virat_kohli': {
+
+'lvl_age_21_virat_kohli': {
         title: 'The Ego Check',
         source: 'Source: ESPNcricinfo & 2009 Emerging Players Tournament, Australia',
         frames: [
@@ -8854,5 +5966,149 @@ export const STORY_DATABASE: Record<string, any> = {
                 ]
             }
         ]
-    }
+    },
+
+    // AGE 17: Rabindranath Tagore
+'lvl_age_17_tagore': {
+        background: '/assets/bg_tagore_bengal.png',
+        characterRight: '/assets/portrait-rabindranath-tagore.png',
+        emotion: 'contemplative',
+        frames: [
+            {
+                id: 'intro',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Narrator',
+                text: "You are Rabindranath Tagore, 17 years old, sent to London in 1878. Your esteemed family expects you to study law at University College London to become a barrister—a path of immense colonial prestige. Yet, surrounded by dry British legal treatises, your soul sings only for Bengali poetry, rhythm, and universal philosophy. The expectations of high society demand obedience; your creative inner voice yearns for freedom.",
+                emotion: 'contemplative',
+                choices: [
+                    {
+                        text: "Surrender to family pressure and force yourself through law school",
+                        next: 'choice_a_outcome',
+                        score: 1,
+                        feedbackTitle: "The Safe Compromise",
+                        feedbackText: "You prioritize social stability and meeting expectations, but suppress the fire of your unique creative gift."
+                    },
+                    {
+                        text: "Follow your calling: abandon the legal degree and return home to write",
+                        next: 'choice_b_outcome',
+                        score: 3,
+                        feedbackTitle: "Courage of Calling",
+                        feedbackText: "You recognize that true education harmonizes life with all existence, choosing authentic creation over empty titles."
+                    },
+                    {
+                        text: "Try to balance legal textbooks by day and Bengali verse by night",
+                        next: 'choice_c_outcome',
+                        score: 2,
+                        feedbackTitle: "Divided Energy",
+                        feedbackText: "You attempt to bridge two conflicting worlds, learning how difficult it is to divide a singular artistic soul."
+                    }
+                ]
+            },
+            {
+                id: 'choice_a_outcome',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Narrator',
+                text: "You attempt to memorize dry legal statutes, but the words feel lifeless. You realize that living a borrowed ambition only starves the spirit destined to awaken a culture.",
+                emotion: 'thoughtful',
+                choices: [{ text: "Next", next: 'lesson', score: 0 }]
+            },
+            {
+                id: 'choice_b_outcome',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Narrator',
+                text: "Rabindranath courageously stepped away from legal studies, leaving England in 1880 without a degree. Returning to Bengal, he poured his entire spirit into poetry, music, and thought.",
+                emotion: 'inspired',
+                choices: [{ text: "Next", next: 'lesson', score: 0 }]
+            },
+            {
+                id: 'choice_c_outcome',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Narrator',
+                text: "Balancing two lives proved impossible; the deep current of Bengali literature could not be contained in the margins of legal briefs.",
+                emotion: 'thoughtful',
+                choices: [{ text: "Next", next: 'lesson', score: 0 }]
+            },
+            {
+                id: 'lesson',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Rabindranath Tagore',
+                portrait: '/assets/portrait-rabindranath-tagore.png',
+                text: "In 1880, Rabindranath returned to Bengal without a degree to pursue literature full-time. Instead of a forgotten colonial lawyer, he became Asia's first Nobel Laureate, reshaping world literature and composing the national anthems of two nations.\n\nLESSONS:\n1. Conventional prestige is hollow if it forces you to silence your deepest genius.\n2. True education is not mere accumulation of credentials, but that which brings your life into harmony with all existence.",
+                emotion: 'wisdom',
+                choices: [{ text: "Complete Story", next: null, score: 0 }]
+            }
+        ]
+    },
+
+    // AGE 22: Rabindranath Tagore
+'lvl_age_22_tagore': {
+        background: '/assets/bg_tagore_bengal.png',
+        characterRight: '/assets/portrait-rabindranath-tagore.png',
+        emotion: 'inspired',
+        frames: [
+            {
+                id: 'intro',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Narrator',
+                text: "You are Rabindranath Tagore at 22, living on Sadar Street in Kolkata. For months, you have wrestled with brooding melancholy, writing isolated verses. But one radiant morning, watching the sunrise illuminate the banyan trees, an extraordinary spiritual awakening overcomes you: the barrier between your soul and the world dissolves into luminous unity. You feel an irresistible surge to liberate your poetic voice.",
+                emotion: 'inspired',
+                choices: [
+                    {
+                        text: "Channel the epiphany into an immortal poem of liberation: 'The Awakening of the Waterfall'",
+                        next: 'choice_a_outcome',
+                        score: 3,
+                        feedbackTitle: "Liberated Flow",
+                        feedbackText: "You burst through the frozen barriers of self-doubt, pouring your soul into words that inspire an entire generation."
+                    },
+                    {
+                        text: "Keep the mystical experience private, fearing others will dismiss it as mere romantic idealism",
+                        next: 'choice_b_outcome',
+                        score: 1,
+                        feedbackTitle: "Cautious Hesitation",
+                        feedbackText: "You hesitate to share your deepest revelation, learning that unshared light cannot warm the world."
+                    },
+                    {
+                        text: "Dissect the feeling through intellectual philosophy before putting pen to paper",
+                        next: 'choice_c_outcome',
+                        score: 2,
+                        feedbackTitle: "Intellectual Analysis",
+                        feedbackText: "You analyze the mystery with intellect, but discover that raw creative vision must be captured in the moment."
+                    }
+                ]
+            },
+            {
+                id: 'choice_a_outcome',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Narrator',
+                text: "In a single unbroken burst of creative genius, you write 'Nirjharer Swapnabhanga'. The poem captures a frozen waterfall shattering its icy cage to rush toward the open ocean.",
+                emotion: 'joy',
+                choices: [{ text: "Next", next: 'lesson', score: 0 }]
+            },
+            {
+                id: 'choice_b_outcome',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Narrator',
+                text: "Holding back the surge only causes restlessness. The vision demands to be shared with all humanity.",
+                emotion: 'thoughtful',
+                choices: [{ text: "Next", next: 'lesson', score: 0 }]
+            },
+            {
+                id: 'choice_c_outcome',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Narrator',
+                text: "Philosophy explains the feeling, but only poetic rhythm can convey the living heartbeat of the universe.",
+                emotion: 'thoughtful',
+                choices: [{ text: "Next", next: 'lesson', score: 0 }]
+            },
+            {
+                id: 'lesson',
+                bg: '/assets/bg_tagore_bengal.png',
+                speaker: 'Rabindranath Tagore',
+                portrait: '/assets/portrait-rabindranath-tagore.png',
+                text: "'The Awakening of the Waterfall' marked Rabindranath's breakthrough from youthful melancholy into cosmic empathy. That same radiant philosophy of universal brotherhood led him to found Santiniketan and champion fearless human dignity.\n\nLESSONS:\n1. When self-absorption breaks open into empathy for the whole world, your greatest work begins.\n2. Never stay frozen behind the ice of fear—let your energy surge outward like a liberated waterfall.",
+                emotion: 'wisdom',
+                choices: [{ text: "Complete Story", next: null, score: 0 }]
+            }
+        ]
+    },
 };

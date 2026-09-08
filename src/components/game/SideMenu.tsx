@@ -29,7 +29,6 @@ export function SideMenu({
 
     const {
         isCandyMode,
-        setShowSubscriptionModal,
         musicVolume,
         sfxVolume,
         isMusicMuted,
@@ -373,31 +372,7 @@ export function SideMenu({
                     </button>
                 </div>
 
-                {/* PRO ACTIONS */}
-                <div className="flex flex-col gap-3">
-                    <span className={clsx("text-[10px] font-black uppercase tracking-widest ml-2 mt-2", isCandyMode ? "text-slate-400" : "text-slate-500")}>Pro Actions</span>
-                    <button
-                        onClick={() => {
-                            audioSynth.playClick();
-                            setShowSubscriptionModal(true);
-                            setIsOpen(false);
-                        }}
-                        className={clsx(
-                            "flex items-center gap-4 p-3 rounded-2xl transition-all border shadow-lg",
-                            isCandyMode
-                                ? "bg-gradient-to-r from-amber-100 to-yellow-50 border-amber-300 hover:border-amber-500"
-                                : "bg-gradient-to-r from-amber-500/20 to-yellow-600/20 border-amber-500 hover:shadow-[0_0_20px_rgba(245,158,11,0.4)]"
-                        )}
-                    >
-                        <div className="p-2 rounded-xl text-black shadow-inner flex items-center justify-center bg-gradient-to-r from-yellow-300 to-amber-500">
-                            <Star size={20} className="stroke-[2.5]" />
-                        </div>
-                        <div className="flex flex-col items-start leading-tight">
-                            <span className={clsx("text-[10px] font-bold uppercase tracking-wider", isCandyMode ? "text-amber-700" : "text-amber-400/80")}>Unlock More</span>
-                            <span className={clsx("text-base font-black uppercase tracking-wide", isCandyMode ? "text-amber-900" : "text-amber-300")}>Upgrade to Pro</span>
-                        </div>
-                    </button>
-                </div>
+
 
                 {/* APP CONTROLS */}
                 <div className="flex flex-col gap-3">

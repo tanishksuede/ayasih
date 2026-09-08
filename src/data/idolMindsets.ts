@@ -24,6 +24,34 @@ export interface IdolMindset {
 }
 
 export const IDOL_MINDSETS: Record<string, IdolMindset> = {
+    "Rabindranath Tagore": {
+        name: "Rabindranath Tagore",
+        archetypeTitle: "The Universal Bard",
+        quote: "You cannot cross the sea merely by standing and staring at the water.",
+        voice: {
+            tone: "Poetic, Profound, Harmonious",
+            intro: "The world speaks to those who listen with an unclouded mind. Let your spirit find its boundless expression."
+        },
+        missions: {
+            discipline: { title: "Morning Stillness", desc: "Dedicate 30 minutes of undisturbed focus to pure creation or reflection.", xp: "+50 Serenity" },
+            resilience: { title: "The Flowing River", desc: "When obstacles block your path, do not fight stubbornly—create a new, deeper channel forward.", xp: "+50 Grace" },
+            risk: { title: "Uncharted Melody", desc: "Write, create, or speak a truth that challenges rigid convention today.", xp: "+50 Fearlessness" },
+            leadership: { title: "Where the Mind is Without Fear", desc: "Lead by elevating others' intellectual and creative dignity, not by authority.", xp: "+50 Nobility" },
+            creativity: { title: "Awakening of the Waterfall", desc: "Express a feeling or insight that no one else around you has dared to articulate.", xp: "+50 Transcendence" },
+            empathy: { title: "Universal Song", desc: "Listen deeply to someone whose background is entirely different from yours.", xp: "+50 Heart" },
+            vision: { title: "Santiniketan Horizon", desc: "Envision how your work can serve universal humanity rather than petty competition.", xp: "+50 Cosmic Vision" }
+        },
+        profile: {
+            motivation: 'Impact',
+            risk: 'Bold',
+            emotional: 'Resilient',
+            social: 'Observer',
+            passion: 'Creative',
+            coreValue: 'Vision'
+        },
+        avatarUrl: '/assets/portrait-rabindranath-tagore.png'
+    },
+
     "Arnold Schwarzenegger": {
         name: "Arnold Schwarzenegger",
         archetypeTitle: "Iron Conqueror",
@@ -51,6 +79,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_arnold.jpg'
     },
+
     "Stephen Hawking": {
         name: "Stephen Hawking",
         archetypeTitle: "Cosmic Explorer",
@@ -78,6 +107,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_hawking.png'
     },
+
     "Frida Kahlo": {
         name: "Frida Kahlo",
         archetypeTitle: "Vivid Soul",
@@ -105,6 +135,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_frida.png'
     },
+
     "Kobe Bryant": {
         name: "Kobe Bryant",
         archetypeTitle: "Mamba Disciple",
@@ -132,33 +163,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_kobe.png'
     },
-    "Taylor Swift": {
-        name: "Taylor Swift",
-        archetypeTitle: "Master Storyteller",
-        quote: "People haven't always been there for me, but music has.",
-        voice: {
-            tone: "Personal, Narrative, Resilient",
-            intro: "Every choice you make is a lyric in your song. Let's read the bridge together."
-        },
-        missions: {
-            discipline: { title: "Studio Time", desc: "Finish the project you started. Don't leave it as a demo.", xp: "+50 Finish" },
-            resilience: { title: "Snake into Butterfly", desc: "Take a criticism and write your way out of it.", xp: "+50 Rebirth" },
-            risk: { title: "Change Genre", desc: "Pivot your approach completely. Try a new style.", xp: "+50 Reinvention" },
-            leadership: { title: "Squad Goals", desc: "Celebrate a friend's success publicly.", xp: "+50 Support" },
-            creativity: { title: "Write it Down", desc: "Journal your raw feelings about a problem. Find the hook.", xp: "+50 Songwriting" },
-            empathy: { title: "Fan Love", desc: "Send a genuine thank you note to someone who supports you.", xp: "+50 Gratitude" },
-            vision: { title: "The Eras Tour", desc: "Plan your next 'Era'. Who will you be next year?", xp: "+50 Identity" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Balanced',
-            emotional: 'Sensitive',
-            social: 'Creator',
-            passion: 'Empathic',
-            coreValue: 'Kindness'
-        },
-        avatarUrl: '/assets/avatar_taylor_swift.png'
-    },
+
     "Mark Zuckerberg": {
         name: "Mark Zuckerberg",
         archetypeTitle: "System Architect",
@@ -186,6 +191,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/zuck_happy.jpg'
     },
+
     "Steve Jobs": {
         name: "Steve Jobs",
         archetypeTitle: "Crazy One",
@@ -213,6 +219,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_steve_jobs.png'
     },
+
     "Walt Disney": {
         name: "Walt Disney",
         archetypeTitle: "Dream Weaver",
@@ -240,6 +247,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_walt_disney.png'
     },
+
     "Michael Jackson": {
         name: "Michael Jackson",
         archetypeTitle: "King of Pop",
@@ -267,60 +275,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/portrait-michael-jackson.png'
     },
-    "Ashneer Grover": {
-        name: "Ashneer Grover",
-        archetypeTitle: "Truth Teller",
-        quote: "Make a business that makes money. The rest is just vanity.",
-        voice: {
-            tone: "Direct, Brutal, Pragmatic",
-            intro: "I don't deal in sugarcoated words. Tell me what you're actually building, or don't waste my time."
-        },
-        missions: {
-            discipline: { title: "Dhanda First", desc: "Spend 2 hours today working purely on revenue-generating actions.", xp: "+50 Grit" },
-            resilience: { title: "Duggal Sahab", desc: "Ignore advice from fake gurus today. Trust the numbers.", xp: "+50 Truth" },
-            risk: { title: "Doglapan Check", desc: "Speak an uncomfortable truth directly to someone. No filters.", xp: "+50 Audacity" },
-            leadership: { title: "Command the Boardroom", desc: "Take a decision based on logic, even if the entire group hates it.", xp: "+50 Resolve" },
-            creativity: { title: "Disrupt the Space", desc: "Find a simple, low-cost hack to speed up your workflow.", xp: "+50 Hustle" },
-            empathy: { title: "Filter the Noise", desc: "Help a colleague see through their own excuses and focus on reality.", xp: "+50 Reality" },
-            vision: { title: "Scale to Unicorn", desc: "Write a business plan that is profitable from day one.", xp: "+50 Scale" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Bold',
-            emotional: 'Analytical',
-            social: 'Leader',
-            passion: 'Competitive',
-            coreValue: 'Success'
-        },
-        avatarUrl: '/assets/portrait-ashneer-grover.png'
-    },
-    "Bhuvan Bam": {
-        name: "Bhuvan Bam",
-        archetypeTitle: "Master Creator",
-        quote: "Our work is our identity. Do not let scale dilute the purity of your craft.",
-        voice: {
-            tone: "Warm, Humorous, Relatable",
-            intro: "Hey, nice to meet you. I know how it feels when everything moves too fast. Let's keep our feet on the ground."
-        },
-        missions: {
-            discipline: { title: "One-Man Show", desc: "Write, shoot, and edit a short piece of work entirely by yourself today.", xp: "+50 Craft" },
-            resilience: { title: "Ignore the Critics", desc: "When facing doubt or negative comments today, smile and continue creating.", xp: "+50 Smile" },
-            risk: { title: "The Next Character", desc: "Try a completely new style or character in your work today. Surprise yourself.", xp: "+50 Versatility" },
-            leadership: { title: "Keep it Close", desc: "Refuse to delegate a key creative decision; own it completely.", xp: "+50 Ownership" },
-            creativity: { title: "Household Hack", desc: "Create something amazing using only the basic tools or props in your room.", xp: "+50 Resourcefulness" },
-            empathy: { title: "Connect to the Roots", desc: "Have a genuine conversation with an old friend who knew you before any success.", xp: "+50 Humility" },
-            vision: { title: "Artist's Dream", desc: "Write down your ultimate creative project that goes beyond short-form videos.", xp: "+50 Legacy" }
-        },
-        profile: {
-            motivation: 'Fame',
-            risk: 'Bold',
-            emotional: 'Sensitive',
-            social: 'Creator',
-            passion: 'Creative',
-            coreValue: 'Art'
-        },
-        avatarUrl: '/assets/portrait-bhuvan-bam.png'
-    },
+
     "Cristiano Ronaldo": {
         name: "Cristiano Ronaldo",
         archetypeTitle: "Ultimate Competitor",
@@ -348,60 +303,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/portrait-cristiano-ronaldo.png'
     },
-    "Ranveer Singh": {
-        name: "Ranveer Singh",
-        archetypeTitle: "Electric Performer",
-        quote: "Express yourself without fear. Put 100% of your energy into whatever you touch.",
-        voice: {
-            tone: "High-Energy, Passionate, Fearless",
-            intro: "Hey! Life is too short to play it small. Whatever you're working on today, give it everything!"
-        },
-        missions: {
-            discipline: { title: "Copywriting Rigor", desc: "Complete a routine professional task with absolute focus before chasing creative work.", xp: "+50 Runway" },
-            resilience: { title: "Audition Rejection", desc: "Bounce back immediately after receiving a 'no' today and double your efforts.", xp: "+50 Energy" },
-            risk: { title: "Audacious Pitch", desc: "Showcase your work or talent to someone influential, despite fear of judgment.", xp: "+50 Passion" },
-            leadership: { title: "Set-Floor Presence", desc: "Bring infectious energy to a group project to elevate everyone's mood.", xp: "+50 Magnetism" },
-            creativity: { title: "Unapologetic Style", desc: "Inject raw originality and vibrant energy into your work today.", xp: "+50 Flair" },
-            empathy: { title: "Listen to the Director", desc: "Observe and assist someone else's vision with total dedication.", xp: "+50 Proximity" },
-            vision: { title: "Band Baaja Vision", desc: "Commit to a long-term dream even when there is no immediate proof of success.", xp: "+50 Breakthrough" }
-        },
-        profile: {
-            motivation: 'Fame',
-            risk: 'Bold',
-            emotional: 'Passionate',
-            social: 'Creator',
-            passion: 'Creative',
-            coreValue: 'Art'
-        },
-        avatarUrl: '/assets/portrait-ranveer-singh.png'
-    },
-    "Alia Bhatt": {
-        name: "Alia Bhatt",
-        archetypeTitle: "Chameleon Star",
-        quote: "Don't get too comfortable. If you don't surprise yourself, you will never surprise the audience.",
-        voice: {
-            tone: "Earnest, Curious, Determined",
-            intro: "Hi! Every role is a chance to learn something new about human nature. Let's see what boundaries we can push today."
-        },
-        missions: {
-            discipline: { title: "Character Preparation", desc: "Spend dedicated time today mastering an unfamiliar skill for your project.", xp: "+50 Craft" },
-            resilience: { title: "Beyond Expectations", desc: "Ignore preconceived labels and perform with quiet focus.", xp: "+50 Grit" },
-            risk: { title: "Unconventional Role", desc: "Say yes to a task or project that steps outside your comfort zone.", xp: "+50 Courage" },
-            leadership: { title: "Anchor the Scene", desc: "Support your team members so that the collective performance shines.", xp: "+50 Presence" },
-            creativity: { title: "Emotional Range", desc: "Explore a deeper, more nuanced emotion in your creative expression today.", xp: "+50 Depth" },
-            empathy: { title: "Understand the Character", desc: "Listen deeply to someone whose life experiences are completely different from yours.", xp: "+50 Perspective" },
-            vision: { title: "Beyond the Stars", desc: "Plan your development around long-term mastery rather than short-term acclaim.", xp: "+50 Legacy" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Bold',
-            emotional: 'Sensitive',
-            social: 'Creator',
-            passion: 'Creative',
-            coreValue: 'Excellence'
-        },
-        avatarUrl: '/assets/portrait-alia-bhatt.png'
-    },
+
     "Bhagat Singh": {
         name: "Bhagat Singh",
         archetypeTitle: "Unshakable Idealist",
@@ -429,6 +331,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/portrait-bhagat-singh.png'
     },
+
     "Oprah Winfrey": {
         name: "Oprah Winfrey",
         archetypeTitle: "Soul Connector",
@@ -456,6 +359,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_oprah.png'
     },
+
     "Bill Gates": {
         name: "Bill Gates",
         archetypeTitle: "Global Architect",
@@ -483,6 +387,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_bill_gates.png'
     },
+
     "J.K. Rowling": {
         name: "J.K. Rowling",
         archetypeTitle: "Phoenix Creator",
@@ -510,6 +415,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_jk_rowling.png'
     },
+
     "Mary Shelley": {
         name: "Mary Shelley",
         archetypeTitle: "Gothic Visionary",
@@ -537,6 +443,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_mary_shelley.jpg'
     },
+
     "Steven Spielberg": {
         name: "Steven Spielberg",
         archetypeTitle: "Blockbuster King",
@@ -564,6 +471,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_spielberg_young.jpg'
     },
+
     "Tina Dabi": {
         name: "Tina Dabi",
         archetypeTitle: "Strategic Topper",
@@ -591,6 +499,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_tina_dabi.png'
     },
+
     "Nitin Vijay (NV Sir)": {
         name: "Nitin Vijay (NV Sir)",
         archetypeTitle: "The Mentor",
@@ -618,7 +527,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_nv_sir.jpg'
     },
-    // NEW ADDITIONS: AGE 18 INDIAN STORIES
+
     "Virat Kohli": {
         name: "Virat Kohli",
         archetypeTitle: "The King",
@@ -646,6 +555,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_virat_kohli.jpg'
     },
+
     "Dr. A.P.J. Abdul Kalam": {
         name: "Dr. A.P.J. Abdul Kalam",
         archetypeTitle: "The Visionary",
@@ -673,6 +583,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_apj_kalam.jpg'
     },
+
     "Ratan Tata": {
         name: "Ratan Tata",
         archetypeTitle: "The Patriarch",
@@ -700,7 +611,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_ratan_tata.jpg'
     },
-    // Age 19: Sachin Tendulkar
+
     "Sachin Tendulkar": {
         name: "Sachin Tendulkar",
         archetypeTitle: "The Prodigy",
@@ -728,7 +639,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_sachin.jpg'
     },
-    // Age 19: Sundar Pichai
+
     "Sundar Pichai": {
         name: "Sundar Pichai",
         archetypeTitle: "The Explorer",
@@ -756,7 +667,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_sundar.jpg'
     },
-    // Age 19: Shah Rukh Khan
+
     "Shah Rukh Khan": {
         name: "Shah Rukh Khan",
         archetypeTitle: "The Entertainer",
@@ -784,7 +695,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_srk.jpg'
     },
-    // Generic fallback for others
+
     "Default": {
         name: "Mentor",
         archetypeTitle: "Rising Star",
@@ -808,8 +719,8 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
             coreValue: 'Kindness'
         },
         avatarUrl: '/assets/avatar_business.png'
-    }
-,
+    },
+
     "P.V. Sindhu": {
         name: "P.V. Sindhu",
         archetypeTitle: "The Challenger",
@@ -837,6 +748,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_sindhu.jpg'
     },
+
     "A.R. Rahman": {
         name: "A.R. Rahman",
         archetypeTitle: "The Maestro",
@@ -864,6 +776,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_rahman.jpg'
     },
+
     "Malala Yousafzai": {
         name: "Malala Yousafzai",
         archetypeTitle: "The Peacemaker",
@@ -891,6 +804,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_malala.jpg'
     },
+
     "Indra Nooyi": {
         name: "Indra Nooyi",
         archetypeTitle: "The Executive",
@@ -918,87 +832,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_nooyi.jpg'
     },
-    "Billie Eilish": {
-        name: "Billie Eilish",
-        archetypeTitle: "The Honest One",
-        quote: "I'm the one thing I can control.",
-        voice: {
-            tone: "Raw, Honest, Vulnerable",
-            intro: "You don't have to pretend you're okay. The world needs your real self, not your performed self."
-        },
-        missions: {
-            discipline: { title: "Show Up Broken", desc: "Do the work even when you feel empty. Show up anyway.", xp: "+50 Presence" },
-            resilience: { title: "Say It Out Loud", desc: "Tell one person the truth about how you're actually feeling.", xp: "+50 Courage" },
-            risk: { title: "No Filter", desc: "Share something unpolished and imperfect with the world.", xp: "+50 Authenticity" },
-            leadership: { title: "Use Your Platform", desc: "Speak about something that matters, even if it's uncomfortable.", xp: "+50 Voice" },
-            creativity: { title: "Dark Pop", desc: "Create something that captures both pain and beauty.", xp: "+50 Depth" },
-            empathy: { title: "Fan Connection", desc: "Acknowledge someone who is struggling — like you once were.", xp: "+50 Bond" },
-            vision: { title: "Own Your Era", desc: "Decide who you are becoming in this next chapter.", xp: "+50 Identity" }
-        },
-        profile: {
-            motivation: 'Art',
-            risk: 'Vulnerable',
-            emotional: 'Sensitive',
-            social: 'Introvert',
-            passion: 'Creative',
-            coreValue: 'Honesty'
-        },
-        avatarUrl: '/assets/avatar_billie.jpg'
-    },
-    "Justin Bieber": {
-        name: "Justin Bieber",
-        archetypeTitle: "The Comeback Kid",
-        quote: "I'm looking forward to influencing others in a positive way. My message is you can do anything if you just put your mind to it.",
-        voice: {
-            tone: "Vulnerable, Honest, Resilient",
-            intro: "You don't have to be perfect. You just have to keep trying."
-        },
-        missions: {
-            discipline: { title: "The Studio Routine", desc: "Work on your craft for 2 hours today without distractions.", xp: "+50 Focus" },
-            resilience: { title: "Forgive Yourself", desc: "Acknowledge a recent mistake, forgive yourself, and move on.", xp: "+50 Healing" },
-            risk: { title: "Vulnerable Truth", desc: "Share something honest about your struggles with a close friend.", xp: "+50 Authenticity" },
-            leadership: { title: "Own the Stage", desc: "Take charge of a situation where others are hesitating.", xp: "+50 Confidence" },
-            creativity: { title: "Acoustic Session", desc: "Strip a project down to its bare essentials.", xp: "+50 Clarity" },
-            empathy: { title: "Reach Out", desc: "Check in on someone who might be silently struggling.", xp: "+50 Connection" },
-            vision: { title: "The Next Chapter", desc: "Write down the kind of person you want to become after this phase.", xp: "+50 Growth" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Vulnerable',
-            emotional: 'Sensitive',
-            social: 'Extrovert',
-            passion: 'Creative',
-            coreValue: 'Resilience'
-        },
-        avatarUrl: '/assets/portrait-justin-19.png'
-    },
-    "MrBeast": {
-        name: "MrBeast",
-        archetypeTitle: "The Obsessed",
-        quote: "If you're not obsessed, you're not trying hard enough.",
-        voice: {
-            tone: "Energetic, Absurd, All-In",
-            intro: "What's the most ridiculous thing you could do that would actually work? That's the one. Do it."
-        },
-        missions: {
-            discipline: { title: "40-Hour Session", desc: "Work on your most important project for longer than is comfortable.", xp: "+50 Obsession" },
-            resilience: { title: "Reupload", desc: "Take your worst failed attempt and try it again with improvements.", xp: "+50 Iteration" },
-            risk: { title: "Absurd Idea", desc: "Execute the idea that people would call stupid. Do it well.", xp: "+50 Boldness" },
-            leadership: { title: "Team Beast", desc: "Give credit publicly to someone who made your work better.", xp: "+50 Generosity" },
-            creativity: { title: "Scale It Up", desc: "Take a small idea and design what it would look like 100x bigger.", xp: "+50 Vision" },
-            empathy: { title: "Give Away", desc: "Do something genuinely generous for someone today, with no expectation.", xp: "+50 Humanity" },
-            vision: { title: "200M Goal", desc: "Set a subscriber-level goal for your life. Write the number down.", xp: "+50 Ambition" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Reckless',
-            emotional: 'Intense',
-            social: 'Entertainer',
-            passion: 'Obsessive',
-            coreValue: 'Scale'
-        },
-        avatarUrl: '/assets/avatar_mrbeast.jpg'
-    },
+
     "Ritesh Agarwal": {
         name: "Ritesh Agarwal",
         archetypeTitle: "The Audacious",
@@ -1026,6 +860,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_ritesh.jpg'
     },
+
     "Muhammad Ali": {
         name: "Muhammad Ali",
         archetypeTitle: "The Greatest",
@@ -1053,33 +888,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_ali.jpg'
     },
-    "Dhruv Rathee": {
-        name: "Dhruv Rathee",
-        archetypeTitle: "The Fact-Checker",
-        quote: "Question everything, especially what you want to believe.",
-        voice: {
-            tone: "Analytical, Passionate, Data-Driven",
-            intro: "Democracy needs informed citizens. Start with yourself."
-        },
-        missions: {
-            discipline: { title: "Research First", desc: "Before forming an opinion today, read three primary sources.", xp: "+50 Accuracy" },
-            resilience: { title: "Trolls Don't Win", desc: "Receive criticism online without changing your factual position.", xp: "+50 Backbone" },
-            risk: { title: "Speak Inconveniently", desc: "Share a fact that challenges the dominant narrative in your circle.", xp: "+50 Courage" },
-            leadership: { title: "Educate One Person", desc: "Explain a complex issue clearly to someone who knows nothing about it.", xp: "+50 Impact" },
-            creativity: { title: "Explainer Format", desc: "Turn a boring topic into something compelling and visual.", xp: "+50 Storytelling" },
-            empathy: { title: "Both Sides", desc: "Genuinely understand the strongest version of a view you disagree with.", xp: "+50 Fairness" },
-            vision: { title: "20 Million", desc: "Imagine reaching 20 million people with one important truth.", xp: "+50 Scale" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Calculated',
-            emotional: 'Analytical',
-            social: 'Educator',
-            passion: 'Intellectual',
-            coreValue: 'Truth'
-        },
-        avatarUrl: '/assets/avatar_dhruv.jpg'
-    },
+
     "Falguni Nayar": {
         name: "Falguni Nayar",
         archetypeTitle: "The Patient Founder",
@@ -1107,6 +916,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_falguni.png'
     },
+
     "Nikola Tesla": {
         name: "Nikola Tesla",
         archetypeTitle: "The Dreamer of Currents",
@@ -1134,6 +944,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_tesla.jpg'
     },
+
     "Shubman Gill": {
         name: "Shubman Gill",
         archetypeTitle: "The Prince",
@@ -1161,33 +972,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_shubman.jpg?v=2'
     },
-    "Prajakta Koli": {
-        name: "Prajakta Koli",
-        archetypeTitle: "The Authentic Voice",
-        quote: "Your weirdness is your magic. Stop trying to hide it.",
-        voice: {
-            tone: "Relatable, Enthusiastic, Honest",
-            intro: "If you aren't being yourself, you are already failing."
-        },
-        missions: {
-            discipline: { title: "The Upload Schedule", desc: "Show up and do the work, even when you don't feel like it.", xp: "+50 Consistency" },
-            resilience: { title: "Ignore the Trolls", desc: "Brush off an online or offline negative comment.", xp: "+50 Confidence" },
-            risk: { title: "The Unfiltered Post", desc: "Share something authentic without worrying about judgment.", xp: "+50 Bravery" },
-            leadership: { title: "Community Builder", desc: "Bring people together over a shared joke or experience.", xp: "+50 Connection" },
-            creativity: { title: "The Everyday Humor", desc: "Find a funny angle to a completely mundane situation.", xp: "+50 Humor" },
-            empathy: { title: "The Relatable Struggle", desc: "Validate someone else's daily frustration.", xp: "+50 Compassion" },
-            vision: { title: "Beyond the Screen", desc: "Dream about taking your small idea to a global stage.", xp: "+50 Ambition" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Bold',
-            emotional: 'Expressive',
-            social: 'Advocate',
-            passion: 'Creative',
-            coreValue: 'Authenticity'
-        },
-        avatarUrl: '/assets/avatar_prajakta.jpg?v=2'
-    },
+
     "Viswanathan Anand": {
         name: "Viswanathan Anand",
         archetypeTitle: "The Grandmaster",
@@ -1215,33 +1000,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_business.png' // Fallback until avatar_anand.jpg is verified
     },
-    "Zendaya": {
-        name: "Zendaya",
-        archetypeTitle: "The Producer",
-        quote: "I feel the most beautiful when I'm really in control of my own image.",
-        voice: {
-            tone: "Bold, Self-Assured, Creative",
-            intro: "You have more power than they're letting you believe. Take it."
-        },
-        missions: {
-            discipline: { title: "Own the Set", desc: "Take full ownership of one creative project from start to finish.", xp: "+50 Control" },
-            resilience: { title: "Stereotype Breaker", desc: "Do the thing they said you couldn't — professionally and publicly.", xp: "+50 Identity" },
-            risk: { title: "Demand the Credit", desc: "Ask for a title, role, or recognition you've been earning but not receiving.", xp: "+50 Power" },
-            leadership: { title: "The Youngest in the Room", desc: "Lead a meeting or project even when you're the newest voice there.", xp: "+50 Presence" },
-            creativity: { title: "Character Work", desc: "Study one icon outside your field and absorb their approach.", xp: "+50 Craft" },
-            empathy: { title: "Amplify Others", desc: "Use your platform to spotlight someone who deserves recognition.", xp: "+50 Generosity" },
-            vision: { title: "Producer Mindset", desc: "Plan the next 3 'moves' in your career like a chess game.", xp: "+50 Strategy" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Bold',
-            emotional: 'Resilient',
-            social: 'Leader',
-            passion: 'Creative',
-            coreValue: 'Authenticity'
-        },
-        avatarUrl: '/assets/avatar_zendaya.jpg?v=2'
-    },
+
     "Neeraj Chopra": {
         name: "Neeraj Chopra",
         archetypeTitle: "The Monk",
@@ -1269,87 +1028,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_neeraj.jpg?v=2'
     },
-    "Ed Sheeran": {
-        name: "Ed Sheeran",
-        archetypeTitle: "Heartfelt Storyteller",
-        quote: "Success is the best revenge for anything.",
-        voice: {
-            tone: "Genuine, Relatable, Grounded",
-            intro: "Your stories are the most valuable thing you own. Let's see how you tell them."
-        },
-        missions: {
-            discipline: { title: "Daily Strum", desc: "Practice your core skill for 20 minutes.", xp: "+50 Craft" },
-            resilience: { title: "Busker's Spirit", desc: "Face rejection today and keep singing anyway.", xp: "+50 Grit" },
-            risk: { title: "Open Mic", desc: "Share something you created before it's perfect.", xp: "+50 Courage" },
-            leadership: { title: "Connect the Crowd", desc: "Bring two disconnected friends together.", xp: "+50 Harmony" },
-            creativity: { title: "Loop Pedal", desc: "Take a simple idea and build layers onto it.", xp: "+50 Invention" },
-            empathy: { title: "Write Their Song", desc: "Listen to someone's problem as if it were your own.", xp: "+50 Empathy" },
-            vision: { title: "Stadium Dreams", desc: "Plan the biggest possible outcome for your current project.", xp: "+50 Belief" }
-        },
-        profile: {
-            motivation: 'Connection',
-            risk: 'Balanced',
-            emotional: 'Resilient',
-            social: 'Empathic',
-            passion: 'Creative',
-            coreValue: 'Authenticity'
-        },
-        avatarUrl: '/assets/portrait-ed-sheeran.png'
-    },
-    "Tanmay Bhat": {
-        name: "Tanmay Bhat",
-        archetypeTitle: "The Creative Risk-Taker",
-        quote: "You don't need a guarantee before you bet on a creative idea.",
-        voice: {
-            tone: "Witty, Observational, Grounded",
-            intro: "Small ideas often hold the biggest surprises. Let's see how you navigate the uncertainty of building something new."
-        },
-        missions: {
-            discipline: { title: "Daily Craft", desc: "Spend 30 minutes writing or honing your craft without distractions.", xp: "+50 Focus" },
-            resilience: { title: "Test the Waters", desc: "Try a new format or idea publicly, even if it feels unproven.", xp: "+50 Grit" },
-            risk: { title: "Bet on the Idea", desc: "Take a creative risk before knowing whether anyone will care.", xp: "+50 Courage" },
-            leadership: { title: "Find the Chemistry", desc: "Collaborate with others and focus on building strong group chemistry.", xp: "+50 Synergy" },
-            creativity: { title: "Experiment", desc: "Try a new creative angle without overthinking the outcome.", xp: "+50 Innovation" },
-            empathy: { title: "Listen to the Room", desc: "Pay close attention to what resonates with your audience.", xp: "+50 Connection" },
-            vision: { title: "Think Bigger", desc: "Look beyond current limitations when an idea starts gaining traction.", xp: "+50 Vision" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Bold',
-            emotional: 'Resilient',
-            social: 'Collaborative',
-            passion: 'Creative',
-            coreValue: 'Experimentation'
-        },
-        avatarUrl: '/assets/portrait-tanmay-bhat.png'
-    },
-    "Selena Gomez": {
-        name: "Selena Gomez",
-        archetypeTitle: "The Vulnerable",
-        quote: "Who says you're not perfect? Who says you're not worth it?",
-        voice: {
-            tone: "Warm, Honest, Empowering",
-            intro: "The bravest thing I ever did was admit I wasn't okay. That's where the real strength began."
-        },
-        missions: {
-            discipline: { title: "Boundary Work", desc: "Set one firm boundary today — and keep it.", xp: "+50 Self-Respect" },
-            resilience: { title: "The Health Pivot", desc: "Turn a limitation into a new direction for your energy.", xp: "+50 Strength" },
-            risk: { title: "Tell the Truth", desc: "Share something vulnerable with someone you trust.", xp: "+50 Courage" },
-            leadership: { title: "Build the Community", desc: "Create something that makes your audience feel less alone.", xp: "+50 Connection" },
-            creativity: { title: "Rare Beauty", desc: "Express who you truly are in one creative act today.", xp: "+50 Identity" },
-            empathy: { title: "Mental Health First", desc: "Check in on someone today — genuinely, not performatively.", xp: "+50 Care" },
-            vision: { title: "Legacy Over Likes", desc: "Identify one impact you want to have that transcends your platform.", xp: "+50 Purpose" }
-        },
-        profile: {
-            motivation: 'Impact',
-            risk: 'Balanced',
-            emotional: 'Sensitive',
-            social: 'Advocate',
-            passion: 'Empathic',
-            coreValue: 'Authenticity'
-        },
-        avatarUrl: '/assets/avatar_selena.jpg?v=2'
-    },
+
     "Elon Musk": {
         name: "Elon Musk",
         archetypeTitle: "The Visionary Architect",
@@ -1377,6 +1056,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/avatar_elon_musk.png'
     },
+
     "Rani Lakshmibai": {
         name: "Rani Lakshmibai",
         archetypeTitle: "The Sovereign Leader",
@@ -1404,6 +1084,7 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
         },
         avatarUrl: '/assets/portrait-rani-lakshmibai.png'
     },
+
     "Narendra Modi": {
         name: "Narendra Modi",
         archetypeTitle: "The Pracharak",
@@ -1416,38 +1097,33 @@ export const IDOL_MINDSETS: Record<string, IdolMindset> = {
             discipline: { title: "The Unglamorous Grind", desc: "Complete the single most tedious, unglamorous chore on your list without complaining.", xp: "+50 Pure Discipline" },
             resilience: { title: "Austerity & Resolve", desc: "Deny yourself one immediate comfort today to stay focused on your larger mission.", xp: "+50 Resolve" },
             risk: { title: "Commit to the Mission", desc: "Make a decisive commitment to a cause larger than yourself.", xp: "+50 Conviction" },
-            leadership: { title: "Grassroots Connection", desc: "Serve or listen to someone whose background is completely different from yours.", xp: "+50 Grounding" },
-            creativity: { title: "Organize the Effort", desc: "Create a simple, structured system to solve a chaotic daily problem.", xp: "+50 Execution" },
-            empathy: { title: "Service Without Spotlight", desc: "Do something genuinely helpful for your community or workplace with zero recognition.", xp: "+50 Humility" },
-            vision: { title: "The Larger Purpose", desc: "Write down how your daily efforts connect to a purpose bigger than your own comfort.", xp: "+50 Vision" }
+            creativity: { title: "See the Gap", desc: "Identify a market or need that existing products completely ignore.", xp: "+50 Insight" },
+            empathy: { title: "The Customer Is You", desc: "Design a product or service for the version of yourself that needed it most.", xp: "+50 Clarity" },
+            vision: { title: "₹1,000 Crore Vision", desc: "Write down the size of company you intend to build and by when.", xp: "+50 Ambition" }
         },
         profile: {
-            motivation: 'Service',
-            risk: 'Bold',
-            emotional: 'Disciplined',
-            social: 'Organizer',
-            passion: 'National Service',
-            coreValue: 'Duty'
+            motivation: 'Legacy',
+            risk: 'Calculated',
+            emotional: 'Poised',
+            social: 'Leader',
+            passion: 'Strategic',
+            coreValue: 'Conviction'
         },
-        avatarUrl: '/assets/avatar_Narendra Modi.jpg'
-    }
+        avatarUrl: '/assets/avatar_falguni.png'
+    },
 };
 
 export const IDOL_PROFILES: Record<string, Record<string, number>> = {
+    "Rabindranath Tagore": { analytical: 90, ambitious: 95, risk: 90, creativity: 100, social: 85 },
     "Arnold Schwarzenegger": { analytical: 60, ambitious: 100, risk: 90, creativity: 50, social: 75 },
     "Stephen Hawking": { analytical: 100, ambitious: 80, risk: 70, creativity: 95, social: 40 },
     "Frida Kahlo": { analytical: 40, ambitious: 70, risk: 95, creativity: 100, social: 80 },
     "Kobe Bryant": { analytical: 85, ambitious: 100, risk: 90, creativity: 60, social: 65 },
     "Cristiano Ronaldo": { analytical: 80, ambitious: 100, risk: 95, creativity: 90, social: 75 },
-    "Taylor Swift": { analytical: 75, ambitious: 95, risk: 80, creativity: 100, social: 90 },
     "Mark Zuckerberg": { analytical: 95, ambitious: 90, risk: 85, creativity: 75, social: 60 },
     "Steve Jobs": { analytical: 80, ambitious: 100, risk: 95, creativity: 95, social: 50 },
     "Walt Disney": { analytical: 65, ambitious: 90, risk: 95, creativity: 100, social: 85 },
     "Michael Jackson": { analytical: 75, ambitious: 95, risk: 85, creativity: 100, social: 80 },
-    "Ashneer Grover": { analytical: 95, ambitious: 100, risk: 90, creativity: 80, social: 70 },
-    "Bhuvan Bam": { analytical: 80, ambitious: 95, risk: 90, creativity: 100, social: 90 },
-    "Ranveer Singh": { analytical: 75, ambitious: 100, risk: 95, creativity: 100, social: 95 },
-    "Alia Bhatt": { analytical: 80, ambitious: 95, risk: 85, creativity: 100, social: 90 },
     "Bhagat Singh": { analytical: 90, ambitious: 100, risk: 100, creativity: 85, social: 95 },
     "Oprah Winfrey": { analytical: 75, ambitious: 95, risk: 80, creativity: 70, social: 100 },
     "Bill Gates": { analytical: 95, ambitious: 90, risk: 80, creativity: 75, social: 60 },
@@ -1466,24 +1142,15 @@ export const IDOL_PROFILES: Record<string, Record<string, number>> = {
     "A.R. Rahman": { analytical: 65, ambitious: 75, risk: 70, creativity: 100, social: 50 },
     "Malala Yousafzai": { analytical: 85, ambitious: 85, risk: 100, creativity: 70, social: 95 },
     "Indra Nooyi": { analytical: 95, ambitious: 95, risk: 80, creativity: 70, social: 85 },
-    "Billie Eilish": { analytical: 55, ambitious: 85, risk: 80, creativity: 100, social: 60 },
-    "Justin Bieber": { analytical: 60, ambitious: 90, risk: 90, creativity: 95, social: 85 },
-    "MrBeast": { analytical: 70, ambitious: 100, risk: 95, creativity: 90, social: 85 },
     "Ritesh Agarwal": { analytical: 80, ambitious: 100, risk: 98, creativity: 75, social: 70 },
     "Muhammad Ali": { analytical: 65, ambitious: 100, risk: 95, creativity: 80, social: 90 },
-    "Dhruv Rathee": { analytical: 95, ambitious: 85, risk: 80, creativity: 85, social: 75 },
     "Falguni Nayar": { analytical: 90, ambitious: 95, risk: 80, creativity: 75, social: 85 },
     "Nikola Tesla": { analytical: 100, ambitious: 90, risk: 90, creativity: 100, social: 30 },
     "Default": { analytical: 50, ambitious: 50, risk: 50, creativity: 50, social: 50 },
     "Elon Musk": { analytical: 95, ambitious: 100, risk: 95, creativity: 90, social: 50 },
     "Rani Lakshmibai": { analytical: 80, ambitious: 95, risk: 100, creativity: 75, social: 90 },
     "Shubman Gill": { analytical: 80, ambitious: 95, risk: 85, creativity: 70, social: 75 },
-    "Prajakta Koli": { analytical: 80, ambitious: 90, risk: 85, creativity: 95, social: 90 },
     "Viswanathan Anand": { analytical: 100, ambitious: 85, risk: 70, creativity: 90, social: 60 },
-    "Zendaya": { analytical: 75, ambitious: 90, risk: 100, creativity: 95, social: 85 },
     "Neeraj Chopra": { analytical: 80, ambitious: 95, risk: 85, creativity: 75, social: 70 },
-    "Ed Sheeran": { analytical: 40, ambitious: 75, risk: 60, creativity: 90, social: 85 },
-    "Tanmay Bhat": { analytical: 75, ambitious: 90, risk: 95, creativity: 100, social: 85 },
-    "Selena Gomez": { analytical: 45, ambitious: 80, risk: 65, creativity: 85, social: 95 },
     "Narendra Modi": { analytical: 85, ambitious: 95, risk: 90, creativity: 80, social: 95 },
 };

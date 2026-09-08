@@ -88,10 +88,6 @@ interface UserState {
     resetProgress: () => void;
     clearUserData: () => void;
 
-    // Subscription Modal State
-    showSubscriptionModal: boolean;
-    setShowSubscriptionModal: (show: boolean) => void;
-
     // Check-in State
     checkinData: import('../types/ayaTypes').CheckInData | null;
     setCheckinData: (data: import('../types/ayaTypes').CheckInData | null) => void;
@@ -175,9 +171,6 @@ export const useUserStore = create<UserState>()(
             levels: generateLevels(18),
             levelScores: {},
             xp: 0, // Legacy fallback. New stats live on profile
-            showSubscriptionModal: false,
-
-            setShowSubscriptionModal: (show) => set({ showSubscriptionModal: show }),
 
             addXp: (amount) => set((state) => ({ xp: state.xp + amount })),
 

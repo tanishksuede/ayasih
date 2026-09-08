@@ -14,9 +14,8 @@ export interface StorySource {
 }
 
 export const STORY_SOURCES: Record<string, StorySource[]> = {
-
   // ── ANNE FRANK ─────────────────────────────────────────────────────────────
-  'lvl_age_13_anne_1': [
+'lvl_age_13_anne_1': [
     {
       title: 'The Diary of a Young Girl',
       type: 'autobiography',
@@ -28,7 +27,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
       detail: 'annefrank.org — documents the birthday, the diary gift, and Anne\'s early entries about school and friendships.',
     },
   ],
-  'lvl_age_13_anne_2': [
+
+'lvl_age_13_anne_2': [
     {
       title: 'The Diary of a Young Girl',
       type: 'autobiography',
@@ -42,7 +42,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SACHIN TENDULKAR ────────────────────────────────────────────────────────
-  'lvl_age_19_sachin': [
+'lvl_age_19_sachin': [
     {
       title: 'Playing It My Way',
       type: 'autobiography',
@@ -56,7 +56,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SUNDAR PICHAI ───────────────────────────────────────────────────────────
-  'lvl_age_19_sundar': [
+'lvl_age_19_sundar': [
     {
       title: 'Sundar Pichai — Forbes Profile & Origin Story',
       type: 'article',
@@ -75,7 +75,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SHAH RUKH KHAN (Age 19) ─────────────────────────────────────────────────
-  'lvl_age_19_srk': [
+'lvl_age_19_srk': [
     {
       title: 'Zero to Hero — SRK: The Untold Story',
       type: 'documentary',
@@ -94,7 +94,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── VIRAT KOHLI (Age 18) ────────────────────────────────────────────────────
-  'lvl_age_18_kohli': [
+'lvl_age_18_kohli': [
     {
       title: 'Virat Kohli — Delhi vs Karnataka, Ranji Trophy 2006',
       type: 'article',
@@ -113,7 +113,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── APJ ABDUL KALAM ─────────────────────────────────────────────────────────
-  'lvl_age_18_kalam': [
+'lvl_age_18_kalam': [
     {
       title: 'Wings of Fire — An Autobiography',
       type: 'autobiography',
@@ -127,7 +127,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── RATAN TATA ──────────────────────────────────────────────────────────────
-  'lvl_age_18_tata': [
+'lvl_age_18_tata': [
     {
       title: 'Ratan Tata: A Life — Thomas Mathew',
       type: 'book',
@@ -140,27 +140,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── TAYLOR SWIFT (Age 18) ───────────────────────────────────────────────────
-  'lvl_age_18': [
-    {
-      title: 'Taylor Swift: The Life of a Songwriter — Chloe Govan',
-      type: 'book',
-      detail: 'Documents the Bluebird Cafe performance, Scott Borchetta\'s discovery, and Swift\'s rejection of RCA to retain songwriting control at Big Machine.',
-    },
-    {
-      title: 'Rolling Stone — Taylor Swift Feature, 2008',
-      type: 'article',
-      detail: 'rollingstone.com — Swift describes her 6-month radio tour, personally visiting stations and baking cookies for DJs to break Tim McGraw.',
-    },
-    {
-      title: 'Tim McGraw — Billboard Chart History',
-      type: 'article',
-      detail: 'Billboard.com — confirms Tim McGraw\'s chart entry and the story of how it was promoted through grassroots radio relationships.',
-    },
-  ],
-
   // ── MARK ZUCKERBERG ─────────────────────────────────────────────────────────
-  'lvl_age_19': [
+'lvl_age_19': [
     {
       title: 'The Facebook Effect — David Kirkpatrick',
       type: 'book',
@@ -173,27 +154,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── TAYLOR SWIFT (Age 20) ───────────────────────────────────────────────────
-  'lvl_age_20_music': [
-    {
-      title: 'Speak Now — Album Liner Notes',
-      type: 'article',
-      detail: 'Taylor Swift\'s own notes in the Speak Now (2010) liner confirming she wrote all 14 songs entirely alone, with no co-writers.',
-    },
-    {
-      title: 'Rolling Stone — Speak Now Review, October 2010',
-      type: 'article',
-      detail: 'Confirms the critical context: reviewers had questioned her songwriting, which Speak Now was designed to answer definitively.',
-    },
-    {
-      title: 'Grammy Award — Best Country Album, 2012',
-      type: 'article',
-      detail: 'Grammy.com — Speak Now was nominated for Best Country Album, vindicating the solo-written gamble.',
-    },
-  ],
-
   // ── KOBE BRYANT (Age 20) ───────────────────────────────────────────────────
-  'lvl_age_20_sports': [
+'lvl_age_20_sports': [
     {
       title: 'The Mamba Mentality: How I Play — Kobe Bryant',
       type: 'book',
@@ -207,7 +169,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── NV SIR ──────────────────────────────────────────────────────────────────
-  'lvl_age_20_nv_sir': [
+'lvl_age_20_nv_sir': [
     {
       title: 'NV Sir (Nitin Vijay) — Life Journey Interviews',
       type: 'interview',
@@ -216,7 +178,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── FRIDA KAHLO ─────────────────────────────────────────────────────────────
-  'lvl_age_20_art': [
+'lvl_age_20_art': [
     {
       title: 'Frida: A Biography of Frida Kahlo — Hayden Herrera',
       type: 'book',
@@ -230,7 +192,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── BILL GATES ──────────────────────────────────────────────────────────────
-  'lvl_age_20': [
+'lvl_age_20': [
     {
       title: 'Hard Drive: Bill Gates and the Making of the Microsoft Empire — James Wallace & Jim Erickson',
       type: 'book',
@@ -244,7 +206,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── STEVE JOBS (Age 21) ─────────────────────────────────────────────────────
-  'lvl_age_21': [
+'lvl_age_21': [
     {
       title: 'Steve Jobs — Walter Isaacson',
       type: 'book',
@@ -258,7 +220,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── WALT DISNEY ─────────────────────────────────────────────────────────────
-  'lvl_age_22': [
+'lvl_age_22': [
     {
       title: 'Walt Disney: The Triumph of the American Imagination — Neal Gabler',
       type: 'book',
@@ -272,7 +234,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── OPRAH WINFREY ───────────────────────────────────────────────────────────
-  'lvl_age_23': [
+'lvl_age_23': [
     {
       title: 'Oprah: A Biography — Kitty Kelley',
       type: 'book',
@@ -286,7 +248,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── ELON MUSK ───────────────────────────────────────────────────────────────
-  'lvl_age_24': [
+'lvl_age_24': [
     {
       title: 'Elon Musk — Walter Isaacson',
       type: 'book',
@@ -300,7 +262,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── JK ROWLING ──────────────────────────────────────────────────────────────
-  'lvl_age_25': [
+'lvl_age_25': [
     {
       title: 'J.K. Rowling Harvard Commencement Address, 2008',
       type: 'speech',
@@ -314,7 +276,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── ARNOLD SCHWARZENEGGER ──────────────────────────────────────────────────
-  'scenario_arnold_awol': [
+'scenario_arnold_awol': [
     {
       title: 'Total Recall: My Unbelievably True Life Story — Arnold Schwarzenegger',
       type: 'autobiography',
@@ -323,7 +285,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── STEPHEN HAWKING ─────────────────────────────────────────────────────────
-  'scenario_hawking_diagnosis': [
+'scenario_hawking_diagnosis': [
     {
       title: 'My Brief History — Stephen Hawking',
       type: 'autobiography',
@@ -337,7 +299,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── TINA DABI ───────────────────────────────────────────────────────────────
-  'scenario_upsc_tina_college': [
+'scenario_upsc_tina_college': [
     {
       title: 'Tina Dabi UPSC Rank 1 Interview — The Hindu, 2015',
       type: 'interview',
@@ -351,7 +313,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── MARY SHELLEY ────────────────────────────────────────────────────────────
-  'lvl_age_20_literature': [
+'lvl_age_20_literature': [
     {
       title: 'Mary Shelley: Her Life, Her Fiction, Her Monsters — Anne K. Mellor',
       type: 'book',
@@ -365,7 +327,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── STEVEN SPIELBERG ────────────────────────────────────────────────────────
-  'lvl_age_20_cinema': [
+'lvl_age_20_cinema': [
     {
       title: 'Steven Spielberg: A Biography — Joseph McBride',
       type: 'book',
@@ -379,7 +341,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── PV SINDHU ───────────────────────────────────────────────────────────────
-  'lvl_age_17_sindhu': [
+'lvl_age_17_sindhu': [
     {
       title: 'PV Sindhu — India Today Feature, 2012',
       type: 'article',
@@ -393,7 +355,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── AR RAHMAN ───────────────────────────────────────────────────────────────
-  'lvl_age_17_rahman': [
+'lvl_age_17_rahman': [
     {
       title: 'Notes of a Dream: The Authorized Biography of AR Rahman — Krishna Trilok',
       type: 'book',
@@ -407,7 +369,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── MALALA YOUSAFZAI ────────────────────────────────────────────────────────
-  'lvl_age_17_malala': [
+'lvl_age_17_malala': [
     {
       title: 'I Am Malala — Malala Yousafzai',
       type: 'autobiography',
@@ -421,7 +383,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── STEVE JOBS (Age 17) ─────────────────────────────────────────────────────
-  'lvl_age_17_jobs': [
+'lvl_age_17_jobs': [
     {
       title: 'Steve Jobs — Walter Isaacson',
       type: 'book',
@@ -435,7 +397,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── INDRA NOOYI ─────────────────────────────────────────────────────────────
-  'lvl_age_17_nooyi': [
+'lvl_age_17_nooyi': [
     {
       title: 'My Life in Full: Work, Family and Our Future — Indra Nooyi',
       type: 'autobiography',
@@ -444,7 +406,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SHAH RUKH KHAN (Age 17) ─────────────────────────────────────────────────
-  'lvl_age_17_srk': [
+'lvl_age_17_srk': [
     {
       title: 'Theatre Action Group (TAG) Delhi — Historical Record',
       type: 'article',
@@ -458,7 +420,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SHAH RUKH KHAN (Age 19 — Story 2) ──────────────────────────────────────
-  'lvl_age_19_srk_2': [
+'lvl_age_19_srk_2': [
     {
       title: 'Shah Rukh Khan: The Authorized Biography — Mushtaq Shiekh',
       type: 'book',
@@ -472,7 +434,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SHAH RUKH KHAN (Age 21) ─────────────────────────────────────────────────
-  'lvl_age_21_srk': [
+'lvl_age_21_srk': [
     {
       title: 'Darr (1993) and Baazigar (1993) — Film Industry Records',
       type: 'article',
@@ -486,7 +448,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SHAH RUKH KHAN (Age 23) ─────────────────────────────────────────────────
-  'lvl_age_23_srk': [
+'lvl_age_23_srk': [
     {
       title: 'Shah Rukh Khan and Gauri Khan — Marriage Record',
       type: 'article',
@@ -500,7 +462,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SHAH RUKH KHAN (Age 25) ─────────────────────────────────────────────────
-  'lvl_age_25_srk': [
+'lvl_age_25_srk': [
     {
       title: 'Deewana (1992) — Film Record',
       type: 'article',
@@ -513,41 +475,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── BILLIE EILISH (Age 19) ──────────────────────────────────────────────────
-  'lvl_age_19_billie': [
-    {
-      title: 'Billie Eilish Grammy Speech and Press Tour, 2020',
-      type: 'interview',
-      detail: 'Eilish won 5 Grammys in January 2020 at age 18 and spoke publicly about mental health issues including depression and body dysmorphia throughout the tour cycle.',
-    },
-    {
-      title: 'Billie Eilish: The World\'s a Little Blurry — Documentary (2021)',
-      type: 'documentary',
-      detail: 'Apple TV+ documentary directed by R.J. Cutler. Shows the Grammy period, the mental health struggles, and the decision to take space between albums.',
-    },
-    {
-      title: 'Happier Than Ever — Album Credits, 2021',
-      type: 'article',
-      detail: 'The album Happier Than Ever was released July 2021, widely reviewed as Eilish\'s most personal and critically acclaimed work.',
-    },
-  ],
-
-  // ── MRBEAST ─────────────────────────────────────────────────────────────────
-  'lvl_age_19_mrbeast': [
-    {
-      title: 'MrBeast — I Counted to 100,000! YouTube Video, 2017',
-      type: 'article',
-      detail: 'youtube.com/@MrBeast — The original viral video published in January 2017. Jimmy Donaldson (MrBeast) was 18 turning 19.',
-    },
-    {
-      title: 'MrBeast — Forbes 30 Under 30 Profile, 2020',
-      type: 'article',
-      detail: 'Forbes documents MrBeast\'s origin story: 5 years of near-zero growth, the counting video breakthrough, and the subsequent explosive growth.',
-    },
-  ],
-
   // ── RITESH AGARWAL ──────────────────────────────────────────────────────────
-  'lvl_age_19_ritesh': [
+'lvl_age_19_ritesh': [
     {
       title: 'Ritesh Agarwal — Thiel Fellowship Announcement, 2013',
       type: 'article',
@@ -561,7 +490,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── MUHAMMAD ALI ────────────────────────────────────────────────────────────
-  'lvl_age_19_ali': [
+'lvl_age_19_ali': [
     {
       title: 'The Greatest: My Own Story — Muhammad Ali',
       type: 'autobiography',
@@ -574,22 +503,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── DHRUV RATHEE ────────────────────────────────────────────────────────────
-  'lvl_age_20_dhruv': [
-    {
-      title: 'Dhruv Rathee — Channel About Page and Early Video History',
-      type: 'article',
-      detail: 'youtube.com/@dhruvrathee — Channel launched in October 2014. Rathee was studying Mechanical Engineering in Germany on a scholarship.',
-    },
-    {
-      title: 'Dhruv Rathee Interview — India Today, 2019',
-      type: 'interview',
-      detail: 'Rathee describes the decision to keep studying while making YouTube videos, and graduating before committing fully to content creation.',
-    },
-  ],
-
   // ── FALGUNI NAYAR ───────────────────────────────────────────────────────────
-  'lvl_age_19_falguni': [
+'lvl_age_19_falguni': [
     {
       title: 'Falguni Nayar — IIM Ahmedabad Alumni Profile',
       type: 'article',
@@ -603,7 +518,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── NIKOLA TESLA ────────────────────────────────────────────────────────────
-  'lvl_age_19_tesla': [
+'lvl_age_19_tesla': [
     {
       title: 'My Inventions: The Autobiography of Nikola Tesla',
       type: 'autobiography',
@@ -617,7 +532,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SHUBMAN GILL ────────────────────────────────────────────────────────────
-  'lvl_age_19_shubman': [
+'lvl_age_19_shubman': [
     {
       title: 'Shubman Gill — India U19 World Cup 2018, ESPNcricinfo',
       type: 'article',
@@ -630,22 +545,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── PRAJAKTA KOLI ───────────────────────────────────────────────────────────
-  'lvl_age_20_prajakta': [
-    {
-      title: 'Prajakta Koli — YouTube Channel (MostlySane) About',
-      type: 'article',
-      detail: 'Channel launched in 2014. Prajakta has described in multiple interviews leaving her radio internship after burnout to start MostlySane.',
-    },
-    {
-      title: 'Prajakta Koli UN Speech — Generation Equality, 2021',
-      type: 'speech',
-      detail: 'Prajakta addressed the UN Generation Equality Forum in 2021, confirming her journey from failed radio intern to 7M+ subscriber creator.',
-    },
-  ],
-
   // ── VISWANATHAN ANAND ───────────────────────────────────────────────────────
-  'lvl_age_18_anand': [
+'lvl_age_18_anand': [
     {
       title: 'Mind Master: Winning Lessons from a Champion\'s Life — Viswanathan Anand',
       type: 'autobiography',
@@ -658,22 +559,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── ZENDAYA ─────────────────────────────────────────────────────────────────
-  'lvl_age_18_zendaya': [
-    {
-      title: 'K.C. Undercover — Disney Channel (2015)',
-      type: 'article',
-      detail: 'Zendaya is credited as Executive Producer on K.C. Undercover (2015-2018) — reportedly the youngest EP in Disney Channel history at the time.',
-    },
-    {
-      title: 'Zendaya — Variety Feature, 2021',
-      type: 'interview',
-      detail: 'variety.com — Zendaya discusses demanding creative control and producer status from Disney as a teenager, before accepting the K.C. Undercover role.',
-    },
-  ],
-
   // ── NEERAJ CHOPRA ───────────────────────────────────────────────────────────
-  'lvl_age_19_neeraj': [
+'lvl_age_19_neeraj': [
     {
       title: 'Neeraj Chopra — World Junior Record, Bydgoszcz 2016',
       type: 'article',
@@ -691,50 +578,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── SELENA GOMEZ ────────────────────────────────────────────────────────────
-  'lvl_age_20_selena': [
-    {
-      title: 'Selena Gomez — Billboard Cover Story, 2016',
-      type: 'article',
-      detail: 'billboard.com — Gomez publicly revealed her lupus diagnosis and kidney transplant for the first time in this cover story.',
-    },
-    {
-      title: 'Selena Gomez: My Mind & Me — Documentary (2022)',
-      type: 'documentary',
-      detail: 'Apple TV+ documentary directed by Alek Keshishian. Shows mental health struggles during her 2016 tour and the decision to step back.',
-    },
-  ],
-
-  // ── BILLIE EILISH (Age 20 — Relationship Story) ─────────────────────────────
-  'lvl_age_20_billie_2': [
-    {
-      title: 'Happier Than Ever — Billie Eilish (2021)',
-      type: 'article',
-      detail: 'The album extensively references unhealthy attachments. Eilish confirmed in multiple interviews that many songs reflect real relationship experiences from age 18-21.',
-    },
-    {
-      title: 'Billie Eilish: The World\'s a Little Blurry — Documentary (2021)',
-      type: 'documentary',
-      detail: 'Apple TV+ — shows Eilish processing a difficult relationship in real time during the recording period.',
-    },
-  ],
-
-  // ── JUSTIN BIEBER ───────────────────────────────────────────────────────────
-  'lvl_age_19_justin': [
-    {
-      title: 'Justin Bieber: Never Say Never — Documentary (2011)',
-      type: 'documentary',
-      detail: 'Documents Bieber\'s rise and the early psychological pressures of global fame at ages 15-17, setting the context for his more difficult 2013-2014 period.',
-    },
-    {
-      title: 'Justin Bieber — Changes Album & Purpose Documentary, 2020',
-      type: 'documentary',
-      detail: 'Bieber describes the emotional difficulties of his early 20s and his relationship in the documentary accompanying the Changes album.',
-    },
-  ],
-
   // ── VIRAT KOHLI (Age 18 — Visual Story) ─────────────────────────────────────
-  'lvl_age_18_virat': [
+'lvl_age_18_virat': [
     {
       title: 'Virat Kohli — Delhi vs Karnataka, Ranji Trophy, December 2006',
       type: 'article',
@@ -748,7 +593,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── KOBE BRYANT (Age 20 — New Format) ──────────────────────────────────────
-  'lvl_age_20_kobe': [
+'lvl_age_20_kobe': [
     {
       title: 'The Mamba Mentality: How I Play — Kobe Bryant',
       type: 'book',
@@ -762,7 +607,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── MICHAEL JACKSON ─────────────────────────────────────────────────────────
-  'lvl_age_22_michael': [
+'lvl_age_22_michael': [
     {
       title: 'Michael Jackson: The Magic, The Madness, The Whole Story — J. Randy Taraborrelli',
       type: 'book',
@@ -775,31 +620,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── ASHNEER GROVER ──────────────────────────────────────────────────────────
-  'lvl_age_22_ashneer': [
-    {
-      title: 'Doglapan: The Hard Truth about Life and Start-Ups — Ashneer Grover',
-      type: 'autobiography',
-      detail: 'Documents Ashneer\'s IIT Delhi B.Tech in Civil Engineering, the exchange year at INSA Lyon (France), IIM Ahmedabad MBA in Finance (2004-2006), and joining Kotak Investment Banking.',
-    },
-  ],
-
-  // ── BHUVAN BAM ──────────────────────────────────────────────────────────────
-  'lvl_age_22_bhuvan': [
-    {
-      title: 'BB Ki Vines — YouTube Channel History',
-      type: 'article',
-      detail: 'Channel launched June 2015. Reached 1 million subscribers in 2016. TEDxIIITD talk in June 2016 confirmed. WebTVAsia Awards 2016 in Seoul confirmed.',
-    },
-    {
-      title: 'Bhuvan Bam — Interview with Film Companion, 2022',
-      type: 'interview',
-      detail: 'Bam describes his Shaheed Bhagat Singh College History degree, the music background before YouTube, and the transition to full-time content creation.',
-    },
-  ],
-
   // ── CRISTIANO RONALDO ──────────────────────────────────────────────────────
-  'lvl_age_22_ronaldo': [
+'lvl_age_22_ronaldo': [
     {
       title: 'Cristiano Ronaldo — Manchester United Season Review 2006-07',
       type: 'article',
@@ -813,7 +635,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── NARENDRA MODI (Age 20) ──────────────────────────────────────────────────
-  'lvl_age_20_modi': [
+'lvl_age_20_modi': [
     {
       title: 'Bharatiya Janata Party Official Biography',
       type: 'article',
@@ -832,7 +654,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── SHAHRUKH KHAN (Age 16) ────────────────────────────────────────────────
-  'lvl_age_16_srk': [
+'lvl_age_16_srk': [
     {
       title: 'Wikipedia / FNP Biography',
       type: 'article',
@@ -851,7 +673,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── MICHAEL JORDAN (Age 16) ───────────────────────────────────────────────
-  'lvl_age_16_jordan': [
+'lvl_age_16_jordan': [
     {
       title: 'Basketball Network (1978)',
       type: 'article',
@@ -869,46 +691,8 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── TAYLOR SWIFT (Age 16) ────────────────────────────────────────────────
-  'lvl_age_16_taylor': [
-    {
-      title: 'CBS Sunday Morning (2019)',
-      type: 'article',
-      detail: 'Details how her family relocated from Pennsylvania to Nashville so she could pursue songwriting in Music Row.',
-    },
-    {
-      title: 'American Songwriter, "They Wanted to Shelf Me" (2025)',
-      type: 'article',
-      detail: 'Chronicles how RCA Records offered a development deal that planned to hold her unreleased until age 18, prompting her to walk away.',
-    },
-    {
-      title: 'Wikipedia / Big Machine Records History',
-      type: 'article',
-      detail: 'Documents her signing with Scott Borchetta\'s brand-new indie startup label Big Machine Records when it had no employees and no infrastructure.',
-    },
-  ],
-
-  // ── BILLIE EILISH (Age 16) ───────────────────────────────────────────────
-  'lvl_age_16_billie': [
-    {
-      title: 'Rolling Stone, "Billie Eilish and the Triumph of the Weird" (2019)',
-      type: 'article',
-      detail: 'Details her viral rise from early singles to the intense expectations surrounding her debut studio album.',
-    },
-    {
-      title: 'Sound on Sound, "Finneas O\'Connell" (2019)',
-      type: 'article',
-      detail: 'Notes the industry meetings pushing for expensive commercial studios and top-tier pop producers before they decided to produce it alone.',
-    },
-    {
-      title: 'Apple TV+, "Billie Eilish: The World\'s A Little Blurry" (2021)',
-      type: 'article',
-      detail: 'Documents the entire recording process of the multi-Grammy-winning debut album inside Finneas\'s Highland Park childhood bedroom.',
-    },
-  ],
-
   // ── BHAGAT SINGH (Age 16) ────────────────────────────────────────────────
-  'lvl_age_16_bhagat': [
+'lvl_age_16_bhagat': [
     {
       title: '"Without Fear: The Life and Trial of Bhagat Singh" by Kuldip Nayar (2007)',
       type: 'book',
@@ -926,188 +710,36 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
     },
   ],
 
-  // ── KARAN AUJLA (Age 16) ─────────────────────────────────────────────────
-  'lvl_age_16_aujla': [
+  // ── RABINDRANATH TAGORE (Age 17) ───────────────────────────────────────────
+'lvl_age_17_tagore': [
     {
-      title: 'Film Companion Interview with Anupama Chopra (2023)',
-      type: 'interview',
-      detail: 'Recounts losing his father at age 9 and mother at age 11 in Ghurala, Punjab, before being raised by his uncle and sisters.',
+      title: 'My Reminiscences (Jibansmriti) — Rabindranath Tagore (1912)',
+      type: 'book',
+      detail: 'Details his departure for England in 1878 to study law at University College London, and his conscious decision to leave without a degree to pursue literature and music in Bengal.',
     },
     {
-      title: 'PTC Punjabi / Various Artist Interviews',
-      type: 'article',
-      detail: 'Details penning the hit song "Range" for Jassi Gill while still a high school student in 9th grade.',
-    },
-    {
-      title: 'Apple Music & GQ India Interviews (2023)',
-      type: 'article',
-      detail: 'Documents moving to Canada in 2014 as an international student and working grueling shifts as a longshoreman on Surrey, BC cargo docks to fund studio recordings.',
+      title: 'Rabindranath Tagore: An Anthology — Krishna Dutta & Andrew Robinson',
+      type: 'book',
+      detail: 'Chronicles how exposure to European romantic poetry and English folk music deepened his appreciation for indigenous Bengali lyrical forms, leading to the creation of Rabindra Sangeet.',
     },
   ],
 
-  // ── KARAN AUJLA (Age 17) ─────────────────────────────────────────────────
-  'lvl_age_17_aujla': [
+  // ── RABINDRANATH TAGORE (Age 22) ───────────────────────────────────────────
+'lvl_age_22_tagore': [
     {
-      title: 'Wikipedia / PTC Punjabi Biographies',
-      type: 'article',
-      detail: 'Documents his debut single "Cell Phone" released in 2014 when he was 17 years old.',
+      title: 'My Reminiscences (Jibansmriti) — Rabindranath Tagore (1912)',
+      type: 'book',
+      detail: 'Recounts the transformative morning at 10 Sadar Street, Kolkata in 1883 where a mystical vision of universal unity inspired his masterpiece poem "Nirjharer Swapnabhanga" (The Awakening of the Waterfall).',
     },
     {
-      title: 'Times of India / Artist Retrospectives',
-      type: 'article',
-      detail: 'Notes that his early vocal releases gained zero traction and required years of independent perseverance.',
-    },
-    {
-      title: 'Film Companion Interview with Anupama Chopra (2023)',
-      type: 'interview',
-      detail: 'Details his determination to refine his vocal delivery in the studio despite the easy safety net of ghostwriting for established stars.',
-    },
-  ],
-
-  // ── KARAN AUJLA (Age 18) ─────────────────────────────────────────────────
-  'lvl_age_18_aujla': [
-    {
-      title: 'GQ India / Apple Music Interviews (2023)',
-      type: 'interview',
-      detail: 'Recounts working exhausting shifts at Surrey shipping docks by day while finishing school and writing lyrics.',
-    },
-    {
-      title: 'Times of India / PTC Punjabi',
-      type: 'article',
-      detail: 'Details meeting producer Deep Jandu and collaborator Elly Mangat in Canada, leading to all-night recording sessions.',
-    },
-    {
-      title: 'Film Companion Interview with Anupama Chopra (2023)',
-      type: 'interview',
-      detail: 'Describes the intense, sleepless studio grind that forged his signature punchy lyrical delivery and built his core fanbase.',
-    },
-  ],
-
-  // ── KARAN AUJLA (Age 19) ─────────────────────────────────────────────────
-  'lvl_age_19_aujla': [
-    {
-      title: 'GQ India / Film Companion Interviews (2023)',
-      type: 'interview',
-      detail: 'Discusses his early years writing lucrative hits for established Punjabi artists like Jazzy B, Gagan Kokri, and Jassi Gill while dreaming of becoming a lead singer.',
-    },
-    {
-      title: 'PTC Punjabi / Discography Archives (2016–2018)',
-      type: 'article',
-      detail: 'Documents his strategic breakthrough approach of providing hit lyrics in exchange for featured vocal verses alongside Deep Jandu and Elly Mangat.',
-    },
-  ],
-
-  // ── KARAN AUJLA (Age 21) ─────────────────────────────────────────────────
-  'lvl_age_21_aujla': [
-    {
-      title: 'Times of India / PTC Punjabi Profiles (2018)',
-      type: 'article',
-      detail: 'Highlights his rise through gritty underground hip-hop before expanding his sonic palette for mainstream audiences.',
-    },
-    {
-      title: 'Spotify Discography & Production Credits',
-      type: 'article',
-      detail: 'Documents the release of "Don\'t Worry" in October 2018, featuring iconic traditional folk singer Gurlez Akhtar.',
-    },
-    {
-      title: 'Wikipedia / YouTube Analytics (2018–Present)',
-      type: 'article',
-      detail: 'Details "Don\'t Worry" surpassing hundreds of millions of streams and becoming his definitive mainstream breakout track.',
-    },
-  ],
-
-  // ── KARAN AUJLA (Age 22) ─────────────────────────────────────────────────
-  'lvl_age_22_aujla': [
-    {
-      title: 'Spotify Discography & YouTube Music Records (2019)',
-      type: 'article',
-      detail: 'Documents the release of "Chitta Kurta" in December 2019 at age 22, cementing his solo momentum.',
-    },
-    {
-      title: 'Film Companion & GQ India Interviews (2023)',
-      type: 'interview',
-      detail: 'Recounts resisting lucrative ghostwriting-only contracts to prioritize his own artistic catalog during the post-breakout period.',
-    },
-    {
-      title: 'Times of India / PTC Punjabi Profiles',
-      type: 'article',
-      detail: 'Highlights his perseverance during the quiet stretch between his first viral hit and his record-breaking debut album in 2021.',
-    },
-  ],
-
-  // ── SIDDHU MOOSEWALA (Age 18) ─────────────────────────────────────────────
-  'lvl_age_18_moosewala': [
-    {
-      title: 'The Tribune / Biography Profiles (2011)',
-      type: 'article',
-      detail: 'Documents his enrollment in Guru Nanak Dev Engineering College (GNDEC), Ludhiana in 2011 to study Electrical Engineering.',
-    },
-    {
-      title: 'Times of India / Various Artist Interviews',
-      type: 'article',
-      detail: 'Highlights how Tupac Shakur\'s music inspired him to begin writing raw, authentic Punjabi lyrics late at night in his college hostel.',
-    },
-    {
-      title: 'PTC Punjabi / Career Retrospective',
-      type: 'article',
-      detail: 'Details how he successfully completed his Electrical Engineering degree in 2016 for his parents before moving to Canada to pursue music.',
-    },
-  ],
-
-  // ── SIDDHU MOOSEWALA (Age 23) ─────────────────────────────────────────────
-  'lvl_age_23_moosewala': [
-    {
-      title: 'GQ India / The Tribune Biographies (2016)',
-      type: 'article',
-      detail: 'Recounts moving to Brampton, Canada on a study visa in 2016 and working grueling manual labor shifts to fund his living expenses.',
-    },
-    {
-      title: 'PTC Punjabi / Music Industry Profiles',
-      type: 'article',
-      detail: 'Details his success penning the breakthrough hit "License" for Ninja in 2016 prior to launching his solo recording career.',
-    },
-    {
-      title: 'Times of India / Discography Archives (2017)',
-      type: 'article',
-      detail: 'Documents his self-funded solo debut single "G-Wagon", recorded and released while living as an international student in Canada.',
-    },
-  ],
-
-  // ── SIDDHU MOOSEWALA (Age 22) ─────────────────────────────────────────────
-  'lvl_age_22_moosewala': [
-    {
-      title: 'The Tribune / Biographical Profiles',
-      type: 'article',
-      detail: 'Documents his graduation with a Bachelor\'s in Electrical Engineering from Guru Nanak Dev Engineering College, Ludhiana in 2016.',
-    },
-    {
-      title: 'Times of India / Various Artist Retrospectives',
-      type: 'article',
-      detail: 'Details his decision to take on student loans to enroll at Humber College in Canada immediately after graduation to immerse himself in the diaspora music scene.',
-    },
-  ],
-
-  // ── BHUVAN BAM (Age 16) ──────────────────────────────────────────────────
-  'lvl_age_16_bhuvan': [
-    {
-      title: 'StartupTalky (2021)',
-      type: 'article',
-      detail: 'Documents Bhuvan Bam scoring 74% in his Class 12 board exams and the ensuing family conversations on traditional degrees vs. his artistic interests.',
-    },
-    {
-      title: 'Wikipedia / Shaheed Bhagat Singh College Records',
-      type: 'article',
-      detail: 'Details his graduation with a Bachelor\'s degree in History (BA History) from Shaheed Bhagat Singh College (University of Delhi) rather than a traditional commerce/science path.',
-    },
-    {
-      title: 'Quartz India (2022)',
-      type: 'article',
-      detail: 'Chronicles how every night of the week, from 8 PM to 12 AM, he played guitar and sang live at a Mughlai restaurant in Delhi before his YouTube breakthrough.',
+      title: 'The Essential Tagore — Fakrul Alam & Radha Chakravarty (Harvard University Press)',
+      type: 'book',
+      detail: 'Analyzes the sudden transition in Tagore\'s oeuvre from youthful melancholy to radiant universal humanism and reverence for nature.',
     },
   ],
 
   // ── VIRAT KOHLI (Age 16) ──────────────────────────────────────────────────
-  'lvl_age_16_virat_kohli': [
+'lvl_age_16_virat_kohli': [
     {
       title: 'Virat Kohli interview with Graham Bensinger / Times of India (2025)',
       type: 'interview',
@@ -1126,7 +758,7 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
   ],
 
   // ── VIRAT KOHLI (Age 21) ──────────────────────────────────────────────────
-  'lvl_age_21_virat_kohli': [
+'lvl_age_21_virat_kohli': [
     {
       title: 'ESPNcricinfo — Virat Kohli Player Profile & Match Records',
       type: 'article',
@@ -1143,5 +775,4 @@ export const STORY_SOURCES: Record<string, StorySource[]> = {
       detail: 'Details his match-winning 104* off 102 balls to lead India to the title, which led directly to his recall for the 2009 ICC Champions Trophy.',
     },
   ],
-
 };
