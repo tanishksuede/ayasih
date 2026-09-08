@@ -3,6 +3,7 @@ import { saveSession, clearAllUserData } from '../utils/session';
 import { useUserStore } from '../store/userStore';
 import { checkUsernameAvailable } from './usernameService';
 import { validatePhone, derivePhoneEmail, deriveMobileEmail } from '../utils/authHelpers';
+import { GOOGLE_AUTH_CONFIG } from '../config/googleAuthConfig';
 
 /** Helper to generate a consistent synthetic email for username-only Supabase Auth */
 export function deriveUsernameEmail(username: string): string {
@@ -38,18 +39,144 @@ export interface SignInPhoneParams {
 
 export const authService = {
     /**
-     * Trigger Google OAuth login/signup flow
+     * Trigger Google OAuth login/signup flow using Google Identity Services (GIS).
+     * Bypasses full-page redirect to prevent landing on atyourage.app, keeping the user
+     * entirely on the active domain (localhost, vercel preview, or custom URL).
      */
-    async signInWithGoogle(redirectTo?: string) {
-        const targetUrl = redirectTo || `${window.location.origin}/signup/complete`;
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: targetUrl,
-            },
+    async signInWithGoogle(redirectTo?: string): Promise<{ user: any; onboardingComplete: boolean }> {
+        return new Promise(async (resolve, reject) => {
+            const handleGoogleUser = async (googleUser: { sub: string; email: string; name?: string; picture?: string }) => {
+                try {
+                    // 1. Look up existing user in public.users
+                    let { data: userRow } = await supabase
+                        .from('users')
+                        .select('*')
+                        .or(`email.eq.${googleUser.email},google_id.eq.${googleUser.sub}`)
+                        .is('deleted_at', null)
+                        .maybeSingle();
+
+                    if (!userRow) {
+                        const newId = crypto.randomUUID();
+                        const defaultName = googleUser.name || googleUser.email.split('@')[0] || 'Player';
+                        const insertPayload: any = {
+                            id: newId,
+                            google_id: googleUser.sub,
+                            email: googleUser.email,
+                            name: defaultName,
+                            avatar_url: googleUser.picture,
+                            onboarding_complete: false,
+                            total_xp: 0,
+                            level: 1,
+                            stories_completed: 0,
+                            age: 18,
+                            preferred_theme: 'city_dark',
+                        };
+
+                        const { data: created, error: insertError } = await supabase
+                            .from('users')
+                            .insert(insertPayload)
+                            .select()
+                            .maybeSingle();
+
+                        if (insertError) {
+                            console.warn('[AuthService] Supabase Google user insert warning:', insertError.message);
+                        }
+                        userRow = created || insertPayload;
+
+                        // Create default personality profile
+                        try {
+                            await supabase.from('personality_profiles').upsert({
+                                user_id: userRow.id,
+                                trait_risk_taker: 50,
+                                trait_creative: 50,
+                                trait_analytical: 50,
+                                trait_social: 50,
+                                trait_ambitious: 50,
+                                future_archetype: 'Explorer',
+                                total_xp: 0,
+                                level: 1,
+                                stories_completed: 0
+                            }, { onConflict: 'user_id' });
+                        } catch {}
+                    } else {
+                        // Update google_id or avatar if missing
+                        if (!userRow.google_id || !userRow.avatar_url) {
+                            await supabase.from('users').update({
+                                google_id: googleUser.sub,
+                                avatar_url: userRow.avatar_url || googleUser.picture
+                            }).eq('id', userRow.id).catch(() => {});
+                        }
+                    }
+
+                    try {
+                        localStorage.setItem('aya_google_email', googleUser.email);
+                    } catch {}
+
+                    const res = await this.handlePostSignIn(userRow, userRow.auth_user_id || userRow.id);
+                    resolve(res);
+                } catch (err) {
+                    console.error('[AuthService] Error processing Google user:', err);
+                    reject(err);
+                }
+            };
+
+            // Option 1: Modern Google Identity Services tokenClient popup
+            const g = (window as any).google;
+            if (g?.accounts?.oauth2) {
+                try {
+                    const tokenClient = g.accounts.oauth2.initTokenClient({
+                        client_id: GOOGLE_AUTH_CONFIG.clientId,
+                        scope: 'email profile openid',
+                        callback: async (tokenResponse: any) => {
+                            if (tokenResponse.error) {
+                                return reject(new Error(tokenResponse.error_description || tokenResponse.error || 'Google sign-in cancelled'));
+                            }
+                            try {
+                                const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                                    headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+                                });
+                                const profile = await res.json();
+                                if (!profile?.email) {
+                                    return reject(new Error('Failed to retrieve email from Google profile.'));
+                                }
+                                await handleGoogleUser({
+                                    sub: profile.sub,
+                                    email: profile.email,
+                                    name: profile.name,
+                                    picture: profile.picture
+                                });
+                            } catch (err) {
+                                reject(err);
+                            }
+                        },
+                        error_callback: (err: any) => {
+                            reject(new Error(err?.message || 'Failed to initialize Google popup.'));
+                        }
+                    });
+                    tokenClient.requestAccessToken({ prompt: 'select_account' });
+                    return;
+                } catch (gisErr) {
+                    console.warn('[AuthService] GIS tokenClient failed, trying fallback:', gisErr);
+                }
+            }
+
+            // Fallback: Supabase Auth OAuth with dynamic current origin
+            try {
+                const targetUrl = redirectTo || `${window.location.origin}/signup/complete`;
+                const { error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: targetUrl,
+                        queryParams: {
+                            client_id: GOOGLE_AUTH_CONFIG.clientId
+                        }
+                    },
+                });
+                if (error) throw error;
+            } catch (fallbackErr) {
+                reject(fallbackErr);
+            }
         });
-        if (error) throw error;
-        return data;
     },
 
     /**

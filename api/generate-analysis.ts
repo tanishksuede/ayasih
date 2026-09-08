@@ -67,7 +67,7 @@ function buildDynamicInsight(params: {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-    const allowedOrigin = process.env.ALLOWED_ORIGIN || 'https://atyourage.app';
+    const allowedOrigin = (req.headers.origin as string) || process.env.ALLOWED_ORIGIN || '*';
     res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');

@@ -9,6 +9,7 @@ import { supabase } from '../../utils/supabase';
 import { deriveMobileEmail, deriveMobilePassword } from '../../utils/authHelpers';
 import { useUsernameAvailability } from '../../hooks/useUsernameAvailability';
 import { UsernameField } from './UsernameField';
+import { authService } from '../../services/authService';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
@@ -553,16 +554,16 @@ export function OnboardingWizard() {
     const handleGoogleSignIn = async () => {
         audioSynth.playClick();
         setIsLoading(true);
-        const { error } = await supabase.auth.signInWithOAuth({
-            provider: 'google',
-            options: {
-                redirectTo: window.location.origin + '/game/welcome'
+        try {
+            const res = await authService.signInWithGoogle(`${window.location.origin}/game/welcome`);
+            if (res?.onboardingComplete) {
+                navigate('/game');
+            } else if (res?.user) {
+                navigate('/game/welcome');
             }
-        });
-
-        if (error) {
+        } catch (error: any) {
             console.error("OAuth Init Error:", error);
-            setError(`Failed to launch Google Sign-In: ${error.message}. Ensure Google Auth is enabled in your Supabase Dashboard.`);
+            setError(`Failed to launch Google Sign-In: ${error.message || 'Please try again.'}`);
             setIsLoading(false);
         }
     };

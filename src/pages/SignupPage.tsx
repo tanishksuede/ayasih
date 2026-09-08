@@ -59,7 +59,12 @@ export function SignupPage() {
         setIsLoading(true);
         setError('');
         try {
-            await authService.signInWithGoogle(`${window.location.origin}/signup/complete`);
+            const res = await authService.signInWithGoogle(`${window.location.origin}/signup/complete`);
+            if (res?.onboardingComplete) {
+                navigate('/game');
+            } else if (res?.user) {
+                navigate('/signup/complete');
+            }
         } catch (err: any) {
             console.error('Google Sign-Up Error:', err);
             setError(err.message || 'Failed to initialize Google Sign-Up.');

@@ -56,7 +56,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_13_anne_2',
@@ -82,7 +82,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_elon_musk',
@@ -108,7 +108,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_ratan_tata',
@@ -134,7 +134,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_virat_kohli',
@@ -160,7 +160,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_michael_1',
@@ -186,7 +186,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_michael_2',
@@ -212,7 +212,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_rani_lakshmibai',
@@ -238,7 +238,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_bhagat_1',
@@ -264,7 +264,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_bhagat_2',
@@ -290,7 +290,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_15_ronaldo',
@@ -316,59 +316,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_20_billie_2',
-    ARRAY['big_decision'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'global',
-    'A story about Billie Eilish at age 20 navigating the person who left you on seen: At 20, you must choose between chasing someone who ghosts you, or turning the pain into art.',
-    ARRAY['billie eilish', 'the person who left you on seen', 'billie eilish age 20', 'big_decision'],
-    'support',
-    'You are dealing with {user_problem}. Billie Eilish at age 20 faced a pivotal choice in The Person Who Left You On Seen — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_19_justin',
-    ARRAY['starting_something', 'feeling_stuck'],
-    ARRAY['isolation'],
-    ARRAY['lonely'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'global',
-    'A story about Justin Bieber at age 19 navigating the hotel room at 2am: At 19, you sit alone in a hotel room deciding whether to text an ex or face the emptiness underneath.',
-    ARRAY['justin bieber', 'the hotel room at 2am', 'justin bieber age 19', 'starting_something'],
-    'support',
-    'You are dealing with {user_problem}. Justin Bieber at age 19 faced a pivotal choice in The Hotel Room at 2AM — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_17_srk',
@@ -394,7 +342,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_17_sindhu',
@@ -420,7 +368,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_17_rahman',
@@ -446,7 +394,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_17_malala',
@@ -472,7 +420,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_17_jobs',
@@ -498,7 +446,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_17_nooyi',
@@ -524,59 +472,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_18',
-    ARRAY['big_decision'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'pivot',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'global',
-    'A story about Taylor Swift at age 18 navigating the beginning (country): At 18, Taylor faced a choice: Security or Authenticity.',
-    ARRAY['taylor swift', 'the beginning (country)', 'taylor swift age 18', 'big_decision'],
-    'support',
-    'You are dealing with {user_problem}. Taylor Swift at age 18 faced a pivotal choice in The Beginning (Country) — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_18_zendaya',
-    ARRAY['career_uncertainty', 'identity_question'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence', 'understand_myself'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'global',
-    'A story about Zendaya at age 18 navigating the identity strike: At 18, Zendaya risked her Disney career for creative control.',
-    ARRAY['zendaya', 'the identity strike', 'zendaya age 18', 'career_uncertainty'],
-    'support',
-    'You are dealing with {user_problem}. Zendaya at age 18 faced a pivotal choice in The Identity Strike — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_18_anand',
@@ -602,7 +498,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_18_kohli',
@@ -628,7 +524,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_18_virat',
@@ -654,7 +550,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_18_kalam',
@@ -680,7 +576,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_18_tata',
@@ -706,7 +602,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19',
@@ -732,7 +628,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_neeraj',
@@ -758,7 +654,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_shubman',
@@ -784,7 +680,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_sachin',
@@ -810,7 +706,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_sundar',
@@ -836,7 +732,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_srk',
@@ -862,7 +758,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_srk_2',
@@ -888,59 +784,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_20_prajakta',
-    ARRAY['career_uncertainty'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'vision',
-    '{"risk":0.6,"creativity":0.6,"vision":0.8,"empathy":0.6,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'indian',
-    'A story about Prajakta Koli at age 20 navigating the 2 am panic: At 20, Prajakta quit her 10-year dream job for a risky YouTube career.',
-    ARRAY['prajakta koli', 'the 2 am panic', 'prajakta koli age 20', 'career_uncertainty'],
-    'support',
-    'You are dealing with {user_problem}. Prajakta Koli at age 20 faced a pivotal choice in The 2 AM Panic — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_20_selena',
-    ARRAY['career_uncertainty', 'identity_question'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'global',
-    'A story about Selena Gomez at age 20 navigating the invisible war: At 20, Selena battled Lupus behind the perfect pop-star facade.',
-    ARRAY['selena gomez', 'the invisible war', 'selena gomez age 20', 'career_uncertainty'],
-    'support',
-    'You are dealing with {user_problem}. Selena Gomez at age 20 faced a pivotal choice in The Invisible War — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_20_kobe',
@@ -966,7 +810,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_20_nv_sir',
@@ -992,33 +836,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_20_music',
-    ARRAY['career_uncertainty'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'global',
-    'A story about Taylor Swift at age 20 navigating the soloist: At 20, Taylor faced critics who said she had ghostwriters.',
-    ARRAY['taylor swift', 'the soloist', 'taylor swift age 20', 'career_uncertainty'],
-    'support',
-    'You are dealing with {user_problem}. Taylor Swift at age 20 faced a pivotal choice in The Soloist — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_20_art',
@@ -1044,7 +862,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'scenario_arnold_awol',
@@ -1070,7 +888,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'scenario_hawking_diagnosis',
@@ -1096,7 +914,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_20_literature',
@@ -1122,7 +940,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_20_cinema',
@@ -1148,7 +966,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_20',
@@ -1174,163 +992,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_21_sheeran_1',
-    ARRAY['big_decision'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'global',
-    'A story about Ed Sheeran at age 21 navigating the photo she might see: At 21, you must choose how to handle the painful intersection of a recent breakup and sudden public attention.',
-    ARRAY['ed sheeran', 'the photo she might see', 'ed sheeran age 21', 'big_decision'],
-    'support',
-    'You are dealing with {user_problem}. Ed Sheeran at age 21 faced a pivotal choice in The Photo She Might See — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_21_sheeran_2',
-    ARRAY['identity_question'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence', 'understand_myself'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'pivot',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'global',
-    'A story about Ed Sheeran at age 21 navigating the people that still feel like home: At 21, you must decide what success is allowed to cost you in your personal life.',
-    ARRAY['ed sheeran', 'the people that still feel like home', 'ed sheeran age 21', 'identity_question'],
-    'support',
-    'You are dealing with {user_problem}. Ed Sheeran at age 21 faced a pivotal choice in The People That Still Feel Like Home — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_21_selena_1',
-    ARRAY['big_decision'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence', 'understand_myself'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'global',
-    'A story about Selena Gomez at age 21 navigating when everyone has an opinion: At 21, you must choose how to handle the painful intersection of a recent relationship and sudden public attention.',
-    ARRAY['selena gomez', 'when everyone has an opinion', 'selena gomez age 21', 'big_decision'],
-    'support',
-    'You are dealing with {user_problem}. Selena Gomez at age 21 faced a pivotal choice in When Everyone Has an Opinion — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_21_selena_2',
-    ARRAY['career_uncertainty', 'identity_question'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'global',
-    'A story about Selena Gomez at age 21 navigating your own name: At 21, you must decide how much of the person people know is actually the person you want to become.',
-    ARRAY['selena gomez', 'your own name', 'selena gomez age 21', 'career_uncertainty'],
-    'support',
-    'You are dealing with {user_problem}. Selena Gomez at age 21 faced a pivotal choice in Your Own Name — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_21_tanmay_1',
-    ARRAY['career_uncertainty'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'overcome',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'indian',
-    'A story about Tanmay Bhat at age 21 navigating should i really do this?: At 21, Tanmay Bhat enters the Mumbai stand-up comedy circuit, deciding how seriously to take his talent before having proof it will work.',
-    ARRAY['tanmay bhat', 'should i really do this?', 'tanmay bhat age 21', 'career_uncertainty'],
-    'support',
-    'You are dealing with {user_problem}. Tanmay Bhat at age 21 faced a pivotal choice in Should I Really Do This? — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_21_tanmay_2',
-    ARRAY['starting_something'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'indian',
-    'A story about Tanmay Bhat at age 21 navigating the five minutes: At 21, Tanmay Bhat gets his first major breakthrough opportunity at the Weirdass Ham-ateur Night competition in Mumbai.',
-    ARRAY['tanmay bhat', 'the five minutes', 'tanmay bhat age 21', 'starting_something'],
-    'support',
-    'You are dealing with {user_problem}. Tanmay Bhat at age 21 faced a pivotal choice in The Five Minutes — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_21_michael_1',
@@ -1356,7 +1018,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_21_michael_2',
@@ -1382,7 +1044,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_21_srk',
@@ -1408,7 +1070,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_21',
@@ -1434,7 +1096,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_22',
@@ -1460,7 +1122,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_22_michael',
@@ -1486,59 +1148,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_22_ashneer',
-    ARRAY['career_uncertainty'],
-    ARRAY['lack_of_direction'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'leadership',
-    '{"leadership":0.95,"risk":0.85,"vision":0.8,"creativity":0.7,"empathy":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'indian',
-    'A story about Ashneer Grover at age 22 navigating the next degree: At 22, Ashneer Grover stands between IIT Delhi and IIM Ahmedabad, deciding how to shape his career direction.',
-    ARRAY['ashneer grover', 'the next degree', 'ashneer grover age 22', 'career_uncertainty'],
-    'challenge',
-    'You are dealing with {user_problem}. Ashneer Grover at age 22 faced a pivotal choice in The Next Degree — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_22_bhuvan',
-    ARRAY['career_uncertainty', 'identity_question', 'starting_something', 'big_decision'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'leadership',
-    '{"leadership":0.95,"risk":0.85,"vision":0.8,"creativity":0.7,"empathy":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'indian',
-    'A story about Bhuvan Bam at age 22 navigating when the phone started working: At 22, Bhuvan Bam must choose between his original craft of music and the sudden explosive growth of BB Ki Vines.',
-    ARRAY['bhuvan bam', 'when the phone started working', 'bhuvan bam age 22', 'career_uncertainty'],
-    'challenge',
-    'You are dealing with {user_problem}. Bhuvan Bam at age 22 faced a pivotal choice in When the Phone Started Working — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_22_ronaldo',
@@ -1564,59 +1174,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_22_ranveer',
-    ARRAY['exam_pressure'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'leadership',
-    '{"leadership":0.95,"risk":0.85,"vision":0.8,"creativity":0.7,"empathy":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'indian',
-    'A story about Ranveer Singh at age 22 navigating the role you can\: At 22, Ranveer Singh returns to Mumbai after studying in the US, figuring out how to build a runway toward acting.',
-    ARRAY['ranveer singh', 'the role you can\', 'ranveer singh age 22', 'exam_pressure'],
-    'challenge',
-    'You are dealing with {user_problem}. Ranveer Singh at age 22 faced a pivotal choice in The Role You Can\ — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_22_alia',
-    ARRAY['career_uncertainty', 'identity_question'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'indian',
-    'A story about Alia Bhatt at age 22 navigating more than a star: At 22, Alia Bhatt faces rising expectations after early success, deciding how to stretch her range beyond early acclaim.',
-    ARRAY['alia bhatt', 'more than a star', 'alia bhatt age 22', 'career_uncertainty'],
-    'continue',
-    'You are dealing with {user_problem}. Alia Bhatt at age 22 faced a pivotal choice in More Than a Star — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_22_bhagat',
@@ -1642,59 +1200,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_22_tanmay_1',
-    ARRAY['starting_something', 'big_decision'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'overcome',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'indian',
-    'A story about Tanmay Bhat at age 22 navigating just 200 people: At 22, Tanmay Bhat and Gursimran Khamba start the All India Bakchod podcast, aiming for 200 people in a room before knowing how big it would become.',
-    ARRAY['tanmay bhat', 'just 200 people', 'tanmay bhat age 22', 'starting_something'],
-    'continue',
-    'You are dealing with {user_problem}. Tanmay Bhat at age 22 faced a pivotal choice in Just 200 People — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_22_tanmay_2',
-    ARRAY['career_uncertainty', 'identity_question'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    4,
-    4,
-    'modern',
-    'indian',
-    'A story about Tanmay Bhat at age 22 navigating what if we go bigger?: At 22, the small podcast experiment begins exceeding original expectations as audiences grow.',
-    ARRAY['tanmay bhat', 'what if we go bigger?', 'tanmay bhat age 22', 'career_uncertainty'],
-    'continue',
-    'You are dealing with {user_problem}. Tanmay Bhat at age 22 faced a pivotal choice in What If We Go Bigger? — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_23_srk',
@@ -1720,7 +1226,7 @@ INSERT INTO public.story_metadata (
     true,
     'aya_plus',
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_23',
@@ -1746,7 +1252,7 @@ INSERT INTO public.story_metadata (
     true,
     'aya_plus',
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'scenario_upsc_tina_college',
@@ -1772,7 +1278,7 @@ INSERT INTO public.story_metadata (
     true,
     'aya_plus',
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_25_srk',
@@ -1798,59 +1304,7 @@ INSERT INTO public.story_metadata (
     true,
     'aya_plus',
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_19_billie',
-    ARRAY['feeling_stuck'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'creativity',
-    '{"creativity":0.95,"vision":0.85,"empathy":0.8,"risk":0.7,"leadership":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'global',
-    'A story about Billie Eilish at age 19 navigating fame is eating me alive: At 19, Billie won 5 Grammys and was falling apart inside.',
-    ARRAY['billie eilish', 'fame is eating me alive', 'billie eilish age 19', 'feeling_stuck'],
-    'support',
-    'You are dealing with {user_problem}. Billie Eilish at age 19 faced a pivotal choice in Fame Is Eating Me Alive — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
-),
-(
-    'lvl_age_19_mrbeast',
-    ARRAY['exam_pressure', 'confidence_low'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'vision',
-    '{"risk":0.6,"creativity":0.6,"vision":0.8,"empathy":0.6,"leadership":0.6}'::jsonb,
-    'pivot',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'global',
-    'A story about MrBeast at age 19 navigating drop out or keep uploading: At 19, Jimmy had 30K subscribers and a ridiculous idea. College apps were due tomorrow.',
-    ARRAY['mrbeast', 'drop out or keep uploading', 'mrbeast age 19', 'exam_pressure'],
-    'support',
-    'You are dealing with {user_problem}. MrBeast at age 19 faced a pivotal choice in Drop Out or Keep Uploading — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_ritesh',
@@ -1876,7 +1330,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_ali',
@@ -1902,33 +1356,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_20_dhruv',
-    ARRAY['identity_question'],
-    ARRAY['uncertainty', 'proving_oneself'],
-    ARRAY['anxious', 'hopeful'],
-    ARRAY['find_direction', 'build_confidence'],
-    ARRAY['early_20s'],
-    16,
-    25,
-    'leadership',
-    '{"leadership":0.95,"risk":0.85,"vision":0.8,"creativity":0.7,"empathy":0.6}'::jsonb,
-    'persist',
-    ARRAY['courage', 'resilience', 'identity'],
-    3,
-    4,
-    'modern',
-    'indian',
-    'A story about Dhruv Rathee at age 20 navigating germany or india: At 20, an engineering scholar in Germany felt India needed his voice more than his degree.',
-    ARRAY['dhruv rathee', 'germany or india', 'dhruv rathee age 20', 'identity_question'],
-    'challenge',
-    'You are dealing with {user_problem}. Dhruv Rathee at age 20 faced a pivotal choice in Germany or India — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_falguni',
@@ -1954,7 +1382,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_19_tesla',
@@ -1980,7 +1408,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_22_rani_lakshmibai',
@@ -2006,7 +1434,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_11_virat_kohli',
@@ -2032,7 +1460,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_25',
@@ -2058,7 +1486,7 @@ INSERT INTO public.story_metadata (
     true,
     'aya_plus',
     NOW(),
-    NOW()
+    NOW(
 ),
 (
     'lvl_age_20_modi',
@@ -2084,33 +1512,7 @@ INSERT INTO public.story_metadata (
     false,
     NULL,
     NOW(),
-    NOW()
-),
-(
-    'lvl_age_16_bhuvan',
-    ARRAY['parents_vs_own_path', 'career_uncertainty', 'starting_with_little', 'discipline'],
-    ARRAY['average_academic_scores', 'parental_pressure_education', 'financial_insecurity_arts'],
-    ARRAY['anxious', 'frustrated', 'determined'],
-    ARRAY['find_courage_non_traditional_path', 'find_direction', 'courage_to_commit'],
-    ARRAY['late_teens'],
-    15,
-    20,
-    'discipline',
-    '{"discipline":0.95,"creativity":0.98,"resilience":0.92,"risk":0.88,"vision":0.92,"empathy":0.9,"leadership":0.85}'::jsonb,
-    'action_step',
-    ARRAY['discipline', 'courage', 'persistence', 'compromise', 'passion'],
-    3,
-    5,
-    'modern',
-    'indian',
-    'A story about Bhuvan Bam at age 16 navigating the night shift stage: At 16, scoring 74% in Class 12, balancing parental pressure for commerce with late-night restaurant music gigs.',
-    ARRAY['bhuvan bam', 'the night shift stage', 'bhuvan bam age 16', 'parents_vs_own_path', 'class 12', 'board exams', 'guitar', 'delhi restaurant'],
-    'challenge',
-    'You are dealing with {user_problem}. Bhuvan Bam at age 16 faced a pivotal choice in The Night Shift Stage — where {trait} guided their path.',
-    false,
-    NULL,
-    NOW(),
-    NOW()
+    NOW(
 )
 ON CONFLICT (story_id) DO UPDATE SET
     situation_tags = EXCLUDED.situation_tags,

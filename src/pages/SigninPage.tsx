@@ -129,7 +129,12 @@ export function SigninPage() {
         setIsLoading(true);
         setError('');
         try {
-            await authService.signInWithGoogle(`${window.location.origin}/signin`);
+            const res = await authService.signInWithGoogle(`${window.location.origin}/signin`);
+            if (res?.onboardingComplete) {
+                navigate('/game');
+            } else if (res?.user) {
+                navigate('/signup/complete');
+            }
         } catch (err: any) {
             console.error('Google Sign-In Error:', err);
             setError(err.message || 'Failed to launch Google Sign-In.');

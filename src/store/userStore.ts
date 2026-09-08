@@ -8,6 +8,19 @@ import { generateLevels } from '../utils/levelGenerator';
 
 export type MapTheme = 'city_dark' | 'solar' | 'light';
 
+export const BANNED_PERSONALITIES = [
+    'karan aujla', 'sidhu moosewala', 'billie eilish', 'mrbeast', 'dhruv rathee',
+    'prajakta koli', 'selena gomez', 'zendaya', 'justin bieber', 'ed sheeran',
+    'taylor swift', 'bhuvan bam', 'tanmay bhat', 'ashneer grover', 'ranveer singh',
+    'alia bhatt', 'eminem'
+];
+
+export function isBannedPersonality(name?: string | null): boolean {
+    if (!name) return false;
+    const lower = name.toLowerCase();
+    return BANNED_PERSONALITIES.some(b => lower.includes(b));
+}
+
 interface UserState {
     profile: UserProfile | null;
     completedOnboarding: boolean;
@@ -168,7 +181,7 @@ export const useUserStore = create<UserState>()(
         (set, get) => ({
             profile: null,
             completedOnboarding: false,
-            levels: generateLevels(18),
+            levels: generateLevels(18).filter(l => !isBannedPersonality(l.personality)),
             levelScores: {},
             xp: 0, // Legacy fallback. New stats live on profile
 
@@ -367,33 +380,7 @@ export const useUserStore = create<UserState>()(
                     return;
                 }
 
-                const latestMasterLevels: Level[] = data.map((row: any) => ({
-                    id: row.id,
-                    day_number: row.day_number,
-                    title: row.title,
-                    description: row.description,
-                    personality: row.personality,
-                    requiredStars: row.required_stars,
-                    year: row.year,
-                    age: row.age,
-                    theme: row.theme,
-                    archetype: row.archetype,
-                    bio: row.bio,
-                    fame: row.fame,
-                    achievements: row.achievements,
-                    lesson: row.lesson,
-                    avatarUrl: row.avatar_url,
-                    scenarioId: row.scenario_id,
-                    idolTraits: row.idol_traits,
-                    status: row.status,
-                    isLocked: row.is_locked,
-                    stars: row.stars,
-                    part1: row.part1,
-                    part2: row.part2,
-                    placeholder: row.placeholder
-                }));
-
-                // Get local levels to merge
+                // Get curated local levels
                 let localLevels: Level[] = [];
                 try {
                     const { generateLevels } = await import('../utils/levelGenerator');
@@ -406,41 +393,24 @@ export const useUserStore = create<UserState>()(
                 set((state) => {
                     const currentScores = state.levelScores;
                     
-                    // Create a map of database levels by ID
-                    const dbLevelsMap = new Map(latestMasterLevels.map(l => [l.id, l]));
+                    // Filter out any banned personalities from localLevels
+                    const cleanLocalLevels = localLevels.filter(l => !isBannedPersonality(l.personality));
                     
-                    // For all local levels, if they exist in DB, use DB info (overwriting local). 
-                    // Otherwise, keep the local level.
-                    const mergedLevels = localLevels.map(localLevel => {
-                        const dbLevel = dbLevelsMap.get(localLevel.id);
+                    // For all local levels, maintain curated metadata and merge only user progress
+                    const mergedLevels = cleanLocalLevels.map(localLevel => {
                         const score = currentScores[localLevel.id];
-                        const activeLevel = dbLevel ? { ...localLevel, ...dbLevel, age: localLevel.age } : localLevel;
-                        
-                        let computedStatus = activeLevel.status;
+                        let computedStatus = localLevel.status;
                         if (score !== undefined && score > 0) {
                             computedStatus = 'completed';
                         }
                         
                         return {
-                            ...activeLevel,
+                            ...localLevel,
                             status: computedStatus,
-                            isLocked: activeLevel.isLocked !== undefined ? activeLevel.isLocked : false,
-                            stars: score !== undefined ? score : (activeLevel.stars || 0)
+                            isLocked: localLevel.isLocked !== undefined ? localLevel.isLocked : false,
+                            stars: score !== undefined ? score : (localLevel.stars || 0)
                         };
                     });
-                    
-                    // Add any database levels that are NOT in local levels (just in case)
-                    const localIds = new Set(localLevels.map(l => l.id));
-                    for (const dbLevel of latestMasterLevels) {
-                        if (!localIds.has(dbLevel.id)) {
-                            const score = currentScores[dbLevel.id];
-                            mergedLevels.push({
-                                ...dbLevel,
-                                status: (score !== undefined && score > 0) ? 'completed' : dbLevel.status,
-                                stars: score !== undefined ? score : (dbLevel.stars || 0)
-                            });
-                        }
-                    }
 
                     return { levels: mergedLevels };
                 });
@@ -669,17 +639,19 @@ export const useUserStore = create<UserState>()(
                             const master = generateLevels(rehydratedState?.profile?.age || 18);
                             const currentScores = rehydratedState?.levelScores || {};
                             const rehydratedMap = new Map((rehydratedState?.levels || []).map((l: any) => [l.id, l]));
-                            const merged = master.map((ml: any) => {
-                                const stored = rehydratedMap.get(ml.id);
-                                const score = currentScores[ml.id];
-                                return {
-                                    ...ml,
-                                    ...(stored || {}),
-                                    age: ml.age,
-                                    status: (score !== undefined && score > 0) ? 'completed' : (stored?.status || ml.status || 'unlocked'),
-                                    stars: Math.max(ml.stars || 0, score || 0, stored?.stars || 0)
-                                };
-                            });
+                            const merged = master
+                                .filter((ml: any) => !isBannedPersonality(ml.personality))
+                                .map((ml: any) => {
+                                    const stored = rehydratedMap.get(ml.id);
+                                    const score = currentScores[ml.id];
+                                    return {
+                                        ...ml,
+                                        age: ml.age,
+                                        status: (score !== undefined && score > 0) ? 'completed' : (stored?.status || ml.status || 'unlocked'),
+                                        stars: Math.max(ml.stars || 0, score || 0, stored?.stars || 0),
+                                        isLocked: stored?.isLocked !== undefined ? stored.isLocked : ml.isLocked
+                                    };
+                                });
                             useUserStore.setState({ levels: merged });
                         } catch (e) {
                             console.error('[Store] Level merge error during hydration:', e);

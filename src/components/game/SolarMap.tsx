@@ -43,11 +43,11 @@ export function SolarMap({ onPlayLevel, onOpenDnaProfile, isMapActive = true }: 
     const activeAge = profile?.age || 18;
     let processedLevels = levels.filter(l => Number(l.age) === Number(activeAge));
 
-    // New stories that should be visible to ALL users regardless of interests.
+    // Stories that should be visible to ALL users regardless of interests.
     const alwaysShowPersonalities = new Set([
-        'Billie Eilish', 'MrBeast', 'Ritesh Agarwal', 'Muhammad Ali',
-        'Dhruv Rathee', 'Falguni Nayar', 'Nikola Tesla',
-        'Zendaya', 'Neeraj Chopra', 'Prajakta Koli', 'Selena Gomez', 'Shah Rukh Khan'
+        'Rabindranath Tagore', 'Bhagat Singh', 'Virat Kohli', 'Dr. A.P.J. Abdul Kalam',
+        'Sachin Tendulkar', 'Ratan Tata', 'Rani Lakshmibai', 'Muhammad Ali',
+        'Falguni Nayar', 'Nikola Tesla', 'Neeraj Chopra', 'Shah Rukh Khan'
     ]);
 
     if (profile?.psychologicalProfile) {
@@ -69,13 +69,13 @@ export function SolarMap({ onPlayLevel, onOpenDnaProfile, isMapActive = true }: 
                 ['Bill Gates', 'Ratan Tata', 'Indra Nooyi', 'Walt Disney'].forEach(n => allowedNames.add(n));
             }
             if (interests.some((i: string) => i.includes('Tech'))) {
-                ['Bill Gates', 'Steve Jobs', 'Sundar Pichai'].forEach(n => allowedNames.add(n));
+                ['Bill Gates', 'Steve Jobs', 'Sundar Pichai', 'Nikola Tesla'].forEach(n => allowedNames.add(n));
             }
             if (interests.some((i: string) => i.includes('Creativity') || i.includes('Love'))) {
-                ['Taylor Swift', 'Shah Rukh Khan', 'Frida Kahlo', 'A.R. Rahman', 'Steven Spielberg', 'J.K. Rowling', 'Mary Shelley'].forEach(n => allowedNames.add(n));
+                ['Rabindranath Tagore', 'Shah Rukh Khan', 'Frida Kahlo', 'A.R. Rahman', 'Steven Spielberg', 'J.K. Rowling', 'Mary Shelley'].forEach(n => allowedNames.add(n));
             }
             if (interests.some((i: string) => i.includes('Discipline'))) {
-                ['Sachin Tendulkar', 'Virat Kohli', 'Kobe Bryant', 'P.V. Sindhu', 'Arnold'].forEach(n => allowedNames.add(n));
+                ['Sachin Tendulkar', 'Virat Kohli', 'Kobe Bryant', 'P.V. Sindhu', 'Arnold Schwarzenegger'].forEach(n => allowedNames.add(n));
             }
 
             if (allowedNames.size > 0) {

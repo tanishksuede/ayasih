@@ -21,13 +21,13 @@ export function DailyChallengeReveal({ mood, onComplete, onClose }: DailyChallen
         let targetNames: string[] = [];
         
         switch (mood) {
-            case 'Heartbreak': targetNames = ['Shah Rukh Khan', 'Taylor Swift', 'Frida Kahlo']; break;
-            case 'Motivation': targetNames = ['Kobe Bryant', 'Sachin Tendulkar', 'Cristiano Ronaldo']; break;
-            case 'Confidence': targetNames = ['Arnold', 'Eminem', 'P.V. Sindhu']; break;
+            case 'Heartbreak': targetNames = ['Shah Rukh Khan', 'Rabindranath Tagore', 'Frida Kahlo']; break;
+            case 'Motivation': targetNames = ['Kobe Bryant', 'Sachin Tendulkar', 'Cristiano Ronaldo', 'Virat Kohli']; break;
+            case 'Confidence': targetNames = ['Arnold Schwarzenegger', 'Bhagat Singh', 'P.V. Sindhu']; break;
             case 'Money': targetNames = ['Elon Musk', 'Bill Gates', 'Steve Jobs', 'Ratan Tata']; break;
-            case 'Purpose': targetNames = ['Steve Jobs', 'Sundar Pichai', 'Indra Nooyi', 'A.P.J. Abdul Kalam']; break;
-            case 'Loneliness': targetNames = ['Shah Rukh Khan', 'A.R. Rahman', 'J.K. Rowling']; break;
-            default: targetNames = ['Bill Gates', 'Taylor Swift']; 
+            case 'Purpose': targetNames = ['Steve Jobs', 'Sundar Pichai', 'Indra Nooyi', 'Dr. A.P.J. Abdul Kalam']; break;
+            case 'Loneliness': targetNames = ['Shah Rukh Khan', 'A.R. Rahman', 'Rabindranath Tagore']; break;
+            default: targetNames = ['Bill Gates', 'Rabindranath Tagore']; 
         }
 
         // Try to find a level that matches

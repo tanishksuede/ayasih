@@ -265,19 +265,6 @@ export function StoryMetadataAuthoring() {
                 />
             </div>
 
-            {/* Premium toggle */}
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-slate-900/60 border border-slate-800">
-                <input
-                    type="checkbox"
-                    id="premiumCheck"
-                    checked={isPremium}
-                    onChange={e => setIsPremium(e.target.checked)}
-                    className="w-4 h-4 accent-purple-500 rounded"
-                />
-                <label htmlFor="premiumCheck" className="text-xs font-bold uppercase tracking-wider text-slate-200 cursor-pointer">
-                    Mark as AYA+ Premium Story (Requires subscription)
-                </label>
-            </div>
         </div>
     );
 }
