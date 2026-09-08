@@ -31,9 +31,32 @@ export function SignupCompletePage() {
 
     useEffect(() => {
         if (!profile) {
-            supabase.auth.getSession().then((resp: any) => {
+            supabase.auth.getSession().then(async (resp: any) => {
                 const session = resp.data?.session;
                 if (session?.user) {
+                    try {
+                        let { data: userRow } = await supabase
+                            .from('users')
+                            .select('*')
+                            .or(`auth_user_id.eq.${session.user.id},email.eq.${session.user.email}`)
+                            .is('deleted_at', null)
+                            .maybeSingle();
+
+                        if (userRow && userRow.username && (userRow.onboarding_complete || (userRow.total_xp && userRow.total_xp > 0))) {
+                            await authService.handlePostSignIn(userRow, session.user.id);
+                            navigate('/game');
+                            return;
+                        }
+
+                        if (userRow) {
+                            if (userRow.username) setUsername(userRow.username);
+                            if (userRow.age) setAge(userRow.age);
+                            if (userRow.mobile) setMobile(userRow.mobile);
+                        }
+                    } catch (e) {
+                        console.warn('[SignupComplete] Error fetching existing user:', e);
+                    }
+
                     const defaultName = session.user.user_metadata?.full_name || session.user.email?.split('@')[0] || 'Player';
                     useUserStore.getState().setProfile({
                         id: session.user.id,
