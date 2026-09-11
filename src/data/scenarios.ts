@@ -542,7 +542,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "intro",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pavilion.jpg",
-                "text": "Question 1 of 7 — Dec 18, 2006, 4:15 PM (Feroz Shah Kotla)\nYou are 18 years old, playing your debut Ranji Trophy season for Delhi against Karnataka. Karnataka piled on 446; Delhi is reeling at 103/5 in gloomy winter twilight. You are 40* with tailender Puneet Bisht. Venkatesh Prasad's pacers are generating vicious reverse swing in the gloom. On the 4th ball of the over, a tight single opens to deep point. Taking it leaves nervous Bisht to face two deliveries in near-darkness.",
+                "text": "December 18, 2006, 4:15 PM — Feroz Shah Kotla, Delhi.\nYou are 18 years old, playing your debut Ranji Trophy season for Delhi against Karnataka. Karnataka piled on 446; Delhi is reeling at 103/5 in gloomy winter twilight. You are 40* with tailender Puneet Bisht. Venkatesh Prasad's pacers are generating vicious reverse swing in the gloom. On the 4th ball of the over, a tight single opens to deep point. Taking it leaves nervous Bisht to face two deliveries in near-darkness.",
                 "choices": [
                         {
                                 "text": "The Selfless Shield: Refuse the single, farm the strike completely, and take 100% of the reverse swing in failing light to protect Bisht until stumps.",
@@ -571,7 +571,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q2_midnight_bereavement",
                 "emotion": "grief",
                 "bg": "/assets/bg_virat_pavilion.jpg",
-                "text": "Question 2 of 7 — Dec 19, 2006, 3:30 AM (Bedside Reality)\nAt 3:00 AM, your 54-year-old father Prem collapses from a massive stroke and passes away in your arms. By 4:00 AM, orthodox relatives gather, insisting: 'Virat, as the younger son, filial duty demands you sit by your father's body, shave your head, and lead the mourning rites. Thinking about a cricket match right now is heartless.' Delhi is 103/5; forfeiting as 'Retired Absent' guarantees Delhi's defeat.",
+                "text": "December 19, 2006, 3:30 AM — Uttam Nagar Family Home.\nAt 3:00 AM, your 54-year-old father Prem collapses from a massive stroke and passes away in your arms. By 4:00 AM, orthodox relatives gather, insisting: 'Virat, as the younger son, filial duty demands you sit by your father's body, shave your head, and lead the mourning rites. Thinking about a cricket match right now is heartless.' Delhi is 103/5; forfeiting as 'Retired Absent' guarantees Delhi's defeat.",
                 "choices": [
                         {
                                 "text": "The Iron Vow: Call coach Rajkumar Sharma at dawn, resolve to bat at 9:00 AM to save Delhi, and promise to rush straight to the pyre after batting.",
@@ -600,7 +600,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q3_dressing_room_veto",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pavilion.jpg",
-                "text": "Question 3 of 7 — Dec 19, 2006, 7:45 AM (Kotla Dressing Room)\nYou arrive in crisp whites with red, sleepless eyes. Coach Chetan Chauhan and captain Mithun Manhas are stunned. Chauhan pulls you aside: 'Virat, you are an 18-year-old boy in deep shock. A 140 km/h bouncer could cause severe head trauma if your reflexes lag by 0.1 seconds. If you fail, the media will accuse us of exploiting a grieving child. Let a substitute take your place.'",
+                "text": "December 19, 2006, 7:45 AM — Kotla Dressing Room.\nYou arrive in crisp whites with red, sleepless eyes. Coach Chetan Chauhan and captain Mithun Manhas are stunned. Chauhan pulls you aside: 'Virat, you are an 18-year-old boy in deep shock. A 140 km/h bouncer could cause severe head trauma if your reflexes lag by 0.1 seconds. If you fail, the media will accuse us of exploiting a grieving child. Let a substitute take your place.'",
                 "choices": [
                         {
                                 "text": "Absolute Ultimatum: Look Chauhan dead in the eye: 'I started this fight and I will finish it. If you bench me today, I will never wear Delhi whites again.'",
@@ -629,7 +629,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q4_morning_attrition",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pitch.jpg",
-                "text": "Question 4 of 7 — Dec 19, 2006, 9:45 AM (Physical & Mental Exhaustion at 55*)\nYou have batted through 2 freezing hours without sleep, grinding to 55*. The Karnataka spinners are targeting a rough patch outside off-stump. Severe dehydration and emotional shock hit you; your calves are cramping, and your vision blurs. Bisht calls for a risky second run to deep mid-wicket.",
+                "text": "December 19, 2006, 9:45 AM — The Crease at 55*.\nYou have batted through 2 freezing hours without sleep, grinding to 55*. The Karnataka spinners are targeting a rough patch outside off-stump. Severe dehydration and emotional shock hit you; your calves are cramping, and your vision blurs. Bisht calls for a risky second run to deep mid-wicket.",
                 "choices": [
                         {
                                 "text": "Iron Discipline: Wave Bisht back, call for electrolyte salt capsules, and grind through safe singles without taking unnecessary physical risks.",
@@ -658,7 +658,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q5_cordon_sledge",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pitch.jpg",
-                "text": "Question 5 of 7 — Dec 19, 2006, 10:45 AM (The 68* Personal Sledge)\nYou have carried Delhi to 195/5, just 12 runs away from avoiding the follow-on. The Karnataka cordon is frustrated. A hostile pacer hurls an express bouncer past your helmet grill, marches right up to your face, and sneers: 'You think you're a hero, boy? Your father is lying dead at home and you're here begging for runs. Have some shame and go home.'",
+                "text": "December 19, 2006, 10:45 AM — Hostile Sledging at 68*.\nYou have carried Delhi to 195/5, just 12 runs away from avoiding the follow-on. The Karnataka cordon is frustrated. A hostile pacer hurls an express bouncer past your helmet grill, marches right up to your face, and sneers: 'You think you're a hero, boy? Your father is lying dead at home and you're here begging for runs. Have some shame and go home.'",
                 "choices": [
                         {
                                 "text": "Deafening Steel: Turn away, say nothing, deliberately tap the turf with your bat, and meet the bowler's gaze with cold, dead focus.",
@@ -687,7 +687,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q6_robbed_on_90",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pitch.jpg",
-                "text": "Question 6 of 7 — Dec 19, 2006, 12:40 PM (Robbed on 90: Blatant Injustice)\nYou are on 90 off 281 minutes. Delhi is completely safe from the follow-on at 230/5. Sunil Joshi tosses up a delivery; you push forward with a soft inside edge into your pad. The ball lobs gently to forward short-leg. Umpire Suresh Shastri inexplicably raises his finger for LBW/catch. TV replays confirm a massive inside edge. You are cheated of an immortal century for your father.",
+                "text": "December 19, 2006, 12:40 PM — Robbed on 90.\nYou are on 90 off 281 minutes. Delhi is completely safe from the follow-on at 230/5. Sunil Joshi tosses up a delivery; you push forward with a soft inside edge into your pad. The ball lobs gently to forward short-leg. Umpire Suresh Shastri inexplicably raises his finger for LBW/catch. TV replays confirm a massive inside edge. You are cheated of an immortal century for your father.",
                 "choices": [
                         {
                                 "text": "Regal Demeanor: Look down at your bat, refuse to show open dissent, tuck the bat under your arm, and walk off in silence with your head held high.",
@@ -716,7 +716,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q7_economic_crossroads",
                 "emotion": "determination",
                 "bg": "/assets/avatar_virat_kohli.jpg",
-                "text": "Question 7 of 7 — Dec 21, 2006 (The Cold Economic Reality: PSU Job vs Burning Ships)\nThe funeral at Nigambodh Ghat is over. With your father gone, the family legal practice is shut with zero household income. Creditors and house rent loom over your mother Saroj. A nationalized PSU bank and an oil corporation offer you an immediate sports-quota clerk job (₹18,000/month permanent government salary). Your brother Vikas says: 'Virat, one knee injury can end cricket. Take this job so Ma has guaranteed food and shelter.'",
+                "text": "December 21, 2006 — Post-Funeral Economic Reality.\nThe funeral at Nigambodh Ghat is over. With your father gone, the family legal practice is shut with zero household income. Creditors and house rent loom over your mother Saroj. A nationalized PSU bank and an oil corporation offer you an immediate sports-quota clerk job (₹18,000/month permanent government salary). Your brother Vikas says: 'Virat, one knee injury can end cricket. Take this job so Ma has guaranteed food and shelter.'",
                 "choices": [
                         {
                                 "text": "Burn the Ships: Refuse the PSU job completely. Tell your mother: 'I will never take a safety net. I will play for India, or I will die trying.'",
@@ -4281,7 +4281,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "intro",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pavilion.jpg",
-                "text": "Question 1 of 7 — Dec 18, 2006, 4:15 PM (Feroz Shah Kotla)\nYou are 18 years old, playing your debut Ranji Trophy season for Delhi against Karnataka. Karnataka piled on 446; Delhi is reeling at 103/5 in gloomy winter twilight. You are 40* with tailender Puneet Bisht. Venkatesh Prasad's pacers are generating vicious reverse swing in the gloom. On the 4th ball of the over, a tight single opens to deep point. Taking it leaves nervous Bisht to face two deliveries in near-darkness.",
+                "text": "December 18, 2006, 4:15 PM — Feroz Shah Kotla, Delhi.\nYou are 18 years old, playing your debut Ranji Trophy season for Delhi against Karnataka. Karnataka piled on 446; Delhi is reeling at 103/5 in gloomy winter twilight. You are 40* with tailender Puneet Bisht. Venkatesh Prasad's pacers are generating vicious reverse swing in the gloom. On the 4th ball of the over, a tight single opens to deep point. Taking it leaves nervous Bisht to face two deliveries in near-darkness.",
                 "choices": [
                         {
                                 "text": "The Selfless Shield: Refuse the single, farm the strike completely, and take 100% of the reverse swing in failing light to protect Bisht until stumps.",
@@ -4310,7 +4310,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q2_midnight_bereavement",
                 "emotion": "grief",
                 "bg": "/assets/bg_virat_pavilion.jpg",
-                "text": "Question 2 of 7 — Dec 19, 2006, 3:30 AM (Bedside Reality)\nAt 3:00 AM, your 54-year-old father Prem collapses from a massive stroke and passes away in your arms. By 4:00 AM, orthodox relatives gather, insisting: 'Virat, as the younger son, filial duty demands you sit by your father's body, shave your head, and lead the mourning rites. Thinking about a cricket match right now is heartless.' Delhi is 103/5; forfeiting as 'Retired Absent' guarantees Delhi's defeat.",
+                "text": "December 19, 2006, 3:30 AM — Uttam Nagar Family Home.\nAt 3:00 AM, your 54-year-old father Prem collapses from a massive stroke and passes away in your arms. By 4:00 AM, orthodox relatives gather, insisting: 'Virat, as the younger son, filial duty demands you sit by your father's body, shave your head, and lead the mourning rites. Thinking about a cricket match right now is heartless.' Delhi is 103/5; forfeiting as 'Retired Absent' guarantees Delhi's defeat.",
                 "choices": [
                         {
                                 "text": "The Iron Vow: Call coach Rajkumar Sharma at dawn, resolve to bat at 9:00 AM to save Delhi, and promise to rush straight to the pyre after batting.",
@@ -4339,7 +4339,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q3_dressing_room_veto",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pavilion.jpg",
-                "text": "Question 3 of 7 — Dec 19, 2006, 7:45 AM (Kotla Dressing Room)\nYou arrive in crisp whites with red, sleepless eyes. Coach Chetan Chauhan and captain Mithun Manhas are stunned. Chauhan pulls you aside: 'Virat, you are an 18-year-old boy in deep shock. A 140 km/h bouncer could cause severe head trauma if your reflexes lag by 0.1 seconds. If you fail, the media will accuse us of exploiting a grieving child. Let a substitute take your place.'",
+                "text": "December 19, 2006, 7:45 AM — Kotla Dressing Room.\nYou arrive in crisp whites with red, sleepless eyes. Coach Chetan Chauhan and captain Mithun Manhas are stunned. Chauhan pulls you aside: 'Virat, you are an 18-year-old boy in deep shock. A 140 km/h bouncer could cause severe head trauma if your reflexes lag by 0.1 seconds. If you fail, the media will accuse us of exploiting a grieving child. Let a substitute take your place.'",
                 "choices": [
                         {
                                 "text": "Absolute Ultimatum: Look Chauhan dead in the eye: 'I started this fight and I will finish it. If you bench me today, I will never wear Delhi whites again.'",
@@ -4368,7 +4368,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q4_morning_attrition",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pitch.jpg",
-                "text": "Question 4 of 7 — Dec 19, 2006, 9:45 AM (Physical & Mental Exhaustion at 55*)\nYou have batted through 2 freezing hours without sleep, grinding to 55*. The Karnataka spinners are targeting a rough patch outside off-stump. Severe dehydration and emotional shock hit you; your calves are cramping, and your vision blurs. Bisht calls for a risky second run to deep mid-wicket.",
+                "text": "December 19, 2006, 9:45 AM — The Crease at 55*.\nYou have batted through 2 freezing hours without sleep, grinding to 55*. The Karnataka spinners are targeting a rough patch outside off-stump. Severe dehydration and emotional shock hit you; your calves are cramping, and your vision blurs. Bisht calls for a risky second run to deep mid-wicket.",
                 "choices": [
                         {
                                 "text": "Iron Discipline: Wave Bisht back, call for electrolyte salt capsules, and grind through safe singles without taking unnecessary physical risks.",
@@ -4397,7 +4397,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q5_cordon_sledge",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pitch.jpg",
-                "text": "Question 5 of 7 — Dec 19, 2006, 10:45 AM (The 68* Personal Sledge)\nYou have carried Delhi to 195/5, just 12 runs away from avoiding the follow-on. The Karnataka cordon is frustrated. A hostile pacer hurls an express bouncer past your helmet grill, marches right up to your face, and sneers: 'You think you're a hero, boy? Your father is lying dead at home and you're here begging for runs. Have some shame and go home.'",
+                "text": "December 19, 2006, 10:45 AM — Hostile Sledging at 68*.\nYou have carried Delhi to 195/5, just 12 runs away from avoiding the follow-on. The Karnataka cordon is frustrated. A hostile pacer hurls an express bouncer past your helmet grill, marches right up to your face, and sneers: 'You think you're a hero, boy? Your father is lying dead at home and you're here begging for runs. Have some shame and go home.'",
                 "choices": [
                         {
                                 "text": "Deafening Steel: Turn away, say nothing, deliberately tap the turf with your bat, and meet the bowler's gaze with cold, dead focus.",
@@ -4426,7 +4426,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q6_robbed_on_90",
                 "emotion": "determination",
                 "bg": "/assets/bg_virat_pitch.jpg",
-                "text": "Question 6 of 7 — Dec 19, 2006, 12:40 PM (Robbed on 90: Blatant Injustice)\nYou are on 90 off 281 minutes. Delhi is completely safe from the follow-on at 230/5. Sunil Joshi tosses up a delivery; you push forward with a soft inside edge into your pad. The ball lobs gently to forward short-leg. Umpire Suresh Shastri inexplicably raises his finger for LBW/catch. TV replays confirm a massive inside edge. You are cheated of an immortal century for your father.",
+                "text": "December 19, 2006, 12:40 PM — Robbed on 90.\nYou are on 90 off 281 minutes. Delhi is completely safe from the follow-on at 230/5. Sunil Joshi tosses up a delivery; you push forward with a soft inside edge into your pad. The ball lobs gently to forward short-leg. Umpire Suresh Shastri inexplicably raises his finger for LBW/catch. TV replays confirm a massive inside edge. You are cheated of an immortal century for your father.",
                 "choices": [
                         {
                                 "text": "Regal Demeanor: Look down at your bat, refuse to show open dissent, tuck the bat under your arm, and walk off in silence with your head held high.",
@@ -4455,7 +4455,7 @@ export const STORY_DATABASE: Record<string, any> = {
                 "id": "q7_economic_crossroads",
                 "emotion": "determination",
                 "bg": "/assets/avatar_virat_kohli.jpg",
-                "text": "Question 7 of 7 — Dec 21, 2006 (The Cold Economic Reality: PSU Job vs Burning Ships)\nThe funeral at Nigambodh Ghat is over. With your father gone, the family legal practice is shut with zero household income. Creditors and house rent loom over your mother Saroj. A nationalized PSU bank and an oil corporation offer you an immediate sports-quota clerk job (₹18,000/month permanent government salary). Your brother Vikas says: 'Virat, one knee injury can end cricket. Take this job so Ma has guaranteed food and shelter.'",
+                "text": "December 21, 2006 — Post-Funeral Economic Reality.\nThe funeral at Nigambodh Ghat is over. With your father gone, the family legal practice is shut with zero household income. Creditors and house rent loom over your mother Saroj. A nationalized PSU bank and an oil corporation offer you an immediate sports-quota clerk job (₹18,000/month permanent government salary). Your brother Vikas says: 'Virat, one knee injury can end cricket. Take this job so Ma has guaranteed food and shelter.'",
                 "choices": [
                         {
                                 "text": "Burn the Ships: Refuse the PSU job completely. Tell your mother: 'I will never take a safety net. I will play for India, or I will die trying.'",
