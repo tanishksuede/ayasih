@@ -535,336 +535,336 @@ export const STORY_DATABASE: Record<string, any> = {
 
     // AGE 18: Virat Kohli
 'lvl_age_18_kohli': {
-        title: "The Fire Inside: Virat Kohli's 6 Crucibles",
-        source: "Source: West Delhi Academy, Ranji Trophy 2006, Adelaide 2012 & 2014, Edgbaston 2018",
+        title: "The Longest 48 Hours: Virat Kohli at 18",
+        source: "Source: Delhi vs Karnataka, Ranji Trophy (December 18-20, 2006, Feroz Shah Kotla)",
         frames: [
             {
                 id: 'intro',
                 emotion: 'determination',
-                bg: '/assets/bg-virat-kohli-paschim-vihar-2000.png',
-                text: "You are 13 years old, grinding at the West Delhi Cricket Academy. You topped the run charts in the state trials, but an influential selector approaches your father Prem Kohli, hinting that without a commercial contribution, your spot in the Delhi Under-14 state team will be handed to a connected politician's son. Your father, a self-made criminal defense lawyer, refuses instantly on principle: 'If my boy plays, it will be on merit alone.' The next morning, you are omitted from the squad despite being the best batsman in the trial matches.",
+                bg: '/assets/bg_virat_pavilion.jpg',
+                text: "December 18, 2006, 4:15 PM. You are 18 years old, playing your debut Ranji Trophy season for Delhi against powerhouse Karnataka. Karnataka piled on 446. Your team collapsed to 103/5 in failing winter twilight. You are batting on 40* with wicketkeeper-tailender Puneet Bisht. Karnataka pacers Dodda Ganesh and Vinay Kumar are finding vicious reverse swing in the gloom. On ball 4, a single opens up to deep point. Taking it leaves your nervous tailender partner to survive the remaining 2 hostile deliveries in near darkness.",
                 choices: [
                     {
-                        text: "Statistical Tyranny: Vow to score so many triple-centuries in club cricket that dropping you becomes mathematical madness.",
-                        next: 'q1_stat_outcome',
+                        text: "The Selfless Shield: Turn down the single, take 100% of the reverse swing yourself in failing light, and protect Bisht until stumps.",
+                        next: 'q1_shield_outcome',
                         score: 10,
-                        feedbackTitle: "The Uncontestable Path",
-                        feedback: "You realized fair play is never handed to you. You chose to make your bat an undeniable mathematical weapon."
+                        feedbackTitle: "Leadership Beyond Your Years",
+                        feedback: "You exposed yourself to physical danger in the twilight, taking bruised ribs to ensure Delhi reached stumps 103/5 intact."
                     },
                     {
-                        text: "Chameleonic Pivot: Suppress your natural aggressive cross-bat strokes and rebuild into a risk-free orthodox textbook compiler.",
-                        next: 'q1_orthodox_outcome',
+                        text: "Trust the Partner: Take the easy single, rotate strike, and chip away at the 240-run follow-on deficit while light permits.",
+                        next: 'q1_rotate_outcome',
                         score: 5,
-                        feedbackTitle: "The Aesthetic Compromise",
-                        feedback: "You pleased traditional selectors by muting your flair, but you lost the predatory instinct that terrifies opposition bowlers."
+                        feedbackTitle: "Conventional Pragmatism",
+                        feedback: "You rotated the strike, but Karnataka's pacers immediately beat Bisht's outside edge twice in the darkness, rattling his nerves."
                     },
                     {
-                        text: "Interstate Emigration: Convince your family to move your registration to a neighboring state board with less political toxicity.",
-                        next: 'q1_politics_outcome',
-                        score: 0,
-                        feedbackTitle: "The Relocation Route",
-                        feedback: "You sought a fairer playing field, but forfeited the hyper-competitive Delhi cauldron that forges ruthless mental steel."
+                        text: "Counter-Punch Gamble: Step out of your crease to force Karnataka's captain into spreading the field and bowling spin.",
+                        next: 'q1_attack_outcome',
+                        score: -5,
+                        feedbackTitle: "High-Wire Recklessness",
+                        feedback: "A wild slash in the gloom almost ended in an edge to second slip. You survived, but realized bravado cannot replace composure."
                     }
                 ]
             },
             {
-                id: 'q1_stat_outcome',
+                id: 'q1_shield_outcome',
                 emotion: 'determination',
-                bg: '/assets/bg-virat-kohli-paschim-vihar-2000.png',
-                text: "You pounded the nets from dawn till sunset, scoring double hundreds in club leagues until Delhi selectors had zero mathematical excuse. Five years later, you are 18, playing your debut Ranji Trophy season against Karnataka at Feroz Shah Kotla.",
-                choices: [{ text: "Next Crucible: The Midnight Call", next: 'q2_grief_crossroad', score: 0 }]
+                bg: '/assets/bg_virat_pitch.jpg',
+                text: "You defended resolutely through the final 15 minutes, taking body blows to steer Delhi to stumps at 103/5 with you unbeaten on 40*. You head home to Uttam Nagar exhausted, proud to have kept Delhi alive. But at 3:00 AM, the world shatters.",
+                choices: [{ text: "Next Crucible: 3:30 AM Bedside Agony", next: 'q2_grief_crossroad', score: 0 }]
             },
             {
-                id: 'q1_orthodox_outcome',
+                id: 'q1_rotate_outcome',
                 emotion: 'determination',
-                bg: '/assets/bg-virat-kohli-paschim-vihar-2000.png',
-                text: "You made the junior teams, but coaches warned you were batting within a shell. It took months to reignite the raw Delhi street-fighter inside you. At 18, you are playing your debut Ranji season for Delhi against Karnataka.",
-                choices: [{ text: "Next Crucible: The Midnight Call", next: 'q2_grief_crossroad', score: 0 }]
+                bg: '/assets/bg_virat_pitch.jpg',
+                text: "Bisht survived by millimeters as the umpires called stumps due to bad light. You finish on 40* overnight, but your mind is restless as you return home to Uttam Nagar. At 3:00 AM, tragedy strikes without warning.",
+                choices: [{ text: "Next Crucible: 3:30 AM Bedside Agony", next: 'q2_grief_crossroad', score: 0 }]
             },
             {
-                id: 'q1_politics_outcome',
+                id: 'q1_attack_outcome',
                 emotion: 'determination',
-                bg: '/assets/bg-virat-kohli-paschim-vihar-2000.png',
-                text: "You realized that running from hostile systems does not build mental armor. You returned to Delhi, doubled down on your craft, and broke into the Ranji squad at 18 against Karnataka.",
-                choices: [{ text: "Next Crucible: The Midnight Call", next: 'q2_grief_crossroad', score: 0 }]
+                bg: '/assets/bg_virat_pitch.jpg',
+                text: "A stern look from your partner brought you back to discipline. You blocked out the remainder of the evening to stay 40* at stumps. You go to sleep in Uttam Nagar, unaware that your life will change forever at 3:00 AM.",
+                choices: [{ text: "Next Crucible: 3:30 AM Bedside Agony", next: 'q2_grief_crossroad', score: 0 }]
             },
             {
                 id: 'q2_grief_crossroad',
                 emotion: 'grief',
                 bg: '/assets/bg_virat_pavilion.jpg',
-                text: "December 19, 2006. Delhi is reeling at 103/5 chasing 446 against Karnataka's lethal seamers. You fought to 40* overnight. At 3:00 AM, your father passes away in your arms. In the cold dawn, your house fills with weeping relatives preparing for the cremation. In the dressing room, your teammates warn: 'You are 18. If you bat in trauma, a bouncer could break your ribs, you could fail, and you will miss your father's last rites.'",
+                text: "3:00 AM, December 19, 2006. Your father Prem collapses from a massive cardiac stroke. You desperately pump his chest, but he passes away in your arms. By 4:30 AM, orthodox relatives gather at home. They urge angrily: 'Virat is the younger son; he must sit by his father's body, shave his head, and lead funeral rites. Thinking about a cricket match right now is heartless.' Your weeping mother Saroj whispers: 'Your father gave his life to see you play. Do what he would want.'",
                 choices: [
                     {
-                        text: "Total Stoic Armor: Strap on pads in silence, erase emotion at the boundary rope, and bat strictly to save the follow-on.",
-                        next: 'q2_stoic_outcome',
+                        text: "The Iron Vow: Call coach Rajkumar Sharma at dawn, resolve to bat at 9:00 AM to save Delhi, and promise to rush straight to the pyre.",
+                        next: 'q2_vow_outcome',
                         score: 10,
-                        feedbackTitle: "The Man of Granite",
-                        feedback: "You walked to the pitch with tear-stained eyes, absorbed hostile bouncers without flinching, and scored a heroic 90 to save Delhi."
+                        feedbackTitle: "The Unbreakable Promise",
+                        feedback: "Relatives condemned you as cold, but you knew that abandoning your father's dream on the day of his passing would be the true betrayal."
                     },
                     {
-                        text: "Explosive Counter-Attack: Take down Karnataka's pacers furiously in the first hour to score fast and rush home.",
-                        next: 'q2_attack_outcome',
-                        score: -5,
-                        feedbackTitle: "Emotional Volatility",
-                        feedback: "Grief turned to reckless fury. A rash slash outside off edge sent you back on 48, leaving Delhi stranded at 120/6."
-                    },
-                    {
-                        text: "Honor Sacred Filial Duty: Stay at your mother's side for the funeral rites; sport cannot supersede a father's farewell.",
+                        text: "Filial Surrender: Stay at home, fulfill all customary funeral rites, and accept that family grief supersedes sporting duty.",
                         next: 'q2_mourn_outcome',
                         score: 5,
-                        feedbackTitle: "The Son's Sacred Duty",
-                        feedback: "A deeply human choice that everyone respected, yet the unfinished fight at Kotla left a burning ache in your soul."
+                        feedbackTitle: "The Conventional Path",
+                        feedback: "Everyone understood and consoled you, but inside, a dark voice whispered that you abandoned your father's fight when he needed you most."
+                    },
+                    {
+                        text: "The Tardy Compromise: Attend morning rituals until 10:30 AM, then rush to Kotla hoping to bat down at number 8.",
+                        next: 'q2_compromise_outcome',
+                        score: -5,
+                        feedbackTitle: "Neither Here Nor There",
+                        feedback: "Compromise pleased no one. Your relatives were offended, and Delhi would be bowled out before you even reached the stadium gates."
                     }
                 ]
             },
             {
-                id: 'q2_stoic_outcome',
+                id: 'q2_vow_outcome',
                 emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "You batted for nearly 5 hours, scoring 90 defiant runs to rescue Delhi from the follow-on. Only after a controversial dismissal did you take off your pads and go straight to the crematorium. That day, boy Virat became a man of granite resolve.",
-                choices: [{ text: "Next Crucible: The Stardom Trap", next: 'q3_fame_crossroad', score: 0 }]
-            },
-            {
-                id: 'q2_attack_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "You scored a couple of violent boundaries before nicking off. The pain of leaving your team stranded taught you the ultimate lesson: raw anger is a weapon that cuts both ways. Discipline must tame fury.",
-                choices: [{ text: "Next Crucible: The Stardom Trap", next: 'q3_fame_crossroad', score: 0 }]
+                bg: '/assets/bg_virat_pavilion.jpg',
+                text: "You strapped your cricket kit into your scooter with numb fingers at 6:45 AM, tears drying on your cheeks. By 7:30 AM, you walk into the Feroz Shah Kotla dressing room in immaculate whites. But your arrival triggers an internal revolt.",
+                choices: [{ text: "Next Crucible: 7:45 AM Dressing Room Veto", next: 'q3_veto_crossroad', score: 0 }]
             },
             {
                 id: 'q2_mourn_outcome',
                 emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "You honored your father with your family. But you remembered his scooter rides to the academy and made a silent vow over his ashes: from this day forward, no obstacle will ever break your commitment to the game.",
-                choices: [{ text: "Next Crucible: The Stardom Trap", next: 'q3_fame_crossroad', score: 0 }]
+                bg: '/assets/bg_virat_pavilion.jpg',
+                text: "You stayed and held your mother's hand. As Karnataka rolled over Delhi for 130 by lunch, you looked at your father's cricket gear and made an oath: never again will you leave an innings unfinished. You return to the stadium.",
+                choices: [{ text: "Next Crucible: 7:45 AM Dressing Room Veto", next: 'q3_veto_crossroad', score: 0 }]
             },
             {
-                id: 'q3_fame_crossroad',
+                id: 'q2_compromise_outcome',
                 emotion: 'determination',
-                bg: '/assets/avatar_virat_kohli.jpg',
-                text: "Age 20. You captained India to the 2008 U-19 World Cup trophy. Suddenly, you have a $30,000 IPL deal, flash earrings, fast cars, and Delhi party invitations. But in your debut international matches, you average just 15. The media calls you a 'spoiled brat' and a 'flash in the pan.' Selectors drop you from the national squad.",
+                bg: '/assets/bg_virat_pavilion.jpg',
+                text: "Realizing that half-hearted commitments fail in life and sport, you wipe your tears, grab your bat, and arrive at Feroz Shah Kotla before the morning bell rings.",
+                choices: [{ text: "Next Crucible: 7:45 AM Dressing Room Veto", next: 'q3_veto_crossroad', score: 0 }]
+            },
+            {
+                id: 'q3_veto_crossroad',
+                emotion: 'determination',
+                bg: '/assets/bg_virat_pavilion.jpg',
+                text: "7:45 AM, Feroz Shah Kotla dressing room. Coach Chetan Chauhan and captain Mithun Manhas are stunned seeing you in whites. Chauhan pulls you into the office: 'Virat, you are an 18-year-old child in trauma. If your reflexes lag by 0.1 seconds, a 140 km/h bouncer could fracture your skull. If you get out on 40, people will say Delhi cricket exploited a grieving boy. We can send a substitute.'",
                 choices: [
                     {
-                        text: "Defiant Counter-Swagger: Keep your nightlife and brash attitude; use media hatred as jet fuel and prove yourself through IPL glory.",
-                        next: 'q3_swagger_outcome',
-                        score: -5,
-                        feedbackTitle: "The Ego Trap",
-                        feedback: "Distractions compound. You produce occasional fireworks in T20, but the discipline required for red-ball supremacy slips away."
-                    },
-                    {
-                        text: "The Radical Purge: Sever ties with the party circuit, fire flattering sycophants, and immerse in silent, unglamorous domestic grind.",
-                        next: 'q3_purge_outcome',
+                        text: "Absolute Ultimatum: Look Chauhan in the eye and state: 'I was 40* overnight. I started this fight and I will finish it. If you bench me, I will never play for Delhi again.'",
+                        next: 'q3_ultimatum_outcome',
                         score: 10,
-                        feedbackTitle: "Radical Accountability",
-                        feedback: "You chose isolation over applause. You rebuilt your work ethic in silence, forcing selectors to recall you on unstoppable form."
+                        feedbackTitle: "Fierce Ownership",
+                        feedback: "Chauhan was silenced by the fire in your eyes. He nodded slowly, handed you your batting gloves, and ordered the dressing room to maintain silence."
                     },
                     {
-                        text: "White-Ball Specialization: Pivot into a short-format mercenary; capitalize on lucrative leagues and avoid brutal 5-day Test scrutiny.",
-                        next: 'q3_t20_outcome',
-                        score: 0,
-                        feedbackTitle: "The Comfortable Compromise",
-                        feedback: "You earned wealth, but abandoned the ultimate arena where cricketing immortality is forged."
-                    }
-                ]
-            },
-            {
-                id: 'q3_purge_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "You discarded junk food, worked out twice daily, and dominated the Emerging Players tournament in Australia. You broke back into the Indian team and helped win the 2011 World Cup. But in January 2012, your greatest Test crucible arrives.",
-                choices: [{ text: "Next Crucible: The WACA Inferno", next: 'q4_perth_crossroad', score: 0 }]
-            },
-            {
-                id: 'q3_swagger_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "After a string of low scores, you look into the mirror and feel disgust at your lethargy. You throw out every party temptation and swear total dedication to training. By 2012, you are facing Australia on their fastest turf.",
-                choices: [{ text: "Next Crucible: The WACA Inferno", next: 'q4_perth_crossroad', score: 0 }]
-            },
-            {
-                id: 'q3_t20_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "The desire to be remembered as a Test legend proves too overwhelming to settle for T20 stardom. You return to the first-class grind, earn a Test spot, and land in Australia for the grueling 2011-12 tour.",
-                choices: [{ text: "Next Crucible: The WACA Inferno", next: 'q4_perth_crossroad', score: 0 }]
-            },
-            {
-                id: 'q4_perth_crossroad',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "Perth, January 2012. 3rd Test. 40°C heat. The fastest pitch on the planet. India trails 0-2; icons like Tendulkar, Dravid, and Laxman are crumbling. You were fined 50% match fee in Sydney for reacting to crowd abuse. Media demands you be dropped. Mitchell Johnson and Peter Siddle are hurling 148 km/h bouncers aiming for your helmet.",
-                choices: [
+                        text: "Pragmatic Order Shift: Ask to bat down at number 7 so you have 45 minutes in the pavilion to collect your emotional composure.",
+                        next: 'q3_shift_outcome',
+                        score: -5,
+                        feedbackTitle: "Loss of Momentum",
+                        feedback: "Altering the lineup rattled team morale. Karnataka pacers tore through the substitute, and you had to walk in anyway at 115/6 under worse pressure."
+                    },
                     {
-                        text: "Bodyline Shield: Drop your hands, refuse to pull, and take brutal blows on chest and thighs to exhaust their pace battery.",
-                        next: 'q4_shield_outcome',
+                        text: "The Net Trial: Agree to face 15 minutes of throwdowns in the indoor nets first with Chauhan watching to prove your reflexes.",
+                        next: 'q3_net_outcome',
                         score: 5,
-                        feedbackTitle: "Physical Fortitude",
-                        feedback: "You survived through sheer physical pain, but allowed the bowlers to dictate field settings around your bat."
-                    },
-                    {
-                        text: "Step Out and Counter-Attack: Stand a foot outside the crease, punch 145 km/h bouncers off the front foot, and fight fire with fire.",
-                        next: 'q4_counter_outcome',
-                        score: 10,
-                        feedbackTitle: "Fearless Dominance",
-                        feedback: "You shattered their intimidation tactics. You pulled Mitchell Johnson in front of square and scored India's lone century of the tour in Adelaide."
-                    },
-                    {
-                        text: "Verbal War of Attrition: Sledge the fast bowlers between deliveries to break their rhythm, while leaving everything outside off.",
-                        next: 'q4_sledge_outcome',
-                        score: 0,
-                        feedbackTitle: "A High-Wire Gamble",
-                        feedback: "Siddle bowled with heightened rage. You held your own, but risked a fatal lapse in concentration or an umpire sanction."
+                        feedbackTitle: "Demonstrated Readiness",
+                        feedback: "You middled 18 straight deliveries in the cage with crisp precision. Chauhan closed the gate and said simply: 'Go save Delhi.'"
                     }
                 ]
             },
             {
-                id: 'q4_counter_outcome',
+                id: 'q3_ultimatum_outcome',
                 emotion: 'determination',
                 bg: '/assets/bg_virat_pitch.jpg',
-                text: "You scored 44 and 75 in Perth, followed by a majestic 116 in Adelaide—the only Indian century of that brutal tour. You cemented your place as India's next generational leader. Two years later, the armband is yours in Adelaide.",
-                choices: [{ text: "Next Crucible: Adelaide 364", next: 'q5_adelaide_crossroad', score: 0 }]
+                text: "You strapped on your pads in complete silence. At 8:55 AM, the umpires walk out. You step onto the Kotla turf, blind to the grandstand, seeing only the 22 yards of dirt. By 10:30 AM, you are batting on 68*.",
+                choices: [{ text: "Next Crucible: 10:30 AM Sledging in the Shadows", next: 'q4_sledge_crossroad', score: 0 }]
             },
             {
-                id: 'q4_shield_outcome',
+                id: 'q3_shift_outcome',
                 emotion: 'determination',
                 bg: '/assets/bg_virat_pitch.jpg',
-                text: "Bruised and battered, you dug in and proved your toughness. In the next match at Adelaide, you paired your resilience with attacking flair to score 116. Two years later, you walk out as India's Test captain.",
-                choices: [{ text: "Next Crucible: Adelaide 364", next: 'q5_adelaide_crossroad', score: 0 }]
+                text: "Realizing that delay only magnifies fear, you discard your jacket, grab your helmet, and walk straight out with Puneet Bisht onto the field to confront Karnataka. By 10:30 AM, you have fought your way to 68*.",
+                choices: [{ text: "Next Crucible: 10:30 AM Sledging in the Shadows", next: 'q4_sledge_crossroad', score: 0 }]
             },
             {
-                id: 'q4_sledge_outcome',
+                id: 'q3_net_outcome',
                 emotion: 'determination',
                 bg: '/assets/bg_virat_pitch.jpg',
-                text: "You survived the confrontation and scored vital runs under extreme hostility. Australian crowds hated you, yet respected your spine. In December 2014, with Dhoni injured, you lead India as Test captain in Adelaide.",
-                choices: [{ text: "Next Crucible: Adelaide 364", next: 'q5_adelaide_crossroad', score: 0 }]
+                text: "The net session cleared the fog in your brain. You walked to the middle with supreme focus, blocking out the world. By 10:30 AM, you have carried Delhi to within striking distance of avoiding the follow-on.",
+                choices: [{ text: "Next Crucible: 10:30 AM Sledging in the Shadows", next: 'q4_sledge_crossroad', score: 0 }]
             },
             {
-                id: 'q5_adelaide_crossroad',
+                id: 'q4_sledge_crossroad',
                 emotion: 'determination',
                 bg: '/assets/bg_virat_pitch.jpg',
-                text: "December 2014, Adelaide Oval. Day 5. Australia sets India 364 runs in 98 overs on a deteriorating pitch spitting spin from Nathan Lyon. For 82 years, Indian captains in Australia batted for a safe draw. At lunch, India is 105/2. If you chase the win and collapse, critics will brand you 'arrogant and reckless'. If you draw, India stays safe but remains meek tourists.",
+                text: "10:30 AM, Feroz Shah Kotla. You have batted over 2 hours this morning, grinding to 68*. Delhi is just 25 runs away from avoiding the follow-on. The Karnataka cordon is frustrated. A hostile pacer hurls a vicious bouncer that grazes your shoulder, walks down the pitch, and sneers: 'You think you are a hero, boy? Your father is lying dead on the floor and you are chasing runs. Go home.'",
                 choices: [
                     {
-                        text: "The Audacious War Cry: Tell the team in the huddle: 'We are chasing 364. Win or lose, India will never play for draws under my watch.'",
-                        next: 'q5_war_outcome',
+                        text: "Deaf Steel: Do not utter a word. Turn your back, tap the pitch with deliberate slowness, and meet his gaze with cold, dead eyes.",
+                        next: 'q4_steel_outcome',
                         score: 10,
-                        feedbackTitle: "The Cultural Revolution",
-                        feedback: "You scored a breathtaking 141, coming within 48 runs of a miracle chase. You changed the DNA of Indian Test cricket forever."
+                        feedbackTitle: "Mastery Over Emotion",
+                        feedback: "Silence was your deadliest weapon. The bowler was unnerved by your refusal to take the bait and lost his rhythm on the very next ball."
                     },
                     {
-                        text: "Pragmatic Stalemate: Park the bus, block 98 overs, and secure an honorable 0-0 draw to begin your captaincy tenure safely.",
-                        next: 'q5_draw_outcome',
+                        text: "Fierce Verbal Retaliation: Confront the bowler chest-to-chest mid-pitch, letting Delhi street fire push him back.",
+                        next: 'q4_retaliate_outcome',
                         score: -5,
-                        feedbackTitle: "The Defensive Trap",
-                        feedback: "Without scoring pressure, Clarke crowded Lyon with 9 catchers. Defenses unraveled and India lost anyway without fighting for victory."
+                        feedbackTitle: "Taking the Bait",
+                        feedback: "The altercation spiked your heart rate. On the next delivery, you played with tense hands and edged an outswinger inches short of slip."
                     },
                     {
-                        text: "Asymmetric Burden: Take every boundary risk yourself while forcing your partner Murali Vijay to stonewall strictly.",
-                        next: 'q5_asymmetric_outcome',
+                        text: "Violent Hook Shot: Step outside off-stump on the next short delivery and pull it with maximum fury into the mid-wicket stands.",
+                        next: 'q4_hook_outcome',
                         score: 5,
-                        feedbackTitle: "Single-Handed Burden",
-                        feedback: "You shielded your partner, but the mounting dot-ball pressure eventually caused Vijay to play across the line to Lyon."
+                        feedbackTitle: "High-Risk Defiance",
+                        feedback: "The ball rattled the boundary hoardings, silencing the cordon. But playing with adrenaline on a crumbling deck flirted with disaster."
                     }
                 ]
             },
             {
-                id: 'q5_war_outcome',
+                id: 'q4_steel_outcome',
                 emotion: 'determination',
                 bg: '/assets/bg_virat_pitch.jpg',
-                text: "Even though India fell 48 runs short, Australian commentators stood and applauded. You redefined what Indian cricket stood for: fearless, predatory, and relentless. Four years later, you face your ultimate personal ghost in England.",
-                choices: [{ text: "Final Crucible: The Ghost of 2014", next: 'q6_edgbaston_crossroad', score: 0 }]
+                text: "Your icy composure broke their spirit. You clipped the next ball through mid-wicket for four, steering Delhi past the follow-on mark. You reach 90 runs, 10 short of a legendary century. Then, tragedy of a different kind strikes.",
+                choices: [{ text: "Next Crucible: 12:40 PM The Umpiring Injustice", next: 'q5_umpire_crossroad', score: 0 }]
             },
             {
-                id: 'q5_draw_outcome',
+                id: 'q4_retaliate_outcome',
                 emotion: 'determination',
                 bg: '/assets/bg_virat_pitch.jpg',
-                text: "Realizing that defensive mindset breeds defeat, you resolved that Indian cricket would never take backward steps again under your leadership. By 2018, you arrive in England with unfinished business.",
-                choices: [{ text: "Final Crucible: The Ghost of 2014", next: 'q6_edgbaston_crossroad', score: 0 }]
+                text: "Senior partner Bisht rushed down the pitch, calmed you down, and reminded you of Prem Kohli's face. You swallowed your anger, reset your stance, and grinded to 90 runs. But at 12:40 PM, the umpire intervenes.",
+                choices: [{ text: "Next Crucible: 12:40 PM The Umpiring Injustice", next: 'q5_umpire_crossroad', score: 0 }]
             },
             {
-                id: 'q5_asymmetric_outcome',
+                id: 'q4_hook_outcome',
                 emotion: 'determination',
                 bg: '/assets/bg_virat_pitch.jpg',
-                text: "Your 141 showed the world your genius, but taught you that greatness requires building a ruthless pace battery and fearless lower-order belief. In 2018, you arrive at Edgbaston to confront your greatest nemesis.",
-                choices: [{ text: "Final Crucible: The Ghost of 2014", next: 'q6_edgbaston_crossroad', score: 0 }]
+                text: "The boundary relieved the tension, but reminded you to guard your wicket with life. You refocused on defense and reached 90 runs. Delhi is officially safe from the follow-on. Then, a shocking decision unfolds.",
+                choices: [{ text: "Next Crucible: 12:40 PM The Umpiring Injustice", next: 'q5_umpire_crossroad', score: 0 }]
             },
             {
-                id: 'q6_edgbaston_crossroad',
+                id: 'q5_umpire_crossroad',
                 emotion: 'determination',
                 bg: '/assets/bg_virat_pitch.jpg',
-                text: "August 2018, 1st Test at Edgbaston, Birmingham. Overcast skies, green pitch, Duke ball hoop-swinging. In 2014, James Anderson humiliated you (134 runs in 10 innings at an average of 13.4). Now, India is reeling at 100/5, then 134/6. Anderson is probing 5th stump with 4 slips waiting. Your favorite shot is the booming cover drive—the very shot that got you out 4 times in 2014.",
+                text: "12:40 PM. You are on 90 off 281 minutes. You push forward with a soft bat to a spinning delivery from Sunil Joshi. The ball hits the exact middle of your willow, bounces off your pad, and lobs to short leg. A desperate appeal rings out. Umpire Suresh Shastri inexplicably raises his finger. You are robbed of a century dedicated to your late father by a blatant umpiring blunder.",
                 choices: [
                     {
-                        text: "Ego Annihilation: Stand a foot outside crease to cut swing, ban the cover drive entirely, and leave 60+ balls outside off.",
-                        next: 'q6_mastery_outcome',
+                        text: "Dignified Acceptance: Look down at your bat, refuse to show petulant dissent, tuck your bat under your arm, and walk off in silence.",
+                        next: 'q5_dignity_outcome',
                         score: 10,
-                        feedbackTitle: "The Masterclass",
-                        feedback: "You conquered your ego. You left balls by millimeters, farm-struck with tailenders Ishant and Umesh, and scored a legendary 149."
+                        feedbackTitle: "Regal Demeanor",
+                        feedback: "You rose above the injustice. Even the Karnataka fielders stood in awe as you walked off with your head held high, job completed."
                     },
                     {
-                        text: "Charge Anderson's Length: Walk down the wicket on his release stride to turn outswingers into full volleys over mid-off.",
-                        next: 'q6_charge_outcome',
+                        text: "Crease Protest: Point emphatically to the middle of your bat, demand the umpire consult square-leg, and stand your ground.",
+                        next: 'q5_protest_outcome',
                         score: -5,
-                        feedbackTitle: "The High-Risk Trap",
-                        feedback: "Anderson anticipated your charge, pulled his length back with late movement, and found your outside edge straight to second slip."
+                        feedbackTitle: "Disciplinary Jeopardy",
+                        feedback: "The umpire warned you for dissent. The argument sullied the sanctity of a heroic innings and risked a multi-match Ranji ban."
                     },
                     {
-                        text: "Agricultural Slashes: Farm the strike on balls 1-3, then swing aggressively across the line to clear England's ring field.",
-                        next: 'q6_slash_outcome',
+                        text: "Raw Emotional Release: Smash your bat into the turf, let 5 hours of suppressed grief burst out, and walk off weeping.",
+                        next: 'q5_breakdown_outcome',
                         score: 0,
-                        feedbackTitle: "Desperation Over Discipline",
-                        feedback: "You harvested quick runs with the tail, but a mistimed pull shot off Ben Stokes ended your counter-attack prematurely on 62."
+                        feedbackTitle: "Human Vulnerability",
+                        feedback: "Everyone understood your heartbreak, but the eruption showed national selectors an emotional volatility they feared in international cricket."
                     }
                 ]
             },
             {
-                id: 'q6_mastery_outcome',
+                id: 'q5_dignity_outcome',
+                emotion: 'grief',
+                bg: '/assets/avatar_virat_kohli.jpg',
+                text: "The entire Kotla pavilion gave you a standing ovation. You walked straight into the locker room, removed your pads without washing your face, and arrived at Nigambodh Ghat crematorium to light your father's pyre. Two days later, your family gathers.",
+                choices: [{ text: "Final Crucible: The Safe Job Dilemma", next: 'q6_vow_crossroad', score: 0 }]
+            },
+            {
+                id: 'q5_protest_outcome',
+                emotion: 'grief',
+                bg: '/assets/avatar_virat_kohli.jpg',
+                text: "Coach Chauhan met you at the boundary line, embraced you, and said: 'Forget the 10 runs, son. You saved Delhi. Now go do your duty as a son.' You rushed to the crematorium to bid your father farewell. Two days later, family reality strikes.",
+                choices: [{ text: "Final Crucible: The Safe Job Dilemma", next: 'q6_vow_crossroad', score: 0 }]
+            },
+            {
+                id: 'q5_breakdown_outcome',
+                emotion: 'grief',
+                bg: '/assets/avatar_virat_kohli.jpg',
+                text: "Bisht escorted you off as tears soaked your shirt. You saved Delhi from humiliation, and now you must face the finality of death. You rush to the crematorium. Two days later, a critical crossroads arrives.",
+                choices: [{ text: "Final Crucible: The Safe Job Dilemma", next: 'q6_vow_crossroad', score: 0 }]
+            },
+            {
+                id: 'q6_vow_crossroad',
+                emotion: 'determination',
+                bg: '/assets/avatar_virat_kohli.jpg',
+                text: "December 21, 2006. The funeral is over. With your father Prem gone, the family's criminal law practice has closed overnight. There is no steady household income. Your brother Vikas gathers the family: 'Virat, you proved your courage with 90 runs, but sports careers can vanish with one knee injury. A nationalized bank and an oil PSU are offering you an immediate sports-quota job with a permanent government salary. Take it to secure Ma.'",
+                choices: [
+                    {
+                        text: "All-in on Immortality: Refuse the backup job completely. Tell your family: 'I will never take a safety net. I will play for India, or I will die trying.'",
+                        next: 'q6_allin_outcome',
+                        score: 10,
+                        feedbackTitle: "Burning the Ships",
+                        feedback: "By removing all escape routes, you made failure an impossibility. That radical refusal to compromise turned you into King Kohli."
+                    },
+                    {
+                        text: "The Dual-Track Compromise: Accept the bank job for guaranteed family stability, working mornings and training evenings.",
+                        next: 'q6_dual_outcome',
+                        score: 0,
+                        feedbackTitle: "Diluted Focus",
+                        feedback: "You secured your family's short-term finances, but dividing your mental energy between office routines and elite cricket delayed your international debut."
+                    },
+                    {
+                        text: "Commercial League Hustle: Sign quick private club league contracts across Delhi to provide immediate cash flow while playing full-time.",
+                        next: 'q6_commercial_outcome',
+                        score: -5,
+                        feedbackTitle: "Mercenary Distraction",
+                        feedback: "Chasing private match-fees exposed you to predatory club managers, risking burnout on sub-standard turf before your national breakthrough."
+                    }
+                ]
+            },
+            {
+                id: 'q6_allin_outcome',
                 emotion: 'hope',
                 bg: '/assets/avatar_virat_kohli.jpg',
                 bgSize: 'object-contain',
                 bgPosition: 'object-center bg-black',
-                text: "You scored 149 out of India's 274 runs, single-handedly battling for over 5 hours. You conquered England, silenced every global critic, and cemented your status as a modern batting titan. In 6 crucibles, you transformed pain into power.",
+                text: "You burned the boats. Within 14 months of that decision, you captained India to the U-19 World Cup title. Within 20 months, you made your senior India debut. At 18, through 48 hours of grief, hostility, and courage, a boy died and a king was born.",
                 choices: [
                     {
                         text: "Complete Master Journey",
                         next: 'COMPLETE',
                         score: 10,
                         feedbackTitle: "Immortal Legacy",
-                        feedback: "Discipline is choosing what you want most over what you want right now."
+                        feedback: "Discipline is choosing between what you want now and what you want most."
                     }
                 ]
             },
             {
-                id: 'q6_charge_outcome',
+                id: 'q6_dual_outcome',
                 emotion: 'hope',
                 bg: '/assets/avatar_virat_kohli.jpg',
                 bgSize: 'object-contain',
                 bgPosition: 'object-center bg-black',
-                text: "You fell short of 100, but in the second innings you locked away all ego and ground out 51. You finished the tour with 593 runs across 5 Tests, definitively conquering your final psychological frontier.",
+                text: "Realizing after a month that an office desk was suffocating your destiny, you resigned from the bank, committed 100% to cricket, and led India to U-19 World Cup victory. At 18, you chose your true calling.",
                 choices: [
                     {
                         text: "Complete Master Journey",
                         next: 'COMPLETE',
                         score: 10,
                         feedbackTitle: "Immortal Legacy",
-                        feedback: "Discipline is choosing what you want most over what you want right now."
+                        feedback: "Discipline is choosing between what you want now and what you want most."
                     }
                 ]
             },
             {
-                id: 'q6_slash_outcome',
+                id: 'q6_commercial_outcome',
                 emotion: 'hope',
                 bg: '/assets/avatar_virat_kohli.jpg',
                 bgSize: 'object-contain',
                 bgPosition: 'object-center bg-black',
-                text: "Learning that patience beats adrenaline against elite swing, you tightened your defense for the remainder of the series, amassing nearly 600 runs across England and leading India as the world's #1 Test team.",
+                text: "Coach Rajkumar Sharma stepped in, cleared your focus, and reminded you of your father's dream. You channeled every ounce of energy into Ranji Trophy excellence, leading to national glory.",
                 choices: [
                     {
                         text: "Complete Master Journey",
                         next: 'COMPLETE',
                         score: 10,
                         feedbackTitle: "Immortal Legacy",
-                        feedback: "Discipline is choosing what you want most over what you want right now."
+                        feedback: "Discipline is choosing between what you want now and what you want most."
                     }
                 ]
             }
