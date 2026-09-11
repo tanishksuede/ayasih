@@ -215,6 +215,19 @@ export function ScenarioGame({ level, onComplete, onBack, onDailyChallengeComple
             setIsLoadingScenario(true);
             const targetId = level?.scenarioId || 'lvl_age_19';
             
+            // Priority: Curated local story database in codebase is the authoritative source of truth
+            const localData = STORY_DATABASE[targetId];
+            if (localData && localData.frames && localData.frames.length > 0) {
+                setScenario({
+                    id: targetId,
+                    title: localData.title,
+                    source: localData.source,
+                    frames: localData.frames
+                });
+                setIsLoadingScenario(false);
+                return;
+            }
+
             try {
                 const { data, error } = await supabase.from('scenarios').select('*').eq('id', targetId).maybeSingle();
                 

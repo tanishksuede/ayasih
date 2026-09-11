@@ -325,7 +325,7 @@ export function generateLevels(_age: number): Level[] {
             fame: 'One of the greatest batsmen in cricket history.',
             achievements: ['Most runs in a single IPL season', 'Fastest to 10k ODI runs', 'World Cup Winner'],
             lesson: 'DUTY to team and self in the face of unimaginable grief.',
-            avatarUrl: '/assets/avatar_virat_kohli.jpg', scenarioId: 'lvl_age_18_virat',
+            avatarUrl: '/assets/avatar_virat_kohli.jpg', scenarioId: 'lvl_age_18_kohli',
             idolTraits: { discipline: 95, resilience: 100, risk: 85, leadership: 90, creativity: 75, empathy: 70, vision: 85 }
         },
         // Age 18: Dr. A.P.J. Abdul Kalam

@@ -538,337 +538,225 @@ export const STORY_DATABASE: Record<string, any> = {
         title: "The Longest 48 Hours: Virat Kohli at 18",
         source: "Source: Delhi vs Karnataka, Ranji Trophy (December 18-20, 2006, Feroz Shah Kotla)",
         frames: [
-            {
-                id: 'intro',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pavilion.jpg',
-                text: "December 18, 2006, 4:15 PM. You are 18 years old, playing your debut Ranji Trophy season for Delhi against powerhouse Karnataka. Karnataka piled on 446. Your team collapsed to 103/5 in failing winter twilight. You are batting on 40* with wicketkeeper-tailender Puneet Bisht. Karnataka pacers Dodda Ganesh and Vinay Kumar are finding vicious reverse swing in the gloom. On ball 4, a single opens up to deep point. Taking it leaves your nervous tailender partner to survive the remaining 2 hostile deliveries in near darkness.",
-                choices: [
-                    {
-                        text: "The Selfless Shield: Turn down the single, take 100% of the reverse swing yourself in failing light, and protect Bisht until stumps.",
-                        next: 'q1_shield_outcome',
-                        score: 10,
-                        feedbackTitle: "Leadership Beyond Your Years",
-                        feedback: "You exposed yourself to physical danger in the twilight, taking bruised ribs to ensure Delhi reached stumps 103/5 intact."
-                    },
-                    {
-                        text: "Trust the Partner: Take the easy single, rotate strike, and chip away at the 240-run follow-on deficit while light permits.",
-                        next: 'q1_rotate_outcome',
-                        score: 5,
-                        feedbackTitle: "Conventional Pragmatism",
-                        feedback: "You rotated the strike, but Karnataka's pacers immediately beat Bisht's outside edge twice in the darkness, rattling his nerves."
-                    },
-                    {
-                        text: "Counter-Punch Gamble: Step out of your crease to force Karnataka's captain into spreading the field and bowling spin.",
-                        next: 'q1_attack_outcome',
-                        score: -5,
-                        feedbackTitle: "High-Wire Recklessness",
-                        feedback: "A wild slash in the gloom almost ended in an edge to second slip. You survived, but realized bravado cannot replace composure."
-                    }
+        {
+                "id": "intro",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pavilion.jpg",
+                "text": "Question 1 of 7 — Dec 18, 2006, 4:15 PM (Feroz Shah Kotla)\nYou are 18 years old, playing your debut Ranji Trophy season for Delhi against Karnataka. Karnataka piled on 446; Delhi is reeling at 103/5 in gloomy winter twilight. You are 40* with tailender Puneet Bisht. Venkatesh Prasad's pacers are generating vicious reverse swing in the gloom. On the 4th ball of the over, a tight single opens to deep point. Taking it leaves nervous Bisht to face two deliveries in near-darkness.",
+                "choices": [
+                        {
+                                "text": "The Selfless Shield: Refuse the single, farm the strike completely, and take 100% of the reverse swing in failing light to protect Bisht until stumps.",
+                                "next": "q2_midnight_bereavement",
+                                "score": 10,
+                                "feedbackTitle": "Mastery of Burden",
+                                "feedback": "You exposed yourself to body blows in the gloom to protect Bisht, steering Delhi to stumps at 103/5 intact. At 3:00 AM, tragedy strikes."
+                        },
+                        {
+                                "text": "Conventional Rotation: Take the single, rotate strike, and keep the scoreboard moving while light permits.",
+                                "next": "q2_midnight_bereavement",
+                                "score": 5,
+                                "feedbackTitle": "Calculated Risk",
+                                "feedback": "You rotated the strike, but the reverse swing beat Bisht's outside edge twice in near darkness. At 3:00 AM, tragedy strikes."
+                        },
+                        {
+                                "text": "Counter-Punch Gamble: Step out to hit over mid-off to force Karnataka into spreading the field and bowling spin.",
+                                "next": "q2_midnight_bereavement",
+                                "score": -5,
+                                "feedbackTitle": "Impatient Bravado",
+                                "feedback": "Your aggressive slash looped dangerously close to gully. You survived to stumps at 40*, but at 3:00 AM, your world collapses."
+                        }
                 ]
-            },
-            {
-                id: 'q1_shield_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "You defended resolutely through the final 15 minutes, taking body blows to steer Delhi to stumps at 103/5 with you unbeaten on 40*. You head home to Uttam Nagar exhausted, proud to have kept Delhi alive. But at 3:00 AM, the world shatters.",
-                choices: [{ text: "Next Crucible: 3:30 AM Bedside Agony", next: 'q2_grief_crossroad', score: 0 }]
-            },
-            {
-                id: 'q1_rotate_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "Bisht survived by millimeters as the umpires called stumps due to bad light. You finish on 40* overnight, but your mind is restless as you return home to Uttam Nagar. At 3:00 AM, tragedy strikes without warning.",
-                choices: [{ text: "Next Crucible: 3:30 AM Bedside Agony", next: 'q2_grief_crossroad', score: 0 }]
-            },
-            {
-                id: 'q1_attack_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "A stern look from your partner brought you back to discipline. You blocked out the remainder of the evening to stay 40* at stumps. You go to sleep in Uttam Nagar, unaware that your life will change forever at 3:00 AM.",
-                choices: [{ text: "Next Crucible: 3:30 AM Bedside Agony", next: 'q2_grief_crossroad', score: 0 }]
-            },
-            {
-                id: 'q2_grief_crossroad',
-                emotion: 'grief',
-                bg: '/assets/bg_virat_pavilion.jpg',
-                text: "3:00 AM, December 19, 2006. Your father Prem collapses from a massive cardiac stroke. You desperately pump his chest, but he passes away in your arms. By 4:30 AM, orthodox relatives gather at home. They urge angrily: 'Virat is the younger son; he must sit by his father's body, shave his head, and lead funeral rites. Thinking about a cricket match right now is heartless.' Your weeping mother Saroj whispers: 'Your father gave his life to see you play. Do what he would want.'",
-                choices: [
-                    {
-                        text: "The Iron Vow: Call coach Rajkumar Sharma at dawn, resolve to bat at 9:00 AM to save Delhi, and promise to rush straight to the pyre.",
-                        next: 'q2_vow_outcome',
-                        score: 10,
-                        feedbackTitle: "The Unbreakable Promise",
-                        feedback: "Relatives condemned you as cold, but you knew that abandoning your father's dream on the day of his passing would be the true betrayal."
-                    },
-                    {
-                        text: "Filial Surrender: Stay at home, fulfill all customary funeral rites, and accept that family grief supersedes sporting duty.",
-                        next: 'q2_mourn_outcome',
-                        score: 5,
-                        feedbackTitle: "The Conventional Path",
-                        feedback: "Everyone understood and consoled you, but inside, a dark voice whispered that you abandoned your father's fight when he needed you most."
-                    },
-                    {
-                        text: "The Tardy Compromise: Attend morning rituals until 10:30 AM, then rush to Kotla hoping to bat down at number 8.",
-                        next: 'q2_compromise_outcome',
-                        score: -5,
-                        feedbackTitle: "Neither Here Nor There",
-                        feedback: "Compromise pleased no one. Your relatives were offended, and Delhi would be bowled out before you even reached the stadium gates."
-                    }
+        },
+        {
+                "id": "q2_midnight_bereavement",
+                "emotion": "grief",
+                "bg": "/assets/bg_virat_pavilion.jpg",
+                "text": "Question 2 of 7 — Dec 19, 2006, 3:30 AM (Bedside Reality)\nAt 3:00 AM, your 54-year-old father Prem collapses from a massive stroke and passes away in your arms. By 4:00 AM, orthodox relatives gather, insisting: 'Virat, as the younger son, filial duty demands you sit by your father's body, shave your head, and lead the mourning rites. Thinking about a cricket match right now is heartless.' Delhi is 103/5; forfeiting as 'Retired Absent' guarantees Delhi's defeat.",
+                "choices": [
+                        {
+                                "text": "The Iron Vow: Call coach Rajkumar Sharma at dawn, resolve to bat at 9:00 AM to save Delhi, and promise to rush straight to the pyre after batting.",
+                                "next": "q3_dressing_room_veto",
+                                "score": 10,
+                                "feedbackTitle": "The Sacred Covenant",
+                                "feedback": "Relatives called you cold, but you knew that abandoning your father's dream on the day of his passing would be the true betrayal."
+                        },
+                        {
+                                "text": "Filial Surrender: Stay at home, fulfill all customary antim sanskar rites, and accept that family grief supersedes cricket.",
+                                "next": "q3_dressing_room_veto",
+                                "score": 5,
+                                "feedbackTitle": "Traditional Duty",
+                                "feedback": "Your relatives praised your devotion, but looking at your father's cricket bag, you realized you had left the battle unfinished."
+                        },
+                        {
+                                "text": "The Half-Day Compromise: Attend morning prayers until 10:30 AM, then rush to Kotla hoping to bat down at number 8.",
+                                "next": "q3_dressing_room_veto",
+                                "score": -5,
+                                "feedbackTitle": "The Broken Compromise",
+                                "feedback": "Attempting to split your duties pleased no one; Delhi lost two quick wickets while you were stranded in traffic."
+                        }
                 ]
-            },
-            {
-                id: 'q2_vow_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pavilion.jpg',
-                text: "You strapped your cricket kit into your scooter with numb fingers at 6:45 AM, tears drying on your cheeks. By 7:30 AM, you walk into the Feroz Shah Kotla dressing room in immaculate whites. But your arrival triggers an internal revolt.",
-                choices: [{ text: "Next Crucible: 7:45 AM Dressing Room Veto", next: 'q3_veto_crossroad', score: 0 }]
-            },
-            {
-                id: 'q2_mourn_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pavilion.jpg',
-                text: "You stayed and held your mother's hand. As Karnataka rolled over Delhi for 130 by lunch, you looked at your father's cricket gear and made an oath: never again will you leave an innings unfinished. You return to the stadium.",
-                choices: [{ text: "Next Crucible: 7:45 AM Dressing Room Veto", next: 'q3_veto_crossroad', score: 0 }]
-            },
-            {
-                id: 'q2_compromise_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pavilion.jpg',
-                text: "Realizing that half-hearted commitments fail in life and sport, you wipe your tears, grab your bat, and arrive at Feroz Shah Kotla before the morning bell rings.",
-                choices: [{ text: "Next Crucible: 7:45 AM Dressing Room Veto", next: 'q3_veto_crossroad', score: 0 }]
-            },
-            {
-                id: 'q3_veto_crossroad',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pavilion.jpg',
-                text: "7:45 AM, Feroz Shah Kotla dressing room. Coach Chetan Chauhan and captain Mithun Manhas are stunned seeing you in whites. Chauhan pulls you into the office: 'Virat, you are an 18-year-old child in trauma. If your reflexes lag by 0.1 seconds, a 140 km/h bouncer could fracture your skull. If you get out on 40, people will say Delhi cricket exploited a grieving boy. We can send a substitute.'",
-                choices: [
-                    {
-                        text: "Absolute Ultimatum: Look Chauhan in the eye and state: 'I was 40* overnight. I started this fight and I will finish it. If you bench me, I will never play for Delhi again.'",
-                        next: 'q3_ultimatum_outcome',
-                        score: 10,
-                        feedbackTitle: "Fierce Ownership",
-                        feedback: "Chauhan was silenced by the fire in your eyes. He nodded slowly, handed you your batting gloves, and ordered the dressing room to maintain silence."
-                    },
-                    {
-                        text: "Pragmatic Order Shift: Ask to bat down at number 7 so you have 45 minutes in the pavilion to collect your emotional composure.",
-                        next: 'q3_shift_outcome',
-                        score: -5,
-                        feedbackTitle: "Loss of Momentum",
-                        feedback: "Altering the lineup rattled team morale. Karnataka pacers tore through the substitute, and you had to walk in anyway at 115/6 under worse pressure."
-                    },
-                    {
-                        text: "The Net Trial: Agree to face 15 minutes of throwdowns in the indoor nets first with Chauhan watching to prove your reflexes.",
-                        next: 'q3_net_outcome',
-                        score: 5,
-                        feedbackTitle: "Demonstrated Readiness",
-                        feedback: "You middled 18 straight deliveries in the cage with crisp precision. Chauhan closed the gate and said simply: 'Go save Delhi.'"
-                    }
+        },
+        {
+                "id": "q3_dressing_room_veto",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pavilion.jpg",
+                "text": "Question 3 of 7 — Dec 19, 2006, 7:45 AM (Kotla Dressing Room)\nYou arrive in crisp whites with red, sleepless eyes. Coach Chetan Chauhan and captain Mithun Manhas are stunned. Chauhan pulls you aside: 'Virat, you are an 18-year-old boy in deep shock. A 140 km/h bouncer could cause severe head trauma if your reflexes lag by 0.1 seconds. If you fail, the media will accuse us of exploiting a grieving child. Let a substitute take your place.'",
+                "choices": [
+                        {
+                                "text": "Absolute Ultimatum: Look Chauhan dead in the eye: 'I started this fight and I will finish it. If you bench me today, I will never wear Delhi whites again.'",
+                                "next": "q4_morning_attrition",
+                                "score": 10,
+                                "feedbackTitle": "Uncompromising Conviction",
+                                "feedback": "Chauhan went completely silent. The fire in your eyes silenced the entire room. He handed you your helmet and ordered complete silence."
+                        },
+                        {
+                                "text": "The Net Trial: Request an immediate 15-minute fiery session in the indoor nets to objectively prove your reflexes to Chauhan.",
+                                "next": "q4_morning_attrition",
+                                "score": 5,
+                                "feedbackTitle": "Measured Proof",
+                                "feedback": "Facing throwdowns in the cage, you middled 15 consecutive deliveries with crisp precision. Chauhan nodded: 'Go save Delhi.'"
+                        },
+                        {
+                                "text": "Pragmatic Order Shift: Offer to bat down at number 8 so you have 45 minutes to steady your racing pulse and compose yourself.",
+                                "next": "q4_morning_attrition",
+                                "score": -5,
+                                "feedbackTitle": "Disrupted Lineup",
+                                "feedback": "Changing the batting order disoriented the team. Karnataka pacers tore through the substitute, forcing you out at 112/6 anyway."
+                        }
                 ]
-            },
-            {
-                id: 'q3_ultimatum_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "You strapped on your pads in complete silence. At 8:55 AM, the umpires walk out. You step onto the Kotla turf, blind to the grandstand, seeing only the 22 yards of dirt. By 10:30 AM, you are batting on 68*.",
-                choices: [{ text: "Next Crucible: 10:30 AM Sledging in the Shadows", next: 'q4_sledge_crossroad', score: 0 }]
-            },
-            {
-                id: 'q3_shift_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "Realizing that delay only magnifies fear, you discard your jacket, grab your helmet, and walk straight out with Puneet Bisht onto the field to confront Karnataka. By 10:30 AM, you have fought your way to 68*.",
-                choices: [{ text: "Next Crucible: 10:30 AM Sledging in the Shadows", next: 'q4_sledge_crossroad', score: 0 }]
-            },
-            {
-                id: 'q3_net_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "The net session cleared the fog in your brain. You walked to the middle with supreme focus, blocking out the world. By 10:30 AM, you have carried Delhi to within striking distance of avoiding the follow-on.",
-                choices: [{ text: "Next Crucible: 10:30 AM Sledging in the Shadows", next: 'q4_sledge_crossroad', score: 0 }]
-            },
-            {
-                id: 'q4_sledge_crossroad',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "10:30 AM, Feroz Shah Kotla. You have batted over 2 hours this morning, grinding to 68*. Delhi is just 25 runs away from avoiding the follow-on. The Karnataka cordon is frustrated. A hostile pacer hurls a vicious bouncer that grazes your shoulder, walks down the pitch, and sneers: 'You think you are a hero, boy? Your father is lying dead on the floor and you are chasing runs. Go home.'",
-                choices: [
-                    {
-                        text: "Deaf Steel: Do not utter a word. Turn your back, tap the pitch with deliberate slowness, and meet his gaze with cold, dead eyes.",
-                        next: 'q4_steel_outcome',
-                        score: 10,
-                        feedbackTitle: "Mastery Over Emotion",
-                        feedback: "Silence was your deadliest weapon. The bowler was unnerved by your refusal to take the bait and lost his rhythm on the very next ball."
-                    },
-                    {
-                        text: "Fierce Verbal Retaliation: Confront the bowler chest-to-chest mid-pitch, letting Delhi street fire push him back.",
-                        next: 'q4_retaliate_outcome',
-                        score: -5,
-                        feedbackTitle: "Taking the Bait",
-                        feedback: "The altercation spiked your heart rate. On the next delivery, you played with tense hands and edged an outswinger inches short of slip."
-                    },
-                    {
-                        text: "Violent Hook Shot: Step outside off-stump on the next short delivery and pull it with maximum fury into the mid-wicket stands.",
-                        next: 'q4_hook_outcome',
-                        score: 5,
-                        feedbackTitle: "High-Risk Defiance",
-                        feedback: "The ball rattled the boundary hoardings, silencing the cordon. But playing with adrenaline on a crumbling deck flirted with disaster."
-                    }
+        },
+        {
+                "id": "q4_morning_attrition",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pitch.jpg",
+                "text": "Question 4 of 7 — Dec 19, 2006, 9:45 AM (Physical & Mental Exhaustion at 55*)\nYou have batted through 2 freezing hours without sleep, grinding to 55*. The Karnataka spinners are targeting a rough patch outside off-stump. Severe dehydration and emotional shock hit you; your calves are cramping, and your vision blurs. Bisht calls for a risky second run to deep mid-wicket.",
+                "choices": [
+                        {
+                                "text": "Iron Discipline: Wave Bisht back, call for electrolyte salt capsules, and grind through safe singles without taking unnecessary physical risks.",
+                                "next": "q5_cordon_sledge",
+                                "score": 10,
+                                "feedbackTitle": "Mastery Over Pain",
+                                "feedback": "You swallowed the cramps, guarded your off-stump with supreme patience, and forced Karnataka to bowl 12 consecutive maidens."
+                        },
+                        {
+                                "text": "Counter-Attack Sweeps: Break the mental fog with aggressive sweep shots against the spin to disrupt Karnataka's field and relieve running pressure.",
+                                "next": "q5_cordon_sledge",
+                                "score": 5,
+                                "feedbackTitle": "Aggressive Counter",
+                                "feedback": "Two boundaries flew to the rope, forcing the field back, but a top-edge barely evaded short fine-leg on the second boundary."
+                        },
+                        {
+                                "text": "Desperate Sprint: Push through the cramp and dive hard for the second run to prove your physical invincibility to the opposition.",
+                                "next": "q5_cordon_sledge",
+                                "score": -5,
+                                "feedbackTitle": "Dangerous Overexertion",
+                                "feedback": "You made the crease, but the violent slide triggered severe spasms in your hamstring, requiring a prolonged medical delay."
+                        }
                 ]
-            },
-            {
-                id: 'q4_steel_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "Your icy composure broke their spirit. You clipped the next ball through mid-wicket for four, steering Delhi past the follow-on mark. You reach 90 runs, 10 short of a legendary century. Then, tragedy of a different kind strikes.",
-                choices: [{ text: "Next Crucible: 12:40 PM The Umpiring Injustice", next: 'q5_umpire_crossroad', score: 0 }]
-            },
-            {
-                id: 'q4_retaliate_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "Senior partner Bisht rushed down the pitch, calmed you down, and reminded you of Prem Kohli's face. You swallowed your anger, reset your stance, and grinded to 90 runs. But at 12:40 PM, the umpire intervenes.",
-                choices: [{ text: "Next Crucible: 12:40 PM The Umpiring Injustice", next: 'q5_umpire_crossroad', score: 0 }]
-            },
-            {
-                id: 'q4_hook_outcome',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "The boundary relieved the tension, but reminded you to guard your wicket with life. You refocused on defense and reached 90 runs. Delhi is officially safe from the follow-on. Then, a shocking decision unfolds.",
-                choices: [{ text: "Next Crucible: 12:40 PM The Umpiring Injustice", next: 'q5_umpire_crossroad', score: 0 }]
-            },
-            {
-                id: 'q5_umpire_crossroad',
-                emotion: 'determination',
-                bg: '/assets/bg_virat_pitch.jpg',
-                text: "12:40 PM. You are on 90 off 281 minutes. You push forward with a soft bat to a spinning delivery from Sunil Joshi. The ball hits the exact middle of your willow, bounces off your pad, and lobs to short leg. A desperate appeal rings out. Umpire Suresh Shastri inexplicably raises his finger. You are robbed of a century dedicated to your late father by a blatant umpiring blunder.",
-                choices: [
-                    {
-                        text: "Dignified Acceptance: Look down at your bat, refuse to show petulant dissent, tuck your bat under your arm, and walk off in silence.",
-                        next: 'q5_dignity_outcome',
-                        score: 10,
-                        feedbackTitle: "Regal Demeanor",
-                        feedback: "You rose above the injustice. Even the Karnataka fielders stood in awe as you walked off with your head held high, job completed."
-                    },
-                    {
-                        text: "Crease Protest: Point emphatically to the middle of your bat, demand the umpire consult square-leg, and stand your ground.",
-                        next: 'q5_protest_outcome',
-                        score: -5,
-                        feedbackTitle: "Disciplinary Jeopardy",
-                        feedback: "The umpire warned you for dissent. The argument sullied the sanctity of a heroic innings and risked a multi-match Ranji ban."
-                    },
-                    {
-                        text: "Raw Emotional Release: Smash your bat into the turf, let 5 hours of suppressed grief burst out, and walk off weeping.",
-                        next: 'q5_breakdown_outcome',
-                        score: 0,
-                        feedbackTitle: "Human Vulnerability",
-                        feedback: "Everyone understood your heartbreak, but the eruption showed national selectors an emotional volatility they feared in international cricket."
-                    }
+        },
+        {
+                "id": "q5_cordon_sledge",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pitch.jpg",
+                "text": "Question 5 of 7 — Dec 19, 2006, 10:45 AM (The 68* Personal Sledge)\nYou have carried Delhi to 195/5, just 12 runs away from avoiding the follow-on. The Karnataka cordon is frustrated. A hostile pacer hurls an express bouncer past your helmet grill, marches right up to your face, and sneers: 'You think you're a hero, boy? Your father is lying dead at home and you're here begging for runs. Have some shame and go home.'",
+                "choices": [
+                        {
+                                "text": "Deafening Steel: Turn away, say nothing, deliberately tap the turf with your bat, and meet the bowler's gaze with cold, dead focus.",
+                                "next": "q6_robbed_on_90",
+                                "score": 10,
+                                "feedbackTitle": "Cold Murderous Focus",
+                                "feedback": "Your silence destroyed his rhythm. He overcompensated with a wide half-volley next ball, which you ruthlessly dispatched for four."
+                        },
+                        {
+                                "text": "Fierce Verbal Retaliation: Step into his chest with raw Delhi street fire and tell him to get back to his mark before you dismantle him.",
+                                "next": "q6_robbed_on_90",
+                                "score": -5,
+                                "feedbackTitle": "Taking the Bait",
+                                "feedback": "The altercation sent your adrenaline soaring. On the next delivery, you slashed with hard hands and edged dangerously close to slip."
+                        },
+                        {
+                                "text": "Violent Hook Shot: Step across off-stump on the very next ball and hook the expected bouncer ferociously into the mid-wicket stands.",
+                                "next": "q6_robbed_on_90",
+                                "score": 5,
+                                "feedbackTitle": "High-Risk Defiance",
+                                "feedback": "The ball rattled the boundary hoardings, silencing the cordon, but gambling on the hook on a two-paced deck brought immense danger."
+                        }
                 ]
-            },
-            {
-                id: 'q5_dignity_outcome',
-                emotion: 'grief',
-                bg: '/assets/avatar_virat_kohli.jpg',
-                text: "The entire Kotla pavilion gave you a standing ovation. You walked straight into the locker room, removed your pads without washing your face, and arrived at Nigambodh Ghat crematorium to light your father's pyre. Two days later, your family gathers.",
-                choices: [{ text: "Final Crucible: The Safe Job Dilemma", next: 'q6_vow_crossroad', score: 0 }]
-            },
-            {
-                id: 'q5_protest_outcome',
-                emotion: 'grief',
-                bg: '/assets/avatar_virat_kohli.jpg',
-                text: "Coach Chauhan met you at the boundary line, embraced you, and said: 'Forget the 10 runs, son. You saved Delhi. Now go do your duty as a son.' You rushed to the crematorium to bid your father farewell. Two days later, family reality strikes.",
-                choices: [{ text: "Final Crucible: The Safe Job Dilemma", next: 'q6_vow_crossroad', score: 0 }]
-            },
-            {
-                id: 'q5_breakdown_outcome',
-                emotion: 'grief',
-                bg: '/assets/avatar_virat_kohli.jpg',
-                text: "Bisht escorted you off as tears soaked your shirt. You saved Delhi from humiliation, and now you must face the finality of death. You rush to the crematorium. Two days later, a critical crossroads arrives.",
-                choices: [{ text: "Final Crucible: The Safe Job Dilemma", next: 'q6_vow_crossroad', score: 0 }]
-            },
-            {
-                id: 'q6_vow_crossroad',
-                emotion: 'determination',
-                bg: '/assets/avatar_virat_kohli.jpg',
-                text: "December 21, 2006. The funeral is over. With your father Prem gone, the family's criminal law practice has closed overnight. There is no steady household income. Your brother Vikas gathers the family: 'Virat, you proved your courage with 90 runs, but sports careers can vanish with one knee injury. A nationalized bank and an oil PSU are offering you an immediate sports-quota job with a permanent government salary. Take it to secure Ma.'",
-                choices: [
-                    {
-                        text: "All-in on Immortality: Refuse the backup job completely. Tell your family: 'I will never take a safety net. I will play for India, or I will die trying.'",
-                        next: 'q6_allin_outcome',
-                        score: 10,
-                        feedbackTitle: "Burning the Ships",
-                        feedback: "By removing all escape routes, you made failure an impossibility. That radical refusal to compromise turned you into King Kohli."
-                    },
-                    {
-                        text: "The Dual-Track Compromise: Accept the bank job for guaranteed family stability, working mornings and training evenings.",
-                        next: 'q6_dual_outcome',
-                        score: 0,
-                        feedbackTitle: "Diluted Focus",
-                        feedback: "You secured your family's short-term finances, but dividing your mental energy between office routines and elite cricket delayed your international debut."
-                    },
-                    {
-                        text: "Commercial League Hustle: Sign quick private club league contracts across Delhi to provide immediate cash flow while playing full-time.",
-                        next: 'q6_commercial_outcome',
-                        score: -5,
-                        feedbackTitle: "Mercenary Distraction",
-                        feedback: "Chasing private match-fees exposed you to predatory club managers, risking burnout on sub-standard turf before your national breakthrough."
-                    }
+        },
+        {
+                "id": "q6_robbed_on_90",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pitch.jpg",
+                "text": "Question 6 of 7 — Dec 19, 2006, 12:40 PM (Robbed on 90: Blatant Injustice)\nYou are on 90 off 281 minutes. Delhi is completely safe from the follow-on at 230/5. Sunil Joshi tosses up a delivery; you push forward with a soft inside edge into your pad. The ball lobs gently to forward short-leg. Umpire Suresh Shastri inexplicably raises his finger for LBW/catch. TV replays confirm a massive inside edge. You are cheated of an immortal century for your father.",
+                "choices": [
+                        {
+                                "text": "Regal Demeanor: Look down at your bat, refuse to show open dissent, tuck the bat under your arm, and walk off in silence with your head held high.",
+                                "next": "q7_economic_crossroads",
+                                "score": 10,
+                                "feedbackTitle": "The Demeanor of a King",
+                                "feedback": "You rose above human error. Both dressing rooms and the entire Feroz Shah Kotla crowd stood up in absolute reverence as you walked off."
+                        },
+                        {
+                                "text": "Stand Your Ground: Point to the cherry ball mark on the middle of your bat and urge umpire Shastri to consult the square-leg umpire.",
+                                "next": "q7_economic_crossroads",
+                                "score": -5,
+                                "feedbackTitle": "Costly Dissent",
+                                "feedback": "The umpire threatened an official code-of-conduct report. The brief protest overshadowed the pure nobility of your 281-minute vigil."
+                        },
+                        {
+                                "text": "Private Catharsis: Walk off quietly, but let 28 hours of suppressed grief and heartbreak burst out against the dressing room tunnel wall.",
+                                "next": "q7_economic_crossroads",
+                                "score": 5,
+                                "feedbackTitle": "Human Vulnerability",
+                                "feedback": "Coach Chauhan caught you in his arms in the tunnel: 'You saved Delhi, son. Now go do your duty to your father.' You rushed to the pyre."
+                        }
                 ]
-            },
-            {
-                id: 'q6_allin_outcome',
-                emotion: 'hope',
-                bg: '/assets/avatar_virat_kohli.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "You burned the boats. Within 14 months of that decision, you captained India to the U-19 World Cup title. Within 20 months, you made your senior India debut. At 18, through 48 hours of grief, hostility, and courage, a boy died and a king was born.",
-                choices: [
-                    {
-                        text: "Complete Master Journey",
-                        next: 'COMPLETE',
-                        score: 10,
-                        feedbackTitle: "Immortal Legacy",
-                        feedback: "Discipline is choosing between what you want now and what you want most."
-                    }
+        },
+        {
+                "id": "q7_economic_crossroads",
+                "emotion": "determination",
+                "bg": "/assets/avatar_virat_kohli.jpg",
+                "text": "Question 7 of 7 — Dec 21, 2006 (The Cold Economic Reality: PSU Job vs Burning Ships)\nThe funeral at Nigambodh Ghat is over. With your father gone, the family legal practice is shut with zero household income. Creditors and house rent loom over your mother Saroj. A nationalized PSU bank and an oil corporation offer you an immediate sports-quota clerk job (₹18,000/month permanent government salary). Your brother Vikas says: 'Virat, one knee injury can end cricket. Take this job so Ma has guaranteed food and shelter.'",
+                "choices": [
+                        {
+                                "text": "Burn the Ships: Refuse the PSU job completely. Tell your mother: 'I will never take a safety net. I will play for India, or I will die trying.'",
+                                "next": "LEARNING_VIRAT",
+                                "score": 10,
+                                "feedbackTitle": "Absolute Surrender to Destiny",
+                                "feedback": "By eliminating every exit door, you forced yourself into ruthless excellence. That single choice forged the relentless warrior known as King Kohli."
+                        },
+                        {
+                                "text": "The Dual-Track Compromise: Accept the bank job on a half-day shift to guarantee your family's basic survival while training evenings.",
+                                "next": "LEARNING_VIRAT",
+                                "score": 5,
+                                "feedbackTitle": "The Heavy Burden",
+                                "feedback": "You kept the family solvent, but balancing bank ledgers with gym sessions drained your energy before you eventually resigned to commit 100%."
+                        },
+                        {
+                                "text": "The 1-Year Ultimatum: Ask your family for 12 months with zero distraction; if you don't make India U-19 or Ranji regular by next winter, you will take the desk job.",
+                                "next": "LEARNING_VIRAT",
+                                "score": 0,
+                                "feedbackTitle": "The High-Stakes Deadline",
+                                "feedback": "Setting a 12-month clock piled enormous pressure on every innings, but pushed you into the 2008 U-19 World Cup captaincy trial."
+                        }
                 ]
-            },
-            {
-                id: 'q6_dual_outcome',
-                emotion: 'hope',
-                bg: '/assets/avatar_virat_kohli.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "Realizing after a month that an office desk was suffocating your destiny, you resigned from the bank, committed 100% to cricket, and led India to U-19 World Cup victory. At 18, you chose your true calling.",
-                choices: [
-                    {
-                        text: "Complete Master Journey",
-                        next: 'COMPLETE',
-                        score: 10,
-                        feedbackTitle: "Immortal Legacy",
-                        feedback: "Discipline is choosing between what you want now and what you want most."
-                    }
+        },
+        {
+                "id": "LEARNING_VIRAT",
+                "emotion": "hope",
+                "bg": "/assets/avatar_virat_kohli.jpg",
+                "text": "LESSON: RESILIENCE. At 18, over 48 agonizing hours, Virat Kohli buried his father, saved his team with 90 unforgettable runs, and refused the comfortable safety of a desk job. Within 14 months, he captained India to the U-19 World Cup victory. When tragedy strips everything away, your reaction defines the rest of your life.",
+                "choices": [
+                        {
+                                "text": "Complete Master Journey",
+                                "next": "COMPLETE",
+                                "score": 10,
+                                "feedbackTitle": "Immortal Legacy",
+                                "feedback": "Duty to team and self in the face of unimaginable grief."
+                        }
                 ]
-            },
-            {
-                id: 'q6_commercial_outcome',
-                emotion: 'hope',
-                bg: '/assets/avatar_virat_kohli.jpg',
-                bgSize: 'object-contain',
-                bgPosition: 'object-center bg-black',
-                text: "Coach Rajkumar Sharma stepped in, cleared your focus, and reminded you of your father's dream. You channeled every ounce of energy into Ranji Trophy excellence, leading to national glory.",
-                choices: [
-                    {
-                        text: "Complete Master Journey",
-                        next: 'COMPLETE',
-                        score: 10,
-                        feedbackTitle: "Immortal Legacy",
-                        feedback: "Discipline is choosing between what you want now and what you want most."
-                    }
-                ]
-            }
-        ]
+        }
+]
     },
 
     // AGE 18: APJ Abdul Kalam
@@ -4386,44 +4274,228 @@ export const STORY_DATABASE: Record<string, any> = {
 
     // AGE 18: Virat Kohli (Conversational Story)
 'lvl_age_18_virat': {
-        title: "The Hardest Day",
-        source: "Source: Virat Kohli, Delhi Ranji Trophy, 2006",
+        title: "The Longest 48 Hours: Virat Kohli at 18",
+        source: "Source: Delhi vs Karnataka, Ranji Trophy (December 18-20, 2006, Feroz Shah Kotla)",
         frames: [
-            {
-                id: 'intro',
-                emotion: 'grief', bg: '/assets/virat_18/1.png', text: " ", choices: [{ text: "Next", next: 'frame_2' }] },
-            { id: 'frame_2', bg: '/assets/virat_18/2.png', text: " ", choices: [{ text: "Back", next: 'intro' }, { text: "Next", next: 'frame_3' }] },
-            { id: 'frame_3', bg: '/assets/virat_18/3.png', text: " ", choices: [{ text: "Back", next: 'frame_2' }, { text: "Next", next: 'frame_4' }] },
-            { id: 'frame_4', bg: '/assets/virat_18/4.png', text: " ", choices: [{ text: "Back", next: 'frame_3' }, { text: "Next", next: 'frame_5' }] },
-            { id: 'frame_5', bg: '/assets/virat_18/5.png', text: " ", choices: [{ text: "Back", next: 'frame_4' }, { text: "Next", next: 'frame_6' }] },
-            { id: 'frame_6', bg: '/assets/virat_18/6.png', text: " ", choices: [{ text: "Back", next: 'frame_5' }, { text: "Next", next: 'frame_7' }] },
-            { 
-                id: 'frame_7', 
-                bg: '/assets/virat_18/7.png', 
-                text: "What would you do?", 
-                choices: [
-                    { text: "Stay. Your family needs you right now.", next: 'frame_8', score: 5, feedbackTitle: "The Safe Choice", feedback: "Family is everything. Many would choose to stay." }, 
-                    { text: "Go. Your father never once asked you to stop.", next: 'frame_8', score: 10, feedbackTitle: "The Driven Choice", feedback: "A difficult, incredible choice. This is what separates the great from the good." }
-                ] 
-            },
-            { id: 'frame_8', bg: '/assets/virat_18/8.png', text: " ", choices: [{ text: "Next", next: 'frame_9' }] },
-            { id: 'frame_9', bg: '/assets/virat_18/9.png', text: " ", choices: [{ text: "Back", next: 'frame_8' }, { text: "Next", next: 'frame_10' }] },
-            { id: 'frame_10', bg: '/assets/virat_18/10.png', text: " ", choices: [{ text: "Back", next: 'frame_9' }, { text: "Next", next: 'frame_11' }] },
-            { id: 'frame_11', bg: '/assets/virat_18/11.png', text: " ", choices: [{ text: "Back", next: 'frame_10' }, { text: "Next", next: 'frame_12' }] },
-            { id: 'frame_12', bg: '/assets/virat_18/12.png', text: " ", choices: [{ text: "Back", next: 'frame_11' }, { text: "Next", next: 'frame_13' }] },
-            { id: 'frame_13', bg: '/assets/virat_18/13.png', text: " ", choices: [{ text: "Back", next: 'frame_12' }, { text: "Next", next: 'frame_14' }] },
-            { id: 'frame_14', bg: '/assets/virat_18/14.png', text: " ", choices: [{ text: "Back", next: 'frame_13' }, { text: "Next", next: 'frame_15' }] },
-            { id: 'frame_15', bg: '/assets/virat_18/15.png', text: " ", choices: [{ text: "Back", next: 'frame_14' }, { text: "Next", next: 'frame_16' }] },
-            { 
-                id: 'frame_16', 
-                bg: '/assets/virat_18/16.png', 
-                text: "What's your choice?", 
-                choices: [
-                    { text: "Step away. Some things are bigger than the moment.", next: 'COMPLETE', score: 5, feedbackTitle: "Grief and Reflection", feedback: "Taking time to grieve is a human and understandable path." }, 
-                    { text: "Show up anyway. Because that's what they'd want.", next: 'COMPLETE', score: 10, feedbackTitle: "Unbreakable Resolve", feedback: "Virat showed up the next day, saved his team, and attended his father's funeral later that evening. A legend was born." }
-                ] 
-            }
-        ]
+        {
+                "id": "intro",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pavilion.jpg",
+                "text": "Question 1 of 7 — Dec 18, 2006, 4:15 PM (Feroz Shah Kotla)\nYou are 18 years old, playing your debut Ranji Trophy season for Delhi against Karnataka. Karnataka piled on 446; Delhi is reeling at 103/5 in gloomy winter twilight. You are 40* with tailender Puneet Bisht. Venkatesh Prasad's pacers are generating vicious reverse swing in the gloom. On the 4th ball of the over, a tight single opens to deep point. Taking it leaves nervous Bisht to face two deliveries in near-darkness.",
+                "choices": [
+                        {
+                                "text": "The Selfless Shield: Refuse the single, farm the strike completely, and take 100% of the reverse swing in failing light to protect Bisht until stumps.",
+                                "next": "q2_midnight_bereavement",
+                                "score": 10,
+                                "feedbackTitle": "Mastery of Burden",
+                                "feedback": "You exposed yourself to body blows in the gloom to protect Bisht, steering Delhi to stumps at 103/5 intact. At 3:00 AM, tragedy strikes."
+                        },
+                        {
+                                "text": "Conventional Rotation: Take the single, rotate strike, and keep the scoreboard moving while light permits.",
+                                "next": "q2_midnight_bereavement",
+                                "score": 5,
+                                "feedbackTitle": "Calculated Risk",
+                                "feedback": "You rotated the strike, but the reverse swing beat Bisht's outside edge twice in near darkness. At 3:00 AM, tragedy strikes."
+                        },
+                        {
+                                "text": "Counter-Punch Gamble: Step out to hit over mid-off to force Karnataka into spreading the field and bowling spin.",
+                                "next": "q2_midnight_bereavement",
+                                "score": -5,
+                                "feedbackTitle": "Impatient Bravado",
+                                "feedback": "Your aggressive slash looped dangerously close to gully. You survived to stumps at 40*, but at 3:00 AM, your world collapses."
+                        }
+                ]
+        },
+        {
+                "id": "q2_midnight_bereavement",
+                "emotion": "grief",
+                "bg": "/assets/bg_virat_pavilion.jpg",
+                "text": "Question 2 of 7 — Dec 19, 2006, 3:30 AM (Bedside Reality)\nAt 3:00 AM, your 54-year-old father Prem collapses from a massive stroke and passes away in your arms. By 4:00 AM, orthodox relatives gather, insisting: 'Virat, as the younger son, filial duty demands you sit by your father's body, shave your head, and lead the mourning rites. Thinking about a cricket match right now is heartless.' Delhi is 103/5; forfeiting as 'Retired Absent' guarantees Delhi's defeat.",
+                "choices": [
+                        {
+                                "text": "The Iron Vow: Call coach Rajkumar Sharma at dawn, resolve to bat at 9:00 AM to save Delhi, and promise to rush straight to the pyre after batting.",
+                                "next": "q3_dressing_room_veto",
+                                "score": 10,
+                                "feedbackTitle": "The Sacred Covenant",
+                                "feedback": "Relatives called you cold, but you knew that abandoning your father's dream on the day of his passing would be the true betrayal."
+                        },
+                        {
+                                "text": "Filial Surrender: Stay at home, fulfill all customary antim sanskar rites, and accept that family grief supersedes cricket.",
+                                "next": "q3_dressing_room_veto",
+                                "score": 5,
+                                "feedbackTitle": "Traditional Duty",
+                                "feedback": "Your relatives praised your devotion, but looking at your father's cricket bag, you realized you had left the battle unfinished."
+                        },
+                        {
+                                "text": "The Half-Day Compromise: Attend morning prayers until 10:30 AM, then rush to Kotla hoping to bat down at number 8.",
+                                "next": "q3_dressing_room_veto",
+                                "score": -5,
+                                "feedbackTitle": "The Broken Compromise",
+                                "feedback": "Attempting to split your duties pleased no one; Delhi lost two quick wickets while you were stranded in traffic."
+                        }
+                ]
+        },
+        {
+                "id": "q3_dressing_room_veto",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pavilion.jpg",
+                "text": "Question 3 of 7 — Dec 19, 2006, 7:45 AM (Kotla Dressing Room)\nYou arrive in crisp whites with red, sleepless eyes. Coach Chetan Chauhan and captain Mithun Manhas are stunned. Chauhan pulls you aside: 'Virat, you are an 18-year-old boy in deep shock. A 140 km/h bouncer could cause severe head trauma if your reflexes lag by 0.1 seconds. If you fail, the media will accuse us of exploiting a grieving child. Let a substitute take your place.'",
+                "choices": [
+                        {
+                                "text": "Absolute Ultimatum: Look Chauhan dead in the eye: 'I started this fight and I will finish it. If you bench me today, I will never wear Delhi whites again.'",
+                                "next": "q4_morning_attrition",
+                                "score": 10,
+                                "feedbackTitle": "Uncompromising Conviction",
+                                "feedback": "Chauhan went completely silent. The fire in your eyes silenced the entire room. He handed you your helmet and ordered complete silence."
+                        },
+                        {
+                                "text": "The Net Trial: Request an immediate 15-minute fiery session in the indoor nets to objectively prove your reflexes to Chauhan.",
+                                "next": "q4_morning_attrition",
+                                "score": 5,
+                                "feedbackTitle": "Measured Proof",
+                                "feedback": "Facing throwdowns in the cage, you middled 15 consecutive deliveries with crisp precision. Chauhan nodded: 'Go save Delhi.'"
+                        },
+                        {
+                                "text": "Pragmatic Order Shift: Offer to bat down at number 8 so you have 45 minutes to steady your racing pulse and compose yourself.",
+                                "next": "q4_morning_attrition",
+                                "score": -5,
+                                "feedbackTitle": "Disrupted Lineup",
+                                "feedback": "Changing the batting order disoriented the team. Karnataka pacers tore through the substitute, forcing you out at 112/6 anyway."
+                        }
+                ]
+        },
+        {
+                "id": "q4_morning_attrition",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pitch.jpg",
+                "text": "Question 4 of 7 — Dec 19, 2006, 9:45 AM (Physical & Mental Exhaustion at 55*)\nYou have batted through 2 freezing hours without sleep, grinding to 55*. The Karnataka spinners are targeting a rough patch outside off-stump. Severe dehydration and emotional shock hit you; your calves are cramping, and your vision blurs. Bisht calls for a risky second run to deep mid-wicket.",
+                "choices": [
+                        {
+                                "text": "Iron Discipline: Wave Bisht back, call for electrolyte salt capsules, and grind through safe singles without taking unnecessary physical risks.",
+                                "next": "q5_cordon_sledge",
+                                "score": 10,
+                                "feedbackTitle": "Mastery Over Pain",
+                                "feedback": "You swallowed the cramps, guarded your off-stump with supreme patience, and forced Karnataka to bowl 12 consecutive maidens."
+                        },
+                        {
+                                "text": "Counter-Attack Sweeps: Break the mental fog with aggressive sweep shots against the spin to disrupt Karnataka's field and relieve running pressure.",
+                                "next": "q5_cordon_sledge",
+                                "score": 5,
+                                "feedbackTitle": "Aggressive Counter",
+                                "feedback": "Two boundaries flew to the rope, forcing the field back, but a top-edge barely evaded short fine-leg on the second boundary."
+                        },
+                        {
+                                "text": "Desperate Sprint: Push through the cramp and dive hard for the second run to prove your physical invincibility to the opposition.",
+                                "next": "q5_cordon_sledge",
+                                "score": -5,
+                                "feedbackTitle": "Dangerous Overexertion",
+                                "feedback": "You made the crease, but the violent slide triggered severe spasms in your hamstring, requiring a prolonged medical delay."
+                        }
+                ]
+        },
+        {
+                "id": "q5_cordon_sledge",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pitch.jpg",
+                "text": "Question 5 of 7 — Dec 19, 2006, 10:45 AM (The 68* Personal Sledge)\nYou have carried Delhi to 195/5, just 12 runs away from avoiding the follow-on. The Karnataka cordon is frustrated. A hostile pacer hurls an express bouncer past your helmet grill, marches right up to your face, and sneers: 'You think you're a hero, boy? Your father is lying dead at home and you're here begging for runs. Have some shame and go home.'",
+                "choices": [
+                        {
+                                "text": "Deafening Steel: Turn away, say nothing, deliberately tap the turf with your bat, and meet the bowler's gaze with cold, dead focus.",
+                                "next": "q6_robbed_on_90",
+                                "score": 10,
+                                "feedbackTitle": "Cold Murderous Focus",
+                                "feedback": "Your silence destroyed his rhythm. He overcompensated with a wide half-volley next ball, which you ruthlessly dispatched for four."
+                        },
+                        {
+                                "text": "Fierce Verbal Retaliation: Step into his chest with raw Delhi street fire and tell him to get back to his mark before you dismantle him.",
+                                "next": "q6_robbed_on_90",
+                                "score": -5,
+                                "feedbackTitle": "Taking the Bait",
+                                "feedback": "The altercation sent your adrenaline soaring. On the next delivery, you slashed with hard hands and edged dangerously close to slip."
+                        },
+                        {
+                                "text": "Violent Hook Shot: Step across off-stump on the very next ball and hook the expected bouncer ferociously into the mid-wicket stands.",
+                                "next": "q6_robbed_on_90",
+                                "score": 5,
+                                "feedbackTitle": "High-Risk Defiance",
+                                "feedback": "The ball rattled the boundary hoardings, silencing the cordon, but gambling on the hook on a two-paced deck brought immense danger."
+                        }
+                ]
+        },
+        {
+                "id": "q6_robbed_on_90",
+                "emotion": "determination",
+                "bg": "/assets/bg_virat_pitch.jpg",
+                "text": "Question 6 of 7 — Dec 19, 2006, 12:40 PM (Robbed on 90: Blatant Injustice)\nYou are on 90 off 281 minutes. Delhi is completely safe from the follow-on at 230/5. Sunil Joshi tosses up a delivery; you push forward with a soft inside edge into your pad. The ball lobs gently to forward short-leg. Umpire Suresh Shastri inexplicably raises his finger for LBW/catch. TV replays confirm a massive inside edge. You are cheated of an immortal century for your father.",
+                "choices": [
+                        {
+                                "text": "Regal Demeanor: Look down at your bat, refuse to show open dissent, tuck the bat under your arm, and walk off in silence with your head held high.",
+                                "next": "q7_economic_crossroads",
+                                "score": 10,
+                                "feedbackTitle": "The Demeanor of a King",
+                                "feedback": "You rose above human error. Both dressing rooms and the entire Feroz Shah Kotla crowd stood up in absolute reverence as you walked off."
+                        },
+                        {
+                                "text": "Stand Your Ground: Point to the cherry ball mark on the middle of your bat and urge umpire Shastri to consult the square-leg umpire.",
+                                "next": "q7_economic_crossroads",
+                                "score": -5,
+                                "feedbackTitle": "Costly Dissent",
+                                "feedback": "The umpire threatened an official code-of-conduct report. The brief protest overshadowed the pure nobility of your 281-minute vigil."
+                        },
+                        {
+                                "text": "Private Catharsis: Walk off quietly, but let 28 hours of suppressed grief and heartbreak burst out against the dressing room tunnel wall.",
+                                "next": "q7_economic_crossroads",
+                                "score": 5,
+                                "feedbackTitle": "Human Vulnerability",
+                                "feedback": "Coach Chauhan caught you in his arms in the tunnel: 'You saved Delhi, son. Now go do your duty to your father.' You rushed to the pyre."
+                        }
+                ]
+        },
+        {
+                "id": "q7_economic_crossroads",
+                "emotion": "determination",
+                "bg": "/assets/avatar_virat_kohli.jpg",
+                "text": "Question 7 of 7 — Dec 21, 2006 (The Cold Economic Reality: PSU Job vs Burning Ships)\nThe funeral at Nigambodh Ghat is over. With your father gone, the family legal practice is shut with zero household income. Creditors and house rent loom over your mother Saroj. A nationalized PSU bank and an oil corporation offer you an immediate sports-quota clerk job (₹18,000/month permanent government salary). Your brother Vikas says: 'Virat, one knee injury can end cricket. Take this job so Ma has guaranteed food and shelter.'",
+                "choices": [
+                        {
+                                "text": "Burn the Ships: Refuse the PSU job completely. Tell your mother: 'I will never take a safety net. I will play for India, or I will die trying.'",
+                                "next": "LEARNING_VIRAT",
+                                "score": 10,
+                                "feedbackTitle": "Absolute Surrender to Destiny",
+                                "feedback": "By eliminating every exit door, you forced yourself into ruthless excellence. That single choice forged the relentless warrior known as King Kohli."
+                        },
+                        {
+                                "text": "The Dual-Track Compromise: Accept the bank job on a half-day shift to guarantee your family's basic survival while training evenings.",
+                                "next": "LEARNING_VIRAT",
+                                "score": 5,
+                                "feedbackTitle": "The Heavy Burden",
+                                "feedback": "You kept the family solvent, but balancing bank ledgers with gym sessions drained your energy before you eventually resigned to commit 100%."
+                        },
+                        {
+                                "text": "The 1-Year Ultimatum: Ask your family for 12 months with zero distraction; if you don't make India U-19 or Ranji regular by next winter, you will take the desk job.",
+                                "next": "LEARNING_VIRAT",
+                                "score": 0,
+                                "feedbackTitle": "The High-Stakes Deadline",
+                                "feedback": "Setting a 12-month clock piled enormous pressure on every innings, but pushed you into the 2008 U-19 World Cup captaincy trial."
+                        }
+                ]
+        },
+        {
+                "id": "LEARNING_VIRAT",
+                "emotion": "hope",
+                "bg": "/assets/avatar_virat_kohli.jpg",
+                "text": "LESSON: RESILIENCE. At 18, over 48 agonizing hours, Virat Kohli buried his father, saved his team with 90 unforgettable runs, and refused the comfortable safety of a desk job. Within 14 months, he captained India to the U-19 World Cup victory. When tragedy strips everything away, your reaction defines the rest of your life.",
+                "choices": [
+                        {
+                                "text": "Complete Master Journey",
+                                "next": "COMPLETE",
+                                "score": 10,
+                                "feedbackTitle": "Immortal Legacy",
+                                "feedback": "Duty to team and self in the face of unimaginable grief."
+                        }
+                ]
+        }
+]
     },
 
     // AGE 20: Kobe Bryant
